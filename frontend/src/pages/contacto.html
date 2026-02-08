@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Hotel Quinta Dalam - Hospedaje boutique con esencia de pueblos mágicos de Michoacán">
+    <meta name="description" content="Contacto Hotel Quinta Dalam - Reserva tu experiencia">
     <link rel="stylesheet" href="/frontend/src/styles/main.scss">
     <link rel="icon" href="/frontend/src/assets/icons/posible_logo.jpeg" type="image/png">
     <script src="https://kit.fontawesome.com/819070bd93.js" crossorigin="anonymous"></script>
-    <title>Hotel Quinta Dalam | Inicio</title>
+    <title>Hotel Quinta Dalam | Contacto</title>
 </head>
 <body>
     <header style="display:flex">
         <div>
-            <a href="#" style="display:flex">
+            <a href="/frontend/index.html" style="display:flex">
                 <img src="/frontend/src/assets/icons/posible_logo.jpeg" alt="Logo Hotel Quinta Dalam" width="100px" height="100px" style="border-radius: 50%;">
                 <h1>HOTEL QUINTA DALAM</h1>
             </a>
@@ -37,9 +37,6 @@
             <a href="https://www.tiktok.com/@quintadalam?lang=es" aria-label="TikTok" target="_blank">
                 <i class="fa-brands fa-tiktok"></i>
             </a>
-
-            <!-- Aqui será el cambio de idioma, si aplica-->
-            <a href="">ES</a>
         </div>
 
         <div>
@@ -48,58 +45,52 @@
     </header>
 
     <main>
-        <hr>    
+        <hr>
         <section>
             <div>
-                <h2>Hotel Quinta Dalam</h2>
-                <p>Hospedaje con esencia de los pueblos mágicos de Michoacán</p>
-
-                <div>
-                    <a href="/frontend/src/pages/habitaciones.html">
-                        Ver habitaciones
-                    </a>
-                </div>
+                <h2>Contacto</h2>
+                <p>Estamos listos para recibirte</p>
             </div>
         </section>
 
         <section>
-            <div>
-                <h3>Experiencia Quinta Dalam</h3>
-                <p>
-                    Muy pronto podrás descubrir nuestras habitaciones, servicios, experiencias
-                    y todo lo que hace único a Hotel Quinta Dalam.
-                </p>
-            </div>
-        </section>
+            <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+                
+                <article style="flex: 1;">
+                    <h3>Envíanos un mensaje</h3>
+                    <form action="#">
+                        <div style="margin-bottom: 10px;">
+                            <label>Nombre:</label><br>
+                            <input type="text" style="width: 100%;">
+                        </div>
+                        <div style="margin-bottom: 10px;">
+                            <label>Correo:</label><br>
+                            <input type="email" style="width: 100%;">
+                        </div>
+                        <div style="margin-bottom: 10px;">
+                            <label>Mensaje:</label><br>
+                            <textarea rows="4" style="width: 100%;"></textarea>
+                        </div>
+                        <button type="submit">Enviar</button>
+                    </form>
+                </article>
 
-        <section>
-            <div>
-                <h3>Servicios</h3>
-
-                <div>
-                    <article>
-                        <h4>Habitaciones</h4>
-                        <p>Confort y diseño</p>
-                    </article>
-
-                    <article>
-                        <h4>Naturaleza</h4>
-                        <p>Entorno natural y tranquilidad</p>
-                    </article>
-
-                    <article>
-                        <h4>Hospitalidad</h4>
-                        <p>Atención personalizada</p>
-                    </article>
-                </div>
-            </div>
-        </section>
-
-        <section>
-            <div>
-                <p style="opacity:0.6; font-style: italic;">
-                    Sección en construcción xd contenido próximamente disponible.
-                </p>
+                <article style="flex: 1;">
+                    <h3>Información Directa</h3>
+                    <p>
+                        <i class="fa-solid fa-location-dot"></i> Morelia, Michoacán, México.
+                    </p>
+                    <p>
+                        <i class="fa-solid fa-phone"></i> +52 443 000 0000
+                    </p>
+                    <p>
+                        <i class="fa-solid fa-envelope"></i> contacto@quintadalam.com
+                    </p>
+                    
+                    <div style="margin-top: 15px;">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3756.123456!2d-101.123456!3d19.123456" width="100%" height="200" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                    </div>
+                </article>
             </div>
         </section>
         <hr>

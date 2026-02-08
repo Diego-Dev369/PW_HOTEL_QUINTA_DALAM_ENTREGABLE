@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Hotel Quinta Dalam - Hospedaje boutique con esencia de pueblos mágicos de Michoacán">
+    <meta name="description" content="Habitaciones temáticas Pueblos Mágicos - Hotel Quinta Dalam">
     <link rel="stylesheet" href="/frontend/src/styles/main.scss">
     <link rel="icon" href="/frontend/src/assets/icons/posible_logo.jpeg" type="image/png">
     <script src="https://kit.fontawesome.com/819070bd93.js" crossorigin="anonymous"></script>
-    <title>Hotel Quinta Dalam | Inicio</title>
+    <title>Hotel Quinta Dalam | Habitaciones</title>
 </head>
 <body>
     <header style="display:flex">
         <div>
-            <a href="#" style="display:flex">
+            <a href="/frontend/index.html" style="display:flex">
                 <img src="/frontend/src/assets/icons/posible_logo.jpeg" alt="Logo Hotel Quinta Dalam" width="100px" height="100px" style="border-radius: 50%;">
                 <h1>HOTEL QUINTA DALAM</h1>
             </a>
@@ -37,9 +37,6 @@
             <a href="https://www.tiktok.com/@quintadalam?lang=es" aria-label="TikTok" target="_blank">
                 <i class="fa-brands fa-tiktok"></i>
             </a>
-
-            <!-- Aqui será el cambio de idioma, si aplica-->
-            <a href="">ES</a>
         </div>
 
         <div>
@@ -48,59 +45,67 @@
     </header>
 
     <main>
-        <hr>    
+        <hr>
         <section>
             <div>
-                <h2>Hotel Quinta Dalam</h2>
-                <p>Hospedaje con esencia de los pueblos mágicos de Michoacán</p>
+                <h2>Nuestras Habitaciones</h2>
+                <p>Descansa en la magia de Michoacán</p>
+            </div>
+        </section>
 
-                <div>
-                    <a href="/frontend/src/pages/habitaciones.html">
-                        Ver habitaciones
-                    </a>
+        <section>
+            <div style="background-color: #f9f9f9; padding: 20px;">
+                <h3>Verificar Disponibilidad</h3>
+                <form action="#" style="display:flex; gap:10px; flex-wrap: wrap;">
+                    <div>
+                        <label>Llegada</label>
+                        <input type="date">
+                    </div>
+                    <div>
+                        <label>Salida</label>
+                        <input type="date">
+                    </div>
+                    <div>
+                        <label>Personas</label>
+                        <select>
+                            <option>2 Personas</option>
+                            <option>4 Personas</option>
+                        </select>
+                    </div>
+                    <button type="submit">Buscar</button>
+                </form>
+            </div>
+        </section>
+
+        <section>
+            <div>
+                <article style="margin-bottom: 30px;">
+                    <img src="/frontend/src/assets/rooms/101.jpg" alt="Habitación Tzintzuntzan" width="300px" style="display:block; margin-bottom:10px;">
+                    <h3>101 - Tzintzuntzan</h3>
+                    <p>Inspirada en el imperio Purépecha.</p>
+                    <p><strong>$1,200 MXN</strong></p>
+                    <a href="/frontend/src/pages/contacto.html">Reservar</a>
+                </article>
+                <hr>
+
+                <article style="margin-bottom: 30px;">
+                    <img src="/frontend/src/assets/rooms/102.jpg" alt="Habitación Paracho" width="300px" style="display:block; margin-bottom:10px;">
+                    <h3>102 - Paracho</h3>
+                    <p>Capital mundial de la guitarra.</p>
+                    <p><strong>$1,100 MXN</strong></p>
+                    <a href="/frontend/src/pages/contacto.html">Reservar</a>
+                </article>
+                <hr>
+
+                <article style="margin-bottom: 30px;">
+                    <img src="/frontend/src/assets/rooms/201.jpg" alt="Suite Quencio" width="300px" style="display:block; margin-bottom:10px;">
+                    <h3>201 - Suite Quencio</h3>
+                    <p>Master Suite con vista panorámica.</p>
+                    <p><strong>$2,500 MXN</strong></p>
+                    <a href="/frontend/src/pages/contacto.html">Reservar</a>
+                </article>
+                
                 </div>
-            </div>
-        </section>
-
-        <section>
-            <div>
-                <h3>Experiencia Quinta Dalam</h3>
-                <p>
-                    Muy pronto podrás descubrir nuestras habitaciones, servicios, experiencias
-                    y todo lo que hace único a Hotel Quinta Dalam.
-                </p>
-            </div>
-        </section>
-
-        <section>
-            <div>
-                <h3>Servicios</h3>
-
-                <div>
-                    <article>
-                        <h4>Habitaciones</h4>
-                        <p>Confort y diseño</p>
-                    </article>
-
-                    <article>
-                        <h4>Naturaleza</h4>
-                        <p>Entorno natural y tranquilidad</p>
-                    </article>
-
-                    <article>
-                        <h4>Hospitalidad</h4>
-                        <p>Atención personalizada</p>
-                    </article>
-                </div>
-            </div>
-        </section>
-
-        <section>
-            <div>
-                <p style="opacity:0.6; font-style: italic;">
-                    Sección en construcción xd contenido próximamente disponible.
-                </p>
-            </div>
         </section>
         <hr>
     </main>
