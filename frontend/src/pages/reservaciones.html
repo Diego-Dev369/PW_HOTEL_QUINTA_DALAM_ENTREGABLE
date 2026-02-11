@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Visión del Hotel Quinta Dalam - Ser referentes en turismo cultural en Michoacán">
+    <meta name="description" content="Habitaciones temáticas Pueblos Mágicos - Hotel Quinta Dalam">
     <link rel="stylesheet" href="/frontend/src/styles/main.scss">
     <link rel="icon" href="/frontend/src/assets/icons/posible_logo.jpeg" type="image/png">
     <script src="https://kit.fontawesome.com/819070bd93.js" crossorigin="anonymous"></script>
-    <title>Hotel Quinta Dalam | Visión</title>
+    <title>Hotel Quinta Dalam | Mis reservaciones</title>
 </head>
 <body>
     <header style="display:flex">
@@ -21,9 +21,9 @@
         <nav aria-label="Navegación principal">
             <ul>
                 <li><a href="/frontend/src/pages/habitaciones.html">HABITACIONES</a></li>
-                <li><a href="/frontend/src/pages/reservaciones.html">MIS RESERVACIONES</a></li>
+                <li><a href="#">MIS RESERVACIONES</a></li>
                 <li><a href="/frontend/src/pages/mision.html">MISION</a></li>
-                <li><a href="#">VISION</a></li>
+                <li><a href="/frontend/src/pages/vision.html">VISION</a></li>
                 <li><a href="/frontend/src/pages/contacto.html">CONTACTO</a></li>
             </ul>
         </nav>
@@ -42,7 +42,7 @@
 
         <div>
             <a href="">Reserve ahora</a>
-            <a href="/frontend/src/pages/login.html">LOG IN</a>
+            <a href="/frontend/src/pages/login.html">LOGIN</a>
         </div>
         <div>
             <!-- Aqui será el cambio de idioma, si aplica-->
@@ -51,38 +51,50 @@
     </header>
 
     <main>
+        <!-- Codigo talvez temporal - Diego -->
+        <h1>Mis reservaciones</h1>
+
+        <p>
+            Desde este módulo podrás gestionar tus reservaciones, consultar disponibilidady 
+            realizar nuevas reservas en Hotel Quinta Dalam.
+        </p>
         <hr>
-        <section>
-            <div>
-                <h2>Nuestra Visión</h2>
-                <p>Ser el referente del turismo cultural en Morelia</p>
-            </div>
-        </section>
+        <h2>Formulario de reservación</h2>
 
-        <section>
-            <div>
-                <article>
-                    <h3>Visión a Futuro</h3>
-                    <p>
-                        Ser el hotel temático líder en Morelia, reconocido nacionalmente por nuestra calidad, 
-                        hospitalidad y por ser una ventana turística a la belleza de los Pueblos Mágicos de Michoacán.
-                    </p>
-                    <p>
-                        Buscamos consolidarnos como el destino preferido para quienes buscan más que un hospedaje: 
-                        una inmersión en la cultura, colores y tradiciones de nuestro estado.
-                    </p>
-                </article>
+        <form>
+            <label>Nombre completo:</label><br>
+            <input type="text" placeholder="Ej. Juan Pérez"><br><br>
 
-                <br>
+            <label>Correo electrónico:</label><br>
+            <input type="email" placeholder="Ej. correo@ejemplo.com"><br><br>
 
-                <article>
-                    <h3>Nuestros Valores</h3>
-                    <p>- Hospitalidad Michoacana</p>
-                    <p>- Amor por nuestras raíces</p>
-                    <p>- Calidad en el servicio</p>
-                </article>
-            </div>
-        </section>
+            <label>Teléfono:</label><br>
+            <input type="tel" placeholder="Ej. 4431234567"><br><br>
+
+            <label>Fecha de entrada:</label><br>
+            <input type="date"><br><br>
+
+            <label>Fecha de salida:</label><br>
+            <input type="date"><br><br>
+
+            <label>Número de personas:</label><br>
+            <input type="number" min="1" max="10"><br><br>
+
+            <label>Tipo de habitación:</label><br>
+            <select>
+                <option>Seleccione una opción</option>
+            </select><br><br>
+
+            <label>Comentarios adicionales:</label><br>
+            <textarea placeholder="Escriba aquí alguna solicitud especial..."></textarea><br><br>
+
+            <button type="submit">Reservar</button>
+        </form>
+
+        <p>
+            Este módulo se encuentr en desarrollo, Próximamente contará con sistema de pagos,
+            validación automática y gestión de disponibilidad. OH YEAH
+        </p>
         <hr>
     </main>
 

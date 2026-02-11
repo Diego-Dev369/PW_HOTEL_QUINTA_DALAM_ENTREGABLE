@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="/frontend/src/styles/main.scss">
     <link rel="icon" href="/frontend/src/assets/icons/posible_logo.jpeg" type="image/png">
     <script src="https://kit.fontawesome.com/819070bd93.js" crossorigin="anonymous"></script>
-    <title>Hotel Quinta Dalam | Habitaciones</title>
+    <title>Hotel Quinta Dalam | Log in</title>
 </head>
 <body>
     <header style="display:flex">
@@ -20,7 +20,7 @@
 
         <nav aria-label="Navegación principal">
             <ul>
-                <li><a href="#">HABITACIONES</a></li>
+                <li><a href="/frontend/src/pages/habitaciones.html">HABITACIONES</a></li>
                 <li><a href="/frontend/src/pages/reservaciones.html">MIS RESERVACIONES</a></li>
                 <li><a href="/frontend/src/pages/mision.html">MISION</a></li>
                 <li><a href="/frontend/src/pages/vision.html">VISION</a></li>
@@ -42,7 +42,7 @@
 
         <div>
             <a href="">Reserve ahora</a>
-            <a href="/frontend/src/pages/login.html">LOG IN</a>
+            <a href="#">LOG IN</a>
         </div>
         <div>
             <!-- Aqui será el cambio de idioma, si aplica-->
@@ -51,68 +51,24 @@
     </header>
 
     <main>
+        <h1>Iniciar sesión</h1>
+
+        <p>Accede de forma segura a tu cuenta para gestionar tus reservaciones y servicios del hotel.</p>
         <hr>
-        <section>
-            <div>
-                <h2>Nuestras Habitaciones</h2>
-                <p>Descansa en la magia de Michoacán</p>
-            </div>
-        </section>
 
-        <section>
-            <div style="background-color: #f9f9f9; padding: 20px;">
-                <h3>Verificar Disponibilidad</h3>
-                <form action="#" style="display:flex; gap:10px; flex-wrap: wrap;">
-                    <div>
-                        <label>Llegada</label>
-                        <input type="date">
-                    </div>
-                    <div>
-                        <label>Salida</label>
-                        <input type="date">
-                    </div>
-                    <div>
-                        <label>Personas</label>
-                        <select>
-                            <option>2 Personas</option>
-                            <option>4 Personas</option>
-                        </select>
-                    </div>
-                    <button type="submit">Buscar</button>
-                </form>
-            </div>
-        </section>
+        <form>
+            <label>Correo electrónico:</label><br>
+            <input type="email" placeholder="usuario@correo.com" required><br><br>
 
-        <section>
-            <div>
-                <article style="margin-bottom: 30px;">
-                    <img src="/frontend/src/assets/images/rooms/" alt="Habitación Tzintzuntzan" width="300px" style="display:block; margin-bottom:10px;">
-                    <h3>101 - Tzintzuntzan</h3>
-                    <p>Inspirada en el imperio Purépecha.</p>
-                    <p><strong>$1,200 MXN</strong></p>
-                    <a href="/frontend/src/pages/reservaciones.html">Reservar</a>
-                </article>
-                <hr>
+            <label>Contraseña:</label><br>
+            <input type="password" placeholder="********" required><br><br>
 
-                <article style="margin-bottom: 30px;">
-                    <img src="/frontend/src/assets/images/rooms/" alt="Habitación Paracho" width="300px" style="display:block; margin-bottom:10px;">
-                    <h3>102 - Paracho</h3>
-                    <p>Capital mundial de la guitarra.</p>
-                    <p><strong>$1,100 MXN</strong></p>
-                    <a href="/frontend/src/pages/reservaciones.html">Reservar</a>
-                </article>
-                <hr>
+            <button type="submit">Acceder</button>
+        </form>
 
-                <article style="margin-bottom: 30px;">
-                    <img src="/frontend/src/assets/images/rooms/" alt="Suite Quencio" width="300px" style="display:block; margin-bottom:10px;">
-                    <h3>201 - Suite Quencio</h3>
-                    <p>Master Suite con vista panorámica.</p>
-                    <p><strong>$2,500 MXN</strong></p>
-                    <a href="/frontend/src/pages/reservaciones.html">Reservar</a>
-                </article>
-                
-            </div>
-        </section>
+        <p>
+            El acceso está protegido. Todas las credenciales son verificadas de forma segura.
+        </p>
         <hr>
     </main>
 
