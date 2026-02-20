@@ -4,49 +4,55 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Habitaciones temáticas Pueblos Mágicos - Hotel Quinta Dalam">
-    <link rel="stylesheet" href="/frontend/src/styles/main.scss">
+    <link rel="stylesheet" href="./../styles/main.css">
     <link rel="icon" href="/frontend/src/assets/icons/posible_logo.jpeg" type="image/png">
     <script src="https://kit.fontawesome.com/819070bd93.js" crossorigin="anonymous"></script>
     <title>Hotel Quinta Dalam | Mis reservaciones</title>
 </head>
 <body>
-    <header style="display:flex">
-        <div>
-            <a href="/frontend/index.html" style="display:flex">
-                <img src="/frontend/src/assets/icons/posible_logo.jpeg" alt="Logo Hotel Quinta Dalam" width="100px" height="100px" style="border-radius: 50%;">
-                <h1>HOTEL QUINTA DALAM</h1>
+    <header class="header">
+        <div class="header__brand">
+            <a href="./../../index.html" class="header__logo-link">
+                <img src="/frontend/src/assets/icons/posible_logo.jpeg" alt="Logo Hotel Quinta Dalam"
+                    class="header__logo">
+                <h1 class="header__title">HOTEL QUINTA DALAM</h1>
             </a>
         </div>
 
-        <nav aria-label="Navegación principal">
-            <ul>
-                <li><a href="/frontend/src/pages/habitaciones.html">HABITACIONES</a></li>
-                <li><a href="#">MIS RESERVACIONES</a></li>
-                <li><a href="/frontend/src/pages/mision.html">MISION</a></li>
-                <li><a href="/frontend/src/pages/vision.html">VISION</a></li>
-                <li><a href="/frontend/src/pages/contacto.html">CONTACTO</a></li>
+        <div class="header__contact">
+            <p class="header__phone">
+                <i class="fa-solid fa-phone"></i>
+                +52 443 000 0000
+            </p>
+        </div>
+
+        <div class="header__user">
+            <a href="#" class="header__lang">ES | US</a>
+            <a href="/frontend/src/pages/login.html" class="header__login">LOG IN</a>
+        </div>
+
+        <nav class="header__nav" aria-label="Navegación principal">
+            <ul class="header__menu">
+                <li class="header__item">
+                    <a href="/frontend/src/pages/habitaciones.html" class="header__link">HABITACIONES</a>
+                </li>
+                <li class="header__item">
+                    <a href="/frontend/src/pages/reservaciones.html" class="header__link header__link--active">MIS RESERVACIONES</a>
+                </li>
+                <li class="header__item">
+                    <a href="/frontend/src/pages/mision.html" class="header__link">MISIÓN</a>
+                </li>
+                <li class="header__item">
+                    <a href="/frontend/src/pages/vision.html" class="header__link">VISIÓN</a>
+                </li>
+                <li class="header__item">
+                    <a href="/frontend/src/pages/contacto.html" class="header__link">CONTACTO</a>
+                </li>
             </ul>
         </nav>
 
-        <div>
-            <a href="https://www.facebook.com/profile.php?id=61584681841684" aria-label="Facebook" target="_blank">
-                <i class="fa-brands fa-facebook"></i>
-            </a>
-            <a href="https://www.instagram.com/quintadalam" aria-label="Instagram" target="_blank">
-                <i class="fa-brands fa-instagram"></i>
-            </a>
-            <a href="https://www.tiktok.com/@quintadalam?lang=es" aria-label="TikTok" target="_blank">
-                <i class="fa-brands fa-tiktok"></i>
-            </a>
-        </div>
-
-        <div>
-            <a href="">Reserve ahora</a>
-            <a href="/frontend/src/pages/login.html">LOGIN</a>
-        </div>
-        <div>
-            <!-- Aqui será el cambio de idioma, si aplica-->
-            <a href="">ES</a>
+        <div class="header__reserva">
+            <a href="#" class="header__button">RESERVAR</a>
         </div>
     </header>
 
@@ -98,25 +104,44 @@
         <hr>
     </main>
 
-    <footer>
-        <div style="display: flex;">
-            <a href="https://www.facebook.com/profile.php?id=61584681841684" aria-label="Facebook" target="_blank">
+    <footer class="footer">
+        <div class="footer__social">
+            <p class="footer__title">Redes sociales</p>
+            <a href="https://www.facebook.com/profile.php?id=61584681841684" class="footer__social-link"
+                aria-label="Facebook" target="_blank">
                 <i class="fa-brands fa-facebook"></i>
                 <p>Quinta Dalam</p>
             </a>
-            <a href="https://www.instagram.com/quintadalam" aria-label="Instagram" target="_blank">
+
+            <a href="https://www.instagram.com/quintadalam" class="footer__social-link"
+                aria-label="Instagram" target="_blank">
                 <i class="fa-brands fa-instagram"></i>
                 <p>Quinta Dalam</p>
             </a>
-            <a href="https://www.tiktok.com/@quintadalam?lang=es" aria-label="TikTok" target="_blank">
+
+            <a href="https://www.tiktok.com/@quintadalam?lang=es" class="footer__social-link"
+                aria-label="TikTok" target="_blank">
                 <i class="fa-brands fa-tiktok"></i>
                 <p>Quinta Dalam</p>
             </a>
         </div>
 
-        <div>
-            <p>© 2026 Hotel Quinta Dalam. Todos los derechos reservados.</p>
+        <div class="footer__contact">
+            <p class="footer__title">Contacto</p>
         </div>
+
+        <div class="footer__address">
+            <p class="footer__title">Dirección</p>
+        </div>
+
+        <div class="footer__certificaciones">
+            <p class="footer__title">Certificaciones</p>
+        </div>
+
+        <div class="footer__copyright">
+            <p class="footer_title">&copy; 2026 Hotel Quinta Dalam. Todos los derechos reservados.</p>
+        </div>
+
     </footer>
 </body>
 </html>
