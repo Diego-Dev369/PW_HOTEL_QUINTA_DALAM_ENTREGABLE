@@ -27,7 +27,13 @@
         </div>
 
         <div class="header__user">
-            <a href="#" class="header__lang">ES | US</a>
+            <a href="#" class="header__lang">
+                <img src="./src/assets/icons/bandera_mexico.png" alt="bandera de méxico">
+            </a>
+            <span></span>
+            <a href="#" class="header__lang">
+                <img src="./src/assets/icons/bandera_eu.png" alt="bandera de eu">
+            </a>
             <a href="/frontend/src/pages/login.html" class="header__login">LOG IN</a>
         </div>
 
@@ -56,7 +62,6 @@
         </div>
     </header>
 
-    <!-- HERO / BIENVENIDA -->
     <section class="hero">
         <img src="./src/assets/images/img_encabezado.png"
             alt="Pueblo mágico de Michoacán"
@@ -84,50 +89,60 @@
                 </p>
             </div>
 
-            <div class="rooms__grid">
+        <div class="rooms__grid">
+            <article class="room-card">
+                <img src="./src/assets/images/rooms/204-uruapan.jpeg"
+                    alt="Habitación Uruapan"
+                    class="room-card__img">
 
-                <article class="room-card">
-                    <img src="./src/assets/images/tzintzuntzan-habitacion-101.jpeg"
-                        alt="Habitación estándar"
-                        class="room-card__img">
+                <div class="room-card__body">
+                    <h3 class="room-card__title">Uruapan</h3>
+                    <p class="room-card__caract">
+                        <span class="room-card__texto-resaltado">
+                            Naturaleza y tradición
+                        </span>
+                        &#8226; Uruapan</p>
+                    <p class="room-card__desc">Frescura, armonía y descanso</p>
+                    <a href="#" class="room-card__link">Ver detalles</a>
+                </div>
+            </article>
 
-                    <div class="room-card__body">
-                        <h3 class="room-card__title">Tzintzuntzan</h3>
-                        <p class="room-card__caract">Arte y cultura &#8226; Tzintzuntzan</p>
-                        <p class="room-card__desc">Confort y esencia artesanal</p>
-                        <a href="#" class="room-card__link">Ver detalles</a>
-                    </div>
-                </article>
+            <article class="room-card">
+                <img src="./src/assets/images/rooms/104-patzcuaro.jpeg"
+                    alt="Habitación Pátzcuaro"
+                    class="room-card__img">
 
-                <article class="room-card">
-                    <img src="./src/assets/images/201-quencio.png"
-                        alt="Suite"
-                        class="room-card__img">
+                <div class="room-card__body">
+                    <h3 class="room-card__title">Pátzcuaro</h3>
+                    <p class="room-card__caract">
+                        <span class="room-card__texto-resaltado">
+                            Historia y tradición
+                        </span> 
+                        &#8226; Pátzcuaro
+                    </p>
+                    <p class="room-card__desc">Elegancia clásica y serenidad</p>
+                    <a href="#" class="room-card__link">Ver detalles</a>
+                </div>
+            </article>
 
-                    <div class="room-card__body">
-                        <h3 class="room-card__title">Quencio</h3>
-                        <p class="room-card__caract">Naturaleza y Aventuras &#8226; Quencio</p>
-                        <p class="room-card__desc">Espacio amplio y elegante</p>
-                        <a href="#" class="room-card__link">Ver detalles</a>
-                    </div>
-                </article>
+            <article class="room-card">
+                <img src="./src/assets/images/rooms/102-paracho.jpeg"
+                    alt="Habitación Paracho"
+                    class="room-card__img">
 
-                <article class="room-card">
-                    <img src="./src/assets/images/paracho102.jpeg"
-                        alt="Suite premium"
-                        class="room-card__img">
+                <div class="room-card__body">
+                    <h3 class="room-card__title">Paracho</h3>
+                    <p class="room-card__caract">
+                        <span class="room-card__texto-resaltado">Artesanía y tradición</span> 
+                        &#8226; Paracho
+                    </p>
+                    <p class="room-card__desc">Calidez, autenticidad y carácter</p>
+                    <a href="#" class="room-card__link">Ver detalles</a>
+                </div>
+            </article>
 
-                    <div class="room-card__body">
-                        <h3 class="room-card__title">Paracho</h3>
-                        <p class="room-card__caract">Artesania y Encanto &#8226; Paracho</p>
-                        <p class="room-card__desc">Lujo discreto y exclusividad</p>
-                        <a href="#" class="room-card__link">Ver detalles</a>
-                    </div>
-                </article>
-
-            </div>
-        </section>
-
+        </div>
+    </section>
 
         <!-- SERVICIOS -->
         <section class="services">
@@ -192,7 +207,7 @@
                     <a href="#" class="about__btn">Conocer más</a>
                 </div>
 
-                <img src="./src/assets/images/exterior_hotel.jpeg"
+                <img src="./src/assets/images/exteriores/exterior_hotel.jpeg"
                     alt="Exterior del hotel"
                     class="about__img">
 
