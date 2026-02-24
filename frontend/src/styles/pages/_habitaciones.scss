@@ -1,72 +1,250 @@
 @use '../abstracts/variables' as v;
 @use '../abstracts/mixins' as m;
 
-// ── Contenedor General ────────────────────────────────────
-.room-row {
-  display: flex;
-  gap: v.$space-8;
-  align-items: flex-start;
-  margin-bottom: v.$space-16;
+// ─────────────────────────────────────────────────────────────
+//  ROOMS PAGE — contenedor principal
+// ─────────────────────────────────────────────────────────────
+.rooms-page {
+  padding-bottom: 0;
+}
 
-  // Columna izquierda: ancho fijo y sin crecimiento
-  &__left {
-    flex: 0 0 320px;
-    max-width: 320px;
+.rooms-page__list {
+  display: flex;
+  flex-direction: column;
+  counter-reset: room-counter;
+}
+
+// ─────────────────────────────────────────────────────────────
+//  ROOM ROW — fila individual de suite
+// ─────────────────────────────────────────────────────────────
+.room-row {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: v.$space-10;
+  align-items: start;
+  padding-block: v.$space-12;
+  border-bottom: 1px solid v.$border-color;
+  position: relative;
+  counter-increment: room-counter;
+
+  // Número decorativo de fondo lado derecho
+  &::before {
+    content: "0" counter(room-counter);
+    position: absolute;
+    top: v.$space-10;
+    right: 0;
+    font-family: v.$font-serif;
+    font-size: clamp(4rem, 8vw, 7rem);
+    font-weight: 700;
+    font-style: italic;
+    color: rgba(v.$color-adobe, 0.04);
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+    z-index: 0;
   }
 
-  // Columna derecha: ocupa el resto del espacio
-  &__right {
-    flex: 1 1 auto;
-    display: flex;
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &:first-child {
+    padding-top: v.$space-4;
+  }
+
+  @include m.respond-to('lg') {
+    grid-template-columns: 260px 1fr;
+    gap: v.$space-8;
+  }
+
+  @include m.respond-to('md') {
+    grid-template-columns: 1fr;
+    max-width: 560px;
+    margin-inline: auto;
+    padding-block: v.$space-10;
+
+    &::before {
+      top: v.$space-4;
+      right: v.$space-2;
+    }
+  }
+}
+
+// ─────────────────────────────────────────────────────────────
+//  ROOM ROW — columna izquierda
+// ─────────────────────────────────────────────────────────────
+.room-row__left {
+  position: relative;
+  z-index: 1;
+
+  .room-card {
+    box-shadow: v.$shadow-sm;
+    transition: box-shadow v.$transition-base, transform v.$transition-base;
+
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: v.$shadow-md;
+    }
+  }
+
+  .room-card__img-wrap {
+    aspect-ratio: 4 / 3;
+  }
+
+  .room-card__body {
+    padding: v.$space-4 v.$space-5;
+  }
+
+  .room-card__title {
+    font-size: v.$fs-xl;
+    margin-bottom: v.$space-1;
+  }
+
+  .room-card__sub {
+    font-size: v.$fs-xs;
+    margin-bottom: v.$space-3;
+  }
+
+  .room-card__desc {
+    font-size: v.$fs-xs;
+    display: -webkit-box;
+    //-webkit-line-clamp: 2; //No funciona al parecer
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin-bottom: v.$space-3;
+  }
+
+  .room-card__amenities {
+    margin-bottom: 0;
+  }
+
+  .room-card__link {
+    display: none;
+  }
+}
+
+// ─────────────────────────────────────────────────────────────
+//  ROOM ROW — columna derecha (descripción + CTA)
+// ─────────────────────────────────────────────────────────────
+.room-row__right {
+  display: flex;
+  flex-direction: column;
+  gap: v.$space-5;
+  padding-top: v.$space-2;
+  position: relative;
+  z-index: 1;
+}
+
+// ── Título ────────────────────────────────────────────────
+.room-row__title {
+  font-family: v.$font-serif;
+  font-size: clamp(v.$fs-xl, 2.5vw, v.$fs-3xl);
+  font-weight: 700;
+  color: v.$color-text;
+  line-height: 1.15;
+  margin: 0;
+
+  em {
+    color: v.$color-adobe;
+    font-style: italic;
+  }
+}
+
+// ── Descripción larga ─────────────────────────────────────
+.room-row__text {
+  font-family: v.$font-sans;
+  font-size: v.$fs-md;
+  color: v.$color-text-mid;
+  line-height: 1.78;
+  max-width: 56ch;
+  margin: 0;
+}
+
+// ── Especificaciones ──────────────────────────────────────
+.room-row__specs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: v.$space-2;
+  padding-block: v.$space-4;
+  border-top: 1px solid v.$border-color;
+  border-bottom: 1px solid v.$border-color;
+
+  span {
+    display: inline-flex;
+    align-items: center;
+    gap: v.$space-2;
+    font-family: v.$font-sans;
+    font-size: v.$fs-xs;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: v.$color-text-mid;
+    background: v.$color-parchment;
+    border: 1px solid v.$border-color;
+    border-radius: v.$radius-pill;
+    padding: v.$space-1 v.$space-4;
+    white-space: nowrap;
+    transition: border-color v.$transition-fast, color v.$transition-fast;
+
+    &:hover {
+      border-color: rgba(v.$color-adobe, 0.4);
+      color: v.$color-adobe;
+    }
+
+    i {
+      color: v.$color-adobe;
+      font-size: 0.7rem;
+      flex-shrink: 0;
+    }
+  }
+}
+
+// ── Acción: precio + botón ────────────────────────────────
+.room-row__action {
+  display: flex;
+  align-items: center;
+  gap: v.$space-8;
+
+  @include m.respond-to('sm') {
     flex-direction: column;
+    align-items: flex-start;
     gap: v.$space-4;
 
-    // Títulos y texto
-    &__title, &__text {
-      margin: 0;
-    }
-
-    .room-row__specs {
-      display: flex;
-      gap: v.$space-4;
-      margin-bottom: v.$space-6;
-
-      span {
-        display: flex;
-        align-items: center;
-        gap: v.$space-2;
-        font-size: v.$fs-sm;
-        color: v.$color-text-mid;
-      }
-    }
-
-    .room-row__action {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: v.$space-4;
-
-      .room-row__price {
-        small {
-          display: block;
-          font-size: v.$fs-xs;
-          color: v.$color-text-mid;
-        }
-        strong {
-          font-size: v.$fs-lg;
-          color: v.$color-text;
-        }
-      }
+    .btn {
+      width: 100%;
+      justify-content: center;
     }
   }
+}
 
-  // RESPONSIVE: apilar en móvil
-  @include m.respond-to('md') {
-    flex-direction: column;
+// ── Precio ────────────────────────────────────────────────
+.room-row__price {
+  display: flex;
+  flex-direction: column;
+  gap: v.$space-1;
+  min-width: 110px;
 
-    &__left, &__right {
-      flex: 1 1 auto;
-      max-width: 100%;
+  small {
+    font-family: v.$font-sans;
+    font-size: v.$fs-xs;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: v.$color-text-light;
+  }
+
+  strong {
+    font-family: v.$font-serif;
+    font-size: v.$fs-3xl;
+    font-weight: 700;
+    color: v.$color-text;
+    line-height: 1;
+
+    span {
+      font-size: v.$fs-sm;
+      font-weight: 400;
+      color: v.$color-text-mid;
+      margin-left: v.$space-1;
+      vertical-align: middle;
     }
   }
 }
