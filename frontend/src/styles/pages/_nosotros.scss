@@ -1,0 +1,107 @@
+// ============================================================
+//  NOSOTROS — Estilos específicos
+//  Hotel Quinta Dalam · misión · visión · valores
+// ============================================================
+@use '../abstracts/variables' as v;
+@use '../abstracts/mixins' as m;
+
+// ── Sección Misión / Visión (split con icono) ─────────────
+.nosotros-split {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: v.$space-12;
+  align-items: flex-start;
+  max-width: 860px;
+  margin-inline: auto;
+
+  &--reverse {
+    direction: rtl;
+    > * { direction: ltr; }
+  }
+
+  @include m.respond-to('md') {
+    grid-template-columns: 1fr;
+  }
+}
+
+.nosotros-split__icon {
+  @include m.flex-center;
+  width: 80px;
+  height: 80px;
+  flex-shrink: 0;
+  background: rgba(v.$color-adobe, 0.08);
+  border: 1.5px solid rgba(v.$color-adobe, 0.25);
+  border-radius: 50%;
+  font-size: v.$fs-2xl;
+  color: v.$color-adobe;
+
+  @include m.respond-to('md') {
+    margin-inline: auto;
+  }
+}
+
+.nosotros-split__content {
+  display: flex;
+  flex-direction: column;
+  gap: v.$space-4;
+}
+
+.nosotros-split__text {
+  font-family: v.$font-sans;
+  font-size: v.$fs-md;
+  color: v.$color-text-mid;
+  line-height: 1.8;
+  max-width: 60ch;
+}
+
+// ── Grid de Valores ───────────────────────────────────────
+.valores__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: v.$space-6;
+
+  @include m.respond-to('lg') {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include m.respond-to('sm') {
+    grid-template-columns: 1fr;
+    max-width: 380px;
+    margin-inline: auto;
+  }
+}
+
+.valor-card {
+  text-align: center;
+  padding: v.$space-8 v.$space-5;
+  border: 1px solid rgba(v.$color-gold, 0.2);
+  border-radius: v.$radius-md;
+  background: rgba(v.$color-parchment, 0.04);
+  transition: all v.$transition-base;
+
+  &:hover {
+    background: rgba(v.$color-parchment, 0.08);
+    border-color: rgba(v.$color-gold, 0.4);
+    transform: translateY(-4px);
+  }
+}
+
+.valor-card__icon {
+  font-size: v.$fs-3xl;
+  color: v.$color-gold;
+  margin-bottom: v.$space-4;
+}
+
+.valor-card__title {
+  font-family: v.$font-serif;
+  font-size: v.$fs-lg;
+  font-weight: 600;
+  color: v.$color-parchment-light;
+  margin-bottom: v.$space-3;
+}
+
+.valor-card__text {
+  font-size: v.$fs-sm;
+  color: rgba(v.$color-parchment, 0.65);
+  line-height: 1.65;
+}

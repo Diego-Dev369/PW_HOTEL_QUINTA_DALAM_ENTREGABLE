@@ -1,0 +1,57 @@
+// ============================================================
+//  VISIÓN Y VALORES — Página Nosotros
+//  Hotel Quinta Dalam
+// ============================================================
+@use '../abstracts/variables' as v;
+@use '../abstracts/mixins'   as m;
+
+.valores__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: v.$space-6;
+
+  @include m.respond-to('lg') {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include m.respond-to('sm') {
+    grid-template-columns: 1fr;
+    max-width: 380px;
+    margin-inline: auto;
+  }
+}
+
+.valor-card {
+  text-align: center;
+  padding: v.$space-8 v.$space-5;
+  border: 1px solid rgba(v.$color-gold, 0.2);
+  border-radius: v.$radius-md;
+  background: rgba(v.$color-parchment, 0.04);
+  transition: all v.$transition-base;
+
+  &:hover {
+    background: rgba(v.$color-parchment, 0.08);
+    border-color: rgba(v.$color-gold, 0.4);
+    transform: translateY(-4px);
+  }
+}
+
+.valor-card__icon {
+  font-size: v.$fs-3xl;
+  color: v.$color-gold;
+  margin-bottom: v.$space-4;
+}
+
+.valor-card__title {
+  font-family: v.$font-serif;
+  font-size: v.$fs-lg;
+  font-weight: 600;
+  color: v.$color-parchment-light;
+  margin-bottom: v.$space-3;
+}
+
+.valor-card__text {
+  font-size: v.$fs-sm;
+  color: rgba(v.$color-parchment, 0.65);
+  line-height: 1.65;
+}

@@ -1,13 +1,22 @@
-@use 'abstracts/variables';
+// ============================================================
+//  MAIN.SCSS — Archivo Maestro
+//  Hotel Quinta Dalam · Patrón 7-1 · Dart Sass @use
+//
+//  abstracts/ → _variables.scss · _mixins.scss
+//  base/      → _base.scss
+//  layout/    → _header.scss · _body.scss · _footer.scss
+//  pages/     → _mision.scss · _vision.scss · _contacto.scss
+// ============================================================
 
-@use 'base/normalize';
+// ── 1. Base ──────────────────────────────────────────────────
 @use 'base/base';
-@use 'base/reset';
 
+// ── 2. Layout ────────────────────────────────────────────────
 @use 'layout/header';
 @use 'layout/body';
 @use 'layout/footer';
 
-@use 'pages/contacto';
+// ── 3. Pages ─────────────────────────────────────────────────
 @use 'pages/mision';
 @use 'pages/vision';
+@use 'pages/contacto';

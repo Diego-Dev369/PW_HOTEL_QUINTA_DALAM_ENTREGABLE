@@ -1,0 +1,70 @@
+// ============================================================
+//  BUTTONS — Hotel Quinta Dalam
+//  Componente global de botones · Reutilizable en todas las páginas
+// ============================================================
+@use '../abstracts/variables' as v;
+@use '../abstracts/mixins' as m;
+
+.btn {
+  @include m.btn-base;
+
+  // ── Primario · Café Adobe ─────────────────────────────────
+  &--primary {
+    background-color: v.$color-adobe;
+    border-color: v.$color-adobe;
+    color: v.$color-parchment-light;
+
+    &:hover,
+    &:focus-visible {
+      background-color: v.$color-adobe-light;
+      border-color: v.$color-adobe-light;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(v.$color-adobe, 0.35);
+    }
+
+    &:active {
+      background-color: v.$color-adobe-dark;
+      transform: translateY(0);
+    }
+  }
+
+  // ── Outline · Borde café ──────────────────────────────────
+  &--outline {
+    background-color: transparent;
+    border-color: v.$color-adobe;
+    color: v.$color-adobe;
+
+    &:hover,
+    &:focus-visible {
+      background-color: v.$color-adobe;
+      color: v.$color-parchment-light;
+      transform: translateY(-2px);
+    }
+  }
+
+  // ── Ghost · Para fondos oscuros ───────────────────────────
+  &--ghost {
+    background-color: rgba(v.$color-parchment, 0.15);
+    border-color: rgba(v.$color-parchment, 0.5);
+    color: v.$color-parchment-light;
+    backdrop-filter: blur(8px);
+
+    &:hover {
+      background-color: rgba(v.$color-parchment, 0.25);
+      border-color: v.$color-parchment-light;
+    }
+  }
+
+  // ── Dark · Para usar sobre pergamino ──────────────────────
+  &--dark {
+    background-color: v.$color-forest;
+    border-color: v.$color-forest;
+    color: v.$color-parchment-light;
+
+    &:hover {
+      background-color: v.$color-forest-mid;
+      border-color: v.$color-forest-mid;
+      transform: translateY(-2px);
+    }
+  }
+}

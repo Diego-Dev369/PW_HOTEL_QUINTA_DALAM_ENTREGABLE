@@ -1,0 +1,83 @@
+// ============================================================
+//  RESERVACIONES — Estilos específicos
+//  Hotel Quinta Dalam · formulario · sidebar · políticas
+// ============================================================
+@use '../abstracts/variables' as v;
+@use '../abstracts/mixins' as m;
+
+// ── Layout principal (form + sidebar) ────────────────────
+.reserva__layout {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: v.$space-12;
+  align-items: flex-start;
+
+  @include m.respond-to('lg') {
+    grid-template-columns: 1fr;
+  }
+}
+
+.reserva__form-wrap {
+  display: flex;
+  flex-direction: column;
+}
+
+// ── Sidebar sticky de políticas ───────────────────────────
+.reserva__info-card {
+  background: v.$color-parchment-light;
+  border: 1px solid v.$border-color;
+  border-radius: v.$radius-md;
+  padding: v.$space-8;
+  box-shadow: v.$shadow-sm;
+  position: sticky;
+  top: calc(v.$header-height + v.$space-6);
+}
+
+.reserva__info-title {
+  font-family: v.$font-serif;
+  font-size: v.$fs-2xl;
+  font-weight: 700;
+  color: v.$color-text;
+  margin-bottom: v.$space-6;
+
+  em { color: v.$color-adobe; }
+}
+
+// ── Lista de políticas ────────────────────────────────────
+.reserva__policy-list {
+  display: flex;
+  flex-direction: column;
+  gap: v.$space-3;
+  margin-bottom: v.$space-8;
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: v.$space-3;
+    font-size: v.$fs-sm;
+    color: v.$color-text-mid;
+
+    i {
+      color: v.$color-adobe;
+      flex-shrink: 0;
+    }
+  }
+}
+
+// ── CTA de contacto al fondo del sidebar ──────────────────
+.reserva__contact-cta {
+  border-top: 1px solid v.$border-color;
+  padding-top: v.$space-6;
+
+  p {
+    font-size: v.$fs-sm;
+    color: v.$color-text-mid;
+    margin-bottom: v.$space-4;
+    max-width: none;
+  }
+
+  .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}

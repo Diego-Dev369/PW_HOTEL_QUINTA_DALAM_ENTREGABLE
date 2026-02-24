@@ -1,165 +1,189 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Habitaciones temáticas Pueblos Mágicos - Hotel Quinta Dalam">
-    <link rel="stylesheet" href="./../styles/main.css">
-    <link rel="icon" href="/frontend/src/assets/icons/posible_logo.jpeg" type="image/png">
-    <script src="https://kit.fontawesome.com/819070bd93.js" crossorigin="anonymous"></script>
-    <title>Hotel Quinta Dalam | Habitaciones</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Contacto – Hotel Quinta Dalam, Morelia Michoacán">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="./../styles/main.css">
+  <title>Hotel Quinta Dalam | Contacto</title>
 </head>
 <body>
-    <header class="header">
+
+  <input type="checkbox" id="nav-toggle" class="header__nav-toggle-input" hidden>
+
+  <header class="header">
+
         <div class="header__brand">
-            <a href="./../../index.html" class="header__logo-link">
-                <img src="/frontend/src/assets/icons/posible_logo.jpeg" alt="Logo Hotel Quinta Dalam"
-                    class="header__logo">
-                <h1 class="header__title">HOTEL QUINTA DALAM</h1>
+            <a href="../../index.html" class="header__logo-link" aria-label="Hotel Quinta Dalam – Inicio">
+                <img
+                    src="../assets/icons/posible_logo.jpeg"
+                    alt="Logo Hotel Quinta Dalam"
+                    class="header__logo-img"
+                    width="44"
+                    height="44">
+                <div class="header__logo-text">
+                    <span class="header__logo-name">Hotel Quinta Dalam</span>
+                    <span class="header__logo-tagline">Pueblos Mágicos · Michoacán</span>
+                </div>
             </a>
-        </div>
-
-        <div class="header__contact">
-            <p class="header__phone">
-                <i class="fa-solid fa-phone"></i>
-                +52 443 000 0000
-            </p>
-        </div>
-
-        <div class="header__user">
-            <a href="#" class="header__lang">ES | US</a>
-            <a href="/frontend/src/pages/login.html" class="header__login">LOG IN</a>
         </div>
 
         <nav class="header__nav" aria-label="Navegación principal">
-            <ul class="header__menu">
-                <li class="header__item">
-                    <a href="/frontend/src/pages/habitaciones.html" class="header__link header__link--active">HABITACIONES</a>
-                </li>
-                <li class="header__item">
-                    <a href="/frontend/src/pages/reservaciones.html" class="header__link">MIS RESERVACIONES</a>
-                </li>
-                <li class="header__item">
-                    <a href="/frontend/src/pages/mision.html" class="header__link">MISIÓN</a>
-                </li>
-                <li class="header__item">
-                    <a href="/frontend/src/pages/vision.html" class="header__link">VISIÓN</a>
-                </li>
-                <li class="header__item">
-                    <a href="/frontend/src/pages/contacto.html" class="header__link">CONTACTO</a>
-                </li>
+            <ul class="header__menu" role="list">
+                <li><a href="habitaciones.html" class="header__link">Habitaciones</a></li>
+                <li><a href="../../index.html#experiencias" class="header__link">Experiencias</a></li>
+                <li><a href="../../index.html#servicios"    class="header__link">Servicios</a></li>
+                <li><a href="nosotros.html"                 class="header__link">Nosotros</a></li>
+                <li><a href="contacto.html"                 class="header__link">Contacto</a></li>
             </ul>
+
+            <div class="header__mobile-actions">
+                <a href="login.html"         class="header__mobile-login">Iniciar Sesión</a>
+                <a href="reservaciones.html" class="header__mobile-cta">Reservar Ahora</a>
+            </div>
         </nav>
 
-        <div class="header__reserva">
-            <a href="#" class="header__button">RESERVAR</a>
+        <div class="header__actions" aria-label="Acciones de usuario">
+            <a href="#" class="header__lang-switch">
+                <img
+                    src="../assets/icons/bandera_mexico.png"
+                    alt="Cambiar idioma a español"
+                    class="header__flag"
+                    width="18"
+                    height="12">
+                ES
+            </a>
+            <a href="login.html"         class="header__login">Iniciar Sesión</a>
+            <a href="reservaciones.html" class="header__cta">Reservar</a>
         </div>
+
+        <label for="nav-toggle" class="header__hamburger" aria-label="Abrir menú de navegación">
+            <span class="header__hamburger-bar"></span>
+            <span class="header__hamburger-bar"></span>
+            <span class="header__hamburger-bar"></span>
+        </label>
+
     </header>
 
-    <main>
-        <hr>
-        <section>
-            <div>
-                <h2>Nuestras Habitaciones</h2>
-                <p>Descansa en la magia de Michoacán</p>
+<main>
+  <section class="page-hero">
+    <div class="container">
+      <span class="page-hero__eyebrow">Nuestras Suites</span>
+      <h1 class="page-hero__title">Descanso y <em>Tradición</em></h1>
+      <p class="page-hero__subtitle">
+        Cada espacio ha sido diseñado para reflejar la esencia de Michoacán, combinando artesanía local con el máximo confort contemporáneo.
+      </p>
+      <span class="page-hero__ornament">✦ ─── ✦</span>
+    </div>
+  </section>
+
+  <section class="section section--cream">
+    <div class="container">
+      <div class="rooms-page-list">
+
+        <!-- Room Row -->
+        <div class="room-row">
+          
+          <!-- Columna Izquierda -->
+          <div class="room-row__left">
+            <article class="room-card">
+              <div class="room-card__img-wrap">
+                <img src="../assets/images/rooms/204-uruapan.jpeg" alt="Suite Uruapan" class="room-card__img" loading="lazy">
+                <span class="room-card__badge">Suite Deluxe</span>
+              </div>
+              <div class="room-card__body">
+                <h3 class="room-card__title">Uruapan</h3>
+                <em class="room-card__sub">Naturaleza &amp; Tradición</em>
+                <p class="room-card__desc">Frescura, armonía y descanso entre ecos de bosque y artesanía local.</p>
+                <ul class="room-card__amenities" aria-label="Amenidades">
+                  <li class="room-card__amenity" title="Wi-Fi"><i class="fa-solid fa-wifi"></i></li>
+                  <li class="room-card__amenity" title="Aire acondicionado"><i class="fa-solid fa-snowflake"></i></li>
+                  <li class="room-card__amenity" title="Desayuno"><i class="fa-solid fa-mug-hot"></i></li>
+                </ul>
+              </div>
+            </article>
+          </div>
+
+          <!-- Columna Derecha -->
+          <div class="room-row__right">
+            <h3 class="room-row__title">Sobre esta suite</h3>
+            <p class="room-row__text">
+              Equipada con detalles en madera tallada a mano y textiles originarios de la región. Su distribución ofrece un ambiente de relajación total, ideal para quienes buscan escapar del ruido y disfrutar de una noche de sueño reparador.
+            </p>
+            
+            <div class="room-row__specs">
+              <span><i class="fa-solid fa-user-group"></i> 2 Personas</span>
+              <span><i class="fa-solid fa-bed"></i> 1 King Size</span>
             </div>
-        </section>
 
-        <section>
-            <div style="background-color: #f9f9f9; padding: 20px;">
-                <h3>Verificar Disponibilidad</h3>
-                <form action="#" style="display:flex; gap:10px; flex-wrap: wrap;">
-                    <div>
-                        <label>Llegada</label>
-                        <input type="date">
-                    </div>
-                    <div>
-                        <label>Salida</label>
-                        <input type="date">
-                    </div>
-                    <div>
-                        <label>Personas</label>
-                        <select>
-                            <option>2 Personas</option>
-                            <option>4 Personas</option>
-                        </select>
-                    </div>
-                    <button type="submit">Buscar</button>
-                </form>
+            <div class="room-row__action">
+              <div class="room-row__price">
+                <small>Tarifa por noche</small>
+                <strong>$2,500 MXN</strong>
+              </div>
+              <a href="reservaciones.html" class="btn btn--primary">Reservar Ahora</a>
             </div>
-        </section>
+          </div>
 
-        <section>
-            <div>
-                <article style="margin-bottom: 30px;">
-                    <img src="/frontend/src/assets/images/tzintzuntzan habitacion 101.avif" alt="Habitación Tzintzuntzan" width="300px" style="display:block; margin-bottom:10px;">
-                    <h3>101 - Tzintzuntzan</h3>
-                    <p>Inspirada en el imperio Purépecha.</p>
-                    <p><strong>$1,200 MXN</strong></p>
-                    <a href="/frontend/src/pages/reservaciones.html">Reservar</a>
-                </article>
-                <hr>
-
-                <article style="margin-bottom: 30px;">
-                    <img src="/frontend/src/assets/images/paracho102.jpg" alt="Habitación Paracho" width="300px" style="display:block; margin-bottom:10px;">
-                    <h3>102 - Paracho</h3>
-                    <p>Capital mundial de la guitarra.</p>
-                    <p><strong>$1,100 MXN</strong></p>
-                    <a href="/frontend/src/pages/reservaciones.html">Reservar</a>
-                </article>
-                <hr>
-
-                <article style="margin-bottom: 30px;">
-                    <img src="/frontend/src/assets/images/201 quencio.webp" alt="Suite Quencio" width="300px" style="display:block; margin-bottom:10px;">
-                    <h3>201 - Suite Quencio</h3>
-                    <p>Master Suite con vista panorámica.</p>
-                    <p><strong>$2,500 MXN</strong></p>
-                    <a href="/frontend/src/pages/reservaciones.html">Reservar</a>
-                </article>
-                
-            </div>
-        </section>
-        <hr>
-    </main>
-
-    <footer class="footer">
-        <div class="footer__social">
-            <p class="footer__title">Redes sociales</p>
-            <a href="https://www.facebook.com/profile.php?id=61584681841684" class="footer__social-link"
-                aria-label="Facebook" target="_blank">
-                <i class="fa-brands fa-facebook"></i>
-                <p>Quinta Dalam</p>
-            </a>
-
-            <a href="https://www.instagram.com/quintadalam" class="footer__social-link"
-                aria-label="Instagram" target="_blank">
-                <i class="fa-brands fa-instagram"></i>
-                <p>Quinta Dalam</p>
-            </a>
-
-            <a href="https://www.tiktok.com/@quintadalam?lang=es" class="footer__social-link"
-                aria-label="TikTok" target="_blank">
-                <i class="fa-brands fa-tiktok"></i>
-                <p>Quinta Dalam</p>
-            </a>
         </div>
 
-        <div class="footer__contact">
-            <p class="footer__title">Contacto</p>
+      </div>
+    </div>
+  </section>
+</main>
+  <footer class="footer">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <span class="footer__brand-icon" aria-hidden="true">✦</span>
+        <h2 class="footer__brand-name">Hotel Quinta Dalam</h2>
+        <p class="footer__brand-tagline">Pueblos Mágicos · Michoacán</p>
+        <p class="footer__brand-desc">Un refugio colonial donde la tradición y el lujo se encuentran en el corazón de Michoacán.</p>
+      </div>
+      <nav class="footer__nav" aria-label="Navegación secundaria">
+        <p class="footer__nav-title">Explore</p>
+        <ul class="footer__nav-list">
+          <li><a href="habitaciones.html" class="footer__nav-link">Habitaciones</a></li>
+          <li><a href="reservaciones.html" class="footer__nav-link">Reservaciones</a></li>
+          <li><a href="nosotros.html" class="footer__nav-link">Nosotros</a></li>
+          <li><a href="contacto.html" class="footer__nav-link">Contacto</a></li>
+        </ul>
+      </nav>
+      <div class="footer__contact">
+        <p class="footer__nav-title">Contacto</p>
+        <address class="footer__address">
+          <p><i class="fa-solid fa-location-dot"></i> Morelia, Michoacán, México</p>
+          <p><i class="fa-solid fa-phone"></i> +52 443 000 0000</p>
+          <p><i class="fa-solid fa-envelope"></i> reservas@quintadalam.mx</p>
+        </address>
+      </div>
+      <div class="footer__social">
+        <p class="footer__nav-title">Redes Sociales</p>
+        <div class="footer__social-links">
+          <a href="https://www.facebook.com/profile.php?id=61584681841684" class="footer__social-link" aria-label="Facebook" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-facebook-f"></i></a>
+          <a href="https://www.instagram.com/quintadalam" class="footer__social-link" aria-label="Instagram" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-instagram"></i></a>
+          <a href="https://www.tiktok.com/@quintadalam" class="footer__social-link" aria-label="TikTok" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-tiktok"></i></a>
         </div>
-
-        <div class="footer__address">
-            <p class="footer__title">Dirección</p>
+        <div class="footer__newsletter">
+          <p class="footer__newsletter-label">Suscríbete</p>
+          <div class="footer__newsletter-form">
+            <input type="email" class="footer__newsletter-input" placeholder="tu@email.com" aria-label="Email">
+            <button class="footer__newsletter-btn" type="button">→</button>
+          </div>
         </div>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <p class="footer__copyright">&copy; 2026 Hotel Quinta Dalam. Todos los derechos reservados.</p>
+      <div class="footer__certifications">
+        <span class="footer__cert-badge">⭐ Pueblo Mágico</span>
+        <span class="footer__cert-badge">🏛️ Patrimonio Cultural</span>
+      </div>
+    </div>
+  </footer>
 
-        <div class="footer__certificaciones">
-            <p class="footer__title">Certificaciones</p>
-        </div>
-
-        <div class="footer__copyright">
-            <p class="footer_title">&copy; 2026 Hotel Quinta Dalam. Todos los derechos reservados.</p>
-        </div>
-
-    </footer>
 </body>
 </html>

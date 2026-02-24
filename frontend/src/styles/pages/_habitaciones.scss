@@ -1,0 +1,72 @@
+@use '../abstracts/variables' as v;
+@use '../abstracts/mixins' as m;
+
+// ── Contenedor General ────────────────────────────────────
+.room-row {
+  display: flex;
+  gap: v.$space-8;
+  align-items: flex-start;
+  margin-bottom: v.$space-16;
+
+  // Columna izquierda: ancho fijo y sin crecimiento
+  &__left {
+    flex: 0 0 320px;
+    max-width: 320px;
+  }
+
+  // Columna derecha: ocupa el resto del espacio
+  &__right {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    gap: v.$space-4;
+
+    // Títulos y texto
+    &__title, &__text {
+      margin: 0;
+    }
+
+    .room-row__specs {
+      display: flex;
+      gap: v.$space-4;
+      margin-bottom: v.$space-6;
+
+      span {
+        display: flex;
+        align-items: center;
+        gap: v.$space-2;
+        font-size: v.$fs-sm;
+        color: v.$color-text-mid;
+      }
+    }
+
+    .room-row__action {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: v.$space-4;
+
+      .room-row__price {
+        small {
+          display: block;
+          font-size: v.$fs-xs;
+          color: v.$color-text-mid;
+        }
+        strong {
+          font-size: v.$fs-lg;
+          color: v.$color-text;
+        }
+      }
+    }
+  }
+
+  // RESPONSIVE: apilar en móvil
+  @include m.respond-to('md') {
+    flex-direction: column;
+
+    &__left, &__right {
+      flex: 1 1 auto;
+      max-width: 100%;
+    }
+  }
+}

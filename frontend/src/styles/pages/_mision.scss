@@ -1,0 +1,234 @@
+// ============================================================
+//  FOOTER — Hotel Quinta Dalam
+// ============================================================
+@use '../abstracts/variables' as v;
+@use '../abstracts/mixins'   as m;
+
+.footer {
+  background-color: v.$color-forest;
+  border-top: 1px solid rgba(v.$color-gold, 0.2);
+  color: rgba(v.$color-parchment, 0.8);
+}
+
+.footer__top {
+  @include m.container;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1.5fr 1.5fr;
+  gap: v.$space-12;
+  padding-block: v.$space-20;
+
+  @include m.respond-to('lg') {
+    grid-template-columns: 1fr 1fr;
+    gap: v.$space-10;
+  }
+
+  @include m.respond-to('sm') {
+    grid-template-columns: 1fr;
+    gap: v.$space-8;
+  }
+}
+
+// ── Brand ─────────────────────────────────────────────────────
+.footer__brand {
+  display: flex;
+  flex-direction: column;
+  gap: v.$space-3;
+}
+
+.footer__brand-logo {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1.5px solid rgba(v.$color-gold, 0.4);
+}
+
+.footer__brand-name {
+  font-family: v.$font-serif;
+  font-size: v.$fs-xl;
+  font-weight: 700;
+  color: v.$color-parchment-light;
+}
+
+.footer__brand-tagline {
+  font-family: v.$font-sans;
+  font-size: v.$fs-xs;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: v.$color-gold-light;
+}
+
+.footer__brand-desc {
+  font-size: v.$fs-sm;
+  line-height: 1.7;
+  color: rgba(v.$color-parchment, 0.6);
+  max-width: 34ch;
+  margin-top: v.$space-2;
+}
+
+// ── Nav ───────────────────────────────────────────────────────
+.footer__nav-title {
+  font-family: v.$font-sans;
+  font-size: v.$fs-xs;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: v.$color-gold;
+  margin-bottom: v.$space-5;
+}
+
+.footer__nav-list {
+  display: flex;
+  flex-direction: column;
+  gap: v.$space-3;
+}
+
+.footer__nav-link {
+  font-size: v.$fs-sm;
+  color: rgba(v.$color-parchment, 0.65);
+  transition: color v.$transition-fast;
+
+  &:hover {
+    color: v.$color-parchment-light;
+  }
+}
+
+// ── Contacto ─────────────────────────────────────────────────
+.footer__address {
+  display: flex;
+  flex-direction: column;
+  gap: v.$space-3;
+
+  p {
+    display: flex;
+    align-items: flex-start;
+    gap: v.$space-3;
+    font-size: v.$fs-sm;
+    color: rgba(v.$color-parchment, 0.65);
+    line-height: 1.5;
+
+    i {
+      color: v.$color-gold;
+      margin-top: 3px;
+      flex-shrink: 0;
+    }
+  }
+}
+
+// ── Social ────────────────────────────────────────────────────
+.footer__social-links {
+  display: flex;
+  gap: v.$space-3;
+  margin-bottom: v.$space-6;
+}
+
+.footer__social-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(v.$color-parchment, 0.2);
+  border-radius: 50%;
+  color: rgba(v.$color-parchment, 0.65);
+  font-size: v.$fs-md;
+  transition: all v.$transition-base;
+
+  &:hover {
+    background-color: v.$color-adobe;
+    border-color: v.$color-adobe;
+    color: v.$color-parchment-light;
+    transform: translateY(-3px);
+  }
+}
+
+// ── Newsletter ────────────────────────────────────────────────
+.footer__newsletter-label {
+  font-family: v.$font-sans;
+  font-size: v.$fs-xs;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(v.$color-parchment, 0.5);
+  margin-bottom: v.$space-3;
+}
+
+.footer__newsletter-form {
+  display: flex;
+  overflow: hidden;
+  border: 1px solid rgba(v.$color-parchment, 0.2);
+  border-radius: v.$radius-sm;
+}
+
+.footer__newsletter-input {
+  flex: 1;
+  background: rgba(v.$color-parchment, 0.06);
+  border: none;
+  padding: v.$space-3 v.$space-4;
+  font-size: v.$fs-sm;
+  color: v.$color-parchment;
+  outline: none;
+  min-width: 0;
+
+  &::placeholder {
+    color: rgba(v.$color-parchment, 0.35);
+  }
+
+  &:focus {
+    background: rgba(v.$color-parchment, 0.10);
+  }
+}
+
+.footer__newsletter-btn {
+  background-color: v.$color-adobe;
+  color: v.$color-parchment-light;
+  padding: v.$space-3 v.$space-5;
+  font-size: v.$fs-lg;
+  font-weight: 700;
+  flex-shrink: 0;
+  border: none;
+  cursor: pointer;
+  transition: background-color v.$transition-fast;
+
+  &:hover {
+    background-color: v.$color-adobe-light;
+  }
+}
+
+// ── Bottom ────────────────────────────────────────────────────
+.footer__bottom {
+  @include m.container;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: v.$space-6;
+  padding-block: v.$space-6;
+  border-top: 1px solid rgba(v.$color-parchment, 0.08);
+
+  @include m.respond-to('sm') {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+.footer__copyright {
+  font-size: v.$fs-xs;
+  color: rgba(v.$color-parchment, 0.4);
+  letter-spacing: 0.05em;
+}
+
+.footer__certifications {
+  display: flex;
+  gap: v.$space-4;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.footer__cert-badge {
+  font-size: v.$fs-xs;
+  color: rgba(v.$color-parchment, 0.5);
+  border: 1px solid rgba(v.$color-parchment, 0.12);
+  padding: v.$space-1 v.$space-3;
+  border-radius: v.$radius-pill;
+  letter-spacing: 0.05em;
+}

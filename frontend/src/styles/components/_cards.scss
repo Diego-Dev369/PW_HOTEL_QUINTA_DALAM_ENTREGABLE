@@ -1,0 +1,300 @@
+// ============================================================
+//  CARDS — Hotel Quinta Dalam
+//  Room cards · Service cards · Exp cards
+// ============================================================
+@use '../abstracts/variables' as v;
+@use '../abstracts/mixins' as m;
+
+// ────────────────────────────────────────────────────────────
+//  ROOM CARD
+// ────────────────────────────────────────────────────────────
+.room-card {
+  background-color: v.$color-parchment;
+  border: 1px solid v.$border-color;
+  border-radius: v.$radius-md;
+  overflow: hidden;
+  box-shadow: v.$shadow-sm;
+  transition: box-shadow v.$transition-base, transform v.$transition-base;
+  display: flex;
+  flex-direction: column;
+
+  &:hover {
+    box-shadow: v.$shadow-lg;
+    transform: translateY(-6px);
+
+    .room-card__img { transform: scale(1.06); }
+  }
+
+  &--featured {
+    border-color: rgba(v.$color-gold, 0.45);
+    box-shadow: v.$shadow-md, 0 0 0 2px rgba(v.$color-gold, 0.15);
+    position: relative;
+
+    &::before {
+      content: '✦ Recomendado ✦';
+      position: absolute;
+      top: v.$space-3;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      background: rgba(v.$color-forest, 0.88);
+      color: v.$color-gold;
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 3px v.$space-4;
+      border-radius: v.$radius-pill;
+      white-space: nowrap;
+      backdrop-filter: blur(4px);
+    }
+  }
+}
+
+.room-card__img-wrap {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  flex-shrink: 0;
+}
+
+.room-card__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform v.$transition-slow;
+}
+
+.room-card__badge {
+  position: absolute;
+  bottom: v.$space-3;
+  left: v.$space-3;
+  z-index: 1;
+  background: rgba(v.$color-forest, 0.85);
+  color: rgba(v.$color-parchment, 0.9);
+  font-family: v.$font-sans;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 4px v.$space-3;
+  border-radius: v.$radius-pill;
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(v.$color-gold, 0.3);
+}
+
+.room-card__body {
+  padding: v.$space-6 v.$space-8;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  background-color: v.$color-parchment-light;
+}
+
+.room-card__title {
+  font-family: v.$font-serif;
+  font-size: v.$fs-2xl;
+  font-weight: 700;
+  color: v.$color-text;
+  margin-bottom: v.$space-2;
+}
+
+.room-card__meta {
+  display: flex;
+  flex-direction: column;
+  gap: v.$space-1;
+  margin-bottom: v.$space-4;
+}
+
+.room-card__sub {
+  font-family: v.$font-serif;
+  font-size: v.$fs-md;
+  font-style: italic;
+  color: v.$color-adobe;
+  font-weight: 400;
+}
+
+.room-card__ornament {
+  font-size: 0.65rem;
+  color: v.$color-gold;
+  letter-spacing: 0.15em;
+  opacity: 0.8;
+}
+
+.room-card__desc {
+  font-family: v.$font-sans;
+  font-size: v.$fs-sm;
+  color: v.$color-text-mid;
+  line-height: 1.6;
+  margin-bottom: v.$space-5;
+  flex-grow: 1;
+}
+
+.room-card__amenities {
+  display: flex;
+  gap: v.$space-3;
+  margin-bottom: v.$space-6;
+}
+
+.room-card__amenity {
+  @include m.flex-center;
+  width: 32px;
+  height: 32px;
+  border: 1px solid v.$border-color;
+  border-radius: v.$radius-sm;
+  font-size: v.$fs-sm;
+  color: v.$color-text-mid;
+  background: v.$color-parchment;
+  transition: all v.$transition-fast;
+
+  &:hover {
+    border-color: v.$color-adobe;
+    color: v.$color-adobe;
+  }
+}
+
+.room-card__price {
+  font-family: v.$font-serif;
+  font-size: v.$fs-xl;
+  font-weight: 700;
+  color: v.$color-adobe;
+  margin-bottom: v.$space-4;
+
+  span {
+    font-family: v.$font-sans;
+    font-size: v.$fs-xs;
+    font-weight: 400;
+    color: v.$color-text-light;
+    letter-spacing: 0.1em;
+  }
+}
+
+.room-card__link {
+  align-self: flex-start;
+  padding: v.$space-3 v.$space-6;
+  font-size: v.$fs-xs;
+}
+
+// ────────────────────────────────────────────────────────────
+//  SERVICE CARD
+// ────────────────────────────────────────────────────────────
+.service-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: v.$space-10 v.$space-6;
+  background-color: v.$color-parchment-light;
+  border: 1px solid v.$border-color;
+  border-radius: v.$radius-md;
+  box-shadow: v.$shadow-sm;
+  transition: all v.$transition-base;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, v.$color-adobe, v.$color-gold);
+    transform: scaleX(0);
+    transition: transform v.$transition-base;
+  }
+
+  &:hover {
+    box-shadow: v.$shadow-md;
+    transform: translateY(-4px);
+    border-color: rgba(v.$color-adobe, 0.35);
+
+    &::before { transform: scaleX(1); }
+    .service-card__icon-wrap {
+      background-color: v.$color-adobe;
+      border-color: v.$color-adobe;
+    }
+    .service-card__icon {
+      color: v.$color-parchment-light;
+      transform: scale(1.15);
+    }
+  }
+}
+
+.service-card__icon-wrap {
+  @include m.flex-center;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(v.$color-adobe, 0.3);
+  background-color: rgba(v.$color-adobe, 0.06);
+  margin-bottom: v.$space-5;
+  transition: all v.$transition-base;
+}
+
+.service-card__icon {
+  font-size: v.$fs-2xl;
+  color: v.$color-adobe;
+  transition: all v.$transition-base;
+}
+
+.service-card__title {
+  font-family: v.$font-serif;
+  font-size: v.$fs-xl;
+  font-weight: 600;
+  color: v.$color-text;
+  margin-bottom: v.$space-3;
+}
+
+.service-card__text {
+  font-family: v.$font-sans;
+  font-size: v.$fs-sm;
+  color: v.$color-text-mid;
+  line-height: 1.65;
+}
+
+// ────────────────────────────────────────────────────────────
+//  EXP CARD (Experiencias — arco de medio punto)
+// ────────────────────────────────────────────────────────────
+.exp-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: v.$space-5;
+  text-align: center;
+
+  &:hover .exp-card__img-wrap {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 48px rgba(0, 0, 0, 0.5);
+  }
+  &:hover .exp-card__img { transform: scale(1.08); }
+}
+
+.exp-card__img-wrap {
+  width: min(200px, 100%);
+  aspect-ratio: 1;
+  border-radius: 9999px 9999px 20px 20px;
+  overflow: hidden;
+  border: 3px solid rgba(v.$color-gold, 0.4);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  transition: transform v.$transition-slow, box-shadow v.$transition-slow;
+
+  @include m.respond-to('sm') { width: min(150px, 90%); }
+}
+
+.exp-card__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform v.$transition-slow;
+}
+
+.exp-card__title {
+  font-family: v.$font-serif;
+  font-size: v.$fs-lg;
+  font-weight: 600;
+  color: v.$color-parchment;
+  line-height: 1.3;
+}

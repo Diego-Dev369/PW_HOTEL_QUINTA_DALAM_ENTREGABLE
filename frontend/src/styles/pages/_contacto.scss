@@ -1,0 +1,152 @@
+// ============================================================
+//  CONTACTO — Estilos específicos
+//  Hotel Quinta Dalam
+// ============================================================
+@use '../abstracts/variables' as v;
+@use '../abstracts/mixins'   as m;
+
+// ── Formulario + info ─────────────────────────────────────────
+.contacto__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: v.$space-16;
+  align-items: flex-start;
+
+  @include m.respond-to('lg') {
+    grid-template-columns: 1fr;
+    gap: v.$space-10;
+  }
+}
+
+.contacto__title {
+  font-family: v.$font-serif;
+  font-size: clamp(v.$fs-2xl, 3vw, v.$fs-3xl);
+  font-weight: 700;
+  color: v.$color-text;
+  margin-bottom: v.$space-5;
+
+  em {
+    color: v.$color-adobe;
+    font-style: italic;
+  }
+}
+
+.contacto__form-wrap,
+.contacto__info {
+  display: flex;
+  flex-direction: column;
+}
+
+// ── Formulario ────────────────────────────────────────────────
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: v.$space-5;
+}
+
+.form__group {
+  display: flex;
+  flex-direction: column;
+  gap: v.$space-2;
+}
+
+.form__label {
+  font-family: v.$font-sans;
+  font-size: v.$fs-xs;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: v.$color-text-mid;
+}
+
+.form__input,
+.form__select,
+.form__textarea {
+  background-color: v.$color-parchment-light;
+  border: 1px solid v.$border-color;
+  border-radius: v.$radius-sm;
+  padding: v.$space-3 v.$space-4;
+  font-family: v.$font-sans;
+  font-size: v.$fs-md;
+  color: v.$color-text;
+  width: 100%;
+  outline: none;
+  transition: border-color v.$transition-fast, box-shadow v.$transition-fast;
+
+  &::placeholder {
+    color: v.$color-text-light;
+  }
+
+  &:focus {
+    border-color: v.$color-adobe;
+    box-shadow: 0 0 0 3px rgba(v.$color-adobe, 0.12);
+  }
+}
+
+.form__textarea {
+  resize: vertical;
+  min-height: 140px;
+  line-height: 1.6;
+}
+
+.form__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: v.$space-5;
+
+  @include m.respond-to('sm') {
+    grid-template-columns: 1fr;
+  }
+}
+
+// ── Info de contacto ──────────────────────────────────────────
+.contacto__info-list {
+  display: flex;
+  flex-direction: column;
+  gap: v.$space-6;
+  margin-bottom: v.$space-8;
+}
+
+.contacto__info-item {
+  display: flex;
+  align-items: flex-start;
+  gap: v.$space-4;
+
+  strong {
+    display: block;
+    font-family: v.$font-sans;
+    font-size: v.$fs-xs;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: v.$color-text-mid;
+    margin-bottom: v.$space-1;
+  }
+
+  p {
+    font-size: v.$fs-md;
+    color: v.$color-text;
+  }
+}
+
+.contacto__info-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  background: rgba(v.$color-adobe, 0.08);
+  border: 1px solid rgba(v.$color-adobe, 0.2);
+  border-radius: 50%;
+  color: v.$color-adobe;
+  font-size: v.$fs-md;
+}
+
+.contacto__map {
+  border-radius: v.$radius-md;
+  overflow: hidden;
+  border: 1px solid v.$border-color;
+  box-shadow: v.$shadow-sm;
+  margin-top: v.$space-6;
+}

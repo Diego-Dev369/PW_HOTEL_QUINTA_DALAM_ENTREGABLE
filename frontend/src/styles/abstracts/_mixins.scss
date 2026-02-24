@@ -1,0 +1,62 @@
+// ============================================================
+//  MIXINS — Hotel Quinta Dalam
+// ============================================================
+@use 'variables' as v;
+
+// ── Breakpoints ──────────────────────────────────────────────
+@mixin respond-to($bp) {
+  @if      $bp == 'xs'    { @media (max-width: #{v.$bp-xs})  { @content; } }
+  @else if $bp == 'sm'    { @media (max-width: #{v.$bp-sm})  { @content; } }
+  @else if $bp == 'md'    { @media (max-width: #{v.$bp-md})  { @content; } }
+  @else if $bp == 'lg'    { @media (max-width: #{v.$bp-lg})  { @content; } }
+  @else if $bp == 'xl'    { @media (max-width: #{v.$bp-xl})  { @content; } }
+  @else if $bp == 'up-md' { @media (min-width: #{v.$bp-md})  { @content; } }
+  @else if $bp == 'up-lg' { @media (min-width: #{v.$bp-lg})  { @content; } }
+}
+
+// ── Contenedor centrado ──────────────────────────────────────
+@mixin container {
+  width: 100%;
+  max-width: v.$container-max;
+  margin-inline: auto;
+  padding-inline: v.$space-8;
+
+  @include respond-to('md') {
+    padding-inline: v.$space-5;
+  }
+}
+
+// ── Flex center ──────────────────────────────────────────────
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// ── Botón base ───────────────────────────────────────────────
+@mixin btn-base {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: v.$space-2;
+  padding: v.$space-3 v.$space-8;
+  border: 2px solid transparent;
+  border-radius: v.$radius-sm;
+  font-family: v.$font-sans;
+  font-size: v.$fs-sm;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all v.$transition-base;
+  white-space: nowrap;
+}
+
+// ── Image cover ──────────────────────────────────────────────
+@mixin img-cover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
