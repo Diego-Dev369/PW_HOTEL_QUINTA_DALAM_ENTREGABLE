@@ -1,91 +1,338 @@
 @use '../abstracts/variables' as v;
 @use '../abstracts/mixins'   as m;
 
-// ── Grupo de campo ────────────────────────────────────────
-.form__group {
-  display: flex;
-  flex-direction: column;
-  gap: v.$space-2;
 
-  // Variante full-width para grids de dos columnas
-  &--full {
-    grid-column: 1 / -1;
-  }
+//  LAYOUT DE FORMULARIO
+// ────────────────────────────────────────────────────────────
+.admin-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem 1.5rem;
+  margin-bottom: 1rem;
+
+  @include m.respond-to('sm') { grid-template-columns: 1fr; }
 }
 
-// ── Label ─────────────────────────────────────────────────
-.form__label {
+.admin-form__group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+
+  &--full { grid-column: 1 / -1; }
+}
+
+.admin-editor-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(234, 228, 216, 0.08);
+}
+
+
+//  LABEL
+// ────────────────────────────────────────────────────────────
+.admin-form__label {
   font-family: v.$font-sans;
   font-size: 0.68rem;
   font-weight: 700;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: v.$color-text-light;
+  color: rgba(234, 228, 216, 0.55);
 }
 
-// ── Input / Select / Textarea ─────────────────────────────
-.form__input {
-  width: 100%;
+.admin-form__required {
+  color: #e05555;
+  margin-left: 2px;
+}
+
+.admin-form__hint {
+  font-size: 0.72rem;
+  color: rgba(234, 228, 216, 0.4);
+  margin-top: 0.25rem;
+
+  i { margin-right: 0.3rem; }
+}
+
+
+//  INPUT / SELECT / TEXTAREA — base compartida
+// ────────────────────────────────────────────────────────────
+.admin-form__input {
+  background: v.$admin-surface-2;
+  border: 1px solid v.$admin-border;
+  border-radius: v.$radius-sm;
   padding: v.$space-3 v.$space-4;
   font-family: v.$font-sans;
   font-size: v.$fs-sm;
-  color: v.$color-text;
-  background-color: v.$color-parchment;
-  border: 1px solid rgba(v.$color-text, 0.12);
-  border-radius: v.$radius-sm;
+  color: v.$admin-text;
+  width: 100%;
   outline: none;
-  transition:
-    border-color v.$transition-fast,
-    background-color v.$transition-fast,
-    box-shadow v.$transition-fast;
+  transition: border-color v.$transition-fast, box-shadow v.$transition-fast;
 
-  &::placeholder {
-    color: rgba(v.$color-text-light, 0.45);
-    font-style: italic;
-  }
+  &::placeholder { color: v.$admin-text-muted; font-style: italic; }
+  &:hover        { border-color: v.$admin-border-strong; }
+  &:focus        { border-color: v.$color-gold; background: v.$admin-surface-3; box-shadow: 0 0 0 3px rgba(v.$color-gold, 0.1); }
+  &[rows]        { resize: vertical; min-height: 90px; line-height: 1.6; }
+  &--sm          { padding: v.$space-2 v.$space-3; font-size: v.$fs-xs; }
+}
+
+// Normalizar select
+select.admin-form__input {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='rgba(234,228,216,0.4)' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  padding-right: 2rem;
+  cursor: pointer;
+
+  option { background: #1a1a1a; color: rgba(234, 228, 216, 0.85); }
+}
+
+//  SEARCH BAR
+// ────────────────────────────────────────────────────────────
+.admin-search {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(234, 228, 216, 0.12);
+  border-radius: 6px;
+  padding: 0 0.85rem;
+
+  i { color: rgba(234, 228, 216, 0.3); font-size: 0.8rem; }
+}
+
+.admin-search__input {
+  background: transparent;
+  border: none;
+  outline: none;
+  padding: 0.5rem 0;
+  font-family: v.$font-sans;
+  font-size: 0.8rem;
+  color: rgba(234, 228, 216, 0.8);
+  min-width: 160px;
+
+  &::placeholder { color: rgba(234, 228, 216, 0.22); }
+}
+
+//  CHECKBOXES
+// ────────────────────────────────────────────────────────────
+.admin-checkboxes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: v.$space-3;
+}
+
+.admin-checkbox {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: v.$font-sans;
+  font-size: 0.76rem;
+  color: rgba(234, 228, 216, 0.7);
+  cursor: pointer;
+  padding: 0.3rem 0.65rem;
+  border: 1px solid rgba(234, 228, 216, 0.12);
+  border-radius: 5px;
+  transition: all 0.15s;
+
+  input[type="checkbox"] { accent-color: v.$color-adobe; cursor: pointer; }
 
   &:hover {
     border-color: rgba(v.$color-adobe, 0.4);
+    color: rgba(234, 228, 216, 0.9);
   }
 
-  &:focus {
-    background-color: #fff;
-    border-color: v.$color-adobe;
-    box-shadow: 0 0 0 3px rgba(v.$color-adobe, 0.1);
-  }
+  //Para elemntos destacadoss
+  &--featured {
+    width: 100%;
+    padding: 0.6rem 0.85rem;
+    border-color: rgba(v.$color-gold, 0.2);
+    color: rgba(234, 228, 216, 0.65);
 
-  // Textarea
-  &[rows] {
-    resize: vertical;
-    min-height: 100px;
-    line-height: 1.6;
-  }
+    i { color: v.$color-gold; }
 
-  // Select con flecha personalizada
-  &[type="date"],
-  &[type="number"] {
-    cursor: pointer;
+    &:hover { border-color: rgba(v.$color-gold, 0.45); }
   }
 }
 
-// Select — flecha SVG personalizada
-select.form__input {
-  appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%237C3A21' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right v.$space-4 center;
-  padding-right: v.$space-10;
+
+//  TOGGLE (switch on/off)
+// ────────────────────────────────────────────────────────────
+.admin-toggle {
+  display: inline-flex;
+  align-items: center;
   cursor: pointer;
 }
 
-// ── Grid de formulario (dos columnas) ─────────────────────
-.form__grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: v.$space-2 v.$space-6;
-  margin-bottom: v.$space-8;
+.admin-toggle__input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
 
-  @include m.respond-to('sm') {
-    grid-template-columns: 1fr;
+.admin-toggle__track {
+  width: 36px;
+  height: 20px;
+  background: v.$admin-surface-3;
+  border: 1px solid v.$admin-border;
+  border-radius: v.$radius-pill;
+  position: relative;
+  transition: all v.$transition-base;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: v.$admin-text-muted;
+    transition: all v.$transition-base;
   }
 }
+
+.admin-toggle__input:checked + .admin-toggle__track {
+  background: rgba(v.$color-gold, 0.25);
+  border-color: v.$color-gold;
+
+  &::after {
+    left: calc(100% - 15px);
+    background: v.$color-gold;
+  }
+}
+
+//  UPLOAD ZONE
+// ────────────────────────────────────────────────────────────
+.admin-upload {
+  position: relative;
+  border: 2px dashed v.$admin-border-strong;
+  border-radius: v.$radius-md;
+  padding: v.$space-10 v.$space-8;
+  text-align: center;
+  cursor: pointer;
+  transition: all v.$transition-base;
+  background: v.$admin-surface-2;
+
+  &:hover {
+    border-color: v.$color-gold;
+    background: rgba(v.$color-gold, 0.04);
+  }
+
+  i {
+    font-size: v.$fs-3xl;
+    color: v.$color-gold;
+    opacity: 0.5;
+    margin-bottom: v.$space-3;
+    display: block;
+  }
+
+  p {
+    font-family: v.$font-sans;
+    color: v.$admin-text-mid;
+    font-size: v.$fs-sm;
+    margin: 0 0 v.$space-1;
+    span { color: v.$color-gold; font-weight: 700; }
+  }
+
+  small { color: v.$admin-text-muted; font-size: v.$fs-xs; }
+
+  &__input {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+//  ÍCONO PREVIEW (campo de ícono FA)
+// ────────────────────────────────────────────────────────────
+.admin-icono-preview-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.admin-icono-preview {
+  @include m.flex-center;
+  width: 34px;
+  height: 34px;
+  border-radius: 6px;
+  border: 1px solid rgba(234, 228, 216, 0.15);
+  background: rgba(255, 255, 255, 0.04);
+  color: v.$color-gold;
+  font-size: 0.9rem;
+  flex-shrink: 0;
+}
+
+
+//  PASSWORD WRAP (admin usuarios)
+// ────────────────────────────────────────────────────────────
+.admin-password-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  .admin-form__input { padding-right: 2.6rem; }
+}
+
+.admin-password-toggle {
+  position: absolute;
+  right: 0.65rem;
+  background: transparent;
+  border: none;
+  color: rgba(234, 228, 216, 0.35);
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: color 0.15s;
+  padding: 0;
+
+  &:hover { color: rgba(234, 228, 216, 0.7); }
+}
+
+
+//  FORMULARIOS PÚBLICOS (sitio)
+// ────────────────────────────────────────────────────────────
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.form-label {
+  font-family: v.$font-sans;
+  font-size: v.$fs-xs;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: v.$color-text-mid;
+}
+
+.form-input,
+.form-select,
+.form-textarea {
+  width: 100%;
+  background: v.$color-parchment;
+  border: 1px solid v.$border-color;
+  border-radius: v.$radius-sm;
+  padding: 0.65rem 1rem;
+  font-family: v.$font-sans;
+  font-size: v.$fs-sm;
+  color: v.$color-text;
+  outline: none;
+  transition: border-color v.$transition-fast, box-shadow v.$transition-fast;
+
+  &::placeholder { color: v.$color-text-light; }
+
+  &:focus {
+    border-color: v.$color-adobe;
+    box-shadow: 0 0 0 3px rgba(v.$color-adobe, 0.1);
+  }
+}
+
+.form-textarea { resize: vertical; min-height: 120px; }

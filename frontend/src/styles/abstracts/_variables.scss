@@ -1,8 +1,3 @@
-// ============================================================
-//  VARIABLES — Hotel Quinta Dalam
-//  Paleta Colonial · Pergamino · Pueblos Mágicos de Michoacán
-// ============================================================
-
 // ── Colores ──────────────────────────────────────────────────
 $color-parchment:        #F4EFE6;
 $color-parchment-light:  #FAF7F2;
@@ -82,3 +77,35 @@ $bp-xl:  1280px;
 $container-max:        1240px;
 $header-height:        80px;
 $header-height-mobile: 70px;
+
+// ─── Para la scrollbar ───────────────────────────────────────
+$bg-base:        #0f1117;
+$bg-elevated:    #1e2330;
+$radius-pill:    999px;
+$border-strong:  rgba(255, 255, 255, 0.13);
+
+// ─── Panel de administrador ───────────────────────────────────────
+$admin-bg:         #0E1A12;
+$admin-surface-2:  #1A2E20;   // un paso por encima de color-forest
+$admin-surface-3:  #213728;   // bordes y hover
+
+// Estados semánticos (no existen en el proyecto)
+$admin-success:        #27AE60;
+$admin-success-light:  rgba(#27AE60, 0.12);
+$admin-warn:           #E67E22;
+$admin-warn-light:     rgba(#E67E22, 0.10);
+$admin-danger:         #C0392B;
+$admin-danger-light:   rgba(#C0392B, 0.12);
+
+// Bordes del panel (los del proyecto son rgba(adobe, 0.25) — muy cálidos para el dark)
+$admin-border:         rgba($color-gold, 0.12);
+$admin-border-strong:  rgba($color-gold, 0.22);
+
+// Texto sobre fondo oscuro del panel
+$admin-text:           #EAE4D8;
+$admin-text-mid:       rgba(#EAE4D8, 0.62);
+$admin-text-muted:     rgba(#EAE4D8, 0.38);
+
+// Ancho del sidebar y altura del topbar del panel
+$admin-sidebar-w:  260px;
+$admin-topbar-h:   64px;

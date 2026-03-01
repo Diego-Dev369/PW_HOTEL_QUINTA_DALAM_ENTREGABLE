@@ -1,11 +1,7 @@
-// ============================================================
-//  CARDS — Hotel Quinta Dalam
-//  Room cards · Service cards · Exp cards
-// ============================================================
 @use '../abstracts/variables' as v;
-@use '../abstracts/mixins' as m;
+@use '../abstracts/mixins'   as m;
 
-// ────────────────────────────────────────────────────────────
+
 //  ROOM CARD
 // ────────────────────────────────────────────────────────────
 .room-card {
@@ -14,9 +10,9 @@
   border-radius: v.$radius-md;
   overflow: hidden;
   box-shadow: v.$shadow-sm;
-  transition: box-shadow v.$transition-base, transform v.$transition-base;
   display: flex;
   flex-direction: column;
+  transition: box-shadow v.$transition-base, transform v.$transition-base;
 
   &:hover {
     box-shadow: v.$shadow-lg;
@@ -176,7 +172,6 @@
   font-size: v.$fs-xs;
 }
 
-// ────────────────────────────────────────────────────────────
 //  SERVICE CARD
 // ────────────────────────────────────────────────────────────
 .service-card {
@@ -189,9 +184,9 @@
   border: 1px solid v.$border-color;
   border-radius: v.$radius-md;
   box-shadow: v.$shadow-sm;
-  transition: all v.$transition-base;
   position: relative;
   overflow: hidden;
+  transition: all v.$transition-base;
 
   &::before {
     content: '';
@@ -211,10 +206,12 @@
     border-color: rgba(v.$color-adobe, 0.35);
 
     &::before { transform: scaleX(1); }
+
     .service-card__icon-wrap {
       background-color: v.$color-adobe;
       border-color: v.$color-adobe;
     }
+
     .service-card__icon {
       color: v.$color-parchment-light;
       transform: scale(1.15);
@@ -254,7 +251,7 @@
   line-height: 1.65;
 }
 
-// ────────────────────────────────────────────────────────────
+
 //  EXP CARD (Experiencias — arco de medio punto)
 // ────────────────────────────────────────────────────────────
 .exp-card {
@@ -268,6 +265,7 @@
     transform: translateY(-8px);
     box-shadow: 0 20px 48px rgba(0, 0, 0, 0.5);
   }
+
   &:hover .exp-card__img { transform: scale(1.08); }
 }
 

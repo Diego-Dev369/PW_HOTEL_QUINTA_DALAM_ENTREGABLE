@@ -1,5 +1,7 @@
 // ── 1. Base ──────────────────────────────────────────────────
+@use 'base/normalize';
 @use 'base/base';
+@use 'base/reset';
 
 // ── 2. Layout ────────────────────────────────────────────────
 @use 'layout/header';
@@ -18,3 +20,4 @@
 @use 'pages/nosotros';
 @use 'pages/reservaciones';
 @use 'pages/body_index';
+@use 'pages/admin';

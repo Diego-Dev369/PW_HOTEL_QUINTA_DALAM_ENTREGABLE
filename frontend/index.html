@@ -625,16 +625,20 @@
 
         <div class="footer__bottom">
             <p class="footer__copyright">
-            <small
-                >&copy; 2026 Hotel Quinta Dalam. Todos los derechos
-                reservados.</small
-            >
+                <small>&copy; 2026 Hotel Quinta Dalam. Todos los derechos reservados.</small>
             </p>
-            <div class="footer__certifications" aria-label="Reconocimientos">
-            <span class="footer__cert-badge">⭐ Pueblo Mágico</span>
-            <span class="footer__cert-badge">🏛️ Patrimonio Cultural</span>
+
+            <!--
+                Contenedor de badges de reconocimiento.
+                Los scripts de W3C validator / certificaciones se inyectan aquí
+                dinámicamente por el sistema de gestión del panel.
+                NO agregar <span> estáticos aquí; usar el panel Admin → Inicio → Footer → Badges.
+            -->
+            <div class="footer__certifications" id="footer-certifications" aria-label="Reconocimientos">
+                <!-- badges inyectados por JS -->
             </div>
-        </div>
+
+            </div>
         </footer>
     </body>
 </html>

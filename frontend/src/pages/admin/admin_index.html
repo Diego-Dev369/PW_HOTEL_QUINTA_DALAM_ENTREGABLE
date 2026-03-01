@@ -1,0 +1,1220 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Editor Inicio | Panel Admin · Hotel Quinta Dalam</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="../../styles/main.css">
+</head>
+<body class="admin-body">
+
+  <aside class="admin-sidebar">
+    <div class="admin-sidebar__header">
+      <div class="admin-sidebar__brand">
+        <span class="admin-sidebar__brand-icon">✦</span>
+        <div>
+          <p class="admin-sidebar__brand-name">Quinta Dalam</p>
+          <p class="admin-sidebar__brand-role">Panel de Control</p>
+        </div>
+      </div>
+    </div>
+    <nav class="admin-nav" aria-label="Navegación del panel">
+      <p class="admin-nav__group-label">General</p>
+      <ul class="admin-nav__list" role="list">
+        <li><a href="admin_dashboard.html" class="admin-nav__link"><i class="fa-solid fa-gauge-high"></i><span>Dashboard</span></a></li>
+        <li><a href="admin_reservaciones.html" class="admin-nav__link"><i class="fa-solid fa-calendar-check"></i><span>Reservaciones</span></a></li>
+      </ul>
+      <p class="admin-nav__group-label">Contenido</p>
+      <ul class="admin-nav__list" role="list">
+        <li><a href="admin_habitaciones.html" class="admin-nav__link"><i class="fa-solid fa-bed"></i><span>Habitaciones</span></a></li>
+        <li><a href="admin_index.html" class="admin-nav__link admin-nav__link--active"><i class="fa-solid fa-house"></i><span>Página de Inicio</span></a></li>
+        <li><a href="admin_nosotros.html" class="admin-nav__link"><i class="fa-solid fa-heart"></i><span>Nosotros</span></a></li>
+        <li><a href="admin_contacto.html" class="admin-nav__link"><i class="fa-solid fa-location-dot"></i><span>Contacto</span></a></li>
+      </ul>
+      <p class="admin-nav__group-label">Sistema</p>
+      <ul class="admin-nav__list" role="list">
+        <li><a href="admin_usuarios.html" class="admin-nav__link"><i class="fa-solid fa-users-gear"></i><span>Usuarios</span></a></li>
+      </ul>
+    </nav>
+    <div class="admin-sidebar__footer">
+      <a href="./../../../index.html" class="admin-sidebar__view-site" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i> Ver sitio web</a>
+      <a href="../login.html" class="admin-sidebar__logout"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</a>
+    </div>
+  </aside>
+
+  <div class="admin-layout">
+
+    <header class="admin-topbar">
+      <div class="admin-topbar__breadcrumb">
+        <a href="admin_dashboard.html">Panel</a>
+        <i class="fa-solid fa-chevron-right"></i>
+        <span class="admin-topbar__breadcrumb-current">Editor — Página de Inicio</span>
+      </div>
+    </header>
+
+    <main class="admin-main">
+
+      <div class="admin-page-header">
+        <div>
+          <h1 class="admin-page-title">Editor — <em>Página de Inicio</em></h1>
+          <p class="admin-page-subtitle">Edita, crea y elimina el contenido visible en index.html.</p>
+        </div>
+        <a href="../../index.html" target="_blank" class="admin-btn admin-btn--ghost">
+          <i class="fa-solid fa-eye"></i> Ver index
+        </a>
+      </div>
+
+      <!-- Mapa de secciones -->
+      <nav class="admin-index-map" aria-label="Secciones del index">
+        <p class="admin-index-map__label"><i class="fa-solid fa-map"></i> Secciones en orden</p>
+        <div class="admin-index-map__list">
+          <a href="#sec-header"      class="admin-index-map__item"><i class="fa-solid fa-bars"></i> Header</a>
+          <i class="fa-solid fa-chevron-right admin-index-map__sep"></i>
+          <a href="#sec-hero"        class="admin-index-map__item"><i class="fa-solid fa-image"></i> Hero</a>
+          <i class="fa-solid fa-chevron-right admin-index-map__sep"></i>
+          <a href="#sec-booking"     class="admin-index-map__item"><i class="fa-solid fa-calendar"></i> Reservas</a>
+          <i class="fa-solid fa-chevron-right admin-index-map__sep"></i>
+          <a href="#sec-rooms"       class="admin-index-map__item"><i class="fa-solid fa-bed"></i> Habitaciones</a>
+          <i class="fa-solid fa-chevron-right admin-index-map__sep"></i>
+          <a href="#sec-experiences" class="admin-index-map__item"><i class="fa-solid fa-camera"></i> Experiencias</a>
+          <i class="fa-solid fa-chevron-right admin-index-map__sep"></i>
+          <a href="#sec-services"    class="admin-index-map__item"><i class="fa-solid fa-concierge-bell"></i> Servicios</a>
+          <i class="fa-solid fa-chevron-right admin-index-map__sep"></i>
+          <a href="#sec-about"       class="admin-index-map__item"><i class="fa-solid fa-circle-info"></i> Nosotros</a>
+          <i class="fa-solid fa-chevron-right admin-index-map__sep"></i>
+          <a href="#sec-cta"         class="admin-index-map__item"><i class="fa-solid fa-bullhorn"></i> CTA</a>
+          <i class="fa-solid fa-chevron-right admin-index-map__sep"></i>
+          <a href="#sec-footer"      class="admin-index-map__item"><i class="fa-solid fa-layer-group"></i> Footer</a>
+        </div>
+      </nav>
+
+
+      <!-- ══════════════════════════════════════════════════════
+          0. HEADER
+      ══════════════════════════════════════════════════════ -->
+      <section class="admin-card" id="sec-header">
+        <div class="admin-card__header">
+          <h2 class="admin-card__title"><i class="fa-solid fa-bars"></i> Header global <code style="font-size:.7rem;opacity:.4;font-weight:400">header.site-header</code></h2>
+          <span class="admin-badge admin-badge--neutral">Aparece en todas las páginas</span>
+        </div>
+
+        <!-- Logo -->
+        <div class="admin-editor-subsection">
+          <p class="admin-editor-subsection__label"><i class="fa-solid fa-signature"></i> Logo</p>
+          <form class="admin-editor-form" novalidate>
+            <div class="admin-form-grid">
+              <div class="admin-form__group">
+                <label class="admin-form__label" for="hdr-logo-texto">Nombre del hotel <code style="font-size:.7rem;opacity:.5">.site-header__logo-text</code></label>
+                <input class="admin-form__input" type="text" id="hdr-logo-texto" value="Hotel Quinta Dalam">
+              </div>
+              <div class="admin-form__group">
+                <label class="admin-form__label" for="hdr-logo-tagline">Tagline bajo el logo <code style="font-size:.7rem;opacity:.5">.site-header__tagline</code></label>
+                <input class="admin-form__input" type="text" id="hdr-logo-tagline" value="PUEBLOS MÁGICOS · MICHOACÁN">
+              </div>
+              <div class="admin-form__group admin-form__group--full">
+                <label class="admin-form__label">Logo imagen (opcional) <code style="font-size:.7rem;opacity:.5">img.site-header__logo-img · actual: logo.svg</code></label>
+                <div class="admin-upload">
+                  <i class="fa-solid fa-cloud-arrow-up"></i>
+                  <p>Arrastra un archivo o <span>haz clic para subir</span></p>
+                  <small>SVG o PNG transparente · Máximo 500 KB</small>
+                  <input type="file" accept="image/svg+xml,image/png" class="admin-upload__input">
+                </div>
+              </div>
+            </div>
+            <div class="admin-editor-actions">
+              <button type="button" class="admin-btn admin-btn--ghost">Descartar</button>
+              <button type="submit" class="admin-btn admin-btn--primary"><i class="fa-solid fa-floppy-disk"></i> Guardar logo</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Navegación -->
+        <div class="admin-editor-subsection">
+          <div class="admin-editor-subsection__header">
+            <p class="admin-editor-subsection__label">
+              <i class="fa-solid fa-list"></i> Links de navegación <code style="font-size:.7rem;opacity:.5">nav.site-header__nav</code>
+              <span class="admin-badge admin-badge--neutral" style="margin-left:.5rem" id="nav-count-badge">4 links</span>
+            </p>
+            <button type="button" class="admin-btn admin-btn--primary admin-btn--sm">
+              <i class="fa-solid fa-plus"></i> Nuevo link
+            </button>
+          </div>
+
+          <div class="admin-crud-list" id="navLinksList">
+            <div class="admin-crud-item" data-id="nav-1">
+              <div class="admin-crud-item__icon-wrap"><i class="fa-solid fa-house"></i></div>
+              <div class="admin-crud-item__info"><strong>Inicio</strong><small>./index.html</small></div>
+              <div class="admin-crud-item__actions">
+                <button class="admin-icon-btn admin-icon-btn--edit" title="Editar"><i class="fa-solid fa-pen"></i></button>
+                <button class="admin-icon-btn admin-icon-btn--delete" title="Eliminar"><i class="fa-solid fa-trash"></i></button>
+              </div>
+            </div>
+            <div class="admin-crud-item" data-id="nav-2">
+              <div class="admin-crud-item__icon-wrap"><i class="fa-solid fa-bed"></i></div>
+              <div class="admin-crud-item__info"><strong>Habitaciones</strong><small>./src/pages/habitaciones.html</small></div>
+              <div class="admin-crud-item__actions">
+                <button class="admin-icon-btn admin-icon-btn--edit" title="Editar"><i class="fa-solid fa-pen"></i></button>
+                <button class="admin-icon-btn admin-icon-btn--delete" title="Eliminar"><i class="fa-solid fa-trash"></i></button>
+              </div>
+            </div>
+            <div class="admin-crud-item" data-id="nav-3">
+              <div class="admin-crud-item__icon-wrap"><i class="fa-solid fa-heart"></i></div>
+              <div class="admin-crud-item__info"><strong>Nosotros</strong><small>./src/pages/nosotros.html</small></div>
+              <div class="admin-crud-item__actions">
+                <button class="admin-icon-btn admin-icon-btn--edit" title="Editar"><i class="fa-solid fa-pen"></i></button>
+                <button class="admin-icon-btn admin-icon-btn--delete" title="Eliminar"><i class="fa-solid fa-trash"></i></button>
+              </div>
+            </div>
+            <div class="admin-crud-item" data-id="nav-4">
+              <div class="admin-crud-item__icon-wrap"><i class="fa-solid fa-location-dot"></i></div>
+              <div class="admin-crud-item__info"><strong>Contacto</strong><small>./src/pages/contacto.html</small></div>
+              <div class="admin-crud-item__actions">
+                <button class="admin-icon-btn admin-icon-btn--edit" title="Editar"><i class="fa-solid fa-pen"></i></button>
+                <button class="admin-icon-btn admin-icon-btn--delete" title="Eliminar"><i class="fa-solid fa-trash"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CTA  -->
+        <div class="admin-editor-subsection">
+          <p class="admin-editor-subsection__label"><i class="fa-solid fa-bolt"></i> Botón CTA y contacto rápido</p>
+          <form class="admin-editor-form" novalidate>
+            <div class="admin-form-grid">
+              <div class="admin-form__group">
+                <label class="admin-form__label" for="hdr-cta-text">Texto del botón CTA <code style="font-size:.7rem;opacity:.5">a.site-header__cta</code></label>
+                <input class="admin-form__input" type="text" id="hdr-cta-text" value="RESERVAR">
+              </div>
+              <div class="admin-form__group">
+                <label class="admin-form__label" for="hdr-cta-url">URL del botón CTA</label>
+                <input class="admin-form__input" type="text" id="hdr-cta-url" value="./src/pages/reservaciones.html">
+              </div>
+
+              <div class="admin-form__group">
+                <label class="admin-form__label" for="hdr-cta-text">Texto del botón LOGIN <code style="font-size:.7rem;opacity:.5">a.site-header__cta</code></label>
+                <input class="admin-form__input" type="text" id="hdr-cta-text" value="INICIAR SESIÓN">
+              </div>
+              <div class="admin-form__group">
+                <label class="admin-form__label" for="hdr-cta-url">URL del botón LOGIN</label>
+                <input class="admin-form__input" type="text" id="hdr-cta-url" value="./../login.html">
+              </div>
+          
+            </div>
+            <div class="admin-editor-actions">
+              <button type="button" class="admin-btn admin-btn--ghost">Descartar</button>
+              <button type="submit" class="admin-btn admin-btn--primary"><i class="fa-solid fa-floppy-disk"></i> Guardar CTA y contacto</button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+
+      <!-- ══════════════════════════════════════════════════════
+          1. HERO
+      ══════════════════════════════════════════════════════ -->
+      <section class="admin-card" id="sec-hero">
+        <div class="admin-card__header">
+          <h2 class="admin-card__title"><i class="fa-solid fa-image"></i> Hero principal</h2>
+          <span class="admin-badge admin-badge--neutral">Sección fija</span>
+        </div>
+        <form class="admin-editor-form" novalidate>
+          <div class="admin-form-grid">
+            <div class="admin-form__group">
+              <label class="admin-form__label" for="hero-title">Título <code style="font-size:.7rem;opacity:.5">h1.hero__title</code></label>
+              <input class="admin-form__input" type="text" id="hero-title" value="Vive la Magia de Michoacán">
+            </div>
+            <div class="admin-form__group admin-form__group--full">
+              <label class="admin-form__label" for="hero-subtitle">Subtítulo <code style="font-size:.7rem;opacity:.5">p.hero__subtitle</code></label>
+              <input class="admin-form__input" type="text" id="hero-subtitle" value="Descubre la hospitalidad, artesanía y cultura de los Pueblos Mágicos.">
+            </div>
+            <div class="admin-form__group">
+              <label class="admin-form__label" for="hero-cta-text">Texto del botón CTA</label>
+              <input class="admin-form__input" type="text" id="hero-cta-text" value="Reservar Ahora">
+            </div>
+            <div class="admin-form__group">
+              <label class="admin-form__label" for="hero-cta-url">URL del botón CTA</label>
+              <input class="admin-form__input" type="text" id="hero-cta-url" value="./src/pages/reservaciones.html">
+            </div>
+          </div>
+          <div class="admin-form__group admin-form__group--full">
+            <label class="admin-form__label">Imagen de fondo <code style="font-size:.7rem;opacity:.5">img.hero__bg · actual: img_encabezado.png</code></label>
+            <div class="admin-upload">
+              <i class="fa-solid fa-cloud-arrow-up"></i>
+              <p>Arrastra una imagen o <span>haz clic para subir</span></p>
+              <small>JPG · Mínimo 1920 × 1080 px · Máximo 5 MB</small>
+              <input type="file" accept="image/*" class="admin-upload__input">
+            </div>
+          </div>
+          <div class="admin-editor-actions">
+            <button type="button" class="admin-btn admin-btn--ghost">Descartar</button>
+            <button type="submit" class="admin-btn admin-btn--primary"><i class="fa-solid fa-floppy-disk"></i> Guardar Hero</button>
+          </div>
+        </form>
+      </section>
+
+      <!-- ══════════════════════════════════════════════════════
+          2. BARRA DE RESERVAS
+      ══════════════════════════════════════════════════════ -->
+      <section class="admin-card" id="sec-booking">
+        <div class="admin-card__header">
+          <h2 class="admin-card__title"><i class="fa-solid fa-calendar"></i> Barra de reservas <code style="font-size:.7rem;opacity:.4;font-weight:400">.booking</code></h2>
+          <span class="admin-badge admin-badge--neutral">Sección fija</span>
+        </div>
+        <form class="admin-editor-form" novalidate>
+          <div class="admin-form-grid">
+            <div class="admin-form__group">
+              <label class="admin-form__label" for="bk-checkin">Etiqueta campo Llegada</label>
+              <input class="admin-form__input" type="text" id="bk-checkin" value="Llegada">
+            </div>
+            <div class="admin-form__group">
+              <label class="admin-form__label" for="bk-checkout">Etiqueta campo Salida</label>
+              <input class="admin-form__input" type="text" id="bk-checkout" value="Salida">
+            </div>
+            <div class="admin-form__group">
+              <label class="admin-form__label" for="bk-guests">Etiqueta campo Huéspedes</label>
+              <input class="admin-form__input" type="text" id="bk-guests" value="Huéspedes">
+            </div>
+            <div class="admin-form__group">
+              <label class="admin-form__label" for="bk-btn-text">Texto del botón</label>
+              <input class="admin-form__input" type="text" id="bk-btn-text" value="Buscar">
+            </div>
+            <div class="admin-form__group">
+              <label class="admin-form__label" for="bk-btn-url">URL destino del botón</label>
+              <input class="admin-form__input" type="text" id="bk-btn-url" value="./src/pages/reservaciones.html">
+            </div>
+          </div>
+          <div class="admin-editor-actions">
+            <button type="button" class="admin-btn admin-btn--ghost">Descartar</button>
+            <button type="submit" class="admin-btn admin-btn--primary"><i class="fa-solid fa-floppy-disk"></i> Guardar barra</button>
+          </div>
+        </form>
+      </section>
+
+      <!-- ══════════════════════════════════════════════════════
+          3. HABITACIONES
+      ══════════════════════════════════════════════════════ -->
+      <section class="admin-card" id="sec-rooms">
+        <div class="admin-card__header">
+          <h2 class="admin-card__title"><i class="fa-solid fa-bed"></i> Sección Habitaciones <code style="font-size:.7rem;opacity:.4;font-weight:400">section.rooms</code></h2>
+        </div>
+        <div class="admin-editor-subsection">
+          <p class="admin-editor-subsection__label"><i class="fa-solid fa-heading"></i> Cabecera de la sección</p>
+          <form class="admin-editor-form" novalidate>
+            <div class="admin-form-grid">
+              <div class="admin-form__group">
+                <label class="admin-form__label" for="rooms-eyebrow">Eyebrow</label>
+                <input class="admin-form__input" type="text" id="rooms-eyebrow" value="Nuestras Suites">
+              </div>
+              <div class="admin-form__group">
+                <label class="admin-form__label" for="rooms-title">Título</label>
+                <input class="admin-form__input" type="text" id="rooms-title" value="Habitaciones con Encanto">
+              </div>
+              <div class="admin-form__group admin-form__group--full">
+                <label class="admin-form__label" for="rooms-subtitle">Subtítulo</label>
+                <input class="admin-form__input" type="text" id="rooms-subtitle" value="Diseño inspirado en la tradición y el confort contemporáneo">
+              </div>
+              <div class="admin-form__group">
+                <label class="admin-form__label" for="rooms-cta-text">Texto botón "Ver todas"</label>
+                <input class="admin-form__input" type="text" id="rooms-cta-text" value="Ver todas las habitaciones">
+              </div>
+              <div class="admin-form__group">
+                <label class="admin-form__label" for="rooms-cta-url">URL botón "Ver todas"</label>
+                <input class="admin-form__input" type="text" id="rooms-cta-url" value="./src/pages/habitaciones.html">
+              </div>
+            </div>
+            <div class="admin-editor-actions">
+              <button type="button" class="admin-btn admin-btn--ghost">Descartar</button>
+              <button type="submit" class="admin-btn admin-btn--primary"><i class="fa-solid fa-floppy-disk"></i> Guardar cabecera</button>
+            </div>
+          </form>
+        </div>
+        <div class="admin-editor-subsection">
+          <div class="admin-editor-subsection__header">
+            <p class="admin-editor-subsection__label">
+              <i class="fa-solid fa-grid-2"></i> Tarjetas <code style="font-size:.7rem;opacity:.5">article.room-card</code>
+              <span class="admin-badge admin-badge--neutral" style="margin-left:.5rem" id="rooms-count-badge">3 tarjetas</span>
+            </p>
+            <button type="button" class="admin-btn admin-btn--primary admin-btn--sm">
+              <i class="fa-solid fa-plus"></i> Nueva tarjeta
+            </button>
+          </div>
+          <div class="admin-crud-list" id="roomCardsList">
+            <div class="admin-crud-item" data-id="room-1">
+              <div class="admin-crud-item__thumb" style="background-image:url('../../assets/images/rooms/204-uruapan.jpeg')"></div>
+              <div class="admin-crud-item__info">
+                <strong>Uruapan</strong>
+                <div style="display:flex;gap:.5rem;align-items:center;margin:.25rem 0"><span class="admin-badge admin-badge--neutral">Suite Deluxe</span></div>
+                <small>Naturaleza &amp; Tradición · Wi-Fi · AC · Desayuno</small>
+              </div>
+              <div class="admin-crud-item__actions">
+                <button class="admin-icon-btn admin-icon-btn--edit" title="Editar"><i class="fa-solid fa-pen"></i></button>
+                <button class="admin-icon-btn admin-icon-btn--delete" title="Eliminar"><i class="fa-solid fa-trash"></i></button>
+              </div>
+            </div>
+            <div class="admin-crud-item admin-crud-item--featured" data-id="room-2">
+              <div class="admin-crud-item__thumb" style="background-image:url('../../assets/images/rooms/104-patzcuaro.jpeg')"></div>
+              <div class="admin-crud-item__info">
+                <strong>Pátzcuaro</strong>
+                <div style="display:flex;gap:.5rem;align-items:center;margin:.25rem 0"><span class="admin-badge admin-badge--gold">Suite Superior</span><span class="admin-badge admin-badge--gold">✦ Destacada</span></div>
+                <small>Historia &amp; Elegancia · Wi-Fi · AC · Desayuno · Tina</small>
+              </div>
+              <div class="admin-crud-item__actions">
+                <button class="admin-icon-btn admin-icon-btn--edit" title="Editar"><i class="fa-solid fa-pen"></i></button>
+                <button class="admin-icon-btn admin-icon-btn--delete" title="Eliminar"><i class="fa-solid fa-trash"></i></button>
+              </div>
+            </div>
+            <div class="admin-crud-item" data-id="room-3">
+              <div class="admin-crud-item__thumb" style="background-image:url('../../assets/images/rooms/102-paracho.jpeg')"></div>
+              <div class="admin-crud-item__info">
+                <strong>Paracho</strong>
+                <div style="display:flex;gap:.5rem;align-items:center;margin:.25rem 0"><span class="admin-badge admin-badge--neutral">Suite Estudio</span></div>
+                <small>Artesanía &amp; Carácter · Wi-Fi · AC · Desayuno</small>
+              </div>
+              <div class="admin-crud-item__actions">
+                <button class="admin-icon-btn admin-icon-btn--edit" title="Editar"><i class="fa-solid fa-pen"></i></button>
+                <button class="admin-icon-btn admin-icon-btn--delete" title="Eliminar"><i class="fa-solid fa-trash"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══════════════════════════════════════════════════════
+          4. EXPERIENCIAS
+      ══════════════════════════════════════════════════════ -->
+      <section class="admin-card" id="sec-experiences">
+        <div class="admin-card__header">
+          <h2 class="admin-card__title"><i class="fa-solid fa-camera"></i> Sección Experiencias <code style="font-size:.7rem;opacity:.4;font-weight:400">section.experiences</code></h2>
+        </div>
+        <div class="admin-editor-subsection">
+          <p class="admin-editor-subsection__label"><i class="fa-solid fa-heading"></i> Cabecera de la sección</p>
+          <form class="admin-editor-form" novalidate>
+            <div class="admin-form-grid">
+              <div class="admin-form__group">
+                <label class="admin-form__label" for="exp-eyebrow">Eyebrow</label>
+                <input class="admin-form__input" type="text" id="exp-eyebrow" value="Descubre">
+              </div>
+              <div class="admin-form__group">
+                <label class="admin-form__label" for="exp-title">Título</label>
+                <input class="admin-form__input" type="text" id="exp-title" value="Vive una Experiencia Inolvidable">
+              </div>
+            </div>
+            <div class="admin-editor-actions">
+              <button type="button" class="admin-btn admin-btn--ghost">Descartar</button>
+              <button type="submit" class="admin-btn admin-btn--primary"><i class="fa-solid fa-floppy-disk"></i> Guardar cabecera</button>
+            </div>
+          </form>
+        </div>
+        <div class="admin-editor-subsection">
+          <div class="admin-editor-subsection__header">
+            <p class="admin-editor-subsection__label">
+              <i class="fa-solid fa-grid-2"></i> Tarjetas <code style="font-size:.7rem;opacity:.5">article.exp-card</code>
+              <span class="admin-badge admin-badge--neutral" style="margin-left:.5rem" id="exp-count-badge">4 tarjetas</span>
+            </p>
+            <button type="button" class="admin-btn admin-btn--primary admin-btn--sm">
+              <i class="fa-solid fa-plus"></i> Nueva experiencia
+            </button>
+          </div>
+          <div class="admin-crud-list" id="expCardsList">
+            <div class="admin-crud-item" data-id="exp-1">
+              <div class="admin-crud-item__thumb" style="background-image:url('../../assets/images/interiores/decoracion1.jpeg')"></div>
+              <div class="admin-crud-item__info"><strong>Artesanía Tradicional</strong><small>interiores/decoracion1.jpeg</small></div>
+              <div class="admin-crud-item__actions">
+                <button class="admin-icon-btn admin-icon-btn--edit" title="Editar"><i class="fa-solid fa-pen"></i></button>
+                <button class="admin-icon-btn admin-icon-btn--delete" title="Eliminar"><i class="fa-solid fa-trash"></i></button>
+              </div>
+            </div>
+            <div class="admin-crud-item" data-id="exp-2">
+              <div class="admin-crud-item__thumb" style="background-image:url('../../assets/images/exteriores/vista_manantial.jpeg')"></div>
+              <div class="admin-crud-item__info"><strong>Naturaleza Asombrosa</strong><small>exteriores/vista_manantial.jpeg</small></div>
+              <div class="admin-crud-item__actions">
+                <button class="admin-icon-btn admin-icon-btn--edit" title="Editar"><i class="fa-solid fa-pen"></i></button>
+                <button class="admin-icon-btn admin-icon-btn--delete" title="Eliminar"><i class="fa-solid fa-trash"></i></button>
+              </div>
+            </div>
+            <div class="admin-crud-item" data-id="exp-3">
+              <div class="admin-crud-item__thumb" style="background-image:url('../../assets/images/interiores/sala_vista1.jpeg')"></div>
+              <div class="admin-crud-item__info"><strong>Cultura y Hospitalidad</strong><small>interiores/sala_vista1.jpeg</small></div>
+              <div class="admin-crud-item__actions">
+                <button class="admin-icon-btn admin-icon-btn--edit" title="Editar"><i class="fa-solid fa-pen"></i></button>
+                <button class="admin-icon-btn admin-icon-btn--delete" title="Eliminar"><i class="fa-solid fa-trash"></i></button>
+              </div>
+            </div>
+            <div class="admin-crud-item" data-id="exp-4">
+              <div class="admin-crud-item__thumb" style="background-image:url('../../assets/images/interiores/cocina_barra.jpeg')"></div>
+              <div class="admin-crud-item__info"><strong>Gastronomía Regional</strong><small>interiores/cocina_barra.jpeg</small></div>
+              <div class="admin-crud-item__actions">
+                <button class="admin-icon-btn admin-icon-btn--edit" title="Editar"><i class="fa-solid fa-pen"></i></button>
+                <button class="admin-icon-btn admin-icon-btn--delete" title="Eliminar"><i class="fa-solid fa-trash"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══════════════════════════════════════════════════════
+          5. SERVICIOS
+      ══════════════════════════════════════════════════════ -->
+      <section class="admin-card" id="sec-services">
+        <div class="admin-card__header">
+          <h2 class="admin-card__title"><i class="fa-solid fa-concierge-bell"></i> Sección Servicios <code style="font-size:.7rem;opacity:.4;font-weight:400">section.services</code></h2>
+        </div>
+        <div class="admin-editor-subsection">
+          <p class="admin-editor-subsection__label"><i class="fa-solid fa-heading"></i> Cabecera de la sección</p>
+          <form class="admin-editor-form" novalidate>
+            <div class="admin-form-grid">
+              <div class="admin-form__group">
+                <label class="admin-form__label" for="srv-eyebrow">Eyebrow</label>
+                <input class="admin-form__input" type="text" id="srv-eyebrow" value="Lo que ofrecemos">
+              </div>
+              <div class="admin-form__group">
+                <label class="admin-form__label" for="srv-title">Título</label>
+                <input class="admin-form__input" type="text" id="srv-title" value="Servicios de Distinción">
+              </div>
+              <div class="admin-form__group admin-form__group--full">
+                <label class="admin-form__label" for="srv-subtitle">Subtítulo</label>
+                <input class="admin-form__input" type="text" id="srv-subtitle" value="Todo lo necesario para una estancia verdaderamente inolvidable">
+              </div>
+            </div>
+            <div class="admin-editor-actions">
+              <button type="button" class="admin-btn admin-btn--ghost">Descartar</button>
+              <button type="submit" class="admin-btn admin-btn--primary"><i class="fa-solid fa-floppy-disk"></i> Guardar cabecera</button>
+            </div>
+          </form>
+        </div>
+        <div class="admin-editor-subsection">
+          <div class="admin-editor-subsection__header">
+            <p class="admin-editor-subsection__label">
+              <i class="fa-solid fa-grid-2"></i> Tarjetas <code style="font-size:.7rem;opacity:.5">article.service-card</code>
+              <span class="admin-badge admin-badge--neutral" style="margin-left:.5rem" id="srv-count-badge">4 tarjetas</span>
+            </p>
+            <button type="button" class="admin-btn admin-btn--primary admin-btn--sm">
+              <i class="fa-solid fa-plus"></i> Nueva tarjeta
+            </button>
+          </div>
+          <div class="admin-crud-list" id="srvCardsList">
+            <div class="admin-crud-item" data-id="srv-1">
+              <div class="admin-crud-item__icon-wrap"><i class="fa-solid fa-bed"></i></div>
+              <div class="admin-crud-item__info"><strong>Habitaciones Premium</strong><small>Diseño boutique con máximo confort y detalles artesanales únicos.</small></div>
+              <div class="admin-crud-item__actions">
+                <button class="admin-icon-btn admin-icon-btn--edit" title="Editar"><i class="fa-solid fa-pen"></i></button>
+                <button class="admin-icon-btn admin-icon-btn--delete" title="Eliminar"><i class="fa-solid fa-trash"></i></button>
+              </div>
+            </div>
+            <div class="admin-crud-item" data-id="srv-2">
+              <div class="admin-crud-item__icon-wrap"><i class="fa-solid fa-tree"></i></div>
+              <div class="admin-crud-item__info"><strong>Entorno Natural</strong><small>Tranquilidad y conexión profunda con la naturaleza michoacana.</small></div>
+              <div class="admin-crud-item__actions">
+                <button class="admin-icon-btn admin-icon-btn--edit" title="Editar"><i class="fa-solid fa-pen"></i></button>
+                <button class="admin-icon-btn admin-icon-btn--delete" title="Eliminar"><i class="fa-solid fa-trash"></i></button>
+              </div>
+            </div>
+            <div class="admin-crud-item" data-id="srv-3">
+              <div class="admin-crud-item__icon-wrap"><i class="fa-solid fa-concierge-bell"></i></div>
+              <div class="admin-crud-item__info"><strong>Atención Personalizada</strong><small>Hospitalidad auténtica michoacana con calidez y servicio de lujo.</small></div>
+              <div class="admin-crud-item__actions">
+                <button class="admin-icon-btn admin-icon-btn--edit" title="Editar"><i class="fa-solid fa-pen"></i></button>
+                <button class="admin-icon-btn admin-icon-btn--delete" title="Eliminar"><i class="fa-solid fa-trash"></i></button>
+              </div>
+            </div>
+            <div class="admin-crud-item" data-id="srv-4">
+              <div class="admin-crud-item__icon-wrap"><i class="fa-solid fa-utensils"></i></div>
+              <div class="admin-crud-item__info"><strong>Desayuno Regional</strong><small>Sabores tradicionales que despiertan los sentidos cada mañana.</small></div>
+              <div class="admin-crud-item__actions">
+                <button class="admin-icon-btn admin-icon-btn--edit" title="Editar"><i class="fa-solid fa-pen"></i></button>
+                <button class="admin-icon-btn admin-icon-btn--delete" title="Eliminar"><i class="fa-solid fa-trash"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══════════════════════════════════════════════════════
+          6. NOSOTROS PREVIEW
+      ══════════════════════════════════════════════════════ -->
+      <section class="admin-card" id="sec-about">
+        <div class="admin-card__header">
+          <h2 class="admin-card__title"><i class="fa-solid fa-circle-info"></i> Preview "Nosotros" <code style="font-size:.7rem;opacity:.4;font-weight:400">section.about</code></h2>
+          <div style="display:flex;align-items:center;gap:.75rem">
+            <span class="admin-badge admin-badge--neutral">Sección fija</span>
+            <label class="admin-toggle" style="display:flex;align-items:center;gap:.5rem;cursor:pointer">
+              <input type="checkbox" class="admin-toggle__input" checked id="toggle-about">
+              <span class="admin-toggle__track"></span>
+              <span style="font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(234,228,216,.55)" id="toggle-about-label">Visible</span>
+            </label>
+          </div>
+        </div>
+        <form class="admin-editor-form" novalidate>
+          <div class="admin-form-grid">
+            <div class="admin-form__group">
+              <label class="admin-form__label" for="about-eyebrow">Eyebrow</label>
+              <input class="admin-form__input" type="text" id="about-eyebrow" value="Nuestra Historia">
+            </div>
+            <div class="admin-form__group">
+              <label class="admin-form__label" for="about-title">Título</label>
+              <input class="admin-form__input" type="text" id="about-title" value="Una Experiencia Boutique sin igual">
+            </div>
+            <div class="admin-form__group admin-form__group--full">
+              <label class="admin-form__label" for="about-desc">Descripción</label>
+              <textarea class="admin-form__input" id="about-desc" rows="3">Hotel Quinta Dalam nació del amor por la cultura michoacana y el arte de la hospitalidad. Combinamos tradición colonial, diseño moderno y el calor de los Pueblos Mágicos para ofrecerte una estancia que trasciende lo ordinario.</textarea>
+            </div>
+            <div class="admin-form__group">
+              <label class="admin-form__label" for="about-badge-num">Badge — Número</label>
+              <input class="admin-form__input" type="text" id="about-badge-num" value="15">
+            </div>
+            <div class="admin-form__group">
+              <label class="admin-form__label" for="about-badge-text">Badge — Texto</label>
+              <input class="admin-form__input" type="text" id="about-badge-text" value="años de hospitalidad">
+            </div>
+            <div class="admin-form__group">
+              <label class="admin-form__label" for="about-cta-text">Texto botón</label>
+              <input class="admin-form__input" type="text" id="about-cta-text" value="Conocer nuestra historia">
+            </div>
+            <div class="admin-form__group">
+              <label class="admin-form__label" for="about-cta-url">URL botón</label>
+              <input class="admin-form__input" type="text" id="about-cta-url" value="./src/pages/nosotros.html">
+            </div>
+          </div>
+          <div class="admin-form__group admin-form__group--full">
+            <label class="admin-form__label">Imagen <code style="font-size:.7rem;opacity:.5">actual: exterior_hotel.jpeg</code></label>
+            <div class="admin-upload">
+              <i class="fa-solid fa-cloud-arrow-up"></i>
+              <p>Arrastra una imagen o <span>haz clic para subir</span></p>
+              <small>JPG · 800 × 600 px · Máximo 3 MB</small>
+              <input type="file" accept="image/*" class="admin-upload__input">
+            </div>
+          </div>
+          <div class="admin-editor-actions">
+            <button type="button" class="admin-btn admin-btn--ghost">Descartar</button>
+            <button type="submit" class="admin-btn admin-btn--primary"><i class="fa-solid fa-floppy-disk"></i> Guardar Nosotros preview</button>
+          </div>
+        </form>
+      </section>
+
+      <!-- ══════════════════════════════════════════════════════
+          7. CTA BAND
+      ══════════════════════════════════════════════════════ -->
+      <section class="admin-card" id="sec-cta">
+        <div class="admin-card__header">
+          <h2 class="admin-card__title"><i class="fa-solid fa-bullhorn"></i> CTA Band <code style="font-size:.7rem;opacity:.4;font-weight:400">section.cta-band</code></h2>
+          <div style="display:flex;align-items:center;gap:.75rem">
+            <span class="admin-badge admin-badge--neutral">Sección fija</span>
+            <label class="admin-toggle" style="display:flex;align-items:center;gap:.5rem;cursor:pointer">
+              <input type="checkbox" class="admin-toggle__input" checked id="toggle-cta">
+              <span class="admin-toggle__track"></span>
+              <span style="font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(234,228,216,.55)" id="toggle-cta-label">Visible</span>
+            </label>
+          </div>
+        </div>
+        <form class="admin-editor-form" novalidate>
+          <div class="admin-form-grid">
+            <div class="admin-form__group">
+              <label class="admin-form__label" for="cta-eyebrow">Eyebrow</label>
+              <input class="admin-form__input" type="text" id="cta-eyebrow" value="¿Listo para tu escapada?">
+            </div>
+            <div class="admin-form__group">
+              <label class="admin-form__label" for="cta-title">Título</label>
+              <input class="admin-form__input" type="text" id="cta-title" value="Reserva tu estancia perfecta">
+            </div>
+            <div class="admin-form__group admin-form__group--full">
+              <label class="admin-form__label" for="cta-desc">Descripción</label>
+              <input class="admin-form__input" type="text" id="cta-desc" value="Vive una experiencia inolvidable en el corazón de Michoacán.">
+            </div>
+            <div class="admin-form__group">
+              <label class="admin-form__label" for="cta-btn1-text">Botón primario — Texto</label>
+              <input class="admin-form__input" type="text" id="cta-btn1-text" value="Ver disponibilidad">
+            </div>
+            <div class="admin-form__group">
+              <label class="admin-form__label" for="cta-btn1-url">Botón primario — URL</label>
+              <input class="admin-form__input" type="text" id="cta-btn1-url" value="./src/pages/reservaciones.html">
+            </div>
+            <div class="admin-form__group">
+              <label class="admin-form__label" for="cta-btn2-text">Botón secundario — Texto</label>
+              <input class="admin-form__input" type="text" id="cta-btn2-text" value="Contáctanos">
+            </div>
+            <div class="admin-form__group">
+              <label class="admin-form__label" for="cta-btn2-url">Botón secundario — URL</label>
+              <input class="admin-form__input" type="text" id="cta-btn2-url" value="./src/pages/contacto.html">
+            </div>
+          </div>
+          <div class="admin-editor-actions">
+            <button type="button" class="admin-btn admin-btn--ghost">Descartar</button>
+            <button type="submit" class="admin-btn admin-btn--primary"><i class="fa-solid fa-floppy-disk"></i> Guardar CTA Band</button>
+          </div>
+        </form>
+      </section>
+
+      <!-- ══════════════════════════════════════════════════════
+          8. FOOTER GLOBAL
+      ══════════════════════════════════════════════════════ -->
+      <section class="admin-card" id="sec-footer">
+        <div class="admin-card__header">
+          <h2 class="admin-card__title"><i class="fa-solid fa-layer-group"></i> Footer global <code style="font-size:.7rem;opacity:.4;font-weight:400">footer.site-footer</code></h2>
+          <span class="admin-badge admin-badge--neutral">Aparece en todas las páginas</span>
+        </div>
+
+        <!-- Identidad -->
+        <div class="admin-editor-subsection">
+          <p class="admin-editor-subsection__label"><i class="fa-solid fa-signature"></i> Identidad y descripción</p>
+          <form class="admin-editor-form" novalidate>
+            <div class="admin-form-grid">
+              <div class="admin-form__group">
+                <label class="admin-form__label" for="ftr-nombre">Nombre del hotel <code style="font-size:.7rem;opacity:.5">.site-footer__brand-name</code></label>
+                <input class="admin-form__input" type="text" id="ftr-nombre" value="Hotel Quinta Dalam">
+              </div>
+              <div class="admin-form__group">
+                <label class="admin-form__label" for="ftr-tagline">Tagline <code style="font-size:.7rem;opacity:.5">.site-footer__tagline</code></label>
+                <input class="admin-form__input" type="text" id="ftr-tagline" value="PUEBLOS MÁGICOS · MICHIACÁN">
+              </div>
+              <div class="admin-form__group admin-form__group--full">
+                <label class="admin-form__label" for="ftr-desc">Descripción breve <code style="font-size:.7rem;opacity:.5">.site-footer__desc</code></label>
+                <textarea class="admin-form__input" id="ftr-desc" rows="2">Un refugio colonial donde la tradición y el lujo se encuentran en el corazón de Michoacán.</textarea>
+              </div>
+              <div class="admin-form__group admin-form__group--full">
+                <label class="admin-form__label" for="ftr-copyright">Texto de copyright <code style="font-size:.7rem;opacity:.5">.site-footer__copy</code></label>
+                <input class="admin-form__input" type="text" id="ftr-copyright" value="© 2025 Hotel Quinta Dalam. Todos los derechos reservados.">
+              </div>
+            </div>
+            <div class="admin-editor-actions">
+              <button type="button" class="admin-btn admin-btn--ghost">Descartar</button>
+              <button type="submit" class="admin-btn admin-btn--primary"><i class="fa-solid fa-floppy-disk"></i> Guardar identidad</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Links del footer -->
+        <div class="admin-editor-subsection">
+          <div class="admin-editor-subsection__header">
+            <p class="admin-editor-subsection__label">
+              <i class="fa-solid fa-list"></i> Links del footer <code style="font-size:.7rem;opacity:.5">.site-footer__nav</code>
+              <span class="admin-badge admin-badge--neutral" style="margin-left:.5rem" id="footer-links-count-badge">4 links</span>
+            </p>
+            <button type="button" class="admin-btn admin-btn--primary admin-btn--sm">
+              <i class="fa-solid fa-plus"></i> Nuevo link
+            </button>
+          </div>
+          <div class="admin-crud-list" id="footerLinksList">
+            <div class="admin-crud-item" data-id="flink-1">
+              <div class="admin-crud-item__icon-wrap"><i class="fa-solid fa-house"></i></div>
+              <div class="admin-crud-item__info"><strong>Inicio</strong><small>./index.html</small></div>
+              <div class="admin-crud-item__actions">
+                <button class="admin-icon-btn admin-icon-btn--edit" title="Editar"><i class="fa-solid fa-pen"></i></button>
+                <button class="admin-icon-btn admin-icon-btn--delete" title="Eliminar"><i class="fa-solid fa-trash"></i></button>
+              </div>
+            </div>
+            <div class="admin-crud-item" data-id="flink-2">
+              <div class="admin-crud-item__icon-wrap"><i class="fa-solid fa-bed"></i></div>
+              <div class="admin-crud-item__info"><strong>Habitaciones</strong><small>./src/pages/habitaciones.html</small></div>
+              <div class="admin-crud-item__actions">
+                <button class="admin-icon-btn admin-icon-btn--edit" title="Editar"><i class="fa-solid fa-pen"></i></button>
+                <button class="admin-icon-btn admin-icon-btn--delete" title="Eliminar"><i class="fa-solid fa-trash"></i></button>
+              </div>
+            </div>
+            <div class="admin-crud-item" data-id="flink-3">
+              <div class="admin-crud-item__icon-wrap"><i class="fa-solid fa-heart"></i></div>
+              <div class="admin-crud-item__info"><strong>Nosotros</strong><small>./src/pages/nosotros.html</small></div>
+              <div class="admin-crud-item__actions">
+                <button class="admin-icon-btn admin-icon-btn--edit" title="Editar"><i class="fa-solid fa-pen"></i></button>
+                <button class="admin-icon-btn admin-icon-btn--delete" title="Eliminar"><i class="fa-solid fa-trash"></i></button>
+              </div>
+            </div>
+            <div class="admin-crud-item" data-id="flink-4">
+              <div class="admin-crud-item__icon-wrap"><i class="fa-solid fa-location-dot"></i></div>
+              <div class="admin-crud-item__info"><strong>Contacto</strong><small>./src/pages/contacto.html</small></div>
+              <div class="admin-crud-item__actions">
+                <button class="admin-icon-btn admin-icon-btn--edit" title="Editar"><i class="fa-solid fa-pen"></i></button>
+                <button class="admin-icon-btn admin-icon-btn--delete" title="Eliminar"><i class="fa-solid fa-trash"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Redes sociales -->
+        <div class="admin-editor-subsection">
+          <div class="admin-editor-subsection__header">
+            <p class="admin-editor-subsection__label">
+              <i class="fa-solid fa-share-nodes"></i> Redes sociales <code style="font-size:.7rem;opacity:.5">.site-footer__social</code>
+              <span class="admin-badge admin-badge--neutral" style="margin-left:.5rem" id="social-count-badge">3 redes</span>
+            </p>
+            <button type="button" class="admin-btn admin-btn--primary admin-btn--sm">
+              <i class="fa-solid fa-plus"></i> Nueva red
+            </button>
+          </div>
+          <div class="admin-crud-list" id="socialList">
+            <div class="admin-crud-item" data-id="soc-1">
+              <div class="admin-crud-item__icon-wrap"><i class="fa-brands fa-instagram"></i></div>
+              <div class="admin-crud-item__info"><strong>Instagram</strong><small>https://instagram.com/quintadalam</small></div>
+              <div class="admin-crud-item__actions">
+                <button class="admin-icon-btn admin-icon-btn--edit" title="Editar"><i class="fa-solid fa-pen"></i></button>
+                <button class="admin-icon-btn admin-icon-btn--delete" title="Eliminar"><i class="fa-solid fa-trash"></i></button>
+              </div>
+            </div>
+            <div class="admin-crud-item" data-id="soc-2">
+              <div class="admin-crud-item__icon-wrap"><i class="fa-brands fa-facebook"></i></div>
+              <div class="admin-crud-item__info"><strong>Facebook</strong><small>https://facebook.com/quintadalam</small></div>
+              <div class="admin-crud-item__actions">
+                <button class="admin-icon-btn admin-icon-btn--edit" title="Editar"><i class="fa-solid fa-pen"></i></button>
+                <button class="admin-icon-btn admin-icon-btn--delete" title="Eliminar"><i class="fa-solid fa-trash"></i></button>
+              </div>
+            </div>
+
+            <div class="admin-crud-item" data-id="soc-3">
+              <div class="admin-crud-item__icon-wrap"><i class="fa-brands fa-tiktok"></i></div>
+              <div class="admin-crud-item__info"><strong>Tik Tok</strong><small>https://www.tiktok.com/@quintadalam</small></div>
+              <div class="admin-crud-item__actions">
+                <button class="admin-icon-btn admin-icon-btn--edit" title="Editar"><i class="fa-solid fa-pen"></i></button>
+                <button class="admin-icon-btn admin-icon-btn--delete" title="Eliminar"><i class="fa-solid fa-trash"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── SUBSECCIÓN: Badges / Certificaciones ──────────────────
+     Pegar dentro de <section id="sec-footer"> al final,
+     después de la sub-sección de redes sociales
+──────────────────────────────────────────────────────────── -->
+        <div class="admin-editor-subsection">
+          <div class="admin-editor-subsection__header">
+            <p class="admin-editor-subsection__label">
+              <i class="fa-solid fa-certificate"></i> Badges de reconocimiento
+              <code style="font-size:.7rem;opacity:.5">.footer__certifications</code>
+              <span class="admin-badge admin-badge--neutral" style="margin-left:.5rem" id="badges-count-badge">2 badges</span>
+            </p>
+            <button type="button" class="admin-btn admin-btn--primary admin-btn--sm" id="btn-nuevo-badge">
+              <i class="fa-solid fa-plus"></i> Nuevo badge
+            </button>
+          </div>
+
+          <div class="admin-crud-list" id="badgesList">
+
+            <!-- Badge 1 — Pueblo Mágico -->
+            <div class="admin-crud-item" data-badge-id="1">
+              <div class="admin-crud-item__icon-wrap">
+                <i class="fa-solid fa-star"></i>
+              </div>
+              <div class="admin-crud-item__info">
+                <strong>Pueblo Mágico</strong>
+                <small>⭐ Pueblo Mágico · script: W3C validator</small>
+              </div>
+              <div class="admin-crud-item__actions">
+                <button class="admin-icon-btn admin-icon-btn--edit" title="Editar badge" data-action="edit-badge" data-badge-id="1">
+                  <i class="fa-solid fa-pen"></i>
+                </button>
+                <button class="admin-icon-btn admin-icon-btn--delete" title="Quitar badge" data-action="delete-badge" data-badge-id="1">
+                  <i class="fa-solid fa-trash"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Badge 2 — Patrimonio Cultural -->
+            <div class="admin-crud-item" data-badge-id="2">
+              <div class="admin-crud-item__icon-wrap">
+                <i class="fa-solid fa-landmark"></i>
+              </div>
+              <div class="admin-crud-item__info">
+                <strong>Patrimonio Cultural</strong>
+                <small>🏛️ Patrimonio Cultural · script: W3C validator</small>
+              </div>
+              <div class="admin-crud-item__actions">
+                <button class="admin-icon-btn admin-icon-btn--edit" title="Editar badge" data-action="edit-badge" data-badge-id="2">
+                  <i class="fa-solid fa-pen"></i>
+                </button>
+                <button class="admin-icon-btn admin-icon-btn--delete" title="Quitar badge" data-action="delete-badge" data-badge-id="2">
+                  <i class="fa-solid fa-trash"></i>
+                </button>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Estado vacío -->
+          <div class="admin-valores-empty" id="badges-empty" style="display:none;">
+            <i class="fa-solid fa-certificate"></i>
+            <p>No hay badges registrados todavía.</p>
+            <button type="button" class="admin-btn admin-btn--primary admin-btn--sm" id="btn-nuevo-badge-empty">
+              <i class="fa-solid fa-plus"></i> Agregar primer badge
+            </button>
+          </div>
+
+        </div>
+
+      </section>
+
+    </main>
+  </div>
+
+      <!-- MODALES — todos con is-open para visualización sin JS
+  ═══════════════════════════════════════════════════════════  -->
+
+  <!-- Modal: Room Card -->
+  <div class="admin-modal-backdrop " id="modalRoomCard" role="dialog" aria-modal="true" aria-labelledby="modalRoomTitle">
+    <div class="admin-modal">
+      <div class="admin-modal__header">
+        <h2 class="admin-modal__title" id="modalRoomTitle"><i class="fa-solid fa-bed"></i> Nueva tarjeta de habitación</h2>
+        <button class="admin-modal__close" aria-label="Cerrar"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <form class="admin-modal__form" novalidate>
+        <div class="admin-form-grid">
+          <div class="admin-form__group">
+            <label class="admin-form__label" for="rc-nombre">Nombre</label>
+            <input class="admin-form__input" type="text" id="rc-nombre" placeholder="Ej. Uruapan">
+          </div>
+          <div class="admin-form__group">
+            <label class="admin-form__label" for="rc-badge">Badge / Categoría</label>
+            <select class="admin-form__input" id="rc-badge">
+              <option value="">Selecciona…</option>
+              <option>Suite Deluxe</option><option>Suite Superior</option><option>Suite Estudio</option>
+            </select>
+          </div>
+          <div class="admin-form__group admin-form__group--full">
+            <label class="admin-form__label" for="rc-sub">Subtítulo en cursiva</label>
+            <input class="admin-form__input" type="text" id="rc-sub" placeholder="Ej. Naturaleza &amp; Tradición">
+          </div>
+          <div class="admin-form__group admin-form__group--full">
+            <label class="admin-form__label" for="rc-desc">Descripción</label>
+            <textarea class="admin-form__input" id="rc-desc" rows="2" placeholder="Frescura, armonía y descanso…"></textarea>
+          </div>
+          <div class="admin-form__group">
+            <label class="admin-form__label" for="rc-link">URL — botón "Ver detalles"</label>
+            <input class="admin-form__input" type="text" id="rc-link" value="./src/pages/habitaciones.html">
+          </div>
+        </div>
+        <div class="admin-form__group admin-form__group--full">
+          <label class="admin-form__label">Amenidades</label>
+          <div class="admin-checkboxes">
+            <label class="admin-checkbox"><input type="checkbox" id="rc-am-wifi"> <i class="fa-solid fa-wifi"></i> Wi-Fi</label>
+            <label class="admin-checkbox"><input type="checkbox" id="rc-am-ac"> <i class="fa-solid fa-snowflake"></i> Aire acondicionado</label>
+            <label class="admin-checkbox"><input type="checkbox" id="rc-am-desayuno"> <i class="fa-solid fa-mug-hot"></i> Desayuno</label>
+            <label class="admin-checkbox"><input type="checkbox" id="rc-am-tina"> <i class="fa-solid fa-bath"></i> Tina de baño</label>
+          </div>
+        </div>
+        <div class="admin-form__group admin-form__group--full">
+          <label class="admin-form__label">Imagen</label>
+          <div class="admin-upload">
+            <i class="fa-solid fa-cloud-arrow-up"></i>
+            <p>Arrastra una imagen o <span>haz clic para subir</span></p>
+            <small>JPG · 800 × 600 px · Máximo 2 MB</small>
+            <input type="file" accept="image/*" class="admin-upload__input">
+          </div>
+        </div>
+        <div class="admin-form__group admin-form__group--full">
+          <label class="admin-checkbox admin-checkbox--featured">
+            <input type="checkbox" id="rc-featured"> <i class="fa-solid fa-star"></i> Tarjeta <strong>destacada</strong>
+          </label>
+        </div>
+        <div class="admin-modal__actions">
+          <button type="button" class="admin-btn admin-btn--ghost">Cancelar</button>
+          <button type="submit" class="admin-btn admin-btn--primary"><i class="fa-solid fa-floppy-disk"></i> Guardar tarjeta</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Exp Card -->
+  <div class="admin-modal-backdrop " id="modalExpCard" role="dialog" aria-modal="true" aria-labelledby="modalExpTitle">
+    <div class="admin-modal">
+      <div class="admin-modal__header">
+        <h2 class="admin-modal__title" id="modalExpTitle"><i class="fa-solid fa-camera"></i> Nueva tarjeta de experiencia</h2>
+        <button class="admin-modal__close" aria-label="Cerrar"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <form class="admin-modal__form" novalidate>
+        <div class="admin-form-grid">
+          <div class="admin-form__group admin-form__group--full">
+            <label class="admin-form__label" for="ec-titulo">Título</label>
+            <input class="admin-form__input" type="text" id="ec-titulo" placeholder="Ej. Artesanía Tradicional">
+          </div>
+          <div class="admin-form__group admin-form__group--full">
+            <label class="admin-form__label" for="ec-alt">Texto alternativo (accesibilidad)</label>
+            <input class="admin-form__input" type="text" id="ec-alt" placeholder="Ej. Artesanía tradicional michoacana">
+          </div>
+        </div>
+        <div class="admin-form__group admin-form__group--full">
+          <label class="admin-form__label">Imagen</label>
+          <div class="admin-upload">
+            <i class="fa-solid fa-cloud-arrow-up"></i>
+            <p>Arrastra una imagen o <span>haz clic para subir</span></p>
+            <small>JPG · 600 × 600 px · Máximo 2 MB</small>
+            <input type="file" accept="image/*" class="admin-upload__input">
+          </div>
+        </div>
+        <div class="admin-modal__actions">
+          <button type="button" class="admin-btn admin-btn--ghost">Cancelar</button>
+          <button type="submit" class="admin-btn admin-btn--primary"><i class="fa-solid fa-floppy-disk"></i> Guardar experiencia</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Service Card -->
+  <div class="admin-modal-backdrop " id="modalServiceCard" role="dialog" aria-modal="true" aria-labelledby="modalSrvTitle">
+    <div class="admin-modal">
+      <div class="admin-modal__header">
+        <h2 class="admin-modal__title" id="modalSrvTitle"><i class="fa-solid fa-concierge-bell"></i> Nueva tarjeta de servicio</h2>
+        <button class="admin-modal__close" aria-label="Cerrar"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <form class="admin-modal__form" novalidate>
+        <div class="admin-form-grid">
+          <div class="admin-form__group">
+            <label class="admin-form__label" for="sc-icono">Ícono Font Awesome</label>
+            <input class="admin-form__input" type="text" id="sc-icono" placeholder="fa-solid fa-bed">
+          </div>
+          <div class="admin-form__group">
+            <label class="admin-form__label" for="sc-titulo">Título</label>
+            <input class="admin-form__input" type="text" id="sc-titulo" placeholder="Ej. Habitaciones Premium">
+          </div>
+          <div class="admin-form__group admin-form__group--full">
+            <label class="admin-form__label" for="sc-texto">Descripción</label>
+            <textarea class="admin-form__input" id="sc-texto" rows="2" placeholder="Descripción breve del servicio…"></textarea>
+          </div>
+        </div>
+        <div class="admin-modal__actions">
+          <button type="button" class="admin-btn admin-btn--ghost">Cancelar</button>
+          <button type="submit" class="admin-btn admin-btn--primary"><i class="fa-solid fa-floppy-disk"></i> Guardar tarjeta</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Nav Link -->
+  <div class="admin-modal-backdrop " id="modalNavLink" role="dialog" aria-modal="true" aria-labelledby="modalNavTitle">
+    <div class="admin-modal admin-modal--sm">
+      <div class="admin-modal__header">
+        <h2 class="admin-modal__title" id="modalNavTitle"><i class="fa-solid fa-link"></i> Nuevo link</h2>
+        <button class="admin-modal__close" aria-label="Cerrar"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <form class="admin-modal__form" id="formNavLink" novalidate>
+        <input type="hidden" id="nl-context" value="header">
+        <div class="admin-form__group">
+          <label class="admin-form__label" for="nl-label">Texto del link <span class="admin-form__required">*</span></label>
+          <input class="admin-form__input" type="text" id="nl-label" placeholder="Ej. Habitaciones" required>
+        </div>
+        <div class="admin-form__group">
+          <label class="admin-form__label" for="nl-url">URL <span class="admin-form__required">*</span></label>
+          <input class="admin-form__input" type="text" id="nl-url" placeholder="./src/pages/habitaciones.html" required>
+        </div>
+        <div class="admin-form__group">
+          <label class="admin-form__label" for="nl-icono">Ícono Font Awesome <code style="font-size:.7rem;opacity:.5">opcional</code></label>
+          <div class="admin-icono-preview-wrap">
+            <input class="admin-form__input" type="text" id="nl-icono" placeholder="fa-solid fa-house">
+            <span class="admin-icono-preview" id="nl-icono-preview"><i class="fa-solid fa-link"></i></span>
+          </div>
+        </div>
+        <div class="admin-modal__actions">
+          <button type="button" class="admin-btn admin-btn--ghost">Cancelar</button>
+          <button type="submit" class="admin-btn admin-btn--primary"><i class="fa-solid fa-floppy-disk"></i> Guardar link</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Red social -->
+  <div class="admin-modal-backdrop " id="modalSocial" role="dialog" aria-modal="true" aria-labelledby="modalSocialTitle">
+    <div class="admin-modal admin-modal--sm">
+      <div class="admin-modal__header">
+        <h2 class="admin-modal__title" id="modalSocialTitle"><i class="fa-solid fa-share-nodes"></i> Nueva red social</h2>
+        <button class="admin-modal__close" aria-label="Cerrar"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <form class="admin-modal__form" id="formSocial" novalidate>
+        <div class="admin-form__group">
+          <label class="admin-form__label" for="soc-red">Nombre de la red <span class="admin-form__required">*</span></label>
+          <input class="admin-form__input" type="text" id="soc-red" placeholder="Ej. TikTok" required>
+        </div>
+        <div class="admin-form__group">
+          <label class="admin-form__label" for="soc-icono">Ícono Font Awesome <span class="admin-form__required">*</span></label>
+          <div class="admin-icono-preview-wrap">
+            <input class="admin-form__input" type="text" id="soc-icono" placeholder="fa-brands fa-instagram" required>
+            <span class="admin-icono-preview" id="soc-icono-preview"><i class="fa-solid fa-share-nodes"></i></span>
+          </div>
+        </div>
+        <div class="admin-form__group">
+          <label class="admin-form__label" for="soc-url">URL del perfil <span class="admin-form__required">*</span></label>
+          <input class="admin-form__input" type="url" id="soc-url" placeholder="https://instagram.com/tu_usuario" required>
+        </div>
+        <div class="admin-modal__actions">
+          <button type="button" class="admin-btn admin-btn--ghost">Cancelar</button>
+          <button type="submit" class="admin-btn admin-btn--primary"><i class="fa-solid fa-floppy-disk"></i> Guardar red</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Confirmar eliminación -->
+  <div class="admin-modal-backdrop " id="modalConfirm" role="dialog" aria-modal="true" aria-labelledby="modalConfirmTitle">
+    <div class="admin-modal admin-modal--sm">
+      <div class="admin-modal__header">
+        <h2 class="admin-modal__title admin-modal__title--danger" id="modalConfirmTitle">
+          <i class="fa-solid fa-triangle-exclamation"></i> Confirmar eliminación
+        </h2>
+        <button class="admin-modal__close" aria-label="Cerrar"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="admin-modal__body">
+        <p id="modalConfirmMsg">¿Estás seguro? Esta acción no se puede deshacer.</p>
+      </div>
+      <div class="admin-modal__actions">
+        <button type="button" class="admin-btn admin-btn--ghost">Cancelar</button>
+        <button type="button" class="admin-btn admin-btn--danger" id="btnConfirmDelete">
+          <i class="fa-solid fa-trash"></i> Eliminar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Crear / Editar badge -->
+  <div class="admin-modal-backdrop " id="modalBadge" role="dialog" aria-modal="true" aria-labelledby="modalBadgeTitle">
+    <div class="admin-modal admin-modal--sm">
+      <div class="admin-modal__header">
+        <h2 class="admin-modal__title" id="modalBadgeTitle">
+          <i class="fa-solid fa-certificate"></i>
+          <span id="modal-badge-title-text">Nuevo badge</span>
+        </h2>
+        <button class="admin-modal__close" aria-label="Cerrar"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <form class="admin-modal__form" id="form-badge" novalidate>
+        <input type="hidden" id="badge-edit-id" value="">
+
+        <div class="admin-form__group">
+          <label class="admin-form__label" for="badge-label">
+            Etiqueta visible <span class="admin-form__required">*</span>
+          </label>
+          <input
+            class="admin-form__input"
+            type="text"
+            id="badge-label"
+            placeholder="Ej. ⭐ Pueblo Mágico"
+            required
+          >
+          <small style="color:rgba(234,228,216,.35); font-size:.68rem; margin-top:.25rem; display:block">
+            Texto (con emoji opcional) que aparece dentro del badge en el footer.
+          </small>
+        </div>
+
+        <div class="admin-form__group">
+          <label class="admin-form__label" for="badge-script">
+            Script embed del validador <span class="admin-form__required">*</span>
+          </label>
+          <textarea
+            class="admin-form__input"
+            id="badge-script"
+            rows="5"
+            placeholder="Pega aquí el código <script> o <a> del validador W3C…"
+            required
+            style="font-family: monospace; font-size: .72rem; resize: vertical;"
+          ></textarea>
+          <small style="color:rgba(234,228,216,.35); font-size:.68rem; margin-top:.25rem; display:block">
+            El código se inyectará dentro de
+            <code style="background:rgba(255,255,255,.07); padding:1px 5px; border-radius:3px">.footer__certifications</code>
+            en todas las páginas donde esté incluido el footer.
+          </small>
+        </div>
+
+        <!-- Vista previa del script (solo lectura) -->
+        <div class="admin-form__group" id="badge-preview-wrap" style="display:none;">
+          <label class="admin-form__label">Vista previa del badge</label>
+          <div
+            id="badge-preview-render"
+            style="
+              padding: .5rem 1rem;
+              background: rgba(255,255,255,.04);
+              border: 1px solid rgba(234,228,216,.12);
+              border-radius: 6px;
+              font-size: .8rem;
+              color: rgba(234,228,216,.6);
+              min-height: 36px;
+              display: flex;
+              align-items: center;
+            "
+          >
+            <!-- JS inyectará el span con el label aquí -->
+          </div>
+        </div>
+
+        <div class="admin-modal__actions">
+          <button type="button" class="admin-btn admin-btn--ghost">Cancelar</button>
+          <button type="submit" class="admin-btn admin-btn--primary">
+            <i class="fa-solid fa-floppy-disk"></i>
+            <span id="badge-submit-label">Guardar badge</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Confirmar eliminación de badge -->
+  <div class="admin-modal-backdrop " id="modalConfirmBadge" role="dialog" aria-modal="true" aria-labelledby="modalConfirmBadgeTitle">
+    <div class="admin-modal admin-modal--sm">
+      <div class="admin-modal__header">
+        <h2 class="admin-modal__title admin-modal__title--danger" id="modalConfirmBadgeTitle">
+          <i class="fa-solid fa-triangle-exclamation"></i> Quitar badge
+        </h2>
+        <button class="admin-modal__close" aria-label="Cerrar"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="admin-modal__body">
+        <p>
+          ¿Estás seguro de que deseas quitar el badge
+          <strong id="confirm-badge-nombre">"Pueblo Mágico"</strong>
+          del footer? El script asociado dejará de mostrarse en todas las páginas.
+        </p>
+      </div>
+      <div class="admin-modal__actions">
+        <button type="button" class="admin-btn admin-btn--ghost">Cancelar</button>
+        <button type="button" class="admin-btn admin-btn--danger" id="btnConfirmDeleteBadge">
+          <i class="fa-solid fa-trash"></i> Sí, quitar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  /*
+  (() => {
+    window.openModal = function(id, data, context) {
+      const backdrop = document.getElementById(id);
+      backdrop.classList.add('is-open');
+      document.body.style.overflow = 'hidden';
+      // ... (lógica de llenado de datos por modal)
+    };
+
+    window.closeModal = function(id) {
+      document.getElementById(id).classList.remove('is-open');
+      document.body.style.overflow = '';
+    };
+
+    document.querySelectorAll('.admin-modal-backdrop').forEach(b => {
+      b.addEventListener('click', e => { if (e.target === b) closeModal(b.id); });
+    });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') {
+        document.querySelectorAll('.admin-modal-backdrop.is-open').forEach(m => m.classList.remove('is-open'));
+        document.body.style.overflow = '';
+      }
+    });
+
+    document.getElementById('nl-icono').addEventListener('input', e => {
+      document.getElementById('nl-icono-preview').innerHTML = `<i class="${e.target.value.trim() || 'fa-solid fa-link'}"></i>`;
+    });
+    document.getElementById('soc-icono').addEventListener('input', e => {
+      document.getElementById('soc-icono-preview').innerHTML = `<i class="${e.target.value.trim() || 'fa-solid fa-share-nodes'}"></i>`;
+    });
+
+    // Submit Nav Link, Social, Delete, Badges, Toggle visible/oculto...
+    // (ver versión completa con JS activo)
+
+    ['about','cta'].forEach(key => {
+      const input = document.getElementById('toggle-' + key);
+      const label = document.getElementById('toggle-' + key + '-label');
+      if (input && label) {
+        input.addEventListener('change', () => {
+          label.textContent = input.checked ? 'Visible' : 'Oculto';
+          label.style.color = input.checked ? 'rgba(234,228,216,.55)' : 'rgba(224,85,85,.7)';
+        });
+      }
+    });
+  })();
+  */
+  </script>
+
+</body>
+</html>
