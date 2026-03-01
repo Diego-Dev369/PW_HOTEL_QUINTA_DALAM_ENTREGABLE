@@ -1,474 +1,778 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Habitaciones – Hotel Quinta Dalam, Pueblos Mágicos de Michoacán">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link rel="stylesheet" href="./../styles/main.css">
-  <title>Hotel Quinta Dalam | Habitaciones</title>
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Habitaciones – Hotel Quinta Dalam, Pueblos Mágicos de Michoacán"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Lato:wght@300;400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="./../styles/main.css" />
+    <title>Hotel Quinta Dalam | Habitaciones</title>
+  </head>
+  <body>
+    <input
+      type="checkbox"
+      id="nav-toggle"
+      class="header__nav-toggle-input"
+      hidden
+    />
 
-  <input type="checkbox" id="nav-toggle" class="header__nav-toggle-input" hidden>
-
-  <header class="header">
-    <div class="header__brand">
-      <a href="../../index.html" class="header__logo-link" aria-label="Hotel Quinta Dalam – Inicio">
-        <img
-          src="../assets/icons/posible_logo.jpeg"
-          alt="Logo Hotel Quinta Dalam"
-          class="header__logo-img"
-          width="44" height="44">
-        <div class="header__logo-text">
-          <span class="header__logo-name">Hotel Quinta Dalam</span>
-          <span class="header__logo-tagline">Pueblos Mágicos · Michoacán</span>
-        </div>
-      </a>
-    </div>
-
-    <nav class="header__nav" aria-label="Navegación principal">
-      <ul class="header__menu" role="list">
-        <li><a href="habitaciones.html"             class="header__link header__link--active">Habitaciones</a></li>
-        <li><a href="../../index.html#experiencias" class="header__link">Experiencias</a></li>
-        <li><a href="../../index.html#servicios"    class="header__link">Servicios</a></li>
-        <li><a href="nosotros.html"                 class="header__link">Nosotros</a></li>
-        <li><a href="contacto.html"                 class="header__link">Contacto</a></li>
-      </ul>
-      <div class="header__mobile-actions">
-        <a href="login.html"         class="header__mobile-login">Iniciar Sesión</a>
-        <a href="reservaciones.html" class="header__mobile-cta">Reservar Ahora</a>
-      </div>
-    </nav>
-
-    <div class="header__actions" aria-label="Acciones de usuario">
-      <a href="#" class="header__lang-switch">
-        <img src="./../assets/icons/bandera_mexico.png" alt="Cambiar idioma a español" class="header__flag" width="18" height="12">
-        ES
-      </a>
-      <span class="header__divider" aria-hidden="true"></span>
-      <a href="#" class="header__lang-switch">
-        <img src="./../assets/icons/bandera_eu.png" alt="Switch language to English" class="header__flag" width="18" height="12">
-        EN
-      </a>
-      <a href="./login.html"         class="header__login">Iniciar Sesión</a>
-      <a href="./reservaciones.html" class="header__cta">Reservar</a>
-    </div>
-
-    <label for="nav-toggle" class="header__hamburger" aria-label="Abrir menú de navegación">
-      <span class="header__hamburger-bar"></span>
-      <span class="header__hamburger-bar"></span>
-      <span class="header__hamburger-bar"></span>
-    </label>
-  </header>
-
-
-  <div class="page-hero" aria-label="Encabezado de página">
-    <div class="container">
-      <span class="page-hero__eyebrow">Nuestras Suites</span>
-      <h1 class="page-hero__title">Descanso y <em>Tradición</em></h1>
-      <p class="page-hero__subtitle">
-        Cada espacio ha sido diseñado para reflejar la esencia de Michoacán,
-        combinando artesanía local con el máximo confort contemporáneo.
-      </p>
-      <span class="page-hero__ornament" aria-hidden="true">✦ ─── ✦ ─── ✦</span>
-    </div>
-  </div>
-
-  <!-- ═══ LISTADO DE HABITACIONES ══════════════════════════ -->
-  <main>
-    <section class="section section--cream rooms-page" aria-labelledby="h2-suites">
-
-      <!-- Encabezado de sección opcional -->
-      <div class="container">
-        <div class="section__header">
-          <span class="section__eyebrow">Disponibilidad</span>
-          <h2 class="section__title" id="h2-suites">Elige tu <em>Suite</em></h2>
-          <p class="section__subtitle">Cada habitación lleva el nombre de un Pueblo Mágico de Michoacán</p>
-          <span class="section__ornament" aria-hidden="true">✦ ─── ✦ ─── ✦</span>
-        </div>
+    <header class="header">
+      <div class="header__brand">
+        <a
+          href="../../index.html"
+          class="header__logo-link"
+          aria-label="Hotel Quinta Dalam – Inicio"
+        >
+          <img
+            src="../assets/icons/posible_logo.jpeg"
+            alt="Logo Hotel Quinta Dalam"
+            class="header__logo-img"
+            width="44"
+            height="44"
+          />
+          <div class="header__logo-text">
+            <span class="header__logo-name">Hotel Quinta Dalam</span>
+            <span class="header__logo-tagline"
+              >Pueblos Mágicos · Michoacán</span
+            >
+          </div>
+        </a>
       </div>
 
-      <!-- Lista de habitaciones — un solo contenedor -->
-      <div class="container">
-        <div class="rooms-page__list">
-
-          <!-- ── Suite Uruapan ─────────────────────────── -->
-          <article class="room-row" id="suite-uruapan">
-            <div class="room-row__left">
-              <div class="room-card">
-                <div class="room-card__img-wrap">
-                  <img
-                    src="../assets/images/rooms/204-uruapan.jpeg"
-                    alt="Suite Uruapan — vista interior con decoración michoacana"
-                    class="room-card__img"
-                    loading="lazy"
-                    width="600" height="450">
-                  <span class="room-card__badge">Suite Deluxe</span>
-                </div>
-                <div class="room-card__body">
-                  <h3 class="room-card__title">Uruapan</h3>
-                  <em class="room-card__sub">Naturaleza &amp; Tradición</em>
-                  <p class="room-card__desc">Frescura, armonía y descanso entre ecos de bosque y artesanía local.</p>
-                  <ul class="room-card__amenities" aria-label="Amenidades de la Suite Uruapan">
-                    <li class="room-card__amenity" title="Wi-Fi incluido"><i class="fa-solid fa-wifi" aria-hidden="true"></i></li>
-                    <li class="room-card__amenity" title="Aire acondicionado"><i class="fa-solid fa-snowflake" aria-hidden="true"></i></li>
-                    <li class="room-card__amenity" title="Desayuno incluido"><i class="fa-solid fa-mug-hot" aria-hidden="true"></i></li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div class="room-row__right">
-              <h3 class="room-row__title">Suite <em>Uruapan</em></h3>
-              <p class="room-row__text">
-                Equipada con detalles en madera tallada a mano y textiles originarios de la región purépecha. Su distribución ofrece un ambiente de relajación total, ideal para quienes buscan escapar del ruido y disfrutar de una noche de sueño reparador entre aromas de bosque.
-              </p>
-              <div class="room-row__specs">
-                <span><i class="fa-solid fa-user-group" aria-hidden="true"></i> 2 Personas</span>
-                <span><i class="fa-solid fa-bed" aria-hidden="true"></i> 1 King Size</span>
-                <span><i class="fa-solid fa-expand" aria-hidden="true"></i> 28 m²</span>
-              </div>
-              <div class="room-row__action">
-                <div class="room-row__price">
-                  <small>Tarifa por noche</small>
-                  <strong>$2,500 <span>MXN</span></strong>
-                </div>
-                <a href="reservaciones.html" class="btn btn--primary">Reservar Ahora</a>
-              </div>
-            </div>
-          </article>
-
-          <!-- ── Suite Yunuen ──────────────────────────── -->
-          <article class="room-row" id="suite-yunuen">
-            <div class="room-row__left">
-              <div class="room-card">
-                <div class="room-card__img-wrap">
-                  <img
-                    src="../assets/images/rooms/103-yunuen.jpeg"
-                    alt="Suite Yunuen — habitación con vista al jardín"
-                    class="room-card__img"
-                    loading="lazy"
-                    width="600" height="450">
-                  <span class="room-card__badge">Suite Deluxe</span>
-                </div>
-                <div class="room-card__body">
-                  <h3 class="room-card__title">Yunuen</h3>
-                  <em class="room-card__sub">Lago &amp; Serenidad</em>
-                  <p class="room-card__desc">Calma lacustre y paz profunda inspirada en la isla de Janitzio.</p>
-                  <ul class="room-card__amenities" aria-label="Amenidades de la Suite Yunuen">
-                    <li class="room-card__amenity" title="Wi-Fi incluido"><i class="fa-solid fa-wifi" aria-hidden="true"></i></li>
-                    <li class="room-card__amenity" title="Aire acondicionado"><i class="fa-solid fa-snowflake" aria-hidden="true"></i></li>
-                    <li class="room-card__amenity" title="Desayuno incluido"><i class="fa-solid fa-mug-hot" aria-hidden="true"></i></li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div class="room-row__right">
-              <h3 class="room-row__title">Suite <em>Yunuen</em></h3>
-              <p class="room-row__text">
-                Inspirada en la tranquilidad de las islas del lago de Pátzcuaro, esta suite combina tonos tierra con piezas artesanales únicas. Un espacio íntimo diseñado para el descanso absoluto, con iluminación cálida y acabados naturales que evocan la orilla del lago.
-              </p>
-              <div class="room-row__specs">
-                <span><i class="fa-solid fa-user-group" aria-hidden="true"></i> 2 Personas</span>
-                <span><i class="fa-solid fa-bed" aria-hidden="true"></i> 1 King Size</span>
-                <span><i class="fa-solid fa-expand" aria-hidden="true"></i> 30 m²</span>
-              </div>
-              <div class="room-row__action">
-                <div class="room-row__price">
-                  <small>Tarifa por noche</small>
-                  <strong>$2,700 <span>MXN</span></strong>
-                </div>
-                <a href="reservaciones.html" class="btn btn--primary">Reservar Ahora</a>
-              </div>
-            </div>
-          </article>
-
-          <!-- ── Suite Pátzcuaro ───────────────────────── -->
-          <article class="room-row" id="suite-patzcuaro">
-            <div class="room-row__left">
-              <div class="room-card room-card--featured">
-                <div class="room-card__img-wrap">
-                  <img
-                    src="../assets/images/rooms/104-patzcuaro.jpeg"
-                    alt="Suite Pátzcuaro — suite superior con elegancia colonial"
-                    class="room-card__img"
-                    loading="lazy"
-                    width="600" height="450">
-                  <span class="room-card__badge">Suite Superior</span>
-                </div>
-                <div class="room-card__body">
-                  <h3 class="room-card__title">Pátzcuaro</h3>
-                  <em class="room-card__sub">Historia &amp; Elegancia</em>
-                  <p class="room-card__desc">Elegancia clásica y serenidad a orillas del lago más místico de México.</p>
-                  <ul class="room-card__amenities" aria-label="Amenidades de la Suite Pátzcuaro">
-                    <li class="room-card__amenity" title="Wi-Fi incluido"><i class="fa-solid fa-wifi" aria-hidden="true"></i></li>
-                    <li class="room-card__amenity" title="Aire acondicionado"><i class="fa-solid fa-snowflake" aria-hidden="true"></i></li>
-                    <li class="room-card__amenity" title="Desayuno incluido"><i class="fa-solid fa-mug-hot" aria-hidden="true"></i></li>
-                    <li class="room-card__amenity" title="Tina de baño"><i class="fa-solid fa-bath" aria-hidden="true"></i></li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div class="room-row__right">
-              <h3 class="room-row__title">Suite <em>Pátzcuaro</em></h3>
-              <p class="room-row__text">
-                Nuestra suite más emblemática rinde homenaje a la ciudad colonial más bella de Michoacán. Con vigas de madera originales, tapetes artesanales y una tina de baño de cantera rosada, esta suite eleva cada instante a una experiencia de lujo auténtico.
-              </p>
-              <div class="room-row__specs">
-                <span><i class="fa-solid fa-user-group" aria-hidden="true"></i> 2 Personas</span>
-                <span><i class="fa-solid fa-bed" aria-hidden="true"></i> 1 King Size</span>
-                <span><i class="fa-solid fa-expand" aria-hidden="true"></i> 35 m²</span>
-                <span><i class="fa-solid fa-bath" aria-hidden="true"></i> Tina incluida</span>
-              </div>
-              <div class="room-row__action">
-                <div class="room-row__price">
-                  <small>Tarifa por noche</small>
-                  <strong>$3,200 <span>MXN</span></strong>
-                </div>
-                <a href="reservaciones.html" class="btn btn--primary">Reservar Ahora</a>
-              </div>
-            </div>
-          </article>
-
-          <!-- ── Suite Tlalpujagua ─────────────────────── -->
-          <article class="room-row" id="suite-tlalpujagua">
-            <div class="room-row__left">
-              <div class="room-card">
-                <div class="room-card__img-wrap">
-                  <img
-                    src="../assets/images/rooms/205-tlalpujagua.jpeg"
-                    alt="Suite Tlalpujagua — decoración artesanal con esferas navideñas"
-                    class="room-card__img"
-                    loading="lazy"
-                    width="600" height="450">
-                  <span class="room-card__badge">Suite Estudio</span>
-                </div>
-                <div class="room-card__body">
-                  <h3 class="room-card__title">Tlalpujagua</h3>
-                  <em class="room-card__sub">Color &amp; Artesanía</em>
-                  <p class="room-card__desc">Vivacidad, color y el espíritu artesanal de la capital de las esferas.</p>
-                  <ul class="room-card__amenities" aria-label="Amenidades de la Suite Tlalpujagua">
-                    <li class="room-card__amenity" title="Wi-Fi incluido"><i class="fa-solid fa-wifi" aria-hidden="true"></i></li>
-                    <li class="room-card__amenity" title="Aire acondicionado"><i class="fa-solid fa-snowflake" aria-hidden="true"></i></li>
-                    <li class="room-card__amenity" title="Desayuno incluido"><i class="fa-solid fa-mug-hot" aria-hidden="true"></i></li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div class="room-row__right">
-              <h3 class="room-row__title">Suite <em>Tlalpujagua</em></h3>
-              <p class="room-row__text">
-                Decorada con las icónicas esferas de vidrio soplado del pueblo mágico homónimo, esta suite celebra el color y la creatividad michoacana. Un refugio alegre y cálido, perfecto para quienes buscan una estancia con personalidad y carácter propio.
-              </p>
-              <div class="room-row__specs">
-                <span><i class="fa-solid fa-user-group" aria-hidden="true"></i> 2 Personas</span>
-                <span><i class="fa-solid fa-bed" aria-hidden="true"></i> 1 Queen Size</span>
-                <span><i class="fa-solid fa-expand" aria-hidden="true"></i> 26 m²</span>
-              </div>
-              <div class="room-row__action">
-                <div class="room-row__price">
-                  <small>Tarifa por noche</small>
-                  <strong>$2,500 <span>MXN</span></strong>
-                </div>
-                <a href="reservaciones.html" class="btn btn--primary">Reservar Ahora</a>
-              </div>
-            </div>
-          </article>
-
-          <!-- ── Suite Cuanajo ─────────────────────────── -->
-          <article class="room-row" id="suite-cuanajo">
-            <div class="room-row__left">
-              <div class="room-card">
-                <div class="room-card__img-wrap">
-                  <img
-                    src="../assets/images/rooms/207-cuanajo.jpeg"
-                    alt="Suite Cuanajo — vista interior con decoración michoacana"
-                    class="room-card__img"
-                    loading="lazy"
-                    width="600" height="450">
-                  <span class="room-card__badge">Suite Deluxe</span>
-                </div>
-                <div class="room-card__body">
-                  <h3 class="room-card__title">Cuanajo</h3>
-                  <em class="room-card__sub">Naturaleza &amp; Tradición</em>
-                  <p class="room-card__desc">Frescura, armonía y descanso entre ecos de bosque y artesanía local.</p>
-                  <ul class="room-card__amenities" aria-label="Amenidades de la Suite Uruapan">
-                    <li class="room-card__amenity" title="Wi-Fi incluido"><i class="fa-solid fa-wifi" aria-hidden="true"></i></li>
-                    <li class="room-card__amenity" title="Aire acondicionado"><i class="fa-solid fa-snowflake" aria-hidden="true"></i></li>
-                    <li class="room-card__amenity" title="Desayuno incluido"><i class="fa-solid fa-mug-hot" aria-hidden="true"></i></li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div class="room-row__right">
-              <h3 class="room-row__title">Suite <em>Cuanajo</em></h3>
-              <p class="room-row__text">
-                Equipada con detalles en madera tallada a mano y textiles originarios de la región purépecha. Su distribución ofrece un ambiente de relajación total, ideal para quienes buscan escapar del ruido y disfrutar de una noche de sueño reparador entre aromas de bosque.
-              </p>
-              <div class="room-row__specs">
-                <span><i class="fa-solid fa-user-group" aria-hidden="true"></i> 4 Personas</span>
-                <span><i class="fa-solid fa-bed" aria-hidden="true"></i> 2 matrimoniales</span>
-                <span><i class="fa-solid fa-expand" aria-hidden="true"></i> 28 m²</span>
-              </div>
-              <div class="room-row__action">
-                <div class="room-row__price">
-                  <small>Tarifa por noche</small>
-                  <strong>$1,700 <span>MXN</span></strong>
-                </div>
-                <a href="reservaciones.html" class="btn btn--primary">Reservar Ahora</a>
-              </div>
-            </div>
-          </article>
-
-          <!-- ── Suite Cuanajo ─────────────────────────── -->
-          <article class="room-row" id="suite-paracho">
-            <div class="room-row__left">
-              <div class="room-card">
-                <div class="room-card__img-wrap">
-                  <img
-                    src="../assets/images/rooms/102-paracho.jpeg"
-                    alt="Suite Cuanajo — vista interior con decoración michoacana"
-                    class="room-card__img"
-                    loading="lazy"
-                    width="600" height="450">
-                  <span class="room-card__badge">Suite Deluxe</span>
-                </div>
-                <div class="room-card__body">
-                  <h3 class="room-card__title">Paracho</h3>
-                  <em class="room-card__sub">Sofisticación &amp; Cultura</em>
-                  <p class="room-card__desc">Frescura, armonía y descanso entre ecos de bosque y artesanía local.</p>
-                  <ul class="room-card__amenities" aria-label="Amenidades de la Suite Paracho">
-                    <li class="room-card__amenity" title="Wi-Fi incluido"><i class="fa-solid fa-wifi" aria-hidden="true"></i></li>
-                    <li class="room-card__amenity" title="Aire acondicionado"><i class="fa-solid fa-snowflake" aria-hidden="true"></i></li>
-                    <li class="room-card__amenity" title="Desayuno incluido"><i class="fa-solid fa-mug-hot" aria-hidden="true"></i></li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div class="room-row__right">
-              <h3 class="room-row__title">Suite <em>Paracho</em></h3>
-              <p class="room-row__text">
-                Equipada con detalles en madera tallada a mano y textiles originarios de la región purépecha. Su distribución ofrece un ambiente de relajación total, ideal para quienes buscan escapar del ruido y disfrutar de una noche de sueño reparador entre aromas de bosque.
-              </p>
-              <div class="room-row__specs">
-                <span><i class="fa-solid fa-user-group" aria-hidden="true"></i> 4 Personas</span>
-                <span><i class="fa-solid fa-bed" aria-hidden="true"></i> 2 matrimoniales</span>
-                <span><i class="fa-solid fa-expand" aria-hidden="true"></i> 28 m²</span>
-              </div>
-              <div class="room-row__action">
-                <div class="room-row__price">
-                  <small>Tarifa por noche</small>
-                  <strong>$3,100 <span>MXN</span></strong>
-                </div>
-                <a href="reservaciones.html" class="btn btn--primary">Reservar Ahora</a>
-              </div>
-            </div>
-          </article>
-
-        </div>
-      </div>
-    </section>
-
-
-    <!-- ── CTA BAND ──────────────────────────────────────── -->
-    <section class="cta-band" aria-label="Llamada a reservar">
-      <div class="cta-band__inner">
-        <div class="cta-band__text">
-          <span class="section__eyebrow section__eyebrow--gold">¿Lista tu suite favorita?</span>
-          <h2 class="cta-band__title">Confirma tu <em>reservación</em></h2>
-          <p class="cta-band__desc">Disponibilidad limitada. Asegura tu estancia hoy.</p>
-        </div>
-        <div class="cta-band__actions">
-          <a href="reservaciones.html" class="btn btn--primary">Ver disponibilidad</a>
-          <a href="contacto.html"      class="btn btn--ghost">Contáctanos</a>
-        </div>
-      </div>
-    </section>
-
-  </main>
-
-  <!-- ═══ FOOTER ══════════════════════════════════════════ -->
-  <footer class="footer">
-    <div class="footer__top">
-
-      <div class="footer__brand">
-        <img
-          src="../assets/icons/posible_logo.jpeg"
-          alt="Logo Hotel Quinta Dalam"
-          class="footer__brand-logo"
-          width="52" height="52">
-        <p class="footer__brand-name">Hotel Quinta Dalam</p>
-        <p class="footer__brand-tagline">Pueblos Mágicos · Michoacán</p>
-        <p class="footer__brand-desc">Un refugio colonial donde la tradición y el lujo se encuentran en el corazón de Michoacán.</p>
-      </div>
-
-      <nav aria-label="Mapa del sitio">
-        <p class="footer__nav-title">Explore</p>
-        <ul class="footer__nav-list" role="list">
-          <li><a href="habitaciones.html"  class="footer__nav-link">Habitaciones</a></li>
-          <li><a href="reservaciones.html" class="footer__nav-link">Reservaciones</a></li>
-          <li><a href="nosotros.html"      class="footer__nav-link">Nosotros</a></li>
-          <li><a href="contacto.html"      class="footer__nav-link">Contacto</a></li>
+      <nav class="header__nav" aria-label="Navegación principal">
+        <ul class="header__menu" role="list">
+          <li>
+            <a
+              href="habitaciones.html"
+              class="header__link header__link--active"
+              >Habitaciones</a
+            >
+          </li>
+          <li>
+            <a href="../../index.html#experiencias" class="header__link"
+              >Experiencias</a
+            >
+          </li>
+          <li>
+            <a href="../../index.html#servicios" class="header__link"
+              >Servicios</a
+            >
+          </li>
+          <li><a href="nosotros.html" class="header__link">Nosotros</a></li>
+          <li><a href="contacto.html" class="header__link">Contacto</a></li>
         </ul>
+        <div class="header__mobile-actions">
+          <a href="login.html" class="header__mobile-login">Iniciar Sesión</a>
+          <a href="reservaciones.html" class="header__mobile-cta"
+            >Reservar Ahora</a
+          >
+        </div>
       </nav>
 
-      <div>
-        <p class="footer__nav-title">Contacto</p>
-        <address class="footer__address">
-          <p><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Morelia, Michoacán, México</p>
-          <p><i class="fa-solid fa-phone"        aria-hidden="true"></i> <a href="tel:+524430000000">+52 443 000 0000</a></p>
-          <p><i class="fa-solid fa-envelope"     aria-hidden="true"></i> <a href="mailto:reservas@quintadalam.mx">reservas@quintadalam.mx</a></p>
-        </address>
+      <div class="header__actions" aria-label="Acciones de usuario">
+        <a href="#" class="header__lang-switch">
+          <img
+            src="./../assets/icons/bandera_mexico.png"
+            alt="Cambiar idioma a español"
+            class="header__flag"
+            width="18"
+            height="12"
+          />
+          ES
+        </a>
+        <span class="header__divider" aria-hidden="true"></span>
+        <a href="#" class="header__lang-switch">
+          <img
+            src="./../assets/icons/bandera_eu.png"
+            alt="Switch language to English"
+            class="header__flag"
+            width="18"
+            height="12"
+          />
+          EN
+        </a>
+        <a href="./login.html" class="header__login">Iniciar Sesión</a>
+        <a href="./reservaciones.html" class="header__cta">Reservar</a>
       </div>
 
-      <div>
-        <p class="footer__nav-title">Redes Sociales</p>
-        <div class="footer__social-links">
-          <a href="https://www.facebook.com/profile.php?id=61584681841684" class="footer__social-link" aria-label="Facebook de Hotel Quinta Dalam" target="_blank" rel="noopener noreferrer">
-            <i class="fa-brands fa-facebook-f" aria-hidden="true"></i>
-          </a>
-          <a href="https://www.instagram.com/quintadalam" class="footer__social-link" aria-label="Instagram de Hotel Quinta Dalam" target="_blank" rel="noopener noreferrer">
-            <i class="fa-brands fa-instagram" aria-hidden="true"></i>
-          </a>
-          <a href="https://www.tiktok.com/@quintadalam" class="footer__social-link" aria-label="TikTok de Hotel Quinta Dalam" target="_blank" rel="noopener noreferrer">
-            <i class="fa-brands fa-tiktok" aria-hidden="true"></i>
-          </a>
-        </div>
-        <p class="footer__newsletter-label">Suscríbete</p>
-        <div class="footer__newsletter-form">
-          <label for="newsletter-email-hab" class="visually-hidden">Correo electrónico</label>
-          <input
-            type="email"
-            id="newsletter-email-hab"
-            name="newsletter-email"
-            class="footer__newsletter-input"
-            placeholder="tu@email.com"
-            autocomplete="email">
-          <button type="button" class="footer__newsletter-btn" aria-label="Suscribirse">→</button>
-        </div>
-      </div>
+      <label
+        for="nav-toggle"
+        class="header__hamburger"
+        aria-label="Abrir menú de navegación"
+      >
+        <span class="header__hamburger-bar"></span>
+        <span class="header__hamburger-bar"></span>
+        <span class="header__hamburger-bar"></span>
+      </label>
+    </header>
 
+    <div class="page-hero" aria-label="Encabezado de página">
+      <div class="container">
+        <span class="page-hero__eyebrow">Nuestras Suites</span>
+        <h1 class="page-hero__title">Descanso y <em>Tradición</em></h1>
+        <p class="page-hero__subtitle">
+          Cada espacio ha sido diseñado para reflejar la esencia de Michoacán,
+          combinando artesanía local con el máximo confort contemporáneo.
+        </p>
+        <span class="page-hero__ornament" aria-hidden="true"
+          >✦ ─── ✦ ─── ✦</span
+        >
+      </div>
     </div>
 
-    <div class="footer__bottom">
-      <p class="footer__copyright">
-        <small>&copy; 2026 Hotel Quinta Dalam. Todos los derechos reservados.</small>
-      </p>
-      <div class="footer__certifications" aria-label="Reconocimientos">
-        <span class="footer__cert-badge">⭐ Pueblo Mágico</span>
-        <span class="footer__cert-badge">🏛️ Patrimonio Cultural</span>
-      </div>
-    </div>
-  </footer>
+    <!-- ═══ LISTADO DE HABITACIONES ══════════════════════════ -->
+    <main>
+      <section
+        class="section section--cream rooms-page"
+        aria-labelledby="h2-suites"
+      >
+        <!-- Encabezado de sección opcional -->
+        <div class="container">
+          <div class="section__header">
+            <span class="section__eyebrow">Disponibilidad</span>
+            <h2 class="section__title" id="h2-suites">
+              Elige tu <em>Suite</em>
+            </h2>
+            <p class="section__subtitle">
+              Cada habitación lleva el nombre de un Pueblo Mágico de Michoacán
+            </p>
+            <span class="section__ornament" aria-hidden="true"
+              >✦ ─── ✦ ─── ✦</span
+            >
+          </div>
+        </div>
 
-</body>
+        <!-- Lista de habitaciones — un solo contenedor -->
+        <div class="container">
+          <div class="rooms-page__list">
+            <!-- ── Suite Uruapan ─────────────────────────── -->
+            <article class="room-row" id="suite-uruapan">
+              <div class="room-row__left">
+                <div class="room-card">
+                  <div class="room-card__img-wrap">
+                    <img
+                      src="../assets/images/rooms/204-uruapan.jpeg"
+                      alt="Suite Uruapan — vista interior con decoración michoacana"
+                      class="room-card__img"
+                      loading="lazy"
+                      width="600"
+                      height="450"
+                    />
+                    <span class="room-card__badge">Suite Deluxe</span>
+                  </div>
+                  <div class="room-card__body">
+                    <h3 class="room-card__title">Uruapan</h3>
+                    <em class="room-card__sub">Naturaleza &amp; Tradición</em>
+                    <p class="room-card__desc">
+                      Frescura, armonía y descanso entre ecos de bosque y
+                      artesanía local.
+                    </p>
+                    <ul
+                      class="room-card__amenities"
+                      aria-label="Amenidades de la Suite Uruapan"
+                    >
+                      <li class="room-card__amenity" title="Wi-Fi incluido">
+                        <i class="fa-solid fa-wifi" aria-hidden="true"></i>
+                      </li>
+                      <li class="room-card__amenity" title="Aire acondicionado">
+                        <i class="fa-solid fa-snowflake" aria-hidden="true"></i>
+                      </li>
+                      <li class="room-card__amenity" title="Desayuno incluido">
+                        <i class="fa-solid fa-mug-hot" aria-hidden="true"></i>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="room-row__right">
+                <h3 class="room-row__title">Suite <em>Uruapan</em></h3>
+                <p class="room-row__text">
+                  Equipada con detalles en madera tallada a mano y textiles
+                  originarios de la región purépecha. Su distribución ofrece un
+                  ambiente de relajación total, ideal para quienes buscan
+                  escapar del ruido y disfrutar de una noche de sueño reparador
+                  entre aromas de bosque.
+                </p>
+                <div class="room-row__specs">
+                  <span
+                    ><i class="fa-solid fa-user-group" aria-hidden="true"></i> 2
+                    Personas</span
+                  >
+                  <span
+                    ><i class="fa-solid fa-bed" aria-hidden="true"></i> 1 King
+                    Size</span
+                  >
+                  <span
+                    ><i class="fa-solid fa-expand" aria-hidden="true"></i> 28
+                    m²</span
+                  >
+                </div>
+                <div class="room-row__action">
+                  <div class="room-row__price">
+                    <small>Tarifa por noche</small>
+                    <strong>$2,500 <span>MXN</span></strong>
+                  </div>
+                  <a href="reservaciones.html" class="btn btn--primary"
+                    >Reservar Ahora</a
+                  >
+                </div>
+              </div>
+            </article>
+
+            <!-- ── Suite Yunuen ──────────────────────────── -->
+            <article class="room-row" id="suite-yunuen">
+              <div class="room-row__left">
+                <div class="room-card">
+                  <div class="room-card__img-wrap">
+                    <img
+                      src="../assets/images/rooms/103-yunuen.jpeg"
+                      alt="Suite Yunuen — habitación con vista al jardín"
+                      class="room-card__img"
+                      loading="lazy"
+                      width="600"
+                      height="450"
+                    />
+                    <span class="room-card__badge">Suite Deluxe</span>
+                  </div>
+                  <div class="room-card__body">
+                    <h3 class="room-card__title">Yunuen</h3>
+                    <em class="room-card__sub">Lago &amp; Serenidad</em>
+                    <p class="room-card__desc">
+                      Calma lacustre y paz profunda inspirada en la isla de
+                      Janitzio.
+                    </p>
+                    <ul
+                      class="room-card__amenities"
+                      aria-label="Amenidades de la Suite Yunuen"
+                    >
+                      <li class="room-card__amenity" title="Wi-Fi incluido">
+                        <i class="fa-solid fa-wifi" aria-hidden="true"></i>
+                      </li>
+                      <li class="room-card__amenity" title="Aire acondicionado">
+                        <i class="fa-solid fa-snowflake" aria-hidden="true"></i>
+                      </li>
+                      <li class="room-card__amenity" title="Desayuno incluido">
+                        <i class="fa-solid fa-mug-hot" aria-hidden="true"></i>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="room-row__right">
+                <h3 class="room-row__title">Suite <em>Yunuen</em></h3>
+                <p class="room-row__text">
+                  Inspirada en la tranquilidad de las islas del lago de
+                  Pátzcuaro, esta suite combina tonos tierra con piezas
+                  artesanales únicas. Un espacio íntimo diseñado para el
+                  descanso absoluto, con iluminación cálida y acabados naturales
+                  que evocan la orilla del lago.
+                </p>
+                <div class="room-row__specs">
+                  <span
+                    ><i class="fa-solid fa-user-group" aria-hidden="true"></i> 2
+                    Personas</span
+                  >
+                  <span
+                    ><i class="fa-solid fa-bed" aria-hidden="true"></i> 1 King
+                    Size</span
+                  >
+                  <span
+                    ><i class="fa-solid fa-expand" aria-hidden="true"></i> 30
+                    m²</span
+                  >
+                </div>
+                <div class="room-row__action">
+                  <div class="room-row__price">
+                    <small>Tarifa por noche</small>
+                    <strong>$2,700 <span>MXN</span></strong>
+                  </div>
+                  <a href="reservaciones.html" class="btn btn--primary"
+                    >Reservar Ahora</a
+                  >
+                </div>
+              </div>
+            </article>
+
+            <!-- ── Suite Pátzcuaro ───────────────────────── -->
+            <article class="room-row" id="suite-patzcuaro">
+              <div class="room-row__left">
+                <div class="room-card room-card--featured">
+                  <div class="room-card__img-wrap">
+                    <img
+                      src="../assets/images/rooms/104-patzcuaro.jpeg"
+                      alt="Suite Pátzcuaro — suite superior con elegancia colonial"
+                      class="room-card__img"
+                      loading="lazy"
+                      width="600"
+                      height="450"
+                    />
+                    <span class="room-card__badge">Suite Superior</span>
+                  </div>
+                  <div class="room-card__body">
+                    <h3 class="room-card__title">Pátzcuaro</h3>
+                    <em class="room-card__sub">Historia &amp; Elegancia</em>
+                    <p class="room-card__desc">
+                      Elegancia clásica y serenidad a orillas del lago más
+                      místico de México.
+                    </p>
+                    <ul
+                      class="room-card__amenities"
+                      aria-label="Amenidades de la Suite Pátzcuaro"
+                    >
+                      <li class="room-card__amenity" title="Wi-Fi incluido">
+                        <i class="fa-solid fa-wifi" aria-hidden="true"></i>
+                      </li>
+                      <li class="room-card__amenity" title="Aire acondicionado">
+                        <i class="fa-solid fa-snowflake" aria-hidden="true"></i>
+                      </li>
+                      <li class="room-card__amenity" title="Desayuno incluido">
+                        <i class="fa-solid fa-mug-hot" aria-hidden="true"></i>
+                      </li>
+                      <li class="room-card__amenity" title="Tina de baño">
+                        <i class="fa-solid fa-bath" aria-hidden="true"></i>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="room-row__right">
+                <h3 class="room-row__title">Suite <em>Pátzcuaro</em></h3>
+                <p class="room-row__text">
+                  Nuestra suite más emblemática rinde homenaje a la ciudad
+                  colonial más bella de Michoacán. Con vigas de madera
+                  originales, tapetes artesanales y una tina de baño de cantera
+                  rosada, esta suite eleva cada instante a una experiencia de
+                  lujo auténtico.
+                </p>
+                <div class="room-row__specs">
+                  <span
+                    ><i class="fa-solid fa-user-group" aria-hidden="true"></i> 2
+                    Personas</span
+                  >
+                  <span
+                    ><i class="fa-solid fa-bed" aria-hidden="true"></i> 1 King
+                    Size</span
+                  >
+                  <span
+                    ><i class="fa-solid fa-expand" aria-hidden="true"></i> 35
+                    m²</span
+                  >
+                  <span
+                    ><i class="fa-solid fa-bath" aria-hidden="true"></i> Tina
+                    incluida</span
+                  >
+                </div>
+                <div class="room-row__action">
+                  <div class="room-row__price">
+                    <small>Tarifa por noche</small>
+                    <strong>$3,200 <span>MXN</span></strong>
+                  </div>
+                  <a href="reservaciones.html" class="btn btn--primary"
+                    >Reservar Ahora</a
+                  >
+                </div>
+              </div>
+            </article>
+
+            <!-- ── Suite Tlalpujagua ─────────────────────── -->
+            <article class="room-row" id="suite-tlalpujagua">
+              <div class="room-row__left">
+                <div class="room-card">
+                  <div class="room-card__img-wrap">
+                    <img
+                      src="../assets/images/rooms/205-tlalpujagua.jpeg"
+                      alt="Suite Tlalpujagua — decoración artesanal con esferas navideñas"
+                      class="room-card__img"
+                      loading="lazy"
+                      width="600"
+                      height="450"
+                    />
+                    <span class="room-card__badge">Suite Estudio</span>
+                  </div>
+                  <div class="room-card__body">
+                    <h3 class="room-card__title">Tlalpujagua</h3>
+                    <em class="room-card__sub">Color &amp; Artesanía</em>
+                    <p class="room-card__desc">
+                      Vivacidad, color y el espíritu artesanal de la capital de
+                      las esferas.
+                    </p>
+                    <ul
+                      class="room-card__amenities"
+                      aria-label="Amenidades de la Suite Tlalpujagua"
+                    >
+                      <li class="room-card__amenity" title="Wi-Fi incluido">
+                        <i class="fa-solid fa-wifi" aria-hidden="true"></i>
+                      </li>
+                      <li class="room-card__amenity" title="Aire acondicionado">
+                        <i class="fa-solid fa-snowflake" aria-hidden="true"></i>
+                      </li>
+                      <li class="room-card__amenity" title="Desayuno incluido">
+                        <i class="fa-solid fa-mug-hot" aria-hidden="true"></i>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="room-row__right">
+                <h3 class="room-row__title">Suite <em>Tlalpujagua</em></h3>
+                <p class="room-row__text">
+                  Decorada con las icónicas esferas de vidrio soplado del pueblo
+                  mágico homónimo, esta suite celebra el color y la creatividad
+                  michoacana. Un refugio alegre y cálido, perfecto para quienes
+                  buscan una estancia con personalidad y carácter propio.
+                </p>
+                <div class="room-row__specs">
+                  <span
+                    ><i class="fa-solid fa-user-group" aria-hidden="true"></i> 2
+                    Personas</span
+                  >
+                  <span
+                    ><i class="fa-solid fa-bed" aria-hidden="true"></i> 1 Queen
+                    Size</span
+                  >
+                  <span
+                    ><i class="fa-solid fa-expand" aria-hidden="true"></i> 26
+                    m²</span
+                  >
+                </div>
+                <div class="room-row__action">
+                  <div class="room-row__price">
+                    <small>Tarifa por noche</small>
+                    <strong>$2,500 <span>MXN</span></strong>
+                  </div>
+                  <a href="reservaciones.html" class="btn btn--primary"
+                    >Reservar Ahora</a
+                  >
+                </div>
+              </div>
+            </article>
+
+            <!-- ── Suite Cuanajo ─────────────────────────── -->
+            <article class="room-row" id="suite-cuanajo">
+              <div class="room-row__left">
+                <div class="room-card">
+                  <div class="room-card__img-wrap">
+                    <img
+                      src="../assets/images/rooms/207-cuanajo.jpeg"
+                      alt="Suite Cuanajo — vista interior con decoración michoacana"
+                      class="room-card__img"
+                      loading="lazy"
+                      width="600"
+                      height="450"
+                    />
+                    <span class="room-card__badge">Suite Deluxe</span>
+                  </div>
+                  <div class="room-card__body">
+                    <h3 class="room-card__title">Cuanajo</h3>
+                    <em class="room-card__sub">Naturaleza &amp; Tradición</em>
+                    <p class="room-card__desc">
+                      Frescura, armonía y descanso entre ecos de bosque y
+                      artesanía local.
+                    </p>
+                    <ul
+                      class="room-card__amenities"
+                      aria-label="Amenidades de la Suite Uruapan"
+                    >
+                      <li class="room-card__amenity" title="Wi-Fi incluido">
+                        <i class="fa-solid fa-wifi" aria-hidden="true"></i>
+                      </li>
+                      <li class="room-card__amenity" title="Aire acondicionado">
+                        <i class="fa-solid fa-snowflake" aria-hidden="true"></i>
+                      </li>
+                      <li class="room-card__amenity" title="Desayuno incluido">
+                        <i class="fa-solid fa-mug-hot" aria-hidden="true"></i>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="room-row__right">
+                <h3 class="room-row__title">Suite <em>Cuanajo</em></h3>
+                <p class="room-row__text">
+                  Equipada con detalles en madera tallada a mano y textiles
+                  originarios de la región purépecha. Su distribución ofrece un
+                  ambiente de relajación total, ideal para quienes buscan
+                  escapar del ruido y disfrutar de una noche de sueño reparador
+                  entre aromas de bosque.
+                </p>
+                <div class="room-row__specs">
+                  <span
+                    ><i class="fa-solid fa-user-group" aria-hidden="true"></i> 4
+                    Personas</span
+                  >
+                  <span
+                    ><i class="fa-solid fa-bed" aria-hidden="true"></i> 2
+                    matrimoniales</span
+                  >
+                  <span
+                    ><i class="fa-solid fa-expand" aria-hidden="true"></i> 28
+                    m²</span
+                  >
+                </div>
+                <div class="room-row__action">
+                  <div class="room-row__price">
+                    <small>Tarifa por noche</small>
+                    <strong>$1,700 <span>MXN</span></strong>
+                  </div>
+                  <a href="reservaciones.html" class="btn btn--primary"
+                    >Reservar Ahora</a
+                  >
+                </div>
+              </div>
+            </article>
+
+            <!-- ── Suite Cuanajo ─────────────────────────── -->
+            <article class="room-row" id="suite-paracho">
+              <div class="room-row__left">
+                <div class="room-card">
+                  <div class="room-card__img-wrap">
+                    <img
+                      src="../assets/images/rooms/102-paracho.jpeg"
+                      alt="Suite Cuanajo — vista interior con decoración michoacana"
+                      class="room-card__img"
+                      loading="lazy"
+                      width="600"
+                      height="450"
+                    />
+                    <span class="room-card__badge">Suite Deluxe</span>
+                  </div>
+                  <div class="room-card__body">
+                    <h3 class="room-card__title">Paracho</h3>
+                    <em class="room-card__sub">Sofisticación &amp; Cultura</em>
+                    <p class="room-card__desc">
+                      Frescura, armonía y descanso entre ecos de bosque y
+                      artesanía local.
+                    </p>
+                    <ul
+                      class="room-card__amenities"
+                      aria-label="Amenidades de la Suite Paracho"
+                    >
+                      <li class="room-card__amenity" title="Wi-Fi incluido">
+                        <i class="fa-solid fa-wifi" aria-hidden="true"></i>
+                      </li>
+                      <li class="room-card__amenity" title="Aire acondicionado">
+                        <i class="fa-solid fa-snowflake" aria-hidden="true"></i>
+                      </li>
+                      <li class="room-card__amenity" title="Desayuno incluido">
+                        <i class="fa-solid fa-mug-hot" aria-hidden="true"></i>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="room-row__right">
+                <h3 class="room-row__title">Suite <em>Paracho</em></h3>
+                <p class="room-row__text">
+                  Equipada con detalles en madera tallada a mano y textiles
+                  originarios de la región purépecha. Su distribución ofrece un
+                  ambiente de relajación total, ideal para quienes buscan
+                  escapar del ruido y disfrutar de una noche de sueño reparador
+                  entre aromas de bosque.
+                </p>
+                <div class="room-row__specs">
+                  <span
+                    ><i class="fa-solid fa-user-group" aria-hidden="true"></i> 4
+                    Personas</span
+                  >
+                  <span
+                    ><i class="fa-solid fa-bed" aria-hidden="true"></i> 2
+                    matrimoniales</span
+                  >
+                  <span
+                    ><i class="fa-solid fa-expand" aria-hidden="true"></i> 28
+                    m²</span
+                  >
+                </div>
+                <div class="room-row__action">
+                  <div class="room-row__price">
+                    <small>Tarifa por noche</small>
+                    <strong>$3,100 <span>MXN</span></strong>
+                  </div>
+                  <a href="reservaciones.html" class="btn btn--primary"
+                    >Reservar Ahora</a
+                  >
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── CTA BAND ──────────────────────────────────────── -->
+      <section class="cta-band" aria-label="Llamada a reservar">
+        <div class="cta-band__inner">
+          <div class="cta-band__text">
+            <span class="section__eyebrow section__eyebrow--gold"
+              >¿Lista tu suite favorita?</span
+            >
+            <h2 class="cta-band__title">Confirma tu <em>reservación</em></h2>
+            <p class="cta-band__desc">
+              Disponibilidad limitada. Asegura tu estancia hoy.
+            </p>
+          </div>
+          <div class="cta-band__actions">
+            <a href="reservaciones.html" class="btn btn--primary"
+              >Ver disponibilidad</a
+            >
+            <a href="contacto.html" class="btn btn--ghost">Contáctanos</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ═══ FOOTER ══════════════════════════════════════════ -->
+    <footer class="footer">
+      <div class="footer__top">
+        <div class="footer__brand">
+          <img
+            src="../assets/icons/posible_logo.jpeg"
+            alt="Logo Hotel Quinta Dalam"
+            class="footer__brand-logo"
+            width="52"
+            height="52"
+          />
+          <p class="footer__brand-name">Hotel Quinta Dalam</p>
+          <p class="footer__brand-tagline">Pueblos Mágicos · Michoacán</p>
+          <p class="footer__brand-desc">
+            Un refugio colonial donde la tradición y el lujo se encuentran en el
+            corazón de Michoacán.
+          </p>
+        </div>
+
+        <nav aria-label="Mapa del sitio">
+          <p class="footer__nav-title">Explore</p>
+          <ul class="footer__nav-list" role="list">
+            <li>
+              <a href="habitaciones.html" class="footer__nav-link"
+                >Habitaciones</a
+              >
+            </li>
+            <li>
+              <a href="reservaciones.html" class="footer__nav-link"
+                >Reservaciones</a
+              >
+            </li>
+            <li>
+              <a href="nosotros.html" class="footer__nav-link">Nosotros</a>
+            </li>
+            <li>
+              <a href="contacto.html" class="footer__nav-link">Contacto</a>
+            </li>
+          </ul>
+        </nav>
+
+        <div>
+          <p class="footer__nav-title">Contacto</p>
+          <address class="footer__address">
+            <p>
+              <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
+              Morelia, Michoacán, México
+            </p>
+            <p>
+              <i class="fa-solid fa-phone" aria-hidden="true"></i>
+              <a href="tel:+524430000000">+52 443 000 0000</a>
+            </p>
+            <p>
+              <i class="fa-solid fa-envelope" aria-hidden="true"></i>
+              <a href="mailto:reservas@quintadalam.mx"
+                >reservas@quintadalam.mx</a
+              >
+            </p>
+          </address>
+        </div>
+
+        <div>
+          <p class="footer__nav-title">Redes Sociales</p>
+          <div class="footer__social-links">
+            <a
+              href="https://www.facebook.com/profile.php?id=61584681841684"
+              class="footer__social-link"
+              aria-label="Facebook de Hotel Quinta Dalam"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <i class="fa-brands fa-facebook-f" aria-hidden="true"></i>
+            </a>
+            <a
+              href="https://www.instagram.com/quintadalam"
+              class="footer__social-link"
+              aria-label="Instagram de Hotel Quinta Dalam"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <i class="fa-brands fa-instagram" aria-hidden="true"></i>
+            </a>
+            <a
+              href="https://www.tiktok.com/@quintadalam"
+              class="footer__social-link"
+              aria-label="TikTok de Hotel Quinta Dalam"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <i class="fa-brands fa-tiktok" aria-hidden="true"></i>
+            </a>
+          </div>
+          <p class="footer__newsletter-label">Suscríbete</p>
+          <div class="footer__newsletter-form">
+            <label for="newsletter-email-hab" class="visually-hidden"
+              >Correo electrónico</label
+            >
+            <input
+              type="email"
+              id="newsletter-email-hab"
+              name="newsletter-email"
+              class="footer__newsletter-input"
+              placeholder="tu@email.com"
+              autocomplete="email"
+            />
+            <button
+              type="button"
+              class="footer__newsletter-btn"
+              aria-label="Suscribirse"
+            >
+              →
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer__bottom">
+        <p class="footer__copyright">
+          <small
+            >&copy; 2026 Hotel Quinta Dalam. Todos los derechos
+            reservados.</small
+          >
+        </p>
+        <div class="footer__certifications" aria-label="Reconocimientos">
+          <p>
+            <a href="https://jigsaw.w3.org/css-validator/check/referer">
+              <img
+                style="border: 0; width: 88px; height: 31px"
+                src="https://jigsaw.w3.org/css-validator/images/vcss"
+                alt="¡CSS Válido!"
+              />
+            </a>
+          </p>
+        </div>
+      </div>
+    </footer>
+  </body>
 </html>
