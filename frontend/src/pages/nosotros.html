@@ -7,8 +7,6 @@
       name="description"
       content="Conoce la historia, misión y valores del Hotel Quinta Dalam en los Pueblos Mágicos de Michoacán."
     />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Lato:wght@300;400;700&display=swap"
       rel="stylesheet"
@@ -52,7 +50,7 @@
       </div>
 
       <nav class="header__nav" aria-label="Navegación principal">
-        <ul class="header__menu" role="list">
+        <ul class="header__menu">
           <li>
             <a href="habitaciones.html" class="header__link">Habitaciones</a>
           </li>
@@ -82,7 +80,7 @@
         </div>
       </nav>
 
-      <div class="header__actions" aria-label="Acciones de usuario">
+      <div class="header__actions">
         <a href="#" class="header__lang-switch">
           <img
             src="./../assets/icons/bandera_mexico.png"
@@ -111,7 +109,6 @@
       <label
         for="nav-toggle"
         class="header__hamburger"
-        aria-label="Abrir menú de navegación"
       >
         <span class="header__hamburger-bar"></span>
         <span class="header__hamburger-bar"></span>
@@ -119,8 +116,8 @@
       </label>
     </header>
 
-    <!-- ═══ PAGE HERO ════════════════════════════════════════ -->
-    <div class="page-hero" aria-label="Encabezado de página">
+    <!--  PAGE HERO  -->
+    <div class="page-hero">
       <div class="container">
         <span class="page-hero__eyebrow">Hotel Quinta Dalam</span>
         <h1 class="page-hero__title">Nuestra <em>Historia</em></h1>
@@ -134,7 +131,7 @@
     </div>
 
     <main>
-      <!-- ── MISIÓN / VISIÓN ──────────────────────────────── -->
+      <!--  MISIÓN / VISIÓN  -->
       <section class="section" aria-labelledby="h2-mision">
         <div class="container">
           <div class="section__header">
@@ -188,7 +185,7 @@
       </section>
       <!-- /MISIÓN VISIÓN -->
 
-      <!-- ── VALORES ──────────────────────────────────────── -->
+      <!--  VALORES  -->
       <section class="section section--dark" aria-labelledby="h2-valores">
         <div class="container">
           <div class="section__header section__header--light">
@@ -251,7 +248,7 @@
       </section>
       <!-- /VALORES -->
 
-      <!-- ── CTA BAND ─────────────────────────────────────── -->
+      <!--  CTA BAND  -->
       <section class="cta-band" aria-label="Llamada a reservar">
         <div class="cta-band__inner">
           <div class="cta-band__text">
@@ -294,7 +291,7 @@
 
         <nav aria-label="Mapa del sitio">
           <p class="footer__nav-title">Explore</p>
-          <ul class="footer__nav-list" role="list">
+          <ul class="footer__nav-list">
             <li>
               <a href="./habitaciones.html" class="footer__nav-link"
                 >Habitaciones</a
@@ -396,7 +393,12 @@
             reservados.</small
           >
         </p>
-        <div class="footer__certifications" aria-label="Reconocimientos">
+        <div class="footer__certifications">
+          <p>
+            <a href="https://validator.w3.org/check?uri=referer"><img
+              src="https://www.w3.org/Icons/valid-html401" alt="Valid HTML 4.01 Transitional" height="31" width="88"></a>
+            </p>
+
           <p>
             <a href="https://jigsaw.w3.org/css-validator/check/referer">
               <img

@@ -7,8 +7,6 @@
       name="description"
       content="Contacta al Hotel Quinta Dalam. Ubicados en Morelia, Michoacán. Resuelve tus dudas o haz tu reservación."
     />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Lato:wght@300;400;700&display=swap"
       rel="stylesheet"
@@ -28,13 +26,13 @@
       hidden
     />
 
-    <!-- ═══ HEADER ═══════════════════════════════════════════ -->
+    <!-- HEADER -->
     <header class="header">
       <div class="header__brand">
         <a
           href="../../index.html"
           class="header__logo-link"
-          aria-label="Hotel Quinta Dalam – Inicio"
+          aria-label="Hotel Quinta Dalam - Inicio"
         >
           <img
             src="../assets/icons/posible_logo.jpeg"
@@ -53,7 +51,7 @@
       </div>
 
       <nav class="header__nav" aria-label="Navegación principal">
-        <ul class="header__menu" role="list">
+        <ul class="header__menu">
           <li>
             <a href="habitaciones.html" class="header__link">Habitaciones</a>
           </li>
@@ -83,7 +81,7 @@
         </div>
       </nav>
 
-      <div class="header__actions" aria-label="Acciones de usuario">
+      <div class="header__actions">
         <!-- Idioma ES -->
         <a href="#" class="header__lang-switch">
           <img
@@ -125,7 +123,6 @@
       <label
         for="nav-toggle"
         class="header__hamburger"
-        aria-label="Abrir menú de navegación"
       >
         <span class="header__hamburger-bar"></span>
         <span class="header__hamburger-bar"></span>
@@ -133,7 +130,7 @@
       </label>
     </header>
 
-    <!-- ═══ PAGE HERO ════════════════════════════════════════ -->
+    <!-- PAGE HERO  -->
     <div class="page-hero">
       <span class="page-hero__eyebrow">Estamos aquí para ti</span>
       <h1 class="page-hero__title">Contacto</h1>
@@ -143,7 +140,7 @@
       <span class="page-hero__ornament" aria-hidden="true">✦ ─── ✦ ─── ✦</span>
     </div>
 
-    <!-- ═══ MAIN ══════════════════════════════════════════════ -->
+    <!-- MAIN  -->
     <main>
       <section class="section" aria-labelledby="h2-contacto">
         <div class="container">
@@ -244,7 +241,7 @@
             <div class="contacto__info">
               <h2 class="contacto__title">Visítanos en <em>Michoacán</em></h2>
 
-              <ul class="contacto__info-list" role="list">
+              <ul class="contacto__info-list">
                 <li class="contacto__info-item">
                   <span class="contacto__info-icon" aria-hidden="true">
                     <i class="fa-solid fa-location-dot"></i>
@@ -287,13 +284,11 @@
                 </li>
               </ul>
 
-              <!-- Mapa -->
+              <!-- Mapa Fueron eliminados el width y el height-->
               <div class="contacto__map">
                 <iframe
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d60358.93085988832!2d-101.22441!3d19.7059504!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x842d0e0cb4da6b29%3A0x82c1c42f9c3a44c5!2sMorelia%2C%20Michoac%C3%A1n!5e0!3m2!1ses!2smx!4v1700000000000"
-                  width="100%"
-                  height="300"
-                  style="border: 0"
+                  style="border: 0; width: 100%; height: 300px;"
                   allowfullscreen
                   loading="lazy"
                   referrerpolicy="no-referrer-when-downgrade"
@@ -306,7 +301,7 @@
       </section>
     </main>
 
-    <!-- ═══ FOOTER ═══════════════════════════════════════════ -->
+    <!-- FOOTER -->
     <footer class="footer">
       <div class="footer__top">
         <div class="footer__brand">
@@ -325,7 +320,7 @@
         </div>
         <nav aria-label="Mapa del sitio">
           <p class="footer__nav-title">Explore</p>
-          <ul class="footer__nav-list" role="list">
+          <ul class="footer__nav-list">
             <li>
               <a href="./habitaciones.html" class="footer__nav-link"
                 >Habitaciones</a
@@ -415,7 +410,12 @@
             reservados.</small
           >
         </p>
-        <div class="footer__certifications" aria-label="Reconocimientos">
+        <div class="footer__certifications">
+          <p>
+            <a href="https://validator.w3.org/check?uri=referer"><img
+              src="https://www.w3.org/Icons/valid-html401" alt="Valid HTML 4.01 Transitional" height="31" width="88"></a>
+            </p>
+
           <p>
             <a href="https://jigsaw.w3.org/css-validator/check/referer">
               <img
