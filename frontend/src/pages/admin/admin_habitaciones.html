@@ -1,332 +1,611 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Habitaciones | Panel Admin · Hotel Quinta Dalam</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link rel="stylesheet" href="../../styles/main.css">
-</head>
-<body class="admin-body">
-
-  <aside class="admin-sidebar">
-    <div class="admin-sidebar__header">
-      <div class="admin-sidebar__brand">
-        <span class="admin-sidebar__brand-icon">✦</span>
-        <div>
-          <p class="admin-sidebar__brand-name">Quinta Dalam</p>
-          <p class="admin-sidebar__brand-role">Panel de Control</p>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Habitaciones | Panel Admin · Hotel Quinta Dalam</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Lato:wght@300;400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="../../styles/main.css" />
+  </head>
+  <body class="admin-body">
+    <aside class="admin-sidebar">
+      <div class="admin-sidebar__header">
+        <div class="admin-sidebar__brand">
+          <span class="admin-sidebar__brand-icon">✦</span>
+          <div>
+            <p class="admin-sidebar__brand-name">Quinta Dalam</p>
+            <p class="admin-sidebar__brand-role">Panel de Control</p>
+          </div>
         </div>
+      </div>
+      <nav class="admin-nav" aria-label="Navegación del panel">
+        <p class="admin-nav__group-label">General</p>
+        <ul class="admin-nav__list">
+          <li>
+            <a href="admin_dashboard.html" class="admin-nav__link"
+              ><i class="fa-solid fa-gauge-high"></i><span>Dashboard</span></a
+            >
+          </li>
+          <li>
+            <a href="admin_reservaciones.html" class="admin-nav__link"
+              ><i class="fa-solid fa-calendar-check"></i
+              ><span>Reservaciones</span></a
+            >
+          </li>
+        </ul>
+        <p class="admin-nav__group-label">Contenido</p>
+        <ul class="admin-nav__list">
+          <li>
+            <a
+              href="admin_habitaciones.html"
+              class="admin-nav__link admin-nav__link--active"
+              ><i class="fa-solid fa-bed"></i><span>Habitaciones</span></a
+            >
+          </li>
+          <li>
+            <a href="admin_index.html" class="admin-nav__link"
+              ><i class="fa-solid fa-house"></i><span>Página de Inicio</span></a
+            >
+          </li>
+          <li>
+            <a href="admin_nosotros.html" class="admin-nav__link"
+              ><i class="fa-solid fa-heart"></i><span>Nosotros</span></a
+            >
+          </li>
+          <li>
+            <a href="admin_contacto.html" class="admin-nav__link"
+              ><i class="fa-solid fa-location-dot"></i><span>Contacto</span></a
+            >
+          </li>
+        </ul>
+        <p class="admin-nav__group-label">Sistema</p>
+        <ul class="admin-nav__list">
+          <li>
+            <a href="admin_usuarios.html" class="admin-nav__link"
+              ><i class="fa-solid fa-users-gear"></i><span>Usuarios</span></a
+            >
+          </li>
+        </ul>
+      </nav>
+      <div class="admin-sidebar__footer">
+        <a
+          href="./../../../index.html"
+          class="admin-sidebar__view-site"
+          target="_blank"
+          ><i class="fa-solid fa-arrow-up-right-from-square"></i> Ver sitio
+          web</a
+        >
+        <a href="../login.html" class="admin-sidebar__logout"
+          ><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</a
+        >
+      </div>
+    </aside>
+
+    <div class="admin-layout">
+      <header class="admin-topbar">
+        <div class="admin-topbar__breadcrumb">
+          <a href="admin_dashboard.html">Panel</a>
+          <i class="fa-solid fa-chevron-right"></i>
+          <span class="admin-topbar__breadcrumb-current">Habitaciones</span>
+        </div>
+      </header>
+
+      <main class="admin-main">
+        <div class="admin-page-header">
+          <div>
+            <h1 class="admin-page-title">Gestión de <em>Habitaciones</em></h1>
+            <p class="admin-page-subtitle">
+              Crea, edita y elimina las suites del hotel.
+            </p>
+          </div>
+          <button class="admin-btn admin-btn--primary">
+            <i class="fa-solid fa-plus"></i> Nueva Suite
+          </button>
+        </div>
+
+        <section class="admin-card">
+          <div class="admin-card__header">
+            <h2 class="admin-card__title">
+              <i class="fa-solid fa-bed"></i> Suites registradas
+            </h2>
+            <div class="admin-search">
+              <i class="fa-solid fa-magnifying-glass"></i>
+              <input
+                type="search"
+                placeholder="Buscar suite..."
+                class="admin-search__input"
+                aria-label="Buscar suite"
+              />
+            </div>
+          </div>
+
+          <div class="admin-table-wrap">
+            <table class="admin-table" aria-label="Listado de suites">
+              <thead>
+                <tr>
+                  <th>Suite</th>
+                  <th>Categoría</th>
+                  <th>Capacidad</th>
+                  <th>Precio / noche</th>
+                  <th>Estado</th>
+                  <th>Destacada</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <div class="admin-table__room-info">
+                      <div
+                        class="admin-table__room-thumb"
+                        style="
+                          background-image: url(&quot;../../assets/images/rooms/204-uruapan.jpeg&quot;);
+                        "
+                      ></div>
+                      <div>
+                        <strong>Uruapan</strong
+                        ><small>Naturaleza &amp; Tradición</small>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <span class="admin-badge admin-badge--neutral"
+                      >Suite Deluxe</span
+                    >
+                  </td>
+                  <td>2 personas</td>
+                  <td class="admin-table__price">$2,500 MXN</td>
+                  <td>
+                    <span class="admin-badge admin-badge--confirmed"
+                      >Activa</span
+                    >
+                  </td>
+                  <td>
+                    <label class="admin-toggle">
+                      <input
+                        type="checkbox"
+                        class="admin-toggle__input"
+                        aria-label="Marcar como destacada"
+                      />
+                      <span class="admin-toggle__track"></span>
+                    </label>
+                  </td>
+                  <td>
+                    <div class="admin-table__actions">
+                      <button
+                        class="admin-icon-btn admin-icon-btn--edit"
+                        title="Editar"
+                      >
+                        <i class="fa-solid fa-pen"></i>
+                      </button>
+                      <button
+                        class="admin-icon-btn admin-icon-btn--delete"
+                        title="Eliminar"
+                      >
+                        <i class="fa-solid fa-trash"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <div class="admin-table__room-info">
+                      <div
+                        class="admin-table__room-thumb"
+                        style="
+                          background-image: url(&quot;../../assets/images/rooms/103-yunuen.jpeg&quot;);
+                        "
+                      ></div>
+                      <div>
+                        <strong>Yunuen</strong
+                        ><small>Lago &amp; Serenidad</small>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <span class="admin-badge admin-badge--neutral"
+                      >Suite Deluxe</span
+                    >
+                  </td>
+                  <td>2 personas</td>
+                  <td class="admin-table__price">$2,700 MXN</td>
+                  <td>
+                    <span class="admin-badge admin-badge--confirmed"
+                      >Activa</span
+                    >
+                  </td>
+                  <td>
+                    <label class="admin-toggle">
+                      <input
+                        type="checkbox"
+                        class="admin-toggle__input"
+                        aria-label="Marcar como destacada"
+                      />
+                      <span class="admin-toggle__track"></span>
+                    </label>
+                  </td>
+                  <td>
+                    <div class="admin-table__actions">
+                      <button
+                        class="admin-icon-btn admin-icon-btn--edit"
+                        title="Editar"
+                      >
+                        <i class="fa-solid fa-pen"></i>
+                      </button>
+                      <button
+                        class="admin-icon-btn admin-icon-btn--delete"
+                        title="Eliminar"
+                      >
+                        <i class="fa-solid fa-trash"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr class="admin-table__row--featured">
+                  <td>
+                    <div class="admin-table__room-info">
+                      <div
+                        class="admin-table__room-thumb"
+                        style="
+                          background-image: url(&quot;../../assets/images/rooms/104-patzcuaro.jpeg&quot;);
+                        "
+                      ></div>
+                      <div>
+                        <strong>Pátzcuaro</strong
+                        ><small>Historia &amp; Elegancia</small>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <span class="admin-badge admin-badge--gold"
+                      >Suite Superior</span
+                    >
+                  </td>
+                  <td>2 personas</td>
+                  <td class="admin-table__price">$3,200 MXN</td>
+                  <td>
+                    <span class="admin-badge admin-badge--confirmed"
+                      >Activa</span
+                    >
+                  </td>
+                  <td>
+                    <label class="admin-toggle">
+                      <input
+                        type="checkbox"
+                        class="admin-toggle__input"
+                        aria-label="Marcar como destacada"
+                      />
+                      <span class="admin-toggle__track"></span>
+                    </label>
+                  </td>
+                  <td>
+                    <div class="admin-table__actions">
+                      <button
+                        class="admin-icon-btn admin-icon-btn--edit"
+                        title="Editar"
+                      >
+                        <i class="fa-solid fa-pen"></i>
+                      </button>
+                      <button
+                        class="admin-icon-btn admin-icon-btn--delete"
+                        title="Eliminar"
+                      >
+                        <i class="fa-solid fa-trash"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <div class="admin-table__room-info">
+                      <div
+                        class="admin-table__room-thumb"
+                        style="
+                          background-image: url(&quot;../../assets/images/rooms/205-tlalpujagua.jpeg&quot;);
+                        "
+                      ></div>
+                      <div>
+                        <strong>Tlalpujagua</strong
+                        ><small>Color &amp; Artesanía</small>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <span class="admin-badge admin-badge--neutral"
+                      >Suite Estudio</span
+                    >
+                  </td>
+                  <td>2 personas</td>
+                  <td class="admin-table__price">$2,500 MXN</td>
+                  <td>
+                    <span class="admin-badge admin-badge--confirmed"
+                      >Activa</span
+                    >
+                  </td>
+                  <td>
+                    <label class="admin-toggle">
+                      <input
+                        type="checkbox"
+                        class="admin-toggle__input"
+                        aria-label="Marcar como destacada"
+                      />
+                      <span class="admin-toggle__track"></span>
+                    </label>
+                  </td>
+                  <td>
+                    <div class="admin-table__actions">
+                      <button
+                        class="admin-icon-btn admin-icon-btn--edit"
+                        title="Editar"
+                      >
+                        <i class="fa-solid fa-pen"></i>
+                      </button>
+                      <button
+                        class="admin-icon-btn admin-icon-btn--delete"
+                        title="Eliminar"
+                      >
+                        <i class="fa-solid fa-trash"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <!-- Modal: Crear / Editar Suite — visible por defecto; poner is-open en la clase -->
+    <div
+      class="admin-modal-backdrop"
+      id="modalSuite"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modalSuiteTitle"
+    >
+      <div class="admin-modal">
+        <div class="admin-modal__header">
+          <h2 class="admin-modal__title" id="modalSuiteTitle">
+            <i class="fa-solid fa-bed"></i> Nueva Suite
+          </h2>
+          <button class="admin-modal__close" aria-label="Cerrar">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+        <form class="admin-modal__form" novalidate>
+          <div class="admin-form-grid">
+            <div class="admin-form__group">
+              <label class="admin-form__label" for="s-nombre"
+                >Nombre de la suite</label
+              >
+              <input
+                class="admin-form__input"
+                type="text"
+                id="s-nombre"
+                placeholder="Ej. Pátzcuaro"
+              />
+            </div>
+            <div class="admin-form__group">
+              <label class="admin-form__label" for="s-sub">Subtítulo</label>
+              <input
+                class="admin-form__input"
+                type="text"
+                id="s-sub"
+                placeholder="Ej. Historia &amp; Elegancia"
+              />
+            </div>
+            <div class="admin-form__group">
+              <label class="admin-form__label" for="s-cat">Categoría</label>
+              <select class="admin-form__input" id="s-cat">
+                <option value="">Selecciona categoría</option>
+                <option>Suite Deluxe</option>
+                <option>Suite Superior</option>
+                <option>Suite Estudio</option>
+              </select>
+            </div>
+            <div class="admin-form__group">
+              <label class="admin-form__label" for="s-precio"
+                >Precio por noche (MXN)</label
+              >
+              <input
+                class="admin-form__input"
+                type="number"
+                id="s-precio"
+                placeholder="2500"
+              />
+            </div>
+            <div class="admin-form__group">
+              <label class="admin-form__label" for="s-personas"
+                >Capacidad (personas)</label
+              >
+              <input
+                class="admin-form__input"
+                type="number"
+                id="s-personas"
+                min="1"
+                max="6"
+                placeholder="2"
+              />
+            </div>
+            <div class="admin-form__group">
+              <label class="admin-form__label" for="s-area">Área (m²)</label>
+              <input
+                class="admin-form__input"
+                type="number"
+                id="s-area"
+                placeholder="30"
+              />
+            </div>
+            <div class="admin-form__group">
+              <label class="admin-form__label" for="s-cama">Tipo de cama</label>
+              <select class="admin-form__input" id="s-cama">
+                <option value="">Selecciona tipo</option>
+                <option>1 King Size</option>
+                <option>1 Queen Size</option>
+                <option>2 Camas dobles</option>
+              </select>
+            </div>
+            <div class="admin-form__group">
+              <label class="admin-form__label" for="s-estado">Estado</label>
+              <select class="admin-form__input" id="s-estado">
+                <option>Activa</option>
+                <option>Inactiva</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="admin-form__group admin-form__group--full">
+            <label class="admin-form__label" for="s-desc-corta"
+              >Descripción corta (card del index)</label
+            >
+            <input
+              class="admin-form__input"
+              type="text"
+              id="s-desc-corta"
+              placeholder="Frescura, armonía y descanso..."
+            />
+          </div>
+
+          <div class="admin-form__group admin-form__group--full">
+            <label class="admin-form__label" for="s-desc-larga"
+              >Descripción larga (página habitaciones)</label
+            >
+            <textarea
+              class="admin-form__input"
+              id="s-desc-larga"
+              rows="4"
+              placeholder="Descripción completa de la suite..."
+            ></textarea>
+          </div>
+
+          <div class="admin-form__group admin-form__group--full">
+            <label class="admin-form__label">Amenidades incluidas</label>
+            <div class="admin-checkboxes">
+              <label class="admin-checkbox"
+                ><input type="checkbox" checked />
+                <i class="fa-solid fa-wifi"></i> Wi-Fi</label
+              >
+              <label class="admin-checkbox"
+                ><input type="checkbox" checked />
+                <i class="fa-solid fa-snowflake"></i> Aire acondicionado</label
+              >
+              <label class="admin-checkbox"
+                ><input type="checkbox" checked />
+                <i class="fa-solid fa-mug-hot"></i> Desayuno incluido</label
+              >
+              <label class="admin-checkbox"
+                ><input type="checkbox" /> <i class="fa-solid fa-bath"></i> Tina
+                de baño</label
+              >
+              <label class="admin-checkbox"
+                ><input type="checkbox" /> <i class="fa-solid fa-tv"></i> Smart
+                TV</label
+              >
+              <label class="admin-checkbox"
+                ><input type="checkbox" />
+                <i class="fa-solid fa-martini-glass"></i> Minibar</label
+              >
+              <label class="admin-checkbox"
+                ><input type="checkbox" />
+                <i class="fa-solid fa-shirt"></i> Servicio de lavandería</label
+              >
+              <label class="admin-checkbox"
+                ><input type="checkbox" />
+                <i class="fa-solid fa-wind"></i> Balcón / Terraza</label
+              >
+            </div>
+          </div>
+
+          <div class="admin-form__group admin-form__group--full">
+            <label class="admin-form__label" for="s-imagen"
+              >Imagen principal</label
+            >
+            <div class="admin-upload">
+              <i class="fa-solid fa-cloud-arrow-up"></i>
+              <p>Arrastra una imagen o <span>haz clic para subir</span></p>
+              <small>JPG, PNG · Máximo 2 MB · Recomendado: 800 × 600 px</small>
+              <input
+                type="file"
+                id="s-imagen"
+                accept="image/*"
+                class="admin-upload__input"
+                aria-label="Subir imagen"
+              />
+            </div>
+          </div>
+
+          <div class="admin-form__group admin-form__group--full">
+            <label class="admin-checkbox admin-checkbox--featured">
+              <input type="checkbox" />
+              <i class="fa-solid fa-star"></i>
+              Marcar como suite <strong>destacada</strong> (muestra la etiqueta
+              "✦ Recomendado ✦")
+            </label>
+          </div>
+
+          <div class="admin-modal__actions">
+            <button type="button" class="admin-btn admin-btn--ghost">
+              Cancelar
+            </button>
+            <button type="submit" class="admin-btn admin-btn--primary">
+              <i class="fa-solid fa-floppy-disk"></i> Guardar Suite
+            </button>
+          </div>
+        </form>
       </div>
     </div>
-    <nav class="admin-nav" aria-label="Navegación del panel">
-      <p class="admin-nav__group-label">General</p>
-      <ul class="admin-nav__list" role="list">
-        <li><a href="admin_dashboard.html" class="admin-nav__link"><i class="fa-solid fa-gauge-high"></i><span>Dashboard</span></a></li>
-        <li><a href="admin_reservaciones.html" class="admin-nav__link"><i class="fa-solid fa-calendar-check"></i><span>Reservaciones</span></a></li>
-      </ul>
-      <p class="admin-nav__group-label">Contenido</p>
-      <ul class="admin-nav__list" role="list">
-        <li><a href="admin_habitaciones.html" class="admin-nav__link admin-nav__link--active"><i class="fa-solid fa-bed"></i><span>Habitaciones</span></a></li>
-        <li><a href="admin_index.html" class="admin-nav__link"><i class="fa-solid fa-house"></i><span>Página de Inicio</span></a></li>
-        <li><a href="admin_nosotros.html" class="admin-nav__link"><i class="fa-solid fa-heart"></i><span>Nosotros</span></a></li>
-        <li><a href="admin_contacto.html" class="admin-nav__link"><i class="fa-solid fa-location-dot"></i><span>Contacto</span></a></li>
-      </ul>
-      <p class="admin-nav__group-label">Sistema</p>
-      <ul class="admin-nav__list" role="list">
-        <li><a href="admin_usuarios.html" class="admin-nav__link"><i class="fa-solid fa-users-gear"></i><span>Usuarios</span></a></li>
-      </ul>
-    </nav>
-    <div class="admin-sidebar__footer">
-      <a href="./../../../index.html" class="admin-sidebar__view-site" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i> Ver sitio web</a>
-      <a href="../login.html" class="admin-sidebar__logout"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</a>
-    </div>
-  </aside>
 
-  <div class="admin-layout">
-
-    <header class="admin-topbar">
-      <div class="admin-topbar__breadcrumb">
-        <a href="admin_dashboard.html">Panel</a>
-        <i class="fa-solid fa-chevron-right"></i>
-        <span class="admin-topbar__breadcrumb-current">Habitaciones</span>
-      </div>
-    </header>
-
-    <main class="admin-main">
-
-      <div class="admin-page-header">
-        <div>
-          <h1 class="admin-page-title">Gestión de <em>Habitaciones</em></h1>
-          <p class="admin-page-subtitle">Crea, edita y elimina las suites del hotel.</p>
+    <!-- Modal: Confirmar eliminación — visible por defecto -->
+    <div
+      class="admin-modal-backdrop"
+      id="modalConfirm"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modalConfirmTitle"
+    >
+      <div class="admin-modal admin-modal--sm">
+        <div class="admin-modal__header">
+          <h2
+            class="admin-modal__title admin-modal__title--danger"
+            id="modalConfirmTitle"
+          >
+            <i class="fa-solid fa-triangle-exclamation"></i> Confirmar
+            eliminación
+          </h2>
+          <button class="admin-modal__close" aria-label="Cerrar">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
         </div>
-        <button class="admin-btn admin-btn--primary">
-          <i class="fa-solid fa-plus"></i> Nueva Suite
-        </button>
-      </div>
-
-      <section class="admin-card">
-        <div class="admin-card__header">
-          <h2 class="admin-card__title"><i class="fa-solid fa-bed"></i> Suites registradas</h2>
-          <div class="admin-search">
-            <i class="fa-solid fa-magnifying-glass"></i>
-            <input type="search" placeholder="Buscar suite..." class="admin-search__input" aria-label="Buscar suite">
-          </div>
+        <div class="admin-modal__body">
+          <p>
+            ¿Estás seguro de que deseas eliminar esta suite? Esta acción no se
+            puede deshacer.
+          </p>
         </div>
-
-        <div class="admin-table-wrap">
-          <table class="admin-table" aria-label="Listado de suites">
-            <thead>
-              <tr>
-                <th>Suite</th>
-                <th>Categoría</th>
-                <th>Capacidad</th>
-                <th>Precio / noche</th>
-                <th>Estado</th>
-                <th>Destacada</th>
-                <th>Acciones</th>
-              </tr>
-            </thead>
-            <tbody>
-
-              <tr>
-                <td>
-                  <div class="admin-table__room-info">
-                    <div class="admin-table__room-thumb" style="background-image:url('../../assets/images/rooms/204-uruapan.jpeg')"></div>
-                    <div><strong>Uruapan</strong><small>Naturaleza &amp; Tradición</small></div>
-                  </div>
-                </td>
-                <td><span class="admin-badge admin-badge--neutral">Suite Deluxe</span></td>
-                <td>2 personas</td>
-                <td class="admin-table__price">$2,500 MXN</td>
-                <td><span class="admin-badge admin-badge--confirmed">Activa</span></td>
-                <td>
-                  <label class="admin-toggle" aria-label="Destacada">
-                    <input type="checkbox" class="admin-toggle__input">
-                    <span class="admin-toggle__track"></span>
-                  </label>
-                </td>
-                <td>
-                  <div class="admin-table__actions">
-                    <button class="admin-icon-btn admin-icon-btn--edit" title="Editar"><i class="fa-solid fa-pen"></i></button>
-                    <button class="admin-icon-btn admin-icon-btn--delete" title="Eliminar"><i class="fa-solid fa-trash"></i></button>
-                  </div>
-                </td>
-              </tr>
-
-              <tr>
-                <td>
-                  <div class="admin-table__room-info">
-                    <div class="admin-table__room-thumb" style="background-image:url('../../assets/images/rooms/103-yunuen.jpeg')"></div>
-                    <div><strong>Yunuen</strong><small>Lago &amp; Serenidad</small></div>
-                  </div>
-                </td>
-                <td><span class="admin-badge admin-badge--neutral">Suite Deluxe</span></td>
-                <td>2 personas</td>
-                <td class="admin-table__price">$2,700 MXN</td>
-                <td><span class="admin-badge admin-badge--confirmed">Activa</span></td>
-                <td>
-                  <label class="admin-toggle" aria-label="Destacada">
-                    <input type="checkbox" class="admin-toggle__input">
-                    <span class="admin-toggle__track"></span>
-                  </label>
-                </td>
-                <td>
-                  <div class="admin-table__actions">
-                    <button class="admin-icon-btn admin-icon-btn--edit" title="Editar"><i class="fa-solid fa-pen"></i></button>
-                    <button class="admin-icon-btn admin-icon-btn--delete" title="Eliminar"><i class="fa-solid fa-trash"></i></button>
-                  </div>
-                </td>
-              </tr>
-
-              <tr class="admin-table__row--featured">
-                <td>
-                  <div class="admin-table__room-info">
-                    <div class="admin-table__room-thumb" style="background-image:url('../../assets/images/rooms/104-patzcuaro.jpeg')"></div>
-                    <div><strong>Pátzcuaro</strong><small>Historia &amp; Elegancia</small></div>
-                  </div>
-                </td>
-                <td><span class="admin-badge admin-badge--gold">Suite Superior</span></td>
-                <td>2 personas</td>
-                <td class="admin-table__price">$3,200 MXN</td>
-                <td><span class="admin-badge admin-badge--confirmed">Activa</span></td>
-                <td>
-                  <label class="admin-toggle" aria-label="Destacada">
-                    <input type="checkbox" class="admin-toggle__input" checked>
-                    <span class="admin-toggle__track"></span>
-                  </label>
-                </td>
-                <td>
-                  <div class="admin-table__actions">
-                    <button class="admin-icon-btn admin-icon-btn--edit" title="Editar"><i class="fa-solid fa-pen"></i></button>
-                    <button class="admin-icon-btn admin-icon-btn--delete" title="Eliminar"><i class="fa-solid fa-trash"></i></button>
-                  </div>
-                </td>
-              </tr>
-
-              <tr>
-                <td>
-                  <div class="admin-table__room-info">
-                    <div class="admin-table__room-thumb" style="background-image:url('../../assets/images/rooms/205-tlalpujagua.jpeg')"></div>
-                    <div><strong>Tlalpujagua</strong><small>Color &amp; Artesanía</small></div>
-                  </div>
-                </td>
-                <td><span class="admin-badge admin-badge--neutral">Suite Estudio</span></td>
-                <td>2 personas</td>
-                <td class="admin-table__price">$2,500 MXN</td>
-                <td><span class="admin-badge admin-badge--confirmed">Activa</span></td>
-                <td>
-                  <label class="admin-toggle" aria-label="Destacada">
-                    <input type="checkbox" class="admin-toggle__input">
-                    <span class="admin-toggle__track"></span>
-                  </label>
-                </td>
-                <td>
-                  <div class="admin-table__actions">
-                    <button class="admin-icon-btn admin-icon-btn--edit" title="Editar"><i class="fa-solid fa-pen"></i></button>
-                    <button class="admin-icon-btn admin-icon-btn--delete" title="Eliminar"><i class="fa-solid fa-trash"></i></button>
-                  </div>
-                </td>
-              </tr>
-
-            </tbody>
-          </table>
-        </div>
-      </section>
-
-    </main>
-  </div>
-
-  <!-- Modal: Crear / Editar Suite — visible por defecto-- poner is-open en la clase -->
-  <div class="admin-modal-backdrop " id="modalSuite" role="dialog" aria-modal="true" aria-labelledby="modalSuiteTitle">
-    <div class="admin-modal">
-      <div class="admin-modal__header">
-        <h2 class="admin-modal__title" id="modalSuiteTitle"><i class="fa-solid fa-bed"></i> Nueva Suite</h2>
-        <button class="admin-modal__close" aria-label="Cerrar"><i class="fa-solid fa-xmark"></i></button>
-      </div>
-      <form class="admin-modal__form" novalidate>
-
-        <div class="admin-form-grid">
-          <div class="admin-form__group">
-            <label class="admin-form__label" for="s-nombre">Nombre de la suite</label>
-            <input class="admin-form__input" type="text" id="s-nombre" placeholder="Ej. Pátzcuaro">
-          </div>
-          <div class="admin-form__group">
-            <label class="admin-form__label" for="s-sub">Subtítulo</label>
-            <input class="admin-form__input" type="text" id="s-sub" placeholder="Ej. Historia &amp; Elegancia">
-          </div>
-          <div class="admin-form__group">
-            <label class="admin-form__label" for="s-cat">Categoría</label>
-            <select class="admin-form__input" id="s-cat">
-              <option value="">Selecciona categoría</option>
-              <option>Suite Deluxe</option>
-              <option>Suite Superior</option>
-              <option>Suite Estudio</option>
-            </select>
-          </div>
-          <div class="admin-form__group">
-            <label class="admin-form__label" for="s-precio">Precio por noche (MXN)</label>
-            <input class="admin-form__input" type="number" id="s-precio" placeholder="2500">
-          </div>
-          <div class="admin-form__group">
-            <label class="admin-form__label" for="s-personas">Capacidad (personas)</label>
-            <input class="admin-form__input" type="number" id="s-personas" min="1" max="6" placeholder="2">
-          </div>
-          <div class="admin-form__group">
-            <label class="admin-form__label" for="s-area">Área (m²)</label>
-            <input class="admin-form__input" type="number" id="s-area" placeholder="30">
-          </div>
-          <div class="admin-form__group">
-            <label class="admin-form__label" for="s-cama">Tipo de cama</label>
-            <select class="admin-form__input" id="s-cama">
-              <option value="">Selecciona tipo</option>
-              <option>1 King Size</option>
-              <option>1 Queen Size</option>
-              <option>2 Camas dobles</option>
-            </select>
-          </div>
-          <div class="admin-form__group">
-            <label class="admin-form__label" for="s-estado">Estado</label>
-            <select class="admin-form__input" id="s-estado">
-              <option>Activa</option>
-              <option>Inactiva</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="admin-form__group admin-form__group--full">
-          <label class="admin-form__label" for="s-desc-corta">Descripción corta (card del index)</label>
-          <input class="admin-form__input" type="text" id="s-desc-corta" placeholder="Frescura, armonía y descanso...">
-        </div>
-
-        <div class="admin-form__group admin-form__group--full">
-          <label class="admin-form__label" for="s-desc-larga">Descripción larga (página habitaciones)</label>
-          <textarea class="admin-form__input" id="s-desc-larga" rows="4" placeholder="Descripción completa de la suite..."></textarea>
-        </div>
-
-        <div class="admin-form__group admin-form__group--full">
-          <label class="admin-form__label">Amenidades incluidas</label>
-          <div class="admin-checkboxes">
-            <label class="admin-checkbox"><input type="checkbox" checked> <i class="fa-solid fa-wifi"></i> Wi-Fi</label>
-            <label class="admin-checkbox"><input type="checkbox" checked> <i class="fa-solid fa-snowflake"></i> Aire acondicionado</label>
-            <label class="admin-checkbox"><input type="checkbox" checked> <i class="fa-solid fa-mug-hot"></i> Desayuno incluido</label>
-            <label class="admin-checkbox"><input type="checkbox"> <i class="fa-solid fa-bath"></i> Tina de baño</label>
-            <label class="admin-checkbox"><input type="checkbox"> <i class="fa-solid fa-tv"></i> Smart TV</label>
-            <label class="admin-checkbox"><input type="checkbox"> <i class="fa-solid fa-martini-glass"></i> Minibar</label>
-            <label class="admin-checkbox"><input type="checkbox"> <i class="fa-solid fa-shirt"></i> Servicio de lavandería</label>
-            <label class="admin-checkbox"><input type="checkbox"> <i class="fa-solid fa-wind"></i> Balcón / Terraza</label>
-          </div>
-        </div>
-
-        <div class="admin-form__group admin-form__group--full">
-          <label class="admin-form__label" for="s-imagen">Imagen principal</label>
-          <div class="admin-upload">
-            <i class="fa-solid fa-cloud-arrow-up"></i>
-            <p>Arrastra una imagen o <span>haz clic para subir</span></p>
-            <small>JPG, PNG · Máximo 2 MB · Recomendado: 800 × 600 px</small>
-            <input type="file" id="s-imagen" accept="image/*" class="admin-upload__input" aria-label="Subir imagen">
-          </div>
-        </div>
-
-        <div class="admin-form__group admin-form__group--full">
-          <label class="admin-checkbox admin-checkbox--featured">
-            <input type="checkbox">
-            <i class="fa-solid fa-star"></i>
-            Marcar como suite <strong>destacada</strong> (muestra la etiqueta "✦ Recomendado ✦")
-          </label>
-        </div>
-
         <div class="admin-modal__actions">
-          <button type="button" class="admin-btn admin-btn--ghost">Cancelar</button>
-          <button type="submit" class="admin-btn admin-btn--primary"><i class="fa-solid fa-floppy-disk"></i> Guardar Suite</button>
+          <button type="button" class="admin-btn admin-btn--ghost">
+            Cancelar
+          </button>
+          <button type="button" class="admin-btn admin-btn--danger">
+            <i class="fa-solid fa-trash"></i> Eliminar
+          </button>
         </div>
-
-      </form>
-    </div>
-  </div>
-
-  <!-- Modal: Confirmar eliminación — visible por defecto -->
-  <div class="admin-modal-backdrop" id="modalConfirm" role="dialog" aria-modal="true" aria-labelledby="modalConfirmTitle">
-    <div class="admin-modal admin-modal--sm">
-      <div class="admin-modal__header">
-        <h2 class="admin-modal__title admin-modal__title--danger" id="modalConfirmTitle">
-          <i class="fa-solid fa-triangle-exclamation"></i> Confirmar eliminación
-        </h2>
-        <button class="admin-modal__close" aria-label="Cerrar"><i class="fa-solid fa-xmark"></i></button>
-      </div>
-      <div class="admin-modal__body">
-        <p>¿Estás seguro de que deseas eliminar esta suite? Esta acción no se puede deshacer.</p>
-      </div>
-      <div class="admin-modal__actions">
-        <button type="button" class="admin-btn admin-btn--ghost">Cancelar</button>
-        <button type="button" class="admin-btn admin-btn--danger"><i class="fa-solid fa-trash"></i> Eliminar</button>
       </div>
     </div>
-  </div>
 
-  <script>
-  /*
+    <script>
+      /*
   function openModal(id)  { document.getElementById(id).classList.add('is-open');    document.body.style.overflow = 'hidden'; }
   function closeModal(id) { document.getElementById(id).classList.remove('is-open'); document.body.style.overflow = ''; }
   document.addEventListener('keydown', e => {
@@ -336,7 +615,6 @@
     }
   });
   */
-  </script>
-
-</body>
+    </script>
+  </body>
 </html>

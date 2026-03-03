@@ -1,167 +1,233 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard | Panel Admin · Hotel Quinta Dalam</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link rel="stylesheet" href="../../styles/main.css">
-</head>
-<body class="admin-body">
-
-  <aside class="admin-sidebar">
-    <div class="admin-sidebar__header">
-      <div class="admin-sidebar__brand">
-        <span class="admin-sidebar__brand-icon">✦</span>
-        <div>
-          <p class="admin-sidebar__brand-name">Quinta Dalam</p>
-          <p class="admin-sidebar__brand-role">Panel de Control</p>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard | Panel Admin · Hotel Quinta Dalam</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Lato:wght@300;400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="../../styles/main.css" />
+  </head>
+  <body class="admin-body">
+    <aside class="admin-sidebar">
+      <div class="admin-sidebar__header">
+        <div class="admin-sidebar__brand">
+          <span class="admin-sidebar__brand-icon">✦</span>
+          <div>
+            <p class="admin-sidebar__brand-name">Quinta Dalam</p>
+            <p class="admin-sidebar__brand-role">Panel de Control</p>
+          </div>
         </div>
       </div>
-    </div>
-    <nav class="admin-nav" aria-label="Navegación del panel">
-      <p class="admin-nav__group-label">General</p>
-      <ul class="admin-nav__list" role="list">
-        <li><a href="admin_dashboard.html" class="admin-nav__link admin-nav__link--active"><i class="fa-solid fa-gauge-high"></i><span>Dashboard</span></a></li>
-        <li><a href="admin_reservaciones.html" class="admin-nav__link"><i class="fa-solid fa-calendar-check"></i><span>Reservaciones</span></a></li>
-      </ul>
-      <p class="admin-nav__group-label">Contenido</p>
-      <ul class="admin-nav__list" role="list">
-        <li><a href="admin_habitaciones.html" class="admin-nav__link"><i class="fa-solid fa-bed"></i><span>Habitaciones</span></a></li>
-        <li><a href="admin_index.html" class="admin-nav__link"><i class="fa-solid fa-house"></i><span>Página de Inicio</span></a></li>
-        <li><a href="admin_nosotros.html" class="admin-nav__link"><i class="fa-solid fa-heart"></i><span>Nosotros</span></a></li>
-        <li><a href="admin_contacto.html" class="admin-nav__link"><i class="fa-solid fa-location-dot"></i><span>Contacto</span></a></li>
-      </ul>
-      <p class="admin-nav__group-label">Sistema</p>
-      <ul class="admin-nav__list" role="list">
-        <li><a href="admin_usuarios.html" class="admin-nav__link"><i class="fa-solid fa-users-gear"></i><span>Usuarios</span></a></li>
-      </ul>
-    </nav>
-    <div class="admin-sidebar__footer">
-      <a href="./../../../index.html" class="admin-sidebar__view-site" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i> Ver sitio web</a>
-      <a href="../login.html" class="admin-sidebar__logout"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</a>
-    </div>
-  </aside>
 
-  <div class="admin-layout">
+      <nav class="admin-nav" aria-label="Navegación del panel">
+        <p class="admin-nav__group-label">General</p>
+        <ul class="admin-nav__list">
+          <li>
+            <a
+              href="admin_dashboard.html"
+              class="admin-nav__link admin-nav__link--active"
+              ><i class="fa-solid fa-gauge-high"></i><span>Dashboard</span></a
+            >
+          </li>
+          <li>
+            <a href="admin_reservaciones.html" class="admin-nav__link"
+              ><i class="fa-solid fa-calendar-check"></i
+              ><span>Reservaciones</span></a
+            >
+          </li>
+        </ul>
 
-    <header class="admin-topbar">
-      <div class="admin-topbar__breadcrumb">
-        <span>Panel</span>
-        <i class="fa-solid fa-chevron-right"></i>
-        <span class="admin-topbar__breadcrumb-current">Dashboard</span>
+        <p class="admin-nav__group-label">Contenido</p>
+        <ul class="admin-nav__list">
+          <li>
+            <a href="admin_habitaciones.html" class="admin-nav__link"
+              ><i class="fa-solid fa-bed"></i><span>Habitaciones</span></a
+            >
+          </li>
+          <li>
+            <a href="admin_index.html" class="admin-nav__link"
+              ><i class="fa-solid fa-house"></i><span>Página de Inicio</span></a
+            >
+          </li>
+          <li>
+            <a href="admin_nosotros.html" class="admin-nav__link"
+              ><i class="fa-solid fa-heart"></i><span>Nosotros</span></a
+            >
+          </li>
+          <li>
+            <a href="admin_contacto.html" class="admin-nav__link"
+              ><i class="fa-solid fa-location-dot"></i><span>Contacto</span></a
+            >
+          </li>
+        </ul>
+
+        <p class="admin-nav__group-label">Sistema</p>
+        <ul class="admin-nav__list">
+          <li>
+            <a href="admin_usuarios.html" class="admin-nav__link"
+              ><i class="fa-solid fa-users-gear"></i><span>Usuarios</span></a
+            >
+          </li>
+        </ul>
+      </nav>
+
+      <div class="admin-sidebar__footer">
+        <a
+          href="./../../../index.html"
+          class="admin-sidebar__view-site"
+          target="_blank"
+          ><i class="fa-solid fa-arrow-up-right-from-square"></i> Ver sitio
+          web</a
+        >
+        <a href="../login.html" class="admin-sidebar__logout"
+          ><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</a
+        >
       </div>
-    </header>
+    </aside>
 
-    <main class="admin-main">
-
-      <div class="admin-page-header">
-        <div>
-          <h1 class="admin-page-title">Bienvenido, <em>Administrador</em></h1>
-          <p class="admin-page-subtitle">Aquí tienes un resumen del estado actual del hotel.</p>
+    <div class="admin-layout">
+      <header class="admin-topbar">
+        <div class="admin-topbar__breadcrumb">
+          <span>Panel</span>
+          <i class="fa-solid fa-chevron-right"></i>
+          <span class="admin-topbar__breadcrumb-current">Dashboard</span>
         </div>
-        <span class="admin-page-ornament" aria-hidden="true">✦ ─── ✦</span>
-      </div>
+      </header>
 
-      <!-- Métricas -->
-      <div class="admin-metrics">
-
-        <article class="metric-card">
-          <div class="metric-card__icon metric-card__icon--adobe">
-            <i class="fa-solid fa-calendar-check"></i>
-          </div>
-          <div class="metric-card__body">
-            <p class="metric-card__label">Reservas este mes</p>
-            <p class="metric-card__value">0</p>
-          </div>
-        </article>
-
-        <article class="metric-card">
-          <div class="metric-card__icon metric-card__icon--gold">
-            <i class="fa-solid fa-clock"></i>
-          </div>
-          <div class="metric-card__body">
-            <p class="metric-card__label">Reservas pendientes</p>
-            <p class="metric-card__value">0</p>
-          </div>
-        </article>
-
-        <article class="metric-card">
-          <div class="metric-card__icon metric-card__icon--forest">
-            <i class="fa-solid fa-bed"></i>
-          </div>
-          <div class="metric-card__body">
-            <p class="metric-card__label">Suites activas</p>
-            <p class="metric-card__value">6</p>
-            <p class="metric-card__trend metric-card__trend--neutral">
-              <i class="fa-solid fa-circle-dot"></i> Todas disponibles
+      <main class="admin-main">
+        <div class="admin-page-header">
+          <div>
+            <h1 class="admin-page-title">Bienvenido, <em>Administrador</em></h1>
+            <p class="admin-page-subtitle">
+              Aquí tienes un resumen del estado actual del hotel.
             </p>
           </div>
-        </article>
+          <span class="admin-page-ornament" aria-hidden="true">✦ ─── ✦</span>
+        </div>
 
-        <article class="metric-card">
-          <div class="metric-card__icon metric-card__icon--gold">
-            <i class="fa-solid fa-concierge-bell"></i>
+        <!-- Métricas -->
+        <div class="admin-metrics">
+          <div class="metric-card">
+            <div class="metric-card__icon metric-card__icon--adobe">
+              <i class="fa-solid fa-calendar-check"></i>
+            </div>
+            <div class="metric-card__body">
+              <p class="metric-card__label">Reservas este mes</p>
+              <p class="metric-card__value">0</p>
+            </div>
           </div>
-          <div class="metric-card__body">
-            <p class="metric-card__label">Servicios activos</p>
-            <p class="metric-card__value">0</p>
+
+          <div class="metric-card">
+            <div class="metric-card__icon metric-card__icon--gold">
+              <i class="fa-solid fa-clock"></i>
+            </div>
+            <div class="metric-card__body">
+              <p class="metric-card__label">Reservas pendientes</p>
+              <p class="metric-card__value">0</p>
+            </div>
           </div>
-        </article>
 
-      </div>
+          <div class="metric-card">
+            <div class="metric-card__icon metric-card__icon--forest">
+              <i class="fa-solid fa-bed"></i>
+            </div>
+            <div class="metric-card__body">
+              <p class="metric-card__label">Suites activas</p>
+              <p class="metric-card__value">6</p>
+              <p class="metric-card__trend metric-card__trend--neutral">
+                <i class="fa-solid fa-circle-dot"></i> Todas disponibles
+              </p>
+            </div>
+          </div>
 
-      <!-- Reservaciones recientes -->
-      <div class="admin-tables-grid">
-        <section class="admin-card" aria-labelledby="h2-reservas">
+          <div class="metric-card">
+            <div class="metric-card__icon metric-card__icon--gold">
+              <i class="fa-solid fa-concierge-bell"></i>
+            </div>
+            <div class="metric-card__body">
+              <p class="metric-card__label">Servicios activos</p>
+              <p class="metric-card__value">0</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Reservaciones recientes -->
+        <div class="admin-tables-grid">
+          <section class="admin-card" aria-labelledby="h2-reservas">
+            <div class="admin-card__header">
+              <h2 class="admin-card__title" id="h2-reservas">
+                <i class="fa-solid fa-calendar-check"></i> Reservaciones
+                recientes
+              </h2>
+              <a href="admin_reservaciones.html" class="admin-card__link"
+                >Ver todas →</a
+              >
+            </div>
+            <div class="admin-table-wrap">
+              <table class="admin-table" aria-label="Reservaciones recientes">
+                <thead>
+                  <tr>
+                    <th>Huésped</th>
+                    <th>Suite</th>
+                    <th>Entrada</th>
+                    <th>Salida</th>
+                    <th>Estado</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td
+                      colspan="5"
+                      style="
+                        text-align: center;
+                        padding: 2rem;
+                        color: var(--admin-text-muted, #888);
+                        font-style: italic;
+                      "
+                    >
+                      Sin reservaciones aún
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </div>
+
+        <!-- Accesos rápidos -->
+        <section class="admin-card" aria-labelledby="h2-accesos">
           <div class="admin-card__header">
-            <h2 class="admin-card__title" id="h2-reservas">
-              <i class="fa-solid fa-calendar-check"></i> Reservaciones recientes
+            <h2 class="admin-card__title" id="h2-accesos">
+              <i class="fa-solid fa-bolt"></i> Accesos rápidos
             </h2>
-            <a href="admin_reservaciones.html" class="admin-card__link">Ver todas →</a>
           </div>
-          <div class="admin-table-wrap">
-            <table class="admin-table" aria-label="Reservaciones recientes">
-              <thead>
-                <tr>
-                  <th>Huésped</th>
-                  <th>Suite</th>
-                  <th>Entrada</th>
-                  <th>Salida</th>
-                  <th>Estado</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td colspan="5" style="text-align:center; padding:2rem; color:var(--admin-text-muted,#888); font-style:italic;">
-                    Sin reservaciones aún
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+          <div class="admin-quick-actions__grid">
+            <a href="admin_habitaciones.html" class="admin-quick-btn"
+              ><i class="fa-solid fa-bed"></i><span>Habitaciones</span></a
+            >
+            <a href="admin_index.html" class="admin-quick-btn"
+              ><i class="fa-solid fa-house"></i><span>Editar Inicio</span></a
+            >
+            <a href="admin_nosotros.html" class="admin-quick-btn"
+              ><i class="fa-solid fa-heart"></i><span>Nosotros</span></a
+            >
+            <a href="admin_contacto.html" class="admin-quick-btn"
+              ><i class="fa-solid fa-location-dot"></i><span>Contacto</span></a
+            >
+            <a href="admin_reservaciones.html" class="admin-quick-btn"
+              ><i class="fa-solid fa-calendar-check"></i
+              ><span>Reservaciones</span></a
+            >
           </div>
         </section>
-      </div>
-
-      <!-- Accesos rápidos -->
-      <section class="admin-card" aria-labelledby="h2-accesos">
-        <div class="admin-card__header">
-          <h2 class="admin-card__title" id="h2-accesos">
-            <i class="fa-solid fa-bolt"></i> Accesos rápidos
-          </h2>
-        </div>
-        <div class="admin-quick-actions__grid">
-          <a href="admin_habitaciones.html" class="admin-quick-btn"><i class="fa-solid fa-bed"></i><span>Habitaciones</span></a>
-          <a href="admin_index.html"        class="admin-quick-btn"><i class="fa-solid fa-house"></i><span>Editar Inicio</span></a>
-          <a href="admin_nosotros.html"     class="admin-quick-btn"><i class="fa-solid fa-heart"></i><span>Nosotros</span></a>
-          <a href="admin_contacto.html"     class="admin-quick-btn"><i class="fa-solid fa-location-dot"></i><span>Contacto</span></a>
-          <a href="admin_reservaciones.html" class="admin-quick-btn"><i class="fa-solid fa-calendar-check"></i><span>Reservaciones</span></a>
-        </div>
-      </section>
-
-    </main>
-  </div>
-
-</body>
+      </main>
+    </div>
+  </body>
 </html>
