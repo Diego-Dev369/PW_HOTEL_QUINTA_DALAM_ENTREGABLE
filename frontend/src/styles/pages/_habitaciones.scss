@@ -1,7 +1,6 @@
 @use '../abstracts/variables' as v;
 @use '../abstracts/mixins' as m;
 
-// ─────────────────────────────────────────────────────────────
 //  ROOMS PAGE — contenedor principal
 // ─────────────────────────────────────────────────────────────
 .rooms-page {
@@ -14,7 +13,6 @@
   counter-reset: room-counter;
 }
 
-// ─────────────────────────────────────────────────────────────
 //  ROOM ROW — fila individual de suite
 // ─────────────────────────────────────────────────────────────
 .room-row {
@@ -37,7 +35,7 @@
     font-size: clamp(4rem, 8vw, 7rem);
     font-weight: 700;
     font-style: italic;
-    color: rgba(v.$color-adobe, 0.04);
+    color: rgba(v.$color-adobe, 0.2);
     line-height: 1;
     pointer-events: none;
     user-select: none;
@@ -70,7 +68,6 @@
   }
 }
 
-// ─────────────────────────────────────────────────────────────
 //  ROOM ROW — columna izquierda
 // ─────────────────────────────────────────────────────────────
 .room-row__left {
@@ -123,7 +120,6 @@
   }
 }
 
-// ─────────────────────────────────────────────────────────────
 //  ROOM ROW — columna derecha (descripción + CTA)
 // ─────────────────────────────────────────────────────────────
 .room-row__right {

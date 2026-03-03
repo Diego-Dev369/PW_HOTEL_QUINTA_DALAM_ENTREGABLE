@@ -2235,7 +2235,7 @@ select.admin-form__input option {
   font-size: clamp(4rem, 8vw, 7rem);
   font-weight: 700;
   font-style: italic;
-  color: rgba(124, 58, 33, 0.04);
+  color: rgba(124, 58, 33, 0.2);
   line-height: 1;
   pointer-events: none;
   -webkit-user-select: none;
