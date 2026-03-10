@@ -1,0 +1,30 @@
+@use '../abstracts/variables' as *;
+
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity $transition-base, transform $transition-base;
+  will-change: opacity, transform;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+.header.header--scrolled {
+  box-shadow: $shadow-sm;
+  backdrop-filter: blur(8px);
+}
+
+html {
+  scroll-behavior: smooth;
+}
