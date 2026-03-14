@@ -8,7 +8,7 @@
   position: relative;
   width: 100%;
   height: 100svh;
-  min-height: 600px;
+  min-height: 620px;
   overflow: hidden;
   display: flex;
   align-items: center;
@@ -28,24 +28,29 @@
   height: 100%;
   object-fit: cover;
   object-position: center 30%;
-  animation: heroZoom 18s ease-in-out infinite alternate;
+  animation: heroZoom 20s ease-in-out infinite alternate;
 }
 
 @keyframes heroZoom {
-  from { transform: scale(1.04); }
-  to   { transform: scale(1.10); }
+  from { transform: scale(1.0); }
+  to   { transform: scale(1.08); }
 }
 
 .hero__overlay {
   position: absolute;
   inset: 0;
   z-index: 1;
-  background: linear-gradient(
-    to bottom,
-    rgba(14, 18, 10, 0.25) 0%,
-    rgba(14, 18, 10, 0.62) 50%,
-    rgba(14, 18, 10, 0.85) 100%
-  );
+  background: v.$gradient-hero;
+}
+
+// Noise texture overlay sutil
+.hero__overlay::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  opacity: 0.5;
+  pointer-events: none;
 }
 
 .hero__content {
@@ -58,8 +63,24 @@
 }
 
 @keyframes heroFadeUp {
-  from { opacity: 0; transform: translateY(32px); }
+  from { opacity: 0; transform: translateY(36px); }
   to   { opacity: 1; transform: translateY(0); }
+}
+
+.hero__eyebrow {
+  display: inline-block;
+  font-family: v.$font-sans;
+  font-size: v.$fs-xs;
+  font-weight: 700;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: v.$color-gold;
+  margin-bottom: v.$space-5;
+  padding: v.$space-1 v.$space-5;
+  border: 1px solid rgba(v.$color-gold, 0.28);
+  border-radius: v.$radius-pill;
+  background: rgba(v.$color-gold, 0.08);
+  animation: heroFadeUp 1s ease 0.2s both;
 }
 
 .hero__title {
@@ -67,10 +88,10 @@
   font-size: clamp(v.$fs-4xl, 8vw, v.$fs-6xl);
   font-weight: 700;
   font-style: italic;
-  line-height: 1.08;
+  line-height: 1.06;
   color: v.$color-parchment-light;
   margin-bottom: v.$space-6;
-  text-shadow: 0 4px 32px rgba(0, 0, 0, 0.4);
+  text-shadow: 0 4px 40px rgba(0, 0, 0, 0.4);
   animation: heroFadeUp 1s ease 0.3s both;
 }
 
@@ -78,10 +99,11 @@
   font-family: v.$font-sans;
   font-size: clamp(v.$fs-md, 2vw, v.$fs-xl);
   font-weight: 300;
-  color: rgba(v.$color-parchment, 0.85);
+  color: rgba(v.$color-parchment, 0.82);
   max-width: 52ch;
   margin-inline: auto;
   margin-bottom: v.$space-10;
+  line-height: 1.75;
   animation: heroFadeUp 1s ease 0.45s both;
 }
 
@@ -89,40 +111,7 @@
   animation: heroFadeUp 1s ease 0.6s both;
   padding: v.$space-4 v.$space-12;
   font-size: v.$fs-md;
-}
-
-.hero__scroll-hint {
-  position: absolute;
-  bottom: v.$space-8;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 2;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: v.$space-2;
-  animation: heroFadeUp 1s ease 1.2s both;
-}
-
-.hero__scroll-line {
-  display: block;
-  width: 1px;
-  height: 40px;
-  background: linear-gradient(to bottom, v.$color-gold, transparent);
-  animation: scrollPulse 2s ease-in-out infinite;
-}
-
-@keyframes scrollPulse {
-  0%, 100% { transform: scaleY(1);   opacity: 0.8; }
-  50%       { transform: scaleY(0.6); opacity: 0.3; }
-}
-
-.hero__scroll-label {
-  font-family: v.$font-sans;
-  font-size: v.$fs-xs;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: rgba(v.$color-parchment, 0.5);
+  border-radius: v.$radius-lg;
 }
 
 // ─────────────────────────────────────────────────────────────
@@ -143,15 +132,18 @@
 
 .booking__card {
   display: flex;
-  align-items: stretch;
-  background-color: v.$color-parchment-light;
-  border: 1px solid v.$border-color;
-  border-radius: v.$radius-md;
-  box-shadow: v.$shadow-lg, 0 0 0 4px rgba(v.$color-parchment-dark, 0.5);
-  overflow: hidden;
-
+  align-items: center; 
+  background: rgba(v.$color-parchment-light, 0.95); 
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(v.$color-gold, 0.2);
+  border-radius: v.$radius-pill; 
+  box-shadow: v.$shadow-xl, 0 16px 40px rgba(v.$color-adobe, 0.1);
+  padding: v.$space-2 v.$space-4; 
+  
   @include m.respond-to('md') {
     flex-direction: column;
+    border-radius: v.$radius-xl;
+    padding: 0;
   }
 }
 
@@ -160,12 +152,13 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: v.$space-5 v.$space-8;
+  padding: v.$space-4 v.$space-6;
   min-width: 0;
 
   @include m.respond-to('md') {
-    padding: v.$space-4 v.$space-6;
+    padding: v.$space-5 v.$space-6;
     border-bottom: 1px solid v.$border-color;
+    width: 100%;
   }
 }
 
@@ -176,7 +169,7 @@
   font-family: v.$font-sans;
   font-size: v.$fs-xs;
   font-weight: 700;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   color: v.$color-text-light;
   margin-bottom: v.$space-2;
@@ -190,7 +183,7 @@
 .booking__input {
   background: none;
   border: none;
-  border-bottom: 1px solid v.$border-color;
+  border-bottom: 1.5px solid v.$border-color;
   padding: v.$space-2 0;
   font-family: v.$font-serif;
   font-size: v.$fs-lg;
@@ -201,13 +194,11 @@
   transition: border-color v.$transition-fast;
   cursor: pointer;
 
-  &:focus {
-    border-color: v.$color-adobe;
-  }
+  &:focus { border-color: v.$color-adobe; }
 
   &--select {
     appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%237C3A21' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7' viewBox='0 0 12 7'%3E%3Cpath fill='none' stroke='%238B3E22' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: right 4px center;
     padding-right: v.$space-6;
@@ -225,128 +216,140 @@
   }
 }
 
-// ── CORRECCIÓN 1: booking__btn — más pulido y proporcionado ──
 .booking__btn {
   flex-shrink: 0;
-  align-self: stretch;
+  align-self: center; // Centrado vertical perfecto
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: v.$space-2;
-  border-radius: 0;
+  border-radius: v.$radius-pill; // Corregido el doble ;;
   padding-inline: v.$space-10;
-  min-width: 130px;
+  min-width: 140px;
+  margin-right: v.$space-2;
+  height: 60px;
   font-family: v.$font-sans;
   font-size: v.$fs-sm;
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  background-color: v.$color-adobe;
+  background: v.$gradient-adobe;
   color: v.$color-parchment-light;
   border: none;
-  border-left: 1px solid rgba(v.$color-adobe, 0.3);
   cursor: pointer;
   text-decoration: none;
   position: relative;
   overflow: hidden;
-  transition: background-color v.$transition-base, letter-spacing v.$transition-base;
+  transition: letter-spacing v.$transition-base, transform v.$transition-fast;
 
-  // Efecto de brillo sutil al hover
-  &::before {
+  // Efecto de brillo que pasa sobre el botón
+  &::after {
     content: '';
     position: absolute;
     inset: 0;
     background: linear-gradient(
-      135deg,
-      rgba(v.$color-parchment-light, 0.12) 0%,
+      105deg,
+      transparent 40%,
+      rgba(255, 255, 255, 0.10) 50%,
       transparent 60%
     );
-    opacity: 0;
-    transition: opacity v.$transition-base;
+    transform: translateX(-100%);
+    transition: transform 0.5s ease;
   }
 
+  // Animaciones al pasar el mouse
   &:hover {
-    background-color: v.$color-adobe-light;
-    letter-spacing: 0.18em;
+    letter-spacing: 0.18em; // Expande un poco las letras
+    transform: scale(1.02); // Ligero zoom
 
-    &::before {
-      opacity: 1;
+    &::after { 
+      transform: translateX(100%); // Activa el brillo
     }
   }
 
-  &:active {
-    transform: scale(0.98);
-  }
-
+  // Adaptación para celulares (se hace ancho completo)
   @include m.respond-to('md') {
-    border-radius: 0 0 v.$radius-md v.$radius-md;
-    border-left: none;
-    border-top: 1px solid rgba(v.$color-adobe, 0.3);
-    padding: v.$space-5;
-    min-width: unset;
-    width: 100%;
+    margin: v.$space-4;
+    width: calc(100% - #{v.$space-8});
+    height: 54px; // Un poco más bajo en móvil para no estorbar
   }
 }
 
 // ─────────────────────────────────────────────────────────────
-//  BOTONES GLOBALES
+//  SECCIONES GLOBALES
 // ─────────────────────────────────────────────────────────────
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: v.$space-2;
-  padding: v.$space-3 v.$space-8;
-  border: 2px solid transparent;
-  border-radius: v.$radius-sm;
+.section {
+  padding-block: v.$space-24;
+
+  &--cream {
+    background-color: v.$color-parchment;
+  }
+
+  &--white {
+    background-color: v.$color-parchment-light;
+  }
+
+  &--dark {
+    background: linear-gradient(180deg, v.$color-forest 0%, v.$admin-bg 100%);
+  }
+
+  @include m.respond-to('md') {
+    padding-block: v.$space-16;
+  }
+}
+
+.section__header {
+  text-align: center;
+  margin-bottom: v.$space-16;
+
+  @include m.respond-to('md') {
+    margin-bottom: v.$space-10;
+  }
+}
+
+.section__eyebrow {
+  display: inline-block;
   font-family: v.$font-sans;
-  font-size: v.$fs-sm;
+  font-size: v.$fs-xs;
   font-weight: 700;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.28em;
   text-transform: uppercase;
-  text-decoration: none;
-  cursor: pointer;
-  transition: all v.$transition-base;
-  white-space: nowrap;
+  color: v.$color-gold;
+  margin-bottom: v.$space-4;
 
-  &--primary {
-    background-color: v.$color-adobe;
-    border-color: v.$color-adobe;
-    color: v.$color-parchment-light;
+  &--gold { color: v.$color-gold-light; }
+}
 
-    &:hover,
-    &:focus-visible {
-      background-color: v.$color-adobe-light;
-      border-color: v.$color-adobe-light;
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(v.$color-adobe, 0.35);
-    }
-  }
+.section__title {
+  font-family: v.$font-serif;
+  font-size: clamp(v.$fs-2xl, 4vw, v.$fs-4xl);
+  font-weight: 700;
+  color: v.$color-text;
+  margin-bottom: v.$space-4;
+  line-height: 1.15;
 
-  &--outline {
-    background-color: transparent;
-    border-color: v.$color-adobe;
+  em {
     color: v.$color-adobe;
-
-    &:hover,
-    &:focus-visible {
-      background-color: v.$color-adobe;
-      color: v.$color-parchment-light;
-      transform: translateY(-2px);
-    }
+    font-style: italic;
   }
+}
 
-  &--ghost {
-    background-color: rgba(v.$color-parchment, 0.15);
-    border-color: rgba(v.$color-parchment, 0.5);
-    color: v.$color-parchment-light;
-    backdrop-filter: blur(8px);
+.section__subtitle {
+  font-family: v.$font-sans;
+  font-size: v.$fs-lg;
+  color: v.$color-text-mid;
+  max-width: 52ch;
+  margin-inline: auto;
+  line-height: 1.75;
+}
 
-    &:hover {
-      background-color: rgba(v.$color-parchment, 0.25);
-      border-color: v.$color-parchment-light;
-    }
-  }
+.section__ornament {
+  display: block;
+  margin-top: v.$space-5;
+  font-size: 0.7rem;
+  letter-spacing: 0.26em;
+  color: rgba(v.$color-gold, 0.45);
+  user-select: none;
 }
 
 // ─────────────────────────────────────────────────────────────
@@ -356,22 +359,20 @@
   @include m.container;
 }
 
-// ── CORRECCIÓN 2: grid y cards más compactos ─────────────────
 .rooms__grid {
   display: grid;
-  // Columnas con ancho máximo para evitar que las cards sean gigantes
   grid-template-columns: repeat(3, minmax(0, 340px));
   justify-content: center;
-  gap: v.$space-6;            // reducido de space-8
+  gap: v.$space-6;
   margin-bottom: v.$space-12;
 
   @include m.respond-to('lg') {
-    grid-template-columns: repeat(2, minmax(0, 360px));
+    grid-template-columns: repeat(2, minmax(0, 380px));
     gap: v.$space-5;
   }
 
   @include m.respond-to('md') {
-    grid-template-columns: minmax(0, 400px);
+    grid-template-columns: minmax(0, 420px);
     margin-inline: auto;
   }
 }
@@ -380,153 +381,22 @@
   text-align: center;
 }
 
-// ── Room cards ───────────────────────────────────────────────
-.room-card {
-  background-color: v.$color-parchment;
-  border: 1px solid v.$border-color;
-  border-radius: v.$radius-md;
-  overflow: hidden;
-  box-shadow: v.$shadow-sm;
-  display: flex;
-  flex-direction: column;
-  transition: box-shadow v.$transition-base, transform v.$transition-base;
-
-  &:hover {
-    box-shadow: v.$shadow-lg;
-    transform: translateY(-6px);
-
-    .room-card__img {
-      transform: scale(1.06);
-    }
-  }
-
-  &--featured {
-    border-color: rgba(v.$color-gold, 0.45);
-    box-shadow: v.$shadow-md, 0 0 0 2px rgba(v.$color-gold, 0.15);
-    position: relative;
-
-    &::before {
-      content: '✦ Recomendado ✦';
-      position: absolute;
-      top: v.$space-3;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 2;
-      background: rgba(v.$color-forest, 0.88);
-      color: v.$color-gold;
-      font-size: 0.6rem;
-      font-weight: 700;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      padding: 3px v.$space-4;
-      border-radius: v.$radius-pill;
-      white-space: nowrap;
-    }
-  }
-}
-
-.room-card__img-wrap {
-  position: relative;
-  overflow: hidden;
-  aspect-ratio: 16 / 10;     // más cinematográfico, menos alto que 4/3
-  flex-shrink: 0;
-}
-
-.room-card__img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  transition: transform v.$transition-slow;
-}
-
-.room-card__badge {
-  position: absolute;
-  bottom: v.$space-3;
-  left: v.$space-3;
-  z-index: 1;
-  background: rgba(v.$color-forest, 0.85);
-  color: rgba(v.$color-parchment, 0.9);
-  font-family: v.$font-sans;
-  font-size: 0.65rem;
-  font-weight: 700;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  padding: 4px v.$space-3;
-  border-radius: v.$radius-pill;
-  border: 1px solid rgba(v.$color-gold, 0.3);
-}
-
-.room-card__body {
-  padding: v.$space-5 v.$space-6;   // reducido de space-6 / space-8
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  background-color: v.$color-parchment-light;
-}
-
-.room-card__title {
-  font-family: v.$font-serif;
-  font-size: v.$fs-xl;              // reducido de fs-2xl
-  font-weight: 700;
-  color: v.$color-text;
-  margin-bottom: v.$space-1;
-}
-
-.room-card__sub {
-  font-family: v.$font-serif;
-  font-size: v.$fs-sm;              // reducido de fs-md
-  font-style: italic;
-  color: v.$color-adobe;
-  display: block;
-  margin-bottom: v.$space-3;
-}
-
-.room-card__desc {
-  font-size: v.$fs-sm;
-  color: v.$color-text-mid;
-  line-height: 1.6;
-  margin-bottom: v.$space-4;
-  flex-grow: 1;
-}
-
-.room-card__amenities {
-  display: flex;
-  gap: v.$space-2;
-  margin-bottom: v.$space-5;
-}
-
-.room-card__amenity {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 30px;
-  height: 30px;
-  border: 1px solid v.$border-color;
-  border-radius: v.$radius-sm;
-  font-size: v.$fs-sm;
-  color: v.$color-text-mid;
-  background: v.$color-parchment;
-  transition: all v.$transition-fast;
-
-  &:hover {
-    border-color: v.$color-adobe;
-    color: v.$color-adobe;
-  }
-}
-
-.room-card__link {
-  align-self: flex-start;
-  padding: v.$space-2 v.$space-5;   // levemente más compacto
-  font-size: v.$fs-xs;
-}
-
 // ─────────────────────────────────────────────────────────────
 //  EXPERIENCIAS
 // ─────────────────────────────────────────────────────────────
 .experiences {
   padding-block: v.$space-24;
-  background-color: v.$color-forest;
+  background: linear-gradient(180deg, v.$color-forest 0%, v.$color-forest-mid 100%);
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(v.$color-gold, 0.3), transparent);
+  }
 
   @include m.respond-to('md') {
     padding-block: v.$space-16;
@@ -553,53 +423,6 @@
   }
 }
 
-.exp-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: v.$space-5;
-  text-align: center;
-
-  &:hover .exp-card__img-wrap {
-    transform: translateY(-8px);
-    box-shadow: 0 20px 48px rgba(0, 0, 0, 0.5);
-  }
-
-  &:hover .exp-card__img {
-    transform: scale(1.08);
-  }
-}
-
-.exp-card__img-wrap {
-  width: min(200px, 100%);
-  aspect-ratio: 1;
-  border-radius: 9999px 9999px 20px 20px;
-  overflow: hidden;
-  border: 3px solid rgba(v.$color-gold, 0.4);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-  transition: transform v.$transition-slow, box-shadow v.$transition-slow;
-
-  @include m.respond-to('sm') {
-    width: min(150px, 90%);
-  }
-}
-
-.exp-card__img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  transition: transform v.$transition-slow;
-}
-
-.exp-card__title {
-  font-family: v.$font-serif;
-  font-size: v.$fs-lg;
-  font-weight: 600;
-  color: v.$color-parchment;
-  line-height: 1.3;
-}
-
 // ─────────────────────────────────────────────────────────────
 //  SERVICIOS
 // ─────────────────────────────────────────────────────────────
@@ -621,84 +444,6 @@
     max-width: 380px;
     margin-inline: auto;
   }
-}
-
-.service-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  padding: v.$space-10 v.$space-6;
-  background-color: v.$color-parchment-light;
-  border: 1px solid v.$border-color;
-  border-radius: v.$radius-md;
-  box-shadow: v.$shadow-sm;
-  transition: all v.$transition-base;
-  position: relative;
-  overflow: hidden;
-
-  &::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, v.$color-adobe, v.$color-gold);
-    transform: scaleX(0);
-    transition: transform v.$transition-base;
-  }
-
-  &:hover {
-    box-shadow: v.$shadow-md;
-    transform: translateY(-4px);
-
-    &::after {
-      transform: scaleX(1);
-    }
-
-    .service-card__icon-wrap {
-      background-color: v.$color-adobe;
-      border-color: v.$color-adobe;
-    }
-
-    .service-card__icon {
-      color: v.$color-parchment-light;
-    }
-  }
-}
-
-.service-card__icon-wrap {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 72px;
-  height: 72px;
-  border-radius: 50%;
-  border: 1.5px solid rgba(v.$color-adobe, 0.3);
-  background-color: rgba(v.$color-adobe, 0.06);
-  margin-bottom: v.$space-5;
-  transition: all v.$transition-base;
-}
-
-.service-card__icon {
-  font-size: v.$fs-2xl;
-  color: v.$color-adobe;
-  transition: color v.$transition-base;
-}
-
-.service-card__title {
-  font-family: v.$font-serif;
-  font-size: v.$fs-xl;
-  font-weight: 600;
-  color: v.$color-text;
-  margin-bottom: v.$space-3;
-}
-
-.service-card__text {
-  font-size: v.$fs-sm;
-  color: v.$color-text-mid;
-  line-height: 1.65;
 }
 
 // ─────────────────────────────────────────────────────────────
@@ -751,16 +496,14 @@
 .about__desc {
   font-size: v.$fs-md;
   color: v.$color-text-mid;
-  line-height: 1.75;
+  line-height: 1.80;
   max-width: 48ch;
 }
 
-// ── CORRECCIÓN 3: imagen de Nosotros más controlada ──────────
 .about__media {
   position: relative;
-  // Limitamos el ancho máximo del contenedor de imagen
-  max-width: 460px;
-  margin-inline: auto;          // centrado cuando está en columna única (mobile)
+  max-width: 480px;
+  margin-inline: auto;
 
   @include m.respond-to('md') {
     max-width: 420px;
@@ -770,25 +513,27 @@
 
 .about__img {
   width: 100%;
-  // Aspect ratio más horizontal/paisaje → imagen menos alta y dominante
-  aspect-ratio: 4 / 4;         // era 4/5; puedes ajustar a 5/4 o 3/2 si prefieres aún más horizontal
+  aspect-ratio: 4 / 4;
   object-fit: cover;
-  object-position: center top;  // enfoca la parte superior de la foto (fachada del hotel)
-  border-radius: v.$radius-lg;
-  box-shadow: v.$shadow-lg;
+  object-position: center top;
+  border-radius: v.$radius-xl;
+  box-shadow: v.$shadow-xl;
+  transition: transform v.$transition-slow;
+
+  .about__media:hover & { transform: scale(1.02); }
 }
 
 .about__badge {
   position: absolute;
   bottom: calc(-1 * v.$space-6);
   left: calc(-1 * v.$space-6);
-  background: v.$color-adobe;
+  background: v.$gradient-adobe;
   color: v.$color-parchment-light;
-  border-radius: v.$radius-md;
+  border-radius: v.$radius-lg;
   padding: v.$space-5 v.$space-6;
   text-align: center;
-  box-shadow: v.$shadow-md;
-  border: 2px solid rgba(v.$color-gold, 0.4);
+  box-shadow: v.$shadow-adobe;
+  border: 2px solid rgba(v.$color-gold, 0.35);
 
   @include m.respond-to('md') {
     bottom: v.$space-4;
@@ -808,7 +553,7 @@
 .about__badge-text {
   font-family: v.$font-sans;
   font-size: v.$fs-xs;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   opacity: 0.85;
 }
@@ -817,8 +562,26 @@
 //  CTA BAND
 // ─────────────────────────────────────────────────────────────
 .cta-band {
-  background-color: v.$color-forest;
+  background: linear-gradient(135deg, v.$color-forest 0%, v.$color-forest-mid 100%);
+  border-top: 1px solid rgba(v.$color-gold, 0.12);
   padding-block: v.$space-24;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -30%;
+    right: -5%;
+    width: 40%;
+    height: 160%;
+    background: radial-gradient(
+      ellipse,
+      rgba(v.$color-gold, 0.05) 0%,
+      transparent 65%
+    );
+    pointer-events: none;
+  }
 
   @include m.respond-to('md') {
     padding-block: v.$space-16;
@@ -855,8 +618,9 @@
 
 .cta-band__desc {
   font-size: v.$fs-lg;
-  color: rgba(v.$color-parchment, 0.75);
+  color: rgba(v.$color-parchment, 0.70);
   max-width: 46ch;
+  line-height: 1.7;
 }
 
 .cta-band__actions {
@@ -867,5 +631,71 @@
   @include m.respond-to('sm') {
     flex-direction: column;
     width: 100%;
+
+    .btn { width: 100%; justify-content: center; }
   }
+}
+
+// ─────────────────────────────────────────────────────────────
+//  BOTONES GLOBALES (para contextos que no usan _buttons.scss)
+// ─────────────────────────────────────────────────────────────
+.btn--ghost-light {
+  background: rgba(v.$color-parchment, 0.12);
+  border: 1px solid rgba(v.$color-parchment, 0.35);
+  color: v.$color-parchment-light;
+  backdrop-filter: blur(8px);
+
+  &:hover {
+    background: rgba(v.$color-parchment, 0.22);
+    border-color: rgba(v.$color-parchment, 0.60);
+  }
+}
+
+// ─────────────────────────────────────────────────────────────
+//  LOOKBOOK (Masonry Grid)
+// ─────────────────────────────────────────────────────────────
+.lookbook {
+  background: linear-gradient(180deg, v.$color-forest 0%, v.$color-forest-mid 100%);
+}
+
+.lookbook__grid {
+  // Crea el efecto masonry usando columnas de CSS nativo
+  columns: 3 250px; 
+  column-gap: v.$space-6;
+  
+  @include m.respond-to('md') {
+    columns: 2 200px;
+    column-gap: v.$space-4;
+  }
+}
+
+.lookbook__item {
+  display: inline-block; // Vital para que las imágenes no se corten entre columnas
+  width: 100%;
+  margin-bottom: v.$space-6;
+  border-radius: v.$radius-lg;
+  overflow: hidden;
+  box-shadow: v.$shadow-sm;
+  transition: transform v.$transition-slow, box-shadow v.$transition-slow;
+  border: 1px solid rgba(v.$color-gold, 0.1);
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: v.$shadow-md;
+    border-color: v.$color-gold;
+
+    .lookbook__img {
+      filter: grayscale(0%);
+      transform: scale(1.05);
+    }
+  }
+}
+
+.lookbook__img {
+  width: 100%;
+  height: auto;
+  display: block;
+  filter: grayscale(30%); 
+  transition: filter v.$transition-base, transform v.$transition-slow;
+  object-fit: cover;
 }

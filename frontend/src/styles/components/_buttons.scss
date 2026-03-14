@@ -8,7 +8,7 @@
   align-items: center;
   justify-content: center;
   gap: v.$space-2;
-  padding: v.$space-3 v.$space-6;
+  padding: v.$space-3;
   font-family: v.$font-sans;
   font-size: v.$fs-sm;
   font-weight: 700;
@@ -16,22 +16,43 @@
   text-transform: uppercase;
   text-decoration: none;
   border: none;
-  border-radius: v.$radius-sm;
+  border-radius: v.$radius-md;
   cursor: pointer;
-  transition: background-color v.$transition-fast,
-              color            v.$transition-fast,
-              box-shadow       v.$transition-fast,
-              transform        v.$transition-fast;
+  position: relative;
+  overflow: hidden;
+  transition:
+    transform        v.$transition-base,
+    box-shadow       v.$transition-base,
+    background-color v.$transition-base,
+    color            v.$transition-base;
+
+  // Shimmer line on hover
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      105deg,
+      transparent 40%,
+      rgba(255, 255, 255, 0.12) 50%,
+      transparent 60%
+    );
+    transform: translateX(-100%);
+    transition: transform .6s ease;
+    pointer-events: none;
+  }
+
+  &:hover::after { transform: translateX(100%); }
 
   &:focus-visible {
     outline: 2px solid v.$color-gold;
     outline-offset: 3px;
   }
 
-  &:active { transform: translateY(1px); }
+  &:active { transform: translateY(1px) scale(0.99); }
 
   &:disabled {
-    opacity: 0.45;
+    opacity: 0.42;
     pointer-events: none;
   }
 }
@@ -39,46 +60,67 @@
 //  VARIANTES PÚBLICAS
 // ────────────────────────────────────────────────────────────
 
-// Primario — adobe sólido
+// Primario — adobe con gradiente
 .btn--primary {
-  background-color: v.$color-adobe;
+  background: v.$gradient-adobe;
   color: v.$color-parchment-light;
-  box-shadow: v.$shadow-sm;
+  box-shadow: 0 2px 14px rgba(v.$color-adobe, 0.28);
 
   &:hover {
-    background-color: scale(v.$color-adobe, 8%);
-    box-shadow: v.$shadow-md;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 28px rgba(v.$color-adobe, 0.42);
   }
 }
 
 // Secundario — contorno dorado
 .btn--secondary {
-  background-color: transparent;
+  background: transparent;
   color: v.$color-gold;
   border: 1.5px solid v.$color-gold;
 
   &:hover {
-    background-color: rgba(v.$color-gold, 0.08);
-    box-shadow: v.$shadow-sm;
+    background: rgba(v.$color-gold, 0.08);
+    box-shadow: 0 6px 20px rgba(v.$color-gold, 0.20);
+    transform: translateY(-2px);
   }
 }
 
+// Ghost — neutro
 .btn--ghost {
-  background-color: transparent;
+  background: transparent;
   color: v.$color-text-mid;
   border: 1px solid v.$border-color;
 
   &:hover {
-    border-color: v.$color-adobe;
+    border-color: rgba(v.$color-adobe, 0.4);
     color: v.$color-adobe;
+    background: rgba(v.$color-adobe, 0.04);
   }
 }
 
+// Dark — forestal
 .btn--dark {
-  background-color: v.$color-text;
+  background: v.$color-forest;
   color: v.$color-parchment-light;
+  border: 1px solid rgba(v.$color-gold, 0.18);
 
-  &:hover { background-color: adjust(v.$color-text, 12%); }
+  &:hover {
+    background: v.$color-forest-mid;
+    transform: translateY(-2px);
+    box-shadow: v.$shadow-md;
+  }
+}
+
+// Gold — dorado sólido
+.btn--gold {
+  background: v.$gradient-gold;
+  color: v.$color-forest;
+  box-shadow: 0 2px 12px rgba(v.$color-gold, 0.25);
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 28px rgba(v.$color-gold, 0.38);
+  }
 }
 
 //  TAMAÑOS
@@ -86,16 +128,19 @@
 .btn--sm {
   padding: v.$space-2 v.$space-4;
   font-size: v.$fs-xs;
+  border-radius: v.$radius-sm;
 }
 
 .btn--lg {
-  padding: v.$space-4 v.$space-8;
+  padding: v.$space-4 v.$space-10;
   font-size: v.$fs-md;
+  border-radius: v.$radius-lg;
 }
 
-.btn--full {
-  width: 100%;
-}
+.btn--full { width: 100%; }
+
+.btn--icon-left  i { order: -1; }
+.btn--icon-right i { order: 1; }
 
 
 //  ADMIN BUTTONS — .admin-btn
@@ -111,12 +156,25 @@
   letter-spacing: 0.06em;
   text-transform: uppercase;
   border: none;
-  border-radius: 6px;
+  border-radius: v.$radius-md;
   cursor: pointer;
-  transition: background-color 0.18s, box-shadow 0.18s, transform 0.12s;
+  transition: all v.$transition-base;
   text-decoration: none;
   white-space: nowrap;
+  position: relative;
+  overflow: hidden;
 
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.08) 50%, transparent 60%);
+    transform: translateX(-100%);
+    transition: transform 0.45s ease;
+    pointer-events: none;
+  }
+
+  &:hover::after { transform: translateX(100%); }
   &:active { transform: translateY(1px); }
 
   &:focus-visible {
@@ -125,66 +183,92 @@
   }
 
   &--primary {
-    background: v.$color-adobe;
+    background: v.$gradient-adobe;
     color: v.$color-parchment-light;
+    box-shadow: 0 2px 12px rgba(v.$color-adobe, 0.28);
 
-    &:hover { background: scale(v.$color-adobe, 8%); }
+    &:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 20px rgba(v.$color-adobe, 0.4);
+    }
   }
 
   &--ghost {
     background: transparent;
-    color: rgba(234, 228, 216, 0.6);
-    border: 1px solid rgba(234, 228, 216, 0.18);
+    color: v.$admin-text-mid;
+    border: 1px solid v.$admin-border;
 
     &:hover {
-      background: rgba(234, 228, 216, 0.06);
-      color: rgba(234, 228, 216, 0.85);
+      background: rgba(255, 255, 255, 0.05);
+      color: v.$admin-text;
+      border-color: v.$admin-border-strong;
     }
   }
 
   &--danger {
-    background: rgba(224, 85, 85, 0.15);
+    background: v.$admin-danger-light;
     color: #e05555;
-    border: 1px solid rgba(224, 85, 85, 0.3);
+    border: 1px solid rgba(224, 85, 85, 0.28);
 
-    &:hover { background: rgba(224, 85, 85, 0.25); }
+    &:hover {
+      background: rgba(224, 85, 85, 0.22);
+      transform: translateY(-1px);
+    }
+  }
+
+  &--success {
+    background: v.$admin-success-light;
+    color: v.$admin-success;
+    border: 1px solid rgba(v.$admin-success, 0.25);
+
+    &:hover { background: rgba(v.$admin-success, 0.2); }
   }
 
   &--sm {
-    padding: 0.3rem 0.7rem;
+    padding: 0.3rem 0.75rem;
     font-size: 0.7rem;
+    border-radius: v.$radius-sm;
   }
 }
 
 .admin-icon-btn {
   @include m.flex-center;
-  width: 30px;
-  height: 30px;
-  border-radius: 6px;
+  width: 32px;
+  height: 32px;
+  border-radius: v.$radius-sm;
   border: 1px solid transparent;
   background: transparent;
   cursor: pointer;
-  font-size: 0.75rem;
-  transition: all 0.15s;
+  font-size: 0.8rem;
+  transition: all v.$transition-fast;
 
   &--edit {
     color: v.$color-gold;
-    border-color: rgba(v.$color-gold, 0.2);
-    &:hover { background: rgba(v.$color-gold, 0.12); }
+    border-color: rgba(v.$color-gold, 0.18);
+    &:hover {
+      background: rgba(v.$color-gold, 0.12);
+      border-color: rgba(v.$color-gold, 0.35);
+      transform: translateY(-1px);
+    }
   }
 
   &--delete {
     color: #e05555;
-    border-color: rgba(224, 85, 85, 0.2);
-    &:hover { background: rgba(224, 85, 85, 0.12); }
+    border-color: rgba(224, 85, 85, 0.18);
+    &:hover {
+      background: rgba(224, 85, 85, 0.12);
+      border-color: rgba(224, 85, 85, 0.35);
+      transform: translateY(-1px);
+    }
   }
 
   &--view {
-    color: rgba(234, 228, 216, 0.55);
-    border-color: rgba(234, 228, 216, 0.15);
+    color: v.$admin-text-mid;
+    border-color: v.$admin-border;
     &:hover {
-      color: rgba(234, 228, 216, 0.85);
-      background: rgba(234, 228, 216, 0.08);
+      color: v.$admin-text;
+      background: rgba(255, 255, 255, 0.06);
+      border-color: v.$admin-border-strong;
     }
   }
 }
@@ -197,29 +281,34 @@
   gap: 0.5rem;
   padding: 1.2rem 1rem;
   background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(234, 228, 216, 0.1);
-  border-radius: 10px;
+  border: 1px solid v.$admin-border;
+  border-radius: v.$radius-md;
   text-decoration: none;
-  color: rgba(234, 228, 216, 0.7);
+  color: v.$admin-text-mid;
   font-family: v.$font-sans;
   font-size: 0.7rem;
   font-weight: 700;
   letter-spacing: 0.07em;
   text-transform: uppercase;
-  transition: all 0.18s;
+  transition: all v.$transition-base;
 
-  i { font-size: 1.2rem; color: v.$color-gold; }
+  i {
+    font-size: 1.2rem;
+    color: v.$color-gold;
+    transition: transform v.$transition-spring;
+  }
 
   &:hover {
-    background: rgba(201, 151, 58, 0.08);
-    border-color: rgba(v.$color-gold, 0.3);
-    color: v.$color-parchment-light;
+    background: rgba(v.$color-gold, 0.07);
+    border-color: rgba(v.$color-gold, 0.28);
+    color: v.$admin-text;
     transform: translateY(-2px);
+    box-shadow: v.$shadow-md;
+
+    i { transform: scale(1.15); }
   }
 }
 
-//  BOTÓN PEQUEÑO (para cabeceras de listas CRUD)
-// ─────────────────────────────────────────────────────────────
 .admin-btn--sm {
   padding: v.$space-1 v.$space-4;
   font-size: 0.65rem;

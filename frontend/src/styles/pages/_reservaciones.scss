@@ -1,169 +1,169 @@
-@use '../abstracts/variables' as v;
-@use '../abstracts/mixins'   as m;
+  @use '../abstracts/variables' as v;
+  @use '../abstracts/mixins'   as m;
 
-// ── Página contenedora ────────────────────────────────────
-.reserva-page {
-  background-color: v.$color-parchment;
-  background-image:
-    radial-gradient(ellipse at 10% 20%, rgba(v.$color-adobe, 0.04) 0%, transparent 50%),
-    radial-gradient(ellipse at 90% 80%, rgba(v.$color-gold,  0.03) 0%, transparent 50%);
-  padding-top: calc(v.$header-height + v.$space-12);
+  // ── Página contenedora ────────────────────────────────────
+  .reserva-page {
+    background-color: v.$color-parchment;
+    background-image:
+      radial-gradient(ellipse at 10% 20%, rgba(v.$color-adobe, 0.04) 0%, transparent 50%),
+      radial-gradient(ellipse at 90% 80%, rgba(v.$color-gold,  0.03) 0%, transparent 50%);
+    margin-top: calc(v.$header-height - 3rem);
 
-  @include m.respond-to('md') {
-    padding-top: calc(v.$header-height-mobile + v.$space-8);
-  }
-}
-
-// ── Wrapper: card contenedora del formulario ──────────────
-.reserva-wrapper {
-  width: 100%;
-  max-width: 680px;
-  margin-inline: auto;
-  background: v.$color-parchment-light;
-  border: 1px solid v.$border-color;
-  border-radius: v.$radius-lg;
-  padding: v.$space-12 v.$space-10;
-  box-shadow: v.$shadow-lg, 0 0 0 1px rgba(v.$color-gold, 0.08);
-  position: relative;
-
-  &::before {
-    content: '✦';
-    position: absolute;
-    top: v.$space-6;
-    right: v.$space-8;
-    font-size: v.$fs-lg;
-    color: rgba(v.$color-gold, 0.3);
-    pointer-events: none;
+    @include m.respond-to('md') {
+      padding-top: calc(v.$header-height-mobile + v.$space-8);
+    }
   }
 
-  @include m.respond-to('sm') {
-    padding: v.$space-8 v.$space-6;
-    border-radius: v.$radius-md;
+  // ── Wrapper: card contenedora del formulario ──────────────
+  .reserva-wrapper {
+    width: 100%;
+    max-width: 680px;
+    margin-inline: auto;
+    background: v.$color-parchment-light;
+    border: 1px solid v.$border-color;
+    border-radius: v.$radius-lg;
+    padding: v.$space-12 v.$space-10;
+    box-shadow: v.$shadow-lg, 0 0 0 1px rgba(v.$color-gold, 0.08);
+    position: relative;
+
+    &::before {
+      content: '✦';
+      position: absolute;
+      top: v.$space-6;
+      right: v.$space-8;
+      font-size: v.$fs-lg;
+      color: rgba(v.$color-gold, 0.3);
+      pointer-events: none;
+    }
+
+    @include m.respond-to('sm') {
+      padding: v.$space-8 v.$space-6;
+      border-radius: v.$radius-md;
+    }
   }
-}
 
-// ── Encabezado ────────────────────────────────────────────
-.reserva__header {
-  margin-bottom: v.$space-10;
-  text-align: center;
+  // ── Encabezado ────────────────────────────────────────────
+  .reserva__header {
+    margin-bottom: v.$space-10;
+    text-align: center;
 
-  .section__title    { font-size: clamp(v.$fs-3xl, 5vw, v.$fs-4xl); margin-bottom: v.$space-3; }
-  .section__ornament { display: block; color: v.$color-gold; font-size: v.$fs-xs; letter-spacing: 0.3em; }
-}
-
-// ── Ajustes de inputs dentro del form de reserva ─────────
-//  (complementan los estilos base de _forms.scss)
-.reserva__form {
-  textarea.form__input {
-    min-height: 110px;
-    line-height: 1.65;
+    .section__title    { font-size: clamp(v.$fs-3xl, 5vw, v.$fs-4xl); margin-bottom: v.$space-3; }
+    .section__ornament { display: block; color: v.$color-gold; font-size: v.$fs-xs; letter-spacing: 0.3em; }
   }
-}
 
-// ── Botón submit ──────────────────────────────────────────
-.reserva__submit {
-  width: 100%;
-  padding-block: v.$space-4;
-  font-size: v.$fs-sm;
-  letter-spacing: 0.14em;
-  margin-bottom: v.$space-6;
-}
+  // ── Ajustes de inputs dentro del form de reserva ─────────
+  .reserva__form {
+    textarea.form__input {
+      min-height: 110px;
+      line-height: 1.65;
+      resize: none;
+    }
+  }
 
-// ── Aviso "en desarrollo" ─────────────────────────────────
-.reserva__notice {
-  display: flex;
-  align-items: flex-start;
-  gap: v.$space-3;
-  font-size: v.$fs-xs;
-  color: rgba(v.$color-text, 0.45);
-  line-height: 1.6;
-  padding: v.$space-4 v.$space-5;
-  background: rgba(v.$color-gold, 0.05);
-  border: 1px dashed rgba(v.$color-gold, 0.25);
-  border-radius: v.$radius-sm;
-  letter-spacing: 0.02em;
-
-  i {
-    color: v.$color-gold;
+  // ── Botón submit ──────────────────────────────────────────
+  .reserva__submit {
+    width: 100%;
+    padding-block: v.$space-4;
     font-size: v.$fs-sm;
-    flex-shrink: 0;
-    margin-top: 1px;
+    letter-spacing: 0.14em;
+    margin-bottom: v.$space-6;
   }
-}
 
-// ── Layout con sidebar (futuro) ───────────────────────────
-.reserva__layout {
-  display: grid;
-  grid-template-columns: 1fr 360px;
-  gap: v.$space-10;
-  align-items: start;
-
-  @include m.respond-to('lg') { grid-template-columns: 1fr; }
-}
-
-// ── Sidebar sticky ────────────────────────────────────────
-.reserva__info-card {
-  background: v.$color-parchment-light;
-  border: 1px solid v.$border-color;
-  border-radius: v.$radius-md;
-  padding: v.$space-8;
-  box-shadow: v.$shadow-sm;
-  position: sticky;
-  top: calc(v.$header-height + v.$space-6);
-
-  @include m.respond-to('lg') {
-    position: static;
-    max-width: 480px;
-  }
-}
-
-.reserva__info-title {
-  font-family: v.$font-serif;
-  font-size: v.$fs-2xl;
-  font-weight: 700;
-  color: v.$color-text;
-  margin-bottom: v.$space-6;
-  padding-bottom: v.$space-4;
-  border-bottom: 1px solid v.$border-color;
-
-  em { color: v.$color-adobe; font-style: italic; }
-}
-
-// ── Lista de políticas ────────────────────────────────────
-.reserva__policy-list {
-  display: flex;
-  flex-direction: column;
-  gap: v.$space-4;
-  margin-bottom: v.$space-8;
-
-  li {
+  // ── Aviso "en desarrollo" ─────────────────────────────────
+  .reserva__notice {
     display: flex;
     align-items: flex-start;
     gap: v.$space-3;
-    font-size: v.$fs-sm;
-    color: v.$color-text-mid;
-    line-height: 1.5;
+    font-size: v.$fs-xs;
+    color: rgba(v.$color-text, 0.45);
+    line-height: 1.6;
+    padding: v.$space-4 v.$space-5;
+    background: rgba(v.$color-gold, 0.05);
+    border: 1px dashed rgba(v.$color-gold, 0.25);
+    border-radius: v.$radius-sm;
+    letter-spacing: 0.02em;
 
     i {
-      color: v.$color-adobe;
-      flex-shrink: 0;
-      margin-top: 2px;
+      color: v.$color-gold;
       font-size: v.$fs-sm;
+      flex-shrink: 0;
+      margin-top: 1px;
     }
   }
-}
 
-// ── CTA de contacto en sidebar ────────────────────────────
-.reserva__contact-cta {
-  border-top: 1px solid v.$border-color;
-  padding-top: v.$space-6;
+  // ── Layout con sidebar (futuro) ───────────────────────────
+  .reserva__layout {
+    display: grid;
+    grid-template-columns: 1fr 360px;
+    gap: v.$space-10;
+    align-items: start;
 
-  p {
-    font-size: v.$fs-sm;
-    color: v.$color-text-mid;
-    margin-bottom: v.$space-4;
-    line-height: 1.6;
+    @include m.respond-to('lg') { grid-template-columns: 1fr; }
   }
 
-  .btn { width: 100%; justify-content: center; }
-}
+  // ── Sidebar sticky ────────────────────────────────────────
+  .reserva__info-card {
+    background: v.$color-parchment-light;
+    border: 1px solid v.$border-color;
+    border-radius: v.$radius-md;
+    padding: v.$space-8;
+    box-shadow: v.$shadow-sm;
+    position: sticky;
+    top: calc(v.$header-height + v.$space-6);
+
+    @include m.respond-to('lg') {
+      position: static;
+      max-width: 480px;
+    }
+  }
+
+  .reserva__info-title {
+    font-family: v.$font-serif;
+    font-size: v.$fs-2xl;
+    font-weight: 700;
+    color: v.$color-text;
+    margin-bottom: v.$space-6;
+    padding-bottom: v.$space-4;
+    border-bottom: 1px solid v.$border-color;
+
+    em { color: v.$color-adobe; font-style: italic; }
+  }
+
+  // ── Lista de políticas ────────────────────────────────────
+  .reserva__policy-list {
+    display: flex;
+    flex-direction: column;
+    gap: v.$space-4;
+    margin-bottom: v.$space-8;
+
+    li {
+      display: flex;
+      align-items: flex-start;
+      gap: v.$space-3;
+      font-size: v.$fs-sm;
+      color: v.$color-text-mid;
+      line-height: 1.5;
+
+      i {
+        color: v.$color-adobe;
+        flex-shrink: 0;
+        margin-top: 2px;
+        font-size: v.$fs-sm;
+      }
+    }
+  }
+
+  // ── CTA de contacto en sidebar ────────────────────────────
+  .reserva__contact-cta {
+    border-top: 1px solid v.$border-color;
+    padding-top: v.$space-6;
+
+    p {
+      font-size: v.$fs-sm;
+      color: v.$color-text-mid;
+      margin-bottom: v.$space-4;
+      line-height: 1.6;
+    }
+
+    .btn { width: 100%; justify-content: center; }
+  }

@@ -1,19 +1,45 @@
 import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 export default function NotFound() {
   useEffect(() => {
-    document.title = 'Página no encontrada | Hotel Quinta Dalam';
+    document.title = '404 - Página no encontrada | Hotel Quinta Dalam';
   }, []);
 
   return (
-    <main style={{ padding: '4rem 1.5rem', textAlign: 'center' }}>
-      <h1 style={{ fontSize: '2.5rem', marginBottom: '0.75rem' }}>404</h1>
-      <p style={{ marginBottom: '1.5rem' }}>
-        No encontramos esta página. Vuelve al inicio para seguir explorando.
-      </p>
-      <a href="/" className="btn btn--primary">
-        Volver al inicio
-      </a>
+    <main className="not-found">
+      <div className="not-found__content">
+        
+        {/* Ícono temático (Brújula) */}
+        <div className="not-found__icon">
+          <i className="fa-regular fa-compass"></i>
+        </div>
+
+        <span className="not-found__eyebrow">Error 404</span>
+        
+        <h1 className="not-found__title">
+          Ruta no <em>Encontrada</em>
+        </h1>
+        
+        <span className="not-found__ornament" aria-hidden="true">
+          ✦ ─── ✦ ─── ✦
+        </span>
+
+        <p className="not-found__text">
+          Parece que te has alejado de nuestro sendero. La página que buscas no existe o ha cambiado de lugar. Te invitamos a regresar y seguir descubriendo la magia de Michoacán.
+        </p>
+
+        {/* Botones de acción */}
+        <div className="not-found__actions">
+          <Link to="/" className="btn btn--primary">
+            Volver al inicio
+          </Link>
+          <Link to="/habitaciones" className="btn btn--ghost">
+            Ver habitaciones
+          </Link>
+        </div>
+
+      </div>
     </main>
   );
 }

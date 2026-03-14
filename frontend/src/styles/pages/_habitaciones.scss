@@ -17,10 +17,10 @@
 // ─────────────────────────────────────────────────────────────
 .room-row {
   display: grid;
-  grid-template-columns: 300px 1fr;
-  gap: v.$space-10;
-  align-items: start;
-  padding-block: v.$space-12;
+  grid-template-columns: 400px 1fr; 
+  gap: v.$space-12;
+  align-items: center; 
+  padding-block: v.$space-16;
   border-bottom: 1px solid v.$border-color;
   position: relative;
   counter-increment: room-counter;
@@ -35,7 +35,7 @@
     font-size: clamp(4rem, 8vw, 7rem);
     font-weight: 700;
     font-style: italic;
-    color: rgba(v.$color-adobe, 0.2);
+    color: rgba(v.$color-adobe, 0.55);
     line-height: 1;
     pointer-events: none;
     user-select: none;
@@ -47,24 +47,21 @@
   }
 
   &:first-child {
-    padding-top: v.$space-4;
+    padding-top: v.$space-6;
   }
 
-  @include m.respond-to('lg') {
-    grid-template-columns: 260px 1fr;
+  @include m.respond-to('xl') { grid-template-columns: 400px 1fr; }
+  @include m.respond-to('lg') { 
+    grid-template-columns: 340px 1fr; 
     gap: v.$space-8;
   }
 
   @include m.respond-to('md') {
     grid-template-columns: 1fr;
-    max-width: 560px;
+    max-width: 600px;
     margin-inline: auto;
     padding-block: v.$space-10;
-
-    &::before {
-      top: v.$space-4;
-      right: v.$space-2;
-    }
+    &::before { top: v.$space-4; right: v.$space-2; }
   }
 }
 
@@ -75,12 +72,12 @@
   z-index: 1;
 
   .room-card {
-    box-shadow: v.$shadow-sm;
-    transition: box-shadow v.$transition-base, transform v.$transition-base;
+    box-shadow: v.$shadow-md;
+    transition: box-shadow v.$transition-base, transform v.$transition-slow;
 
     &:hover {
-      transform: translateY(-4px);
-      box-shadow: v.$shadow-md;
+      transform: translateY(-8px);
+      box-shadow: v.$shadow-lg;
     }
   }
 
@@ -89,8 +86,13 @@
   }
 
   .room-card__body {
-    padding: v.$space-4 v.$space-5;
+    padding: v.$space-5 v.$space-6;
   }
+
+  //Tendran que desaparecer luego
+  /*.room-card__desc, .room-card__title, .room-card__sub, .room-card__amenities, .room-card__link {
+    display: none; 
+  }*/
 
   .room-card__title {
     font-size: v.$fs-xl;

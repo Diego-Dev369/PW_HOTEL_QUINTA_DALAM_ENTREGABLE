@@ -1122,3 +1122,77 @@
   letter-spacing: 0.05em;
   user-select: none;
 }
+
+// ─────────────────────────────────────────────────────────────
+//  BUSCADOR (Admin Search)
+// ─────────────────────────────────────────────────────────────
+.admin-search {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 320px; // Tamaño ideal para no saturar el header
+
+  // El ícono de la lupa
+  i {
+    position: absolute;
+    left: v.$space-4;
+    color: v.$color-gold;
+    font-size: 0.85rem;
+    pointer-events: none;
+    transition: transform v.$transition-fast, color v.$transition-fast;
+  }
+
+  // Animación del ícono cuando el usuario hace clic en el input
+  &:focus-within {
+    i {
+      transform: scale(1.1);
+      color: v.$color-gold-light;
+    }
+  }
+}
+
+.admin-search__input {
+  width: 100%;
+  height: 42px;
+  background-color: v.$admin-surface-2; // Fondo oscuro profundo
+  border: 1px solid v.$admin-border;
+  border-radius: v.$radius-pill; // Forma de cápsula elegante
+  padding: 0 v.$space-4 0 v.$space-10; // Espacio extra a la izquierda para el ícono
+  font-family: v.$font-sans;
+  font-size: v.$fs-xs;
+  color: v.$admin-text;
+  transition: all v.$transition-base;
+
+  &::placeholder {
+    color: v.$admin-text-muted;
+    font-style: italic;
+    letter-spacing: 0.02em;
+  }
+
+  // Estado hover: resalta ligeramente el borde
+  &:hover {
+    border-color: rgba(v.$color-gold, 0.4);
+    background-color: v.$admin-surface-3;
+  }
+
+  // Estado focus: Brillo dorado sutil (Halo)
+  &:focus {
+    outline: none;
+    background-color: v.$admin-surface-3;
+    border-color: v.$color-gold;
+    box-shadow: 0 0 0 4px rgba(v.$color-gold, 0.1);
+    width: 100%; // Se mantiene estable
+  }
+
+  // Quitar el icono de "X" que pone Chrome por defecto para que no choque con nuestro estilo
+  &::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+    height: 1em;
+    width: 1em;
+    background: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23C9973A' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M18 6L6 18M6 6l12 12'/%3E%3C/svg%3E") no-repeat 50% 50%;
+    background-size: contain;
+    cursor: pointer;
+    margin-right: v.$space-1;
+  }
+}

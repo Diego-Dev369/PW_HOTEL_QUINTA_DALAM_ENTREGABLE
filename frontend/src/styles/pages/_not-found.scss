@@ -1,0 +1,87 @@
+@use '../abstracts/variables' as v;
+@use '../abstracts/mixins' as m;
+
+.not-found {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: v.$space-24 v.$space-6;
+    background-color: v.$color-parchment;
+    text-align: center;
+    
+    background-image: 
+        radial-gradient(ellipse at 50% 50%, rgba(v.$color-adobe, 0.03) 0%, transparent 60%);
+
+    &__content {
+        max-width: 560px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    &__icon {
+        font-size: v.$fs-6xl; // Muy grande y elegante
+        color: v.$color-gold;
+        margin-bottom: v.$space-6;
+        opacity: 0.8;
+    }
+
+    &__eyebrow {
+        font-family: v.$font-sans;
+        font-size: v.$fs-xs;
+        font-weight: 700;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        color: v.$color-adobe;
+        margin-bottom: v.$space-3;
+    }
+
+    &__title {
+        font-family: v.$font-serif;
+        font-size: clamp(v.$fs-3xl, 8vw, v.$fs-5xl); // Responsivo
+        color: v.$color-text;
+        line-height: 1.1;
+        margin-bottom: v.$space-4;
+
+        em {
+        color: v.$color-gold;
+        font-style: italic;
+        }
+    }
+
+    &__ornament {
+        font-size: v.$fs-xs;
+        color: rgba(v.$color-gold, 0.4);
+        letter-spacing: 0.25em;
+        margin-bottom: v.$space-8;
+    }
+
+    &__text {
+        font-family: v.$font-sans;
+        font-size: v.$fs-md;
+        color: v.$color-text-mid;
+        line-height: v.$line-height-base;
+        margin-bottom: v.$space-10;
+        max-width: 480px;
+    }
+
+    &__actions {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: v.$space-4;
+        flex-wrap: wrap; // Por si están en móvil
+
+        @include m.respond-to('xs') {
+        flex-direction: column;
+        width: 100%;
+
+        .btn {
+            width: 100%;
+            justify-content: center;
+        }
+        }
+    }
+}

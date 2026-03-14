@@ -6,12 +6,13 @@
   min-height: 100svh;
   display: flex;
   align-items: center;
-  padding-top: calc(v.$header-height + v.$space-12);
+  margin-top: calc(v.$header-height - 4rem);
   padding-bottom: v.$space-16;
   background-color: v.$color-parchment;
   background-image:
-    radial-gradient(ellipse at 20% 30%, rgba(v.$color-adobe, 0.05) 0%, transparent 55%),
-    radial-gradient(ellipse at 80% 70%, rgba(v.$color-gold,  0.04) 0%, transparent 55%);
+    radial-gradient(ellipse at 15% 25%, rgba(v.$color-adobe, 0.08) 0%, transparent 55%),
+    radial-gradient(ellipse at 85% 75%, rgba(v.$color-gold, 0.06) 0%, transparent 55%),
+    radial-gradient(ellipse at 50% 0%, rgba(v.$color-forest, 0.04) 0%, transparent 40%);
 
   @include m.respond-to('md') {
     padding-top: calc(v.$header-height-mobile + v.$space-8);
@@ -19,31 +20,38 @@
   }
 }
 
-// ── Wrapper: card contenedora del formulario ──────────────
+// ── Card del formulario ───────────────────────────────────
 .login-wrapper {
   width: 100%;
-  max-width: 460px;
+  max-width: 468px;
   margin-inline: auto;
   background: v.$color-parchment-light;
   border: 1px solid v.$border-color;
-  border-radius: v.$radius-lg;
+  border-radius: v.$radius-xl;
   padding: v.$space-12 v.$space-10;
-  box-shadow: v.$shadow-lg, 0 0 0 1px rgba(v.$color-gold, 0.08);
+  box-shadow:
+    v.$shadow-xl,
+    0 0 0 1px rgba(v.$color-gold, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
   position: relative;
 
+  // Ornamento dorado
   &::before {
-    content: '✦';
+    content: '';
     position: absolute;
-    top: v.$space-6;
-    right: v.$space-8;
-    font-size: v.$fs-lg;
-    color: rgba(v.$color-gold, 0.35);
-    pointer-events: none;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50%;
+    height: 2px;
+    background: v.$gradient-gold;
+    border-radius: 0 0 v.$radius-pill v.$radius-pill;
+    opacity: 0.65;
   }
 
   @include m.respond-to('sm') {
     padding: v.$space-8 v.$space-6;
-    border-radius: v.$radius-md;
+    border-radius: v.$radius-lg;
   }
 }
 
@@ -52,9 +60,17 @@
   margin-bottom: v.$space-10;
   text-align: center;
 
-  .section__eyebrow  { margin-bottom: v.$space-2; }
-  .section__title    { margin-bottom: v.$space-3; font-size: clamp(v.$fs-3xl, 5vw, v.$fs-4xl); }
-  .section__ornament { display: block; font-size: v.$fs-xs; color: v.$color-gold; letter-spacing: 0.3em; }
+  .section__eyebrow  { margin-bottom: v.$space-3; }
+  .section__title    {
+    margin-bottom: v.$space-3;
+    font-size: clamp(v.$fs-3xl, 5vw, v.$fs-4xl);
+  }
+  .section__ornament {
+    display: block;
+    font-size: v.$fs-xs;
+    color: v.$color-gold;
+    letter-spacing: 0.3em;
+  }
 }
 
 // ── Recordarme / Olvidaste contraseña ─────────────────────
@@ -79,8 +95,8 @@
 
   input[type="checkbox"] {
     accent-color: v.$color-adobe;
-    width: 15px;
-    height: 15px;
+    width: 16px;
+    height: 16px;
     cursor: pointer;
   }
 }
@@ -106,14 +122,15 @@
   font-size: v.$fs-sm;
   letter-spacing: 0.14em;
   margin-bottom: v.$space-8;
+  border-radius: v.$radius-lg;
 
   i { font-size: v.$fs-md; }
 }
 
-// ── Pie: registro + seguridad ─────────────────────────────
+// ── Pie ───────────────────────────────────────────────────
 .login__footer {
   text-align: center;
-  border-top: 1px solid rgba(v.$color-text, 0.08);
+  border-top: 1px solid rgba(v.$color-text, 0.07);
   padding-top: v.$space-6;
   display: flex;
   flex-direction: column;
@@ -144,7 +161,7 @@
   justify-content: center;
   gap: v.$space-2;
   font-size: v.$fs-xs;
-  color: rgba(v.$color-text, 0.45);
+  color: rgba(v.$color-text, 0.40);
   letter-spacing: 0.04em;
 
   i { color: v.$color-gold; font-size: v.$fs-sm; }

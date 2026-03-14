@@ -1,26 +1,27 @@
-// ── Colores ──────────────────────────────────────────────────
-$color-parchment:        #F4EFE6;
-$color-parchment-light:  #FAF7F2;
-$color-parchment-dark:   #E8DECF;
+// ── Colores base ──────────────────────────────────────────────
+$color-parchment:        #F5F0E8;
+$color-parchment-light:  #FDFAF5;
+$color-parchment-dark:   #EAE0CE;
 
-$color-forest:           #14241A;
-$color-forest-mid:       #1D3226;
+$color-forest:           #0E1E14;
+$color-forest-mid:       #162A1C;
 
-$color-adobe:            #7C3A21;
-$color-adobe-light:      #9E4D2F;
-$color-adobe-dark:       #5C2918;
+$color-adobe:            #8B3E22;
+$color-adobe-light:      #A84F2E;
+$color-adobe-dark:       #6A2D15;
 
 $color-gold:             #C9973A;
-$color-gold-light:       #D9AE62;
+$color-gold-light:       #DDB86A;
+$color-gold-pale:        rgba(#C9973A, 0.15);
 
-$color-text:             #2D251E;
-$color-text-mid:         #5A4E44;
-$color-text-light:       #9A8D82;
+$color-text:             #2A2118;
+$color-text-mid:         #574A3D;
+$color-text-light:       #9A8A7A;
 
 // ── Tipografía ───────────────────────────────────────────────
 $font-serif:        'Playfair Display', Georgia, serif;
 $font-sans:         'Lato', 'Helvetica Neue', Arial, sans-serif;
-$font-size-base:    16px;
+$font-size-base:    13px;
 $line-height-base:  1.7;
 
 $fs-xs:   0.75rem;
@@ -49,22 +50,29 @@ $space-20:  5rem;
 $space-24:  6rem;
 
 // ── Bordes y radios ──────────────────────────────────────────
-$radius-sm:   4px;
-$radius-md:   8px;
-$radius-lg:   16px;
+$radius-sm:   6px;
+$radius-md:   12px;
+$radius-lg:   20px;
+$radius-xl:   28px;
 $radius-pill: 999px;
 
-$border-color: rgba($color-adobe, 0.25);
+$border-color: rgba($color-adobe, 0.18);
 
 // ── Sombras ──────────────────────────────────────────────────
-$shadow-sm:  0 2px 8px   rgba(44, 30, 18, 0.10);
-$shadow-md:  0 6px 24px  rgba(44, 30, 18, 0.16);
-$shadow-lg:  0 16px 48px rgba(44, 30, 18, 0.22);
+$shadow-sm:  0 2px 10px  rgba(30, 18, 8, 0.08);
+$shadow-md:  0 8px 28px  rgba(30, 18, 8, 0.14);
+$shadow-lg:  0 20px 56px rgba(30, 18, 8, 0.20);
+$shadow-xl:  0 32px 80px rgba(30, 18, 8, 0.28);
+
+// Sombra de color para botones
+$shadow-adobe:  0 8px 24px rgba($color-adobe, 0.35);
+$shadow-gold:   0 8px 24px rgba($color-gold, 0.3);
 
 // ── Transiciones ─────────────────────────────────────────────
 $transition-fast: 150ms ease;
-$transition-base: 280ms cubic-bezier(0.4, 0, 0.2, 1);
-$transition-slow: 450ms cubic-bezier(0.4, 0, 0.2, 1);
+$transition-base: 600ms cubic-bezier(0.4, 0, 0.2, 1);
+$transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
+$transition-spring: 400ms cubic-bezier(0.34, 1.56, 0.64, 1);
 
 // ── Breakpoints ──────────────────────────────────────────────
 $bp-xs:  480px;
@@ -76,36 +84,50 @@ $bp-xl:  1280px;
 // ── Layout ───────────────────────────────────────────────────
 $container-max:        1240px;
 $header-height:        80px;
-$header-height-mobile: 70px;
+$header-height-mobile: 68px;
 
-// ─── Para la scrollbar ───────────────────────────────────────
-$bg-base:        #0f1117;
-$bg-elevated:    #1e2330;
-$radius-pill:    999px;
-$border-strong:  rgba(255, 255, 255, 0.13);
+// ── Gradientes ────────────────────────────────────────────────
+$gradient-gold:    linear-gradient(135deg, $color-gold-light, $color-gold);
+$gradient-adobe:   linear-gradient(135deg, $color-adobe-light, $color-adobe-dark);
+$gradient-forest:  linear-gradient(180deg, $color-forest, $color-forest-mid);
+$gradient-hero:    linear-gradient(
+  to bottom,
+  rgba(10, 16, 8, 0.20) 0%,
+  rgba(10, 16, 8, 0.58) 50%,
+  rgba(10, 16, 8, 0.88) 100%
+);
 
-// ─── Panel de administrador ───────────────────────────────────────
-$admin-bg:         #0E1A12;
-$admin-surface-2:  #1A2E20;   // un paso por encima de color-forest
-$admin-surface-3:  #213728;   // bordes y hover
+// ── Glassmorphism ─────────────────────────────────────────────
+$glass-bg:     rgba($color-forest, 0.78);
+$glass-blur:   blur(20px) saturate(1.4);
+$glass-border: rgba($color-gold, 0.12);
 
-// Estados semánticos (no existen en el proyecto)
-$admin-success:        #27AE60;
-$admin-success-light:  rgba(#27AE60, 0.12);
-$admin-warn:           #E67E22;
-$admin-warn-light:     rgba(#E67E22, 0.10);
-$admin-danger:         #C0392B;
-$admin-danger-light:   rgba(#C0392B, 0.12);
+// ── Scrollbar ─────────────────────────────────────────────────
+$bg-base:        #0d1410;
+$bg-elevated:    #1a2620;
+$border-strong:  rgba(255, 255, 255, 0.12);
 
-// Bordes del panel (los del proyecto son rgba(adobe, 0.25) — muy cálidos para el dark)
-$admin-border:         rgba($color-gold, 0.12);
-$admin-border-strong:  rgba($color-gold, 0.22);
+// ── Panel de Administrador ────────────────────────────────────
+$admin-bg:         #0A1410;
+$admin-surface-2:  #122018;
+$admin-surface-3:  #1A2E20;
 
-// Texto sobre fondo oscuro del panel
-$admin-text:           #EAE4D8;
-$admin-text-mid:       rgba(#EAE4D8, 0.62);
-$admin-text-muted:     rgba(#EAE4D8, 0.38);
+$admin-success:        #2ECC71;
+$admin-success-light:  rgba(#2ECC71, 0.12);
+$admin-warn:           #F39C12;
+$admin-warn-light:     rgba(#F39C12, 0.10);
+$admin-danger:         #E74C3C;
+$admin-danger-light:   rgba(#E74C3C, 0.12);
 
-// Ancho del sidebar y altura del topbar del panel
-$admin-sidebar-w:  260px;
+$admin-border:         rgba($color-gold, 0.10);
+$admin-border-strong:  rgba($color-gold, 0.20);
+
+$admin-text:           #EDE8DE;
+$admin-text-mid:       rgba(#EDE8DE, 0.60);
+$admin-text-muted:     rgba(#EDE8DE, 0.35);
+
+$admin-sidebar-w:  264px;
 $admin-topbar-h:   64px;
+
+// ── Utilidades de backdrop ────────────────────────────────────
+$backdrop-dark:  rgba(0, 0, 0, 0.55);

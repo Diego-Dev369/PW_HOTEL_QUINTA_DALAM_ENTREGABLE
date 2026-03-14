@@ -5,9 +5,28 @@
 @use '../abstracts/mixins'   as m;
 
 .footer {
-  background-color: v.$color-forest;
-  border-top: 1px solid rgba(v.$color-gold, 0.2);
-  color: rgba(v.$color-parchment, 0.8);
+  background: linear-gradient(180deg, v.$color-forest 0%, v.$admin-bg 100%);
+  border-top: 1px solid rgba(v.$color-gold, 0.18);
+  color: rgba(v.$color-parchment, 0.75);
+  position: relative;
+  overflow: hidden;
+
+  // Destellos de luz decorativos
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(v.$color-gold, 0.4),
+      transparent
+    );
+  }
 }
 
 .footer__top {
@@ -33,6 +52,7 @@
   display: flex;
   flex-direction: column;
   gap: v.$space-3;
+  cursor: default;
 }
 
 .footer__brand-logo {
@@ -40,7 +60,14 @@
   height: 52px;
   border-radius: 50%;
   object-fit: cover;
-  border: 1.5px solid rgba(v.$color-gold, 0.4);
+  border: 1.5px solid rgba(v.$color-gold, 0.35);
+  transition: all v.$transition-base;
+  box-shadow: 0 0 0 4px rgba(v.$color-gold, 0.06);
+
+  &:hover {
+    border-color: v.$color-gold;
+    box-shadow: 0 0 0 4px rgba(v.$color-gold, 0.12);
+  }
 }
 
 .footer__brand-name {
@@ -53,16 +80,17 @@
 .footer__brand-tagline {
   font-family: v.$font-sans;
   font-size: v.$fs-xs;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
   color: v.$color-gold-light;
+  opacity: 0.75;
 }
 
 .footer__brand-desc {
   font-size: v.$fs-sm;
-  line-height: 1.7;
-  color: rgba(v.$color-parchment, 0.6);
-  max-width: 34ch;
+  line-height: 1.75;
+  color: rgba(v.$color-parchment, 0.55);
+  max-width: 32ch;
   margin-top: v.$space-2;
 }
 
@@ -71,10 +99,11 @@
   font-family: v.$font-sans;
   font-size: v.$fs-xs;
   font-weight: 700;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
   color: v.$color-gold;
   margin-bottom: v.$space-5;
+  opacity: 0.85;
 }
 
 .footer__nav-list {
@@ -84,38 +113,56 @@
 }
 
 .footer__nav-link {
+  font-family: v.$font-sans;
   font-size: v.$fs-sm;
-  color: rgba(v.$color-parchment, 0.65);
-  transition: color v.$transition-fast;
+  color: rgba(v.$color-parchment, 0.60);
+  text-decoration: none;
+  transition: color v.$transition-fast, transform v.$transition-fast;
+  display: inline-flex;
+  align-items: center;
+  gap: v.$space-2;
 
   &:hover {
     color: v.$color-parchment-light;
+    &::before { color: v.$color-gold; }
   }
 }
 
-// ── Contacto ─────────────────────────────────────────────────
+// ── Dirección ─────────────────────────────────────────────────
 .footer__address {
   display: flex;
   flex-direction: column;
-  gap: v.$space-3;
+  gap: v.$space-4;
+  font-style: normal;
+  cursor: default;
 
   p {
     display: flex;
     align-items: flex-start;
     gap: v.$space-3;
     font-size: v.$fs-sm;
-    color: rgba(v.$color-parchment, 0.65);
+    color: rgba(v.$color-parchment, 0.60);
     line-height: 1.5;
+  }
 
-    i {
-      color: v.$color-gold;
-      margin-top: 3px;
-      flex-shrink: 0;
-    }
+  i {
+    color: v.$color-gold;
+    opacity: 0.7;
+    font-size: 0.82rem;
+    margin-top: 3px;
+    flex-shrink: 0;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+    transition: color v.$transition-fast;
+
+    &:hover { color: v.$color-parchment-light; }
   }
 }
 
-// ── Social ────────────────────────────────────────────────────
+// ── Social links ──────────────────────────────────────────────
 .footer__social-links {
   display: flex;
   gap: v.$space-3;
@@ -123,22 +170,24 @@
 }
 
 .footer__social-link {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
-  border: 1px solid rgba(v.$color-parchment, 0.2);
-  border-radius: 50%;
-  color: rgba(v.$color-parchment, 0.65);
-  font-size: v.$fs-md;
+  width: 38px;
+  height: 38px;
+  border-radius: v.$radius-md;
+  border: 1px solid rgba(v.$color-gold, 0.18);
+  color: rgba(v.$color-parchment, 0.60);
+  font-size: v.$fs-sm;
   transition: all v.$transition-base;
+  text-decoration: none;
 
   &:hover {
-    background-color: v.$color-adobe;
-    border-color: v.$color-adobe;
-    color: v.$color-parchment-light;
+    background: rgba(v.$color-gold, 0.10);
+    border-color: rgba(v.$color-gold, 0.40);
+    color: v.$color-gold;
     transform: translateY(-3px);
+    box-shadow: 0 6px 18px rgba(v.$color-gold, 0.15);
   }
 }
 
@@ -147,88 +196,89 @@
   font-family: v.$font-sans;
   font-size: v.$fs-xs;
   font-weight: 700;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: rgba(v.$color-parchment, 0.5);
+  color: rgba(v.$color-parchment, 0.55);
   margin-bottom: v.$space-3;
 }
 
 .footer__newsletter-form {
   display: flex;
   overflow: hidden;
-  border: 1px solid rgba(v.$color-parchment, 0.2);
-  border-radius: v.$radius-sm;
+  border: 1px solid rgba(v.$color-gold, 0.18);
+  border-radius: v.$radius-md;
+  transition: border-color v.$transition-fast, box-shadow v.$transition-fast;
+
+  &:focus-within {
+    border-color: rgba(v.$color-gold, 0.40);
+    box-shadow: 0 0 0 3px rgba(v.$color-gold, 0.07);
+  }
 }
 
 .footer__newsletter-input {
   flex: 1;
-  background: rgba(v.$color-parchment, 0.06);
+  background: rgba(255, 255, 255, 0.04);
   border: none;
+  outline: none;
   padding: v.$space-3 v.$space-4;
+  font-family: v.$font-sans;
   font-size: v.$fs-sm;
   color: v.$color-parchment;
-  outline: none;
   min-width: 0;
 
-  &::placeholder {
-    color: rgba(v.$color-parchment, 0.35);
-  }
-
-  &:focus {
-    background: rgba(v.$color-parchment, 0.10);
-  }
+  &::placeholder { color: rgba(v.$color-parchment, 0.35); }
 }
 
 .footer__newsletter-btn {
-  background-color: v.$color-adobe;
-  color: v.$color-parchment-light;
   padding: v.$space-3 v.$space-5;
-  font-size: v.$fs-lg;
-  font-weight: 700;
-  flex-shrink: 0;
+  background: rgba(v.$color-gold, 0.12);
   border: none;
+  border-left: 1px solid rgba(v.$color-gold, 0.18);
+  color: v.$color-gold;
+  font-size: v.$fs-md;
   cursor: pointer;
-  transition: background-color v.$transition-fast;
 
   &:hover {
-    background-color: v.$color-adobe-light;
+    background: rgba(v.$color-gold, 0.22);
+    color: v.$color-gold-light;
   }
 }
 
-// ── Bottom ────────────────────────────────────────────────────
+// ── Bottom bar ────────────────────────────────────────────────
 .footer__bottom {
   @include m.container;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: v.$space-6;
+  gap: v.$space-4;
   padding-block: v.$space-6;
-  border-top: 1px solid rgba(v.$color-parchment, 0.08);
+  border-top: 1px solid rgba(v.$color-gold, 0.10);
 
   @include m.respond-to('sm') {
     flex-direction: column;
     text-align: center;
+    gap: v.$space-3;
   }
 }
 
-.footer__copyright {
+.footer__copyright small {
   font-size: v.$fs-xs;
-  color: rgba(v.$color-parchment, 0.4);
-  letter-spacing: 0.05em;
+  color: rgba(v.$color-parchment, 0.38);
+  letter-spacing: 0.04em;
 }
 
 .footer__certifications {
   display: flex;
-  gap: v.$space-4;
-  flex-wrap: wrap;
-  justify-content: center;
-}
+  align-items: center;
+  gap: v.$space-3;
+  opacity: 0.45;
+  transition: opacity v.$transition-fast;
 
-.footer__cert-badge {
-  font-size: v.$fs-xs;
-  color: rgba(v.$color-parchment, 0.5);
-  border: 1px solid rgba(v.$color-parchment, 0.12);
-  padding: v.$space-1 v.$space-3;
-  border-radius: v.$radius-pill;
-  letter-spacing: 0.05em;
+  &:hover { opacity: 0.7; }
+
+  a, img {
+    display: block;
+    height: 28px;
+    width: auto;
+  }
 }

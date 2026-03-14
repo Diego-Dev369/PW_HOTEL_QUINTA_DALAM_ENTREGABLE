@@ -16,7 +16,7 @@
 .admin-form__group {
   display: flex;
   flex-direction: column;
-  gap: 0.35rem;
+  gap: 0.4rem;
 
   &--full { grid-column: 1 / -1; }
 }
@@ -24,10 +24,10 @@
 .admin-editor-actions {
   display: flex;
   justify-content: flex-end;
-  gap: 0.75rem;
-  margin-top: 1.25rem;
-  padding-top: 1rem;
-  border-top: 1px solid rgba(234, 228, 216, 0.08);
+  gap: v.$space-3;
+  margin-top: v.$space-5;
+  padding-top: v.$space-4;
+  border-top: 1px solid v.$admin-border;
 }
 
 
@@ -37,31 +37,32 @@
   font-family: v.$font-sans;
   font-size: 0.68rem;
   font-weight: 700;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: rgba(234, 228, 216, 0.55);
+  color: v.$admin-text-muted;
 }
 
 .admin-form__required {
-  color: #e05555;
+  color: v.$admin-danger;
   margin-left: 2px;
 }
 
 .admin-form__hint {
   font-size: 0.72rem;
-  color: rgba(234, 228, 216, 0.4);
-  margin-top: 0.25rem;
+  color: v.$admin-text-muted;
+  margin-top: 0.22rem;
+  line-height: 1.4;
 
-  i { margin-right: 0.3rem; }
+  i { margin-right: 0.3rem; color: v.$color-gold; opacity: 0.6; }
 }
 
 
 //  INPUT / SELECT / TEXTAREA — base compartida
 // ────────────────────────────────────────────────────────────
 .admin-form__input {
-  background: v.$admin-surface-2;
+  background: rgba(0, 0, 0, 0.2);
   border: 1px solid v.$admin-border;
-  border-radius: v.$radius-sm;
+  border-radius: v.$radius-md;
   padding: v.$space-3 v.$space-4;
   font-family: v.$font-sans;
   font-size: v.$fs-sm;
@@ -71,49 +72,41 @@
   transition: border-color v.$transition-fast, box-shadow v.$transition-fast;
 
   &::placeholder { color: v.$admin-text-muted; font-style: italic; }
+
   &:hover        { border-color: v.$admin-border-strong; }
-  &:focus        { border-color: v.$color-gold; background: v.$admin-surface-3; box-shadow: 0 0 0 3px rgba(v.$color-gold, 0.1); }
-  &[rows]        { resize: vertical; min-height: 90px; line-height: 1.6; }
-  &--sm          { padding: v.$space-2 v.$space-3; font-size: v.$fs-xs; }
+
+  &:focus {
+    border-color: rgba(v.$color-gold, 0.55);
+    background: rgba(0, 0, 0, 0.28);
+    box-shadow: 0 0 0 3px rgba(v.$color-gold, 0.08);
+  }
+
+  &[rows] {
+    resize: vertical;
+    min-height: 96px;
+    line-height: 1.65;
+  }
+
+  &--sm {
+    padding: v.$space-2 v.$space-3;
+    font-size: v.$fs-xs;
+    border-radius: v.$radius-sm;
+  }
 }
 
 // Normalizar select
 select.admin-form__input {
   appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='rgba(234,228,216,0.4)' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7' viewBox='0 0 12 7'%3E%3Cpath fill='none' stroke='rgba(237,232,222,0.4)' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
-  background-position: right 0.75rem center;
-  padding-right: 2rem;
+  background-position: right 0.85rem center;
+  padding-right: 2.2rem;
   cursor: pointer;
 
-  option { background: #1a1a1a; color: rgba(234, 228, 216, 0.85); }
-}
-
-//  SEARCH BAR
-// ────────────────────────────────────────────────────────────
-.admin-search {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(234, 228, 216, 0.12);
-  border-radius: 6px;
-  padding: 0 0.85rem;
-
-  i { color: rgba(234, 228, 216, 0.3); font-size: 0.8rem; }
-}
-
-.admin-search__input {
-  background: transparent;
-  border: none;
-  outline: none;
-  padding: 0.5rem 0;
-  font-family: v.$font-sans;
-  font-size: 0.8rem;
-  color: rgba(234, 228, 216, 0.8);
-  min-width: 160px;
-
-  &::placeholder { color: rgba(234, 228, 216, 0.22); }
+  option {
+    background: v.$admin-surface-3;
+    color: v.$admin-text;
+  }
 }
 
 //  CHECKBOXES
@@ -121,42 +114,50 @@ select.admin-form__input {
 .admin-checkboxes {
   display: flex;
   flex-wrap: wrap;
-  gap: v.$space-3;
+  gap: v.$space-2;
 }
 
 .admin-checkbox {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: v.$space-2;
   font-family: v.$font-sans;
-  font-size: 0.76rem;
-  color: rgba(234, 228, 216, 0.7);
+  font-size: 0.78rem;
+  color: v.$admin-text-mid;
   cursor: pointer;
-  padding: 0.3rem 0.65rem;
-  border: 1px solid rgba(234, 228, 216, 0.12);
-  border-radius: 5px;
-  transition: all 0.15s;
+  padding: v.$space-2 v.$space-4;
+  border: 1px solid v.$admin-border;
+  border-radius: v.$radius-md;
+  transition: all v.$transition-fast;
+  user-select: none;
 
-  input[type="checkbox"] { accent-color: v.$color-adobe; cursor: pointer; }
-
-  &:hover {
-    border-color: rgba(v.$color-adobe, 0.4);
-    color: rgba(234, 228, 216, 0.9);
+  input[type="checkbox"] {
+    accent-color: v.$color-adobe;
+    cursor: pointer;
+    width: 14px;
+    height: 14px;
   }
 
-  //Para elemntos destacadoss
+  &:hover {
+    border-color: rgba(v.$color-adobe, 0.38);
+    color: v.$admin-text;
+    background: rgba(v.$color-adobe, 0.05);
+  }
+
   &--featured {
     width: 100%;
-    padding: 0.6rem 0.85rem;
-    border-color: rgba(v.$color-gold, 0.2);
-    color: rgba(234, 228, 216, 0.65);
+    padding: v.$space-3 v.$space-4;
+    border-color: rgba(v.$color-gold, 0.18);
+    color: v.$admin-text-mid;
 
     i { color: v.$color-gold; }
 
-    &:hover { border-color: rgba(v.$color-gold, 0.45); }
+    &:hover {
+      border-color: rgba(v.$color-gold, 0.40);
+      background: rgba(v.$color-gold, 0.05);
+    }
   }
 }
-
 
 //  TOGGLE (switch on/off)
 // ────────────────────────────────────────────────────────────
@@ -174,8 +175,8 @@ select.admin-form__input {
 }
 
 .admin-toggle__track {
-  width: 36px;
-  height: 20px;
+  width: 38px;
+  height: 22px;
   background: v.$admin-surface-3;
   border: 1px solid v.$admin-border;
   border-radius: v.$radius-pill;
@@ -187,47 +188,53 @@ select.admin-form__input {
     position: absolute;
     top: 3px;
     left: 3px;
-    width: 12px;
-    height: 12px;
+    width: 14px;
+    height: 14px;
     border-radius: 50%;
     background: v.$admin-text-muted;
     transition: all v.$transition-base;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
   }
 }
 
 .admin-toggle__input:checked + .admin-toggle__track {
-  background: rgba(v.$color-gold, 0.25);
-  border-color: v.$color-gold;
+  background: rgba(v.$color-gold, 0.22);
+  border-color: rgba(v.$color-gold, 0.5);
 
   &::after {
-    left: calc(100% - 15px);
+    left: calc(100% - 17px);
     background: v.$color-gold;
+    box-shadow: 0 2px 6px rgba(v.$color-gold, 0.4);
   }
 }
+
 
 //  UPLOAD ZONE
 // ────────────────────────────────────────────────────────────
 .admin-upload {
   position: relative;
   border: 2px dashed v.$admin-border-strong;
-  border-radius: v.$radius-md;
+  border-radius: v.$radius-lg;
   padding: v.$space-10 v.$space-8;
   text-align: center;
   cursor: pointer;
   transition: all v.$transition-base;
-  background: v.$admin-surface-2;
+  background: rgba(0, 0, 0, 0.12);
 
   &:hover {
-    border-color: v.$color-gold;
-    background: rgba(v.$color-gold, 0.04);
+    border-color: rgba(v.$color-gold, 0.45);
+    background: rgba(v.$color-gold, 0.03);
+
+    i { opacity: 0.7; transform: scale(1.08); }
   }
 
   i {
     font-size: v.$fs-3xl;
     color: v.$color-gold;
-    opacity: 0.5;
+    opacity: 0.4;
     margin-bottom: v.$space-3;
     display: block;
+    transition: all v.$transition-base;
   }
 
   p {
@@ -250,20 +257,21 @@ select.admin-form__input {
   }
 }
 
-//  ÍCONO PREVIEW (campo de ícono FA)
+
+//  ÍCONO PREVIEW
 // ────────────────────────────────────────────────────────────
 .admin-icono-preview-wrap {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: v.$space-2;
 }
 
 .admin-icono-preview {
   @include m.flex-center;
-  width: 34px;
-  height: 34px;
-  border-radius: 6px;
-  border: 1px solid rgba(234, 228, 216, 0.15);
+  width: 36px;
+  height: 36px;
+  border-radius: v.$radius-md;
+  border: 1px solid v.$admin-border;
   background: rgba(255, 255, 255, 0.04);
   color: v.$color-gold;
   font-size: 0.9rem;
@@ -271,44 +279,44 @@ select.admin-form__input {
 }
 
 
-//  PASSWORD WRAP (admin usuarios)
+//  PASSWORD WRAP
 // ────────────────────────────────────────────────────────────
 .admin-password-wrap {
   position: relative;
   display: flex;
   align-items: center;
 
-  .admin-form__input { padding-right: 2.6rem; }
+  .admin-form__input { padding-right: 2.8rem; }
 }
 
 .admin-password-toggle {
   position: absolute;
-  right: 0.65rem;
+  right: 0.7rem;
   background: transparent;
   border: none;
-  color: rgba(234, 228, 216, 0.35);
+  color: v.$admin-text-muted;
   cursor: pointer;
-  font-size: 0.8rem;
-  transition: color 0.15s;
+  font-size: 0.82rem;
+  transition: color v.$transition-fast;
   padding: 0;
 
-  &:hover { color: rgba(234, 228, 216, 0.7); }
+  &:hover { color: v.$admin-text-mid; }
 }
 
 
-//  FORMULARIOS PÚBLICOS (sitio)
+//  FORMULARIOS PÚBLICOS (sitio web)
 // ────────────────────────────────────────────────────────────
 .form-group {
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
+  gap: v.$space-2;
 }
 
 .form-label {
   font-family: v.$font-sans;
   font-size: v.$fs-xs;
   font-weight: 700;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: v.$color-text-mid;
 }
@@ -318,9 +326,9 @@ select.admin-form__input {
 .form-textarea {
   width: 100%;
   background: v.$color-parchment;
-  border: 1px solid v.$border-color;
-  border-radius: v.$radius-sm;
-  padding: 0.65rem 1rem;
+  border: 1.5px solid v.$border-color;
+  border-radius: v.$radius-md;
+  padding: v.$space-3 v.$space-5;
   font-family: v.$font-sans;
   font-size: v.$fs-sm;
   color: v.$color-text;
@@ -329,10 +337,38 @@ select.admin-form__input {
 
   &::placeholder { color: v.$color-text-light; }
 
+  &:hover { border-color: rgba(v.$color-adobe, 0.3); }
+
   &:focus {
     border-color: v.$color-adobe;
-    box-shadow: 0 0 0 3px rgba(v.$color-adobe, 0.1);
+    box-shadow: 0 0 0 3px rgba(v.$color-adobe, 0.08);
+    background: v.$color-parchment-light;
   }
 }
 
-.form-textarea { resize: vertical; min-height: 120px; }
+.form-textarea {
+  resize: vertical;
+  min-height: 130px;
+  line-height: 1.7;
+}
+
+select.form-select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7' viewBox='0 0 12 7'%3E%3Cpath fill='none' stroke='%239A8A7A' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  padding-right: 2.5rem;
+  cursor: pointer;
+}
+
+.form-error {
+  font-size: v.$fs-xs;
+  color: v.$admin-danger;
+  margin-top: v.$space-1;
+}
+
+.form-success {
+  font-size: v.$fs-xs;
+  color: v.$admin-success;
+  margin-top: v.$space-1;
+}
