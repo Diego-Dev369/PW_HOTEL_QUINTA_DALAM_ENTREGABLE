@@ -1,25 +1,29 @@
-// ── 1. Base ──────────────────────────────────────────────────
+// 1. Abstracts (Variables y Temas primero)
+@use 'abstracts/themes';
+@use 'abstracts/variables' as v;
+@use 'abstracts/mixins' as m;
+
+// 2. Base (Reset y estilos globales)
+@use 'base/reset';
 @use 'base/normalize';
 @use 'base/base';
-@use 'base/reset';
 
-// ── 2. Layout ────────────────────────────────────────────────
+// 3. Layout (Cabecera y pie de página)
 @use 'layout/header';
 @use 'layout/footer';
 
-// ── 3. COMPONENTS ─────────────────────────────────────────────
-//    Bloques reutilizables — orden: de más general a más específico
-@use 'components/buttons'; 
-@use 'components/forms'; 
+// 4. Components (Botones, tarjetas, formularios)
+@use 'components/buttons';
 @use 'components/cards';
+@use 'components/forms';
 @use 'components/effects';
 
-// ── 4. Pages ─────────────────────────────────────────────────
-@use 'pages/contacto';
-@use 'pages/habitaciones';
-@use 'pages/login';
-@use 'pages/nosotros';
-@use 'pages/reservaciones';
+// 5. Pages (Estilos específicos por página)
 @use 'pages/body_index';
+@use 'pages/habitaciones';
+@use 'pages/nosotros';
+@use 'pages/contacto';
+@use 'pages/reservaciones';
+@use 'pages/login';
 @use 'pages/admin';
 @use 'pages/not-found';

@@ -1,41 +1,400 @@
+// ============================================================
+//  Home.jsx — Quinta Dalam (Refactorizado v2)
+//  Implementa Framer Motion para animaciones de scroll.
+//  Elimina clases CSS manuales .reveal / .reveal-group.
+//  UBICACIÓN: src/react/pages/Home.jsx
+// ============================================================
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import imgEncabezado from '../../assets/images/img_encabezado.png';
-import roomUruapan from '../../assets/images/rooms/204-uruapan.jpeg';
-import roomPatzcuaro from '../../assets/images/rooms/104-patzcuaro.jpeg';
-import roomParacho from '../../assets/images/rooms/102-paracho.jpeg';
+import { AnimatePresence, motion } from 'framer-motion';
 
-import ArtesaniaManual  from "../../assets/images/interiores/decoracion1.jpeg";
-import Paisaje from '../../assets/images/exteriores/vista_manantial.jpeg';
-import Hospitalidad from '../../assets/images/interiores/sala_vista1.jpeg';
-import Gastronomia from '../../assets/images/interiores/cocina_barra.jpeg';
-import ZonaExterior from '../../assets/images/exteriores/exterior_hotel.jpeg';
-import salaVista2 from '../../assets/images/interiores/sala_vista2.jpeg';
+// ── Imágenes ──────────────────────────────────────────────────
+import roomUruapan    from '../../assets/images/rooms/204-uruapan.jpeg';
+import roomPatzcuaro  from '../../assets/images/rooms/104-patzcuaro.jpeg';
+import roomParacho    from '../../assets/images/rooms/102-paracho.jpeg';
+import ArtesaniaManual from '../../assets/images/interiores/decoracion1.jpeg';
+import Paisaje         from '../../assets/images/exteriores/vista_manantial.jpeg';
+import Hospitalidad    from '../../assets/images/interiores/sala_vista1.jpeg';
+import Gastronomia     from '../../assets/images/interiores/cocina_barra.jpeg';
+import ZonaExterior    from '../../assets/images/exteriores/exterior_hotel.jpg';
+import salaVista2      from '../../assets/images/interiores/sala_vista2.jpeg';
+import atardecerHotel from '../../assets/images/exteriores/atardecer_dalam.jpg';
 
+// ── Variantes de animación reutilizables ──────────────────────
 
-export default function Home() {
+/** Contenedor: orquesta los hijos con stagger */
+const staggerContainer = {
+  hidden: {},
+  show: {
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.05,
+    },
+  },
+};
+
+/** Hijo: aparece desde abajo */
+const fadeUp = {
+  hidden: { opacity: 0, y: 18 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.65, ease: 'easeOut' },
+  },
+};
+
+/** Hijo: aparece desde la izquierda */
+const fadeLeft = {
+  hidden: { opacity: 0, x: -22 },
+  show: {
+    opacity: 1,
+    x: 0,
+    transition: { duration: 0.7, ease: 'easeOut' },
+  },
+};
+
+/** Hijo: aparece desde la derecha */
+const fadeRight = {
+  hidden: { opacity: 0, x: 22 },
+  show: {
+    opacity: 1,
+    x: 0,
+    transition: { duration: 0.7, ease: 'easeOut' },
+  },
+};
+
+/** Escala suave */
+const scaleUp = {
+  hidden: { opacity: 0, scale: 0.97 },
+  show: {
+    opacity: 1,
+    scale: 1,
+    transition: { duration: 0.65, ease: 'easeOut' },
+  },
+};
+
+/** Tarjeta: peso y suavidad premium */
+const cardFadeUp = {
+  hidden: { opacity: 0, y: 16 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.65, ease: 'easeOut' },
+  },
+};
+
+/** Hero: entrada sutil y más aireada */
+const heroStagger = {
+  hidden: {},
+  show: {
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.08,
+    },
+  },
+};
+
+const heroFadeUp = {
+  hidden: { opacity: 0, y: 14 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.7, ease: 'easeOut' },
+  },
+};
+
+// Props comunes para activar la animación cuando el elemento
+// entra al viewport (once: true = solo una vez)
+const inView = { viewport: { once: true, margin: '-80px' } };
+
+// ─────────────────────────────────────────────────────────────
+//  SUBCOMPONENTES
+// ─────────────────────────────────────────────────────────────
+
+/** Cabecera de sección reutilizable */
+function SectionHeader({ eyebrow, title, titleEm, subtitle, light = false }) {
   return (
-    <main>
-      {/* ═══ HERO ═════════════════════════════════════════════ */}
-      <section className="hero" aria-label="Portada principal">
-        <div className="hero__overlay" aria-hidden="true"></div>
+    <motion.div
+      className={`section__header${light ? ' section__header--light' : ''}`}
+      variants={staggerContainer}
+      initial="hidden"
+      whileInView="show"
+      {...inView}
+    >
+      <motion.span className="section__eyebrow" variants={fadeUp}>
+        {eyebrow}
+      </motion.span>
+      <motion.h2 className="section__title" variants={fadeUp}>
+        {title} {titleEm && <em>{titleEm}</em>}
+      </motion.h2>
+      {subtitle && (
+        <motion.p className="section__subtitle" variants={fadeUp}>
+          {subtitle}
+        </motion.p>
+      )}
+      <motion.span className="section__ornament" aria-hidden="true" variants={fadeUp}>
+        ✦ ─── ✦ ─── ✦
+      </motion.span>
+    </motion.div>
+  );
+}
+
+/** Tarjeta de habitación */
+function RoomCard({ img, alt, badge, title, sub, desc, amenities, featured = false }) {
+  return (
+    <motion.article
+      className={`room-card${featured ? ' room-card--featured' : ''}`}
+      variants={cardFadeUp}
+      whileHover={{ y: -6 }}
+      transition={{ type: 'spring', stiffness: 80, damping: 18 }}
+    >
+      <div className="room-card__img-wrap">
         <img
-          src={imgEncabezado}
-          alt="Vista de los Pueblos Mágicos de Michoacán al atardecer"
-          className="hero__bg"
+          src={img}
+          alt={alt}
+          className="room-card__img"
+          loading="lazy"
+          decoding="async"
+          width="800"
+          height="600"
         />
-        <div className="hero__content">
-          <h1 className="hero__title">Vive la Magia<br />de Michoacán</h1>
-          <p className="hero__subtitle">
+        <span className="room-card__badge">{badge}</span>
+      </div>
+      <div className="room-card__body">
+        <h3 className="room-card__title">{title}</h3>
+        <em className="room-card__sub">{sub}</em>
+        <p className="room-card__desc">{desc}</p>
+        <ul className="room-card__amenities" aria-label="Amenidades">
+          {amenities.map(({ icon, title: t }) => (
+            <li key={t} className="room-card__amenity" title={t}>
+              <i className={icon} aria-hidden="true"></i>
+            </li>
+          ))}
+        </ul>
+        <Link to="/habitaciones" className="room-card__link btn btn--outline">
+          Ver detalles
+        </Link>
+      </div>
+    </motion.article>
+  );
+}
+
+/** Tarjeta de servicio */
+function ServiceCard({ icon, title, text }) {
+  return (
+    <motion.article
+      className="service-card"
+      variants={cardFadeUp}
+      whileHover={{ y: -6 }}
+      transition={{ type: 'spring', stiffness: 70, damping: 20 }}
+    >
+      <div className="service-card__icon-wrap">
+        <i className={`${icon} service-card__icon`} aria-hidden="true"></i>
+      </div>
+      <h3 className="service-card__title">{title}</h3>
+      <p className="service-card__text">{text}</p>
+    </motion.article>
+  );
+}
+
+/** Tarjeta de experiencia */
+function ExpCard({ img, alt, title }) {
+  return (
+    <motion.article className="exp-card" variants={scaleUp}>
+      <div className="exp-card__img-wrap">
+        <img src={img} alt={alt} className="exp-card__img" loading="lazy" decoding="async" />
+      </div>
+      <h3 className="exp-card__title">{title}</h3>
+    </motion.article>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────
+//  DATOS
+// ─────────────────────────────────────────────────────────────
+const rooms = [
+  {
+    img: roomUruapan,
+    alt: 'Suite Uruapan — dormitorio principal con decoración michoacana',
+    badge: 'Suite Deluxe',
+    title: 'Uruapan',
+    sub: 'Naturaleza & Tradición',
+    desc: 'Frescura, armonía y descanso entre ecos de bosque y artesanía local.',
+    amenities: [
+      { icon: 'fa-solid fa-wifi',     title: 'Wi-Fi incluido' },
+      { icon: 'fa-solid fa-snowflake', title: 'Aire acondicionado' },
+      { icon: 'fa-solid fa-mug-hot',   title: 'Desayuno incluido' },
+    ],
+  },
+  {
+    img: roomPatzcuaro,
+    alt: 'Suite Pátzcuaro — suite superior con vista al lago',
+    badge: 'Suite Superior',
+    title: 'Pátzcuaro',
+    sub: 'Historia & Elegancia',
+    desc: 'Elegancia clásica y serenidad a orillas del lago más místico de México.',
+    featured: true,
+    amenities: [
+      { icon: 'fa-solid fa-wifi',     title: 'Wi-Fi incluido' },
+      { icon: 'fa-solid fa-snowflake', title: 'Aire acondicionado' },
+      { icon: 'fa-solid fa-mug-hot',   title: 'Desayuno incluido' },
+      { icon: 'fa-solid fa-bath',      title: 'Tina de baño' },
+    ],
+  },
+  {
+    img: roomParacho,
+    alt: 'Suite Paracho — habitación con decoración artesanal',
+    badge: 'Suite Estándar',
+    title: 'Paracho',
+    sub: 'Arte & Autenticidad',
+    desc: 'Artesanía viva, música de fondo y la calidez del pueblo más musical.',
+    amenities: [
+      { icon: 'fa-solid fa-wifi',     title: 'Wi-Fi incluido' },
+      { icon: 'fa-solid fa-snowflake', title: 'Aire acondicionado' },
+      { icon: 'fa-solid fa-mug-hot',   title: 'Desayuno incluido' },
+    ],
+  },
+];
+
+const services = [
+  { icon: 'fa-solid fa-bed',           title: 'Habitaciones Premium',    text: 'Diseño boutique con máximo confort y detalles artesanales únicos.' },
+  { icon: 'fa-solid fa-tree',          title: 'Entorno Natural',         text: 'Tranquilidad y conexión profunda con la naturaleza michoacana.' },
+  { icon: 'fa-solid fa-concierge-bell', title: 'Atención Personalizada',  text: 'Hospitalidad auténtica michoacana con calidez y servicio de lujo.' },
+  { icon: 'fa-solid fa-utensils',      title: 'Desayuno Regional',       text: 'Sabores tradicionales que despiertan los sentidos cada mañana.' },
+];
+
+const experiences = [
+  { img: ArtesaniaManual, alt: 'Artesanía manual michoacana',     title: 'Artesanía\nMichoacana' },
+  { img: Paisaje,         alt: 'Naturaleza y paisajes',           title: 'Naturaleza\nAsombrosa' },
+  { img: Hospitalidad,    alt: 'Cultura y hospitalidad',          title: 'Cultura y\nHospitalidad' },
+  { img: Gastronomia,     alt: 'Gastronomía regional',            title: 'Gastronomía\nRegional' },
+];
+
+const lookbook = [
+  { src: ArtesaniaManual, alt: 'Sala de estar' },
+  { src: Paisaje,         alt: 'Fachada colonial' },
+  { src: Hospitalidad,    alt: 'Detalles artesanales' },
+  { src: Gastronomia,     alt: 'Vista al manantial' },
+  { src: ZonaExterior,    alt: 'Interiores acogedores' },
+  { src: salaVista2,      alt: 'Cocina tradicional' },
+];
+
+const heroSlides = [
+  {
+    src: atardecerHotel, 
+    alt: 'Atardecer colonial en el Hotel Quinta Dalam',
+  },
+  {
+    src: Paisaje,
+    alt: 'Paisajes naturales de Michoacán',
+  },
+  {
+    src: Hospitalidad,
+    alt: 'Sala principal con hospitalidad boutique',
+  },
+  {
+    src: Gastronomia,
+    alt: 'Interior gastronómico con detalles artesanales',
+  },
+  {
+    src: salaVista2,
+    alt: 'Sala interior con detalles artesanales',
+  },
+];
+
+// ─────────────────────────────────────────────────────────────
+//  COMPONENTE PRINCIPAL
+// ─────────────────────────────────────────────────────────────
+export default function Home() {
+  const [heroIndex, setHeroIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setHeroIndex((prev) => (prev + 1) % heroSlides.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [heroSlides.length]);
+
+  const activeHero = heroSlides[heroIndex];
+
+  return (
+    <motion.main
+      initial={{ opacity: 0, y: 14 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -10 }}
+      transition={{ duration: 0.55, ease: 'easeOut' }}
+    >
+
+      {/* ═══ HERO ═══════════════════════════════════════════ */}
+      <section className="hero" aria-label="Portada principal">
+        <div className="hero__overlay" aria-hidden="true" />
+        <AnimatePresence initial={false}>
+          <motion.img
+            key={activeHero.src}
+            src={activeHero.src}
+            alt={activeHero.alt}
+            className="hero__bg"
+            loading={heroIndex === 0 ? 'eager' : 'lazy'}
+            fetchPriority={heroIndex === 0 ? 'high' : 'auto'}
+            decoding="async"
+            initial={{ opacity: 0, scale: 1.02 }}
+            animate={{
+              opacity: 1,
+              scale: [1.01, 1.045, 1.02],
+              x: [0, -4, 0],
+              y: [0, -3, 0],
+            }}
+            exit={{ opacity: 0 }}
+            transition={{
+              opacity: { duration: 1.8, ease: 'easeInOut' },
+              scale: {
+                duration: 30,
+                ease: [0.33, 0, 0.25, 1],
+                repeat: Infinity,
+                repeatType: 'mirror',
+              },
+              x: {
+                duration: 28,
+                ease: [0.33, 0, 0.25, 1],
+                repeat: Infinity,
+                repeatType: 'mirror',
+              },
+              y: {
+                duration: 26,
+                ease: [0.33, 0, 0.25, 1],
+                repeat: Infinity,
+                repeatType: 'mirror',
+              },
+            }}
+          />
+        </AnimatePresence>
+        <motion.div
+          className="hero__content"
+          variants={heroStagger}
+          initial="hidden"
+          animate="show"
+        >
+          <motion.h1 className="hero__title" variants={heroFadeUp}>
+            Vive la Magia<br />de Michoacán
+          </motion.h1>
+          <motion.p className="hero__subtitle" variants={heroFadeUp}>
             Descubre la hospitalidad, artesanía y cultura de los Pueblos Mágicos.
-          </p>
-          <Link to="/reservaciones" className="hero__cta btn btn--primary">
-            Reservar Ahora
-          </Link>
-        </div>
+          </motion.p>
+          <motion.div variants={heroFadeUp}>
+            <Link to="/reservaciones" className="hero__cta btn btn--primary">
+              Reservar Ahora
+            </Link>
+          </motion.div>
+        </motion.div>
       </section>
 
-      {/* ═══ BARRA DE RESERVAS ════════════════════════════════ */}
-      <section aria-label="Búsqueda de disponibilidad">
+      {/* ═══ BARRA DE RESERVAS ══════════════════════════════ */}
+      <motion.section
+        aria-label="Búsqueda de disponibilidad"
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.7, delay: 0.4, ease: 'easeOut' }}
+      >
         <div className="booking">
           <div className="booking__card">
             <div className="booking__field">
@@ -43,384 +402,234 @@ export default function Home() {
                 <i className="fa-regular fa-calendar" aria-hidden="true"></i>
                 Llegada
               </label>
-              <input
-                type="date"
-                id="check-in"
-                name="check-in"
-                className="booking__input"
-              />
+              <input type="date" id="check-in" name="check-in" className="booking__input" />
             </div>
-            <div className="booking__divider" aria-hidden="true"></div>
+            <div className="booking__divider" aria-hidden="true" />
             <div className="booking__field">
               <label className="booking__label" htmlFor="check-out">
                 <i className="fa-regular fa-calendar-check" aria-hidden="true"></i>
                 Salida
               </label>
-              <input
-                type="date"
-                id="check-out"
-                name="check-out"
-                className="booking__input"
-              />
+              <input type="date" id="check-out" name="check-out" className="booking__input" />
             </div>
-            <div className="booking__divider" aria-hidden="true"></div>
+            <div className="booking__divider" aria-hidden="true" />
             <div className="booking__field">
               <label className="booking__label" htmlFor="guests">
                 <i className="fa-regular fa-user" aria-hidden="true"></i>
                 Huéspedes
               </label>
-              <select
-                id="guests"
-                name="guests"
-                className="booking__input booking__input--select"
-                defaultValue="2"
-              >
+              <select id="guests" name="guests" className="booking__input booking__input--select" defaultValue="2">
                 <option value="1">1 Persona</option>
                 <option value="2">2 Personas</option>
                 <option value="3">3 Personas</option>
                 <option value="4">4+ Personas</option>
               </select>
             </div>
-            <Link to="/reservaciones" className="booking__btn">
-              Buscar
-            </Link>
+            <Link to="/reservaciones" className="booking__btn">Buscar</Link>
           </div>
         </div>
-      </section>
+      </motion.section>
 
-      {/* ═══ HABITACIONES ═════════════════════════════════════ */}
+      {/* ═══ HABITACIONES ═══════════════════════════════════ */}
       <section className="rooms section" id="habitaciones">
-        <div className="section__header">
-          <span className="section__eyebrow">Nuestras Suites</span>
-          <h2 className="section__title">Habitaciones con <em>Encanto</em></h2>
-          <p className="section__subtitle">
-            Diseño inspirado en la tradición y el confort contemporáneo
-          </p>
-          <span className="section__ornament" aria-hidden="true">
-            ✦ ─── ✦ ─── ✦
-          </span>
-        </div>
-        <div className="rooms__grid">
-          <article className="room-card">
-            <div className="room-card__img-wrap">
-              <img
-                src={roomUruapan}
-                alt="Suite Uruapan — dormitorio principal con decoración michoacana"
-                className="room-card__img"
-                loading="lazy"
-                width="800"
-                height="600"
-              />
-              <span className="room-card__badge">Suite Deluxe</span>
-            </div>
-            <div className="room-card__body">
-              <h3 className="room-card__title">Uruapan</h3>
-              <em className="room-card__sub">Naturaleza &amp; Tradición</em>
-              <p className="room-card__desc">
-                Frescura, armonía y descanso entre ecos de bosque y artesanía local.
-              </p>
-              <ul className="room-card__amenities" aria-label="Amenidades de la habitación">
-                <li className="room-card__amenity" title="Wi-Fi incluido">
-                  <i className="fa-solid fa-wifi" aria-hidden="true"></i>
-                </li>
-                <li className="room-card__amenity" title="Aire acondicionado">
-                  <i className="fa-solid fa-snowflake" aria-hidden="true"></i>
-                </li>
-                <li className="room-card__amenity" title="Desayuno incluido">
-                  <i className="fa-solid fa-mug-hot" aria-hidden="true"></i>
-                </li>
-              </ul>
-              <Link to="/habitaciones" className="room-card__link btn btn--outline">
-                Ver detalles
-              </Link>
-            </div>
-          </article>
-
-          <article className="room-card room-card--featured">
-            <div className="room-card__img-wrap">
-              <img
-                src={roomPatzcuaro}
-                alt="Suite Pátzcuaro — suite superior con vista al lago"
-                className="room-card__img"
-                loading="lazy"
-                width="800"
-                height="600"
-              />
-              <span className="room-card__badge">Suite Superior</span>
-            </div>
-            <div className="room-card__body">
-              <h3 className="room-card__title">Pátzcuaro</h3>
-              <em className="room-card__sub">Historia &amp; Elegancia</em>
-              <p className="room-card__desc">
-                Elegancia clásica y serenidad a orillas del lago más místico de México.
-              </p>
-              <ul className="room-card__amenities" aria-label="Amenidades de la habitación">
-                <li className="room-card__amenity" title="Wi-Fi incluido">
-                  <i className="fa-solid fa-wifi" aria-hidden="true"></i>
-                </li>
-                <li className="room-card__amenity" title="Aire acondicionado">
-                  <i className="fa-solid fa-snowflake" aria-hidden="true"></i>
-                </li>
-                <li className="room-card__amenity" title="Desayuno incluido">
-                  <i className="fa-solid fa-mug-hot" aria-hidden="true"></i>
-                </li>
-                <li className="room-card__amenity" title="Tina de baño">
-                  <i className="fa-solid fa-bath" aria-hidden="true"></i>
-                </li>
-              </ul>
-              <Link to="/habitaciones" className="room-card__link btn btn--outline">
-                Ver detalles
-              </Link>
-            </div>
-          </article>
-
-          <article className="room-card">
-            <div className="room-card__img-wrap">
-              <img
-                src={roomParacho}
-                alt="Suite Paracho — ambiente artesanal con instrumentos michoacanos"
-                className="room-card__img"
-                loading="lazy"
-                width="800"
-                height="600"
-              />
-              <span className="room-card__badge">Suite Estudio</span>
-            </div>
-            <div className="room-card__body">
-              <h3 className="room-card__title">Paracho</h3>
-              <em className="room-card__sub">Artesanía &amp; Carácter</em>
-              <p className="room-card__desc">
-                Calidez, autenticidad y el espíritu musical de la capital de la guitarra.
-              </p>
-              <ul className="room-card__amenities" aria-label="Amenidades de la habitación">
-                <li className="room-card__amenity" title="Wi-Fi incluido">
-                  <i className="fa-solid fa-wifi" aria-hidden="true"></i>
-                </li>
-                <li className="room-card__amenity" title="Aire acondicionado">
-                  <i className="fa-solid fa-snowflake" aria-hidden="true"></i>
-                </li>
-                <li className="room-card__amenity" title="Desayuno incluido">
-                  <i className="fa-solid fa-mug-hot" aria-hidden="true"></i>
-                </li>
-              </ul>
-              <Link to="/habitaciones" className="room-card__link btn btn--outline">
-                Ver detalles
-              </Link>
-            </div>
-          </article>
-        </div>
-        <div className="rooms__cta-wrap">
+        <SectionHeader
+          eyebrow="Nuestras Suites"
+          title="Habitaciones con"
+          titleEm="Encanto"
+          subtitle="Diseño inspirado en la tradición y el confort contemporáneo"
+        />
+        <motion.div
+          className="rooms__grid"
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="show"
+          {...inView}
+        >
+          {rooms.map((room) => (
+            <RoomCard key={room.title} {...room} />
+          ))}
+        </motion.div>
+        <motion.div
+          className="rooms__cta-wrap"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.65, delay: 0.15, ease: 'easeOut' }}
+          {...inView}
+        >
           <Link to="/habitaciones" className="btn btn--primary">
             Ver todas las habitaciones
           </Link>
-        </div>
+        </motion.div>
       </section>
 
-      {/* ═══ EXPERIENCIAS ═════════════════════════════════════ */}
-      <section className="experiences section section--dark" id="experiencias">
+      {/* ═══ EXPERIENCIAS ═══════════════════════════════════ */}
+      <section className="experiences section--dark" id="experiencias">
         <div className="experiences__inner">
-          <div className="section__header section__header--light">
-            <span className="section__eyebrow section__eyebrow--gold">
-              Descubre
-            </span>
-            <h2 className="section__title">
-              Vive una Experiencia <em>Inolvidable</em>
-            </h2>
-            <span className="section__ornament" aria-hidden="true">
-              ✦ ─── ✦ ─── ✦
-            </span>
-          </div>
-          <div className="experiences__grid">
-            <article className="exp-card">
-              <div className="exp-card__img-wrap">
-                <img
-                  src={ArtesaniaManual}
-                  alt="Artesanía tradicional michoacana"
-                  className="exp-card__img"
-                  loading="lazy"
-                />
-              </div>
-              <h3 className="exp-card__title">Artesanía<br />Tradicional</h3>
-            </article>
-            <article className="exp-card">
-              <div className="exp-card__img-wrap">
-                <img
-                  src={Paisaje}
-                  alt="Naturaleza y paisajes de Michoacán"
-                  className="exp-card__img"
-                  loading="lazy"
-                />
-              </div>
-              <h3 className="exp-card__title">Naturaleza<br />Asombrosa</h3>
-            </article>
-            <article className="exp-card">
-              <div className="exp-card__img-wrap">
-                <img
-                  src={Hospitalidad}
-                  alt="Cultura y hospitalidad michoacana"
-                  className="exp-card__img"
-                  loading="lazy"
-                />
-              </div>
-              <h3 className="exp-card__title">Cultura y<br />Hospitalidad</h3>
-            </article>
-            <article className="exp-card">
-              <div className="exp-card__img-wrap">
-                <img
-                  src={Gastronomia}
-                  alt="Gastronomía regional de Michoacán"
-                  className="exp-card__img"
-                  loading="lazy"
-                />
-              </div>
-              <h3 className="exp-card__title">Gastronomía<br />Regional</h3>
-            </article>
-          </div>
+          <SectionHeader
+            eyebrow="La Experiencia Dalam"
+            title="Momentos que"
+            titleEm="Perduran"
+            subtitle="Cada rincón de Michoacán tiene una historia que contarte"
+          />
+          <motion.div
+            className="experiences__grid"
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="show"
+            {...inView}
+          >
+            {experiences.map((exp) => (
+              <ExpCard key={exp.alt} {...exp} />
+            ))}
+          </motion.div>
         </div>
       </section>
 
-      {/* ═══ SERVICIOS ════════════════════════════════════════ */}
-      <section className="services section" id="servicios">
-        <div className="section__header">
-          <span className="section__eyebrow">Lo que ofrecemos</span>
-          <h2 className="section__title">Servicios de <em>Distinción</em></h2>
-          <p className="section__subtitle">
-            Todo lo necesario para una estancia verdaderamente inolvidable
-          </p>
-          <span className="section__ornament" aria-hidden="true">
-            ✦ ─── ✦ ─── ✦
-          </span>
-        </div>
-        <div className="services__grid">
-          <article className="service-card">
-            <div className="service-card__icon-wrap">
-              <i className="fa-solid fa-bed service-card__icon" aria-hidden="true"></i>
-            </div>
-            <h3 className="service-card__title">Habitaciones Premium</h3>
-            <p className="service-card__text">
-              Diseño boutique con máximo confort y detalles artesanales únicos.
-            </p>
-          </article>
-          <article className="service-card">
-            <div className="service-card__icon-wrap">
-              <i className="fa-solid fa-tree service-card__icon" aria-hidden="true"></i>
-            </div>
-            <h3 className="service-card__title">Entorno Natural</h3>
-            <p className="service-card__text">
-              Tranquilidad y conexión profunda con la naturaleza michoacana.
-            </p>
-          </article>
-          <article className="service-card">
-            <div className="service-card__icon-wrap">
-              <i className="fa-solid fa-concierge-bell service-card__icon" aria-hidden="true"></i>
-            </div>
-            <h3 className="service-card__title">Atención Personalizada</h3>
-            <p className="service-card__text">
-              Hospitalidad auténtica michoacana con calidez y servicio de lujo.
-            </p>
-          </article>
-          <article className="service-card">
-            <div className="service-card__icon-wrap">
-              <i className="fa-solid fa-utensils service-card__icon" aria-hidden="true"></i>
-            </div>
-            <h3 className="service-card__title">Desayuno Regional</h3>
-            <p className="service-card__text">
-              Sabores tradicionales que despiertan los sentidos cada mañana.
-            </p>
-          </article>
-        </div>
+      {/* ═══ SERVICIOS ══════════════════════════════════════ */}
+      <section className="services section section--cream" id="servicios">
+        <SectionHeader
+          eyebrow="Lo que ofrecemos"
+          title="Servicios de"
+          titleEm="Distinción"
+          subtitle="Todo lo necesario para una estancia verdaderamente inolvidable"
+        />
+        <motion.div
+          className="services__grid"
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="show"
+          {...inView}
+        >
+          {services.map((svc) => (
+            <ServiceCard key={svc.title} {...svc} />
+          ))}
+        </motion.div>
       </section>
 
-      {/*  ═══ GALERIA ════════════════════════════════════════ */}
-      <section className="lookbook section">
+      {/* ═══ GALERÍA LOOKBOOK ═══════════════════════════════ */}
+      <section className="lookbook section section--dark">
         <div className="container">
-          <div className="section__header">
-            <span className="section__eyebrow">Atmósfera</span>
-            <h2 className="section__title">Nuestra <em>Esencia</em></h2>
-            <p className="section__subtitle">Capturamos los momentos que definen la estancia en Quinta Dalam.</p>
-            <span className="section__ornament" aria-hidden="true">✦ ─── ✦</span>
-          </div>
-
-          <div className="lookbook__grid">
-            <div className="lookbook__item">
-              <img src={ArtesaniaManual} alt="Sala de estar" className="lookbook__img" loading="lazy" />
-            </div>
-            <div className="lookbook__item ">
-              <img src={Paisaje} alt="Fachada colonial" className="lookbook__img" loading="lazy" />
-            </div>
-            <div className="lookbook__item ">
-              <img src={Hospitalidad} alt="Detalles artesanales" className="lookbook__img" loading="lazy" />
-            </div>
-            <div className="lookbook__item ">
-              <img src={Gastronomia} alt="Vista al manantial" className="lookbook__img" loading="lazy" />
-            </div>
-            <div className="lookbook__item ">
-              <img src={ZonaExterior} alt="Interiores acogedores" className="lookbook__img" loading="lazy" />
-            </div>
-            <div className="lookbook__item ">
-              <img src={salaVista2} alt="Cocina tradicional" className="lookbook__img" loading="lazy" />
-            </div>
-          </div>
+          <SectionHeader
+            eyebrow="Atmósfera"
+            title="Nuestra"
+            titleEm="Esencia"
+            subtitle="Capturamos los momentos que definen la estancia en Quinta Dalam"
+          />
+          <motion.div
+            className="lookbook__grid"
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="show"
+            {...inView}
+          >
+            {lookbook.map(({ src, alt }, i) => (
+              <motion.div
+                key={alt}
+                className="lookbook__item"
+                variants={scaleUp}
+                custom={i}
+              >
+                <img src={src} alt={alt} className="lookbook__img" loading="lazy" decoding="async" />
+              </motion.div>
+            ))}
+          </motion.div>
         </div>
       </section>
 
-      {/* ═══ NOSOTROS PREVIEW ═════════════════════════════════ */}
-      <section className="about section" id="sobre-nosotros">
+      {/* ═══ NOSOTROS PREVIEW ═══════════════════════════════ */}
+      <section className="about section section--white" id="sobre-nosotros">
         <div className="about__inner">
-          <div className="about__text">
-            <span className="section__eyebrow">Nuestra Historia</span>
-            <h2 className="about__title">
+          <motion.div
+            className="about__text"
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="show"
+            {...inView}
+          >
+            <motion.span className="section__eyebrow" variants={fadeLeft}>
+              Nuestra Historia
+            </motion.span>
+            <motion.h2 className="about__title" variants={fadeLeft}>
               Una Experiencia <em>Boutique</em> sin igual
-            </h2>
-            <span className="section__ornament" aria-hidden="true">✦ ─── ✦</span>
-            <p className="about__desc">
-              Hotel Quinta Dalam nació del amor por la cultura michoacana y el arte de la hospitalidad. Combinamos tradición colonial, diseño moderno y el calor de los Pueblos Mágicos para ofrecerte una estancia que trasciende lo ordinario.
-            </p>
-            <Link to="/nosotros" className="btn btn--primary">
-              Conocer nuestra historia
-            </Link>
-          </div>
-          <div className="about__media">
+            </motion.h2>
+            <motion.span className="section__ornament" variants={fadeLeft} aria-hidden="true">
+              ✦ ─── ✦
+            </motion.span>
+            <motion.p className="about__desc" variants={fadeLeft}>
+              Hotel Quinta Dalam nació del amor por la cultura michoacana y el arte de la hospitalidad.
+              Combinamos tradición colonial, diseño moderno y el calor de los Pueblos Mágicos para
+              ofrecerte una estancia que trasciende lo ordinario.
+            </motion.p>
+            <motion.div variants={fadeLeft}>
+              <Link to="/nosotros" className="btn btn--primary">
+                Conocer nuestra historia
+              </Link>
+            </motion.div>
+          </motion.div>
+
+          <motion.div
+            className="about__media"
+            variants={fadeRight}
+            initial="hidden"
+            whileInView="show"
+            {...inView}
+          >
             <img
               src={ZonaExterior}
               alt="Exterior colonial del Hotel Quinta Dalam rodeado de jardines"
               className="about__img"
               loading="lazy"
+              decoding="async"
             />
             <div className="about__badge" aria-hidden="true">
               <span className="about__badge-num">2</span>
               <span className="about__badge-text">años de hospitalidad</span>
             </div>
-          </div>
+          </motion.div>
         </div>
       </section>
 
-      
-
-      {/* ═══ CTA FINAL ════════════════════════════════════════ */}
+      {/* ═══ CTA FINAL ══════════════════════════════════════ */}
       <section className="cta-band" aria-label="Llamada a reservar">
         <div className="cta-band__inner">
-          <div className="cta-band__text">
-            <span className="section__eyebrow section__eyebrow--gold">
+          <motion.div
+            className="cta-band__text"
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="show"
+            {...inView}
+          >
+            <motion.span
+              className="section__eyebrow section__eyebrow--gold"
+              variants={fadeUp}
+            >
               ¿Listo para tu escapada?
-            </span>
-            <h2 className="cta-band__title">
+            </motion.span>
+            <motion.h2 className="cta-band__title" variants={fadeUp}>
               Reserva tu estancia <em>perfecta</em>
-            </h2>
-            <p className="cta-band__desc">
+            </motion.h2>
+            <motion.p className="cta-band__desc" variants={fadeUp}>
               Vive una experiencia inolvidable en el corazón de Michoacán.
-            </p>
-          </div>
-          <div className="cta-band__actions">
+            </motion.p>
+          </motion.div>
+
+          <motion.div
+            className="cta-band__actions"
+            initial={{ opacity: 0, x: 24 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.7, delay: 0.18, ease: 'easeOut' }}
+            {...inView}
+          >
             <Link to="/reservaciones" className="btn btn--primary">
               Ver disponibilidad
             </Link>
-            <Link to="/contacto" className="btn btn--ghost">
+            <Link to="/contacto" className="btn btn--ghost-light">
               Contáctanos
             </Link>
-          </div>
+          </motion.div>
         </div>
       </section>
-    </main>
+
+    </motion.main>
   );
 }

@@ -1,7 +1,12 @@
+// ============================================================
+//  _header.scss — Quinta Dalam (Versión 1 Restaurada)
+//  Header en grid con fondo fijo bosque.
+//  UBICACIÓN: src/styles/layout/_header.scss
+// ============================================================
 @use '../abstracts/variables' as v;
 @use '../abstracts/mixins'   as m;
 
-// ── Checkbox toggle (mobile) ────────────────────────────────
+// ── Ocultar checkbox ───
 .header__nav-toggle-input {
   position: absolute;
   opacity: 0;
@@ -10,7 +15,7 @@
   pointer-events: none;
 }
 
-// ── Header ──────────────────────────────────────────────────
+// ── Header ────
 .header {
   position: fixed;
   top: 0;
@@ -23,32 +28,26 @@
   gap: v.$space-8;
   height: v.$header-height;
   padding-inline: v.$space-10;
-
   background-color: v.$color-forest;
+  border-bottom: 1px solid rgba(v.$color-gold, 0.15);
 
-  // Línea dorada inferior
   &::after {
     content: '';
     position: absolute;
-    bottom: 0;
+    bottom: -3px;
     left: 0;
     right: 0;
-    height: 1px;
+    height: 2px;
     background: linear-gradient(
       90deg,
       transparent 0%,
-      rgba(v.$color-gold, 0.5) 25%,
-      rgba(v.$color-gold-light, 0.7) 50%,
-      rgba(v.$color-gold, 0.5) 75%,
+      v.$color-gold 20%,
+      v.$color-gold-light 50%,
+      v.$color-gold 80%,
       transparent 100%
     );
+    opacity: 0.6;
   }
-
-  // Estado scrolled: más opaco
-  &--scrolled {
-  background-color: v.$color-forest;
-  box-shadow: 0 4px 32px rgba(0, 0, 0, 0.25);
-}
 
   @include m.respond-to('lg') {
     padding-inline: v.$space-6;
@@ -62,37 +61,30 @@
   }
 }
 
-// ── Brand ───────────────────────────────────────────────────
+// ── Brand ────
 .header__brand {
   min-width: 0;
+  flex-shrink: 0;
 }
 
 .header__logo-link {
   display: inline-flex;
   align-items: center;
   gap: v.$space-3;
-  text-decoration: none;
 }
 
 .header__logo-img {
-  width: 42px;
-  height: 42px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   object-fit: cover;
   flex-shrink: 0;
-  border: 1.5px solid rgba(v.$color-gold, 0.45);
-  transition: transform v.$transition-spring, border-color v.$transition-base,
-              box-shadow v.$transition-base;
+  border: 1.5px solid rgba(v.$color-gold, 0.4);
+  transition: transform v.$transition-base, border-color v.$transition-base;
 
   .header__logo-link:hover & {
-    transform: scale(1.08);
+    transform: scale(1.06);
     border-color: v.$color-gold;
-    box-shadow: 0 0 0 3px rgba(v.$color-gold, 0.15);
-  }
-
-  @include m.respond-to('md') {
-    width: 34px;
-    height: 34px;
   }
 }
 
@@ -107,7 +99,7 @@
   font-size: v.$fs-lg;
   font-weight: 700;
   color: v.$color-parchment-light;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.03em;
 
   @include m.respond-to('lg') {
     font-size: v.$fs-md;
@@ -119,7 +111,7 @@
   font-size: v.$fs-xs;
   font-weight: 300;
   color: v.$color-gold-light;
-  letter-spacing: 0.20em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
 
   @include m.respond-to('lg') {
@@ -127,7 +119,7 @@
   }
 }
 
-// ── Navegación ──────────────────────────────────────────────
+// ── Navegación ────
 .header__nav {
   @include m.respond-to('md') {
     position: fixed;
@@ -135,10 +127,8 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(v.$color-forest, 0.97);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-top: 1px solid rgba(v.$color-gold, 0.15);
+    background-color: v.$color-forest;
+    border-top: 1px solid rgba(v.$color-gold, 0.2);
     transform: translateX(-100%);
     transition: transform v.$transition-slow;
     z-index: 999;
@@ -150,6 +140,7 @@
   }
 }
 
+// Checkbox hack: abre el menú móvil
 .header__nav-toggle-input:checked ~ .header .header__nav {
   transform: translateX(0);
 }
@@ -172,40 +163,52 @@
   font-family: v.$font-sans;
   font-size: v.$fs-sm;
   font-weight: 400;
-  letter-spacing: 0.10em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: rgba(v.$color-parchment, 0.78);
+  color: rgba(v.$color-parchment, 0.82);
   position: relative;
-  transition: color v.$transition-fast;
 
-  // Underline animado
+  transition:
+    color v.$transition-fast,
+    transform v.$transition-fast;
+
   &::after {
     content: '';
     position: absolute;
-    bottom: 2px;
+    bottom: 0;
     left: 50%;
     width: 0;
     height: 1px;
-    background: v.$gradient-gold;
+    background: v.$color-gold;
     transform: translateX(-50%);
     transition: width v.$transition-base;
-    border-radius: v.$radius-pill;
   }
 
   &:hover,
   &:focus-visible {
     color: v.$color-parchment-light;
+    transform: translateY(-2px) scale(1.06);
 
-    &::after { width: calc(100% - 2rem); }
+    &::after {
+      width: calc(100% - 2rem);
+    }
   }
 
   &--active {
     color: v.$color-gold-light;
+    transform: translateY(-2px) scale(1.06);
 
     &::after {
       width: calc(100% - 2rem);
-      background: v.$color-gold;
     }
+  }
+
+  &--admin {
+    color: v.$color-gold-light;
+  }
+
+  &--admin::after {
+    background: v.$color-gold;
   }
 
   @include m.respond-to('md') {
@@ -216,7 +219,7 @@
   }
 }
 
-// ── Acciones móvil ──────────────────────────────────────────
+// ── Acciones móvil (dentro del drawer) ───
 .header__mobile-actions {
   display: none;
 
@@ -227,7 +230,7 @@
     gap: v.$space-4;
     margin-top: v.$space-8;
     padding-top: v.$space-6;
-    border-top: 1px solid rgba(v.$color-gold, 0.12);
+    border-top: 1px solid rgba(v.$color-gold, 0.15);
     width: 100%;
     max-width: 260px;
   }
@@ -241,17 +244,16 @@
   font-family: v.$font-sans;
   font-size: v.$fs-sm;
   font-weight: 700;
-  letter-spacing: 0.10em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: rgba(v.$color-parchment, 0.72);
-  border: 1px solid rgba(v.$color-parchment, 0.25);
-  border-radius: v.$radius-md;
+  color: rgba(v.$color-parchment, 0.75);
+  border: 1px solid rgba(v.$color-parchment, 0.3);
+  border-radius: v.$radius-sm;
   transition: all v.$transition-base;
 
   &:hover {
     color: v.$color-parchment-light;
-    border-color: rgba(v.$color-parchment, 0.55);
-    background: rgba(v.$color-parchment, 0.05);
+    border-color: rgba(v.$color-parchment, 0.6);
   }
 }
 
@@ -264,22 +266,21 @@
   font-family: v.$font-sans;
   font-size: v.$fs-sm;
   font-weight: 700;
-  letter-spacing: 0.10em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  background: v.$gradient-adobe;
+  background-color: v.$color-adobe;
   color: v.$color-parchment-light;
-  border: none;
-  border-radius: v.$radius-md;
+  border: 2px solid v.$color-adobe;
+  border-radius: v.$radius-sm;
   transition: all v.$transition-base;
-  box-shadow: v.$shadow-adobe;
 
   &:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 12px 30px rgba(v.$color-adobe, 0.5);
+    background-color: v.$color-adobe-light;
+    border-color: v.$color-adobe-light;
   }
 }
 
-// ── Acciones desktop ────────────────────────────────────────
+// ── Acciones desktop ───
 .header__actions {
   display: flex;
   align-items: center;
@@ -292,8 +293,8 @@
 }
 
 .header__flag {
-  width: 20px;
-  height: 14px;
+  width: 18px;
+  height: 12px;
   object-fit: cover;
   border-radius: 2px;
   vertical-align: middle;
@@ -306,69 +307,60 @@
   font-family: v.$font-sans;
   font-size: v.$fs-xs;
   font-weight: 700;
-  letter-spacing: 0.10em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: rgba(v.$color-parchment, 0.55);
+  color: rgba(v.$color-parchment, 0.6);
   transition: color v.$transition-fast;
 
-  &:hover { color: v.$color-gold-light; }
+  &:hover {
+    color: v.$color-gold-light;
+  }
 }
 
 .header__login {
-  padding: v.$space-2 v.$space-5;
+  padding: v.$space-2 v.$space-4;
   font-family: v.$font-sans;
   font-size: v.$fs-xs;
   font-weight: 700;
-  letter-spacing: 0.10em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: rgba(v.$color-parchment, 0.72);
-  border: 1px solid rgba(v.$color-parchment, 0.20);
-  border-radius: v.$radius-md;
+  color: rgba(v.$color-parchment, 0.75);
+  border: 1px solid rgba(v.$color-parchment, 0.25);
+  border-radius: v.$radius-sm;
   transition: all v.$transition-base;
+
   white-space: nowrap;
   flex-shrink: 0;
 
   &:hover {
     color: v.$color-parchment-light;
-    border-color: rgba(v.$color-parchment, 0.45);
-    background: rgba(v.$color-parchment, 0.05);
+    border-color: rgba(v.$color-parchment, 0.5);
   }
 }
 
 .header__cta {
   display: inline-flex;
   align-items: center;
-  padding: v.$space-2 v.$space-6;
+  padding: v.$space-3 v.$space-6;
   font-family: v.$font-sans;
   font-size: v.$fs-xs;
   font-weight: 700;
-  letter-spacing: 0.10em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  background: v.$gradient-adobe;
+  background-color: v.$color-adobe;
   color: v.$color-parchment-light;
-  border: none;
-  border-radius: v.$radius-md;
+  border: 2px solid v.$color-adobe;
+  border-radius: v.$radius-sm;
   transition: all v.$transition-base;
   white-space: nowrap;
   flex-shrink: 0;
-  box-shadow: 0 2px 12px rgba(v.$color-adobe, 0.3);
-  position: relative;
-  overflow: hidden;
 
-  &::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.1) 50%, transparent 60%);
-    transform: translateX(-100%);
-    transition: transform 0.45s ease;
-  }
-
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(v.$color-adobe, 0.45);
-
-    &::after { transform: translateX(100%); }
+  &:hover,
+  &:focus-visible {
+    background-color: v.$color-adobe-light;
+    border-color: v.$color-adobe-light;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(v.$color-adobe, 0.4);
   }
 }
 
@@ -378,12 +370,50 @@
   background: linear-gradient(
     to bottom,
     transparent,
-    rgba(v.$color-parchment, 0.5),
+    rgba(v.$color-parchment, 0.6),
     transparent
   );
 }
 
-// ── Hamburguesa ─────────────────────────────────────────────
+.header__theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: v.$radius-sm;
+  border: 1px solid rgba(v.$color-parchment, 0.35);
+  background: transparent;
+  color: v.$color-parchment-light;
+  cursor: pointer;
+  transition: all v.$transition-base;
+
+  &:hover {
+    color: v.$color-gold-light;
+    border-color: rgba(v.$color-gold, 0.45);
+    background: rgba(v.$color-gold, 0.08);
+  }
+
+  svg {
+    width: 16px;
+    height: 16px;
+    display: block;
+  }
+}
+
+.header__theme-toggle--mobile {
+  display: none;
+
+  @include m.respond-to('md') {
+    display: inline-flex;
+    position: absolute;
+    right: 52px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
+
+// ── Hamburguesa ───
 .header__hamburger {
   display: none;
   flex-direction: column;
@@ -393,12 +423,12 @@
   height: 40px;
   padding: v.$space-2;
   cursor: pointer;
-  border-radius: v.$radius-md;
+  border-radius: v.$radius-sm;
   transition: background v.$transition-fast;
   z-index: 1001;
 
   &:hover {
-    background: rgba(v.$color-parchment, 0.08);
+    background-color: rgba(v.$color-parchment, 0.08);
   }
 
   @include m.respond-to('md') {
@@ -410,13 +440,13 @@
   display: block;
   width: 100%;
   height: 2px;
-  background: v.$color-parchment;
+  background-color: v.$color-parchment;
   border-radius: v.$radius-pill;
   transform-origin: center;
   transition:
     transform v.$transition-base,
-    opacity   v.$transition-base,
-    width     v.$transition-base;
+    opacity  v.$transition-base,
+    width    v.$transition-base;
 }
 
 // Animación X al abrir
@@ -424,10 +454,12 @@
   .header__hamburger-bar:nth-child(1) {
     transform: translateY(7px) rotate(45deg);
   }
+
   .header__hamburger-bar:nth-child(2) {
     opacity: 0;
     width: 0;
   }
+
   .header__hamburger-bar:nth-child(3) {
     transform: translateY(-7px) rotate(-45deg);
   }

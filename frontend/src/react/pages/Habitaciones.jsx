@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
 import roomUruapan from '../../assets/images/rooms/204-uruapan.jpeg';
 import roomPatzcuaro from '../../assets/images/rooms/104-patzcuaro.jpeg';
@@ -6,6 +7,27 @@ import roomParacho from '../../assets/images/rooms/102-paracho.jpeg';
 import roomYunuen from '../../assets/images/rooms/103-yunuen.jpeg';
 import roomCuanajo from '../../assets/images/rooms/207-cuanajo.jpeg';
 import roomTlalpujagua from '../../assets/images/rooms/205-tlalpujagua.jpeg';
+
+const staggerContainer = {
+  hidden: {},
+  show: {
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.05,
+    },
+  },
+};
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 20 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.65, ease: 'easeOut' },
+  },
+};
+
+const inView = { viewport: { once: true, margin: '-50px' } };
 
 
 export default function Habitaciones() {
@@ -23,21 +45,39 @@ export default function Habitaciones() {
         </div>
       </div>
 
-      <main>
-        <section className="section section--cream rooms-page" aria-labelledby="h2-suites">
+      <motion.main
+        initial={{ opacity: 0, y: 14 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -10 }}
+        transition={{ duration: 0.55, ease: 'easeOut' }}
+      >
+        <motion.section
+          className="section section--cream rooms-page"
+          aria-labelledby="h2-suites"
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="show"
+          {...inView}
+        >
           <div className="container">
-            <div className="section__header">
+            <motion.div className="section__header" variants={fadeUp}>
               <span className="section__eyebrow">Disponibilidad</span>
               <h2 className="section__title" id="h2-suites">Elige tu <em>Suite</em></h2>
               <p className="section__subtitle">Cada habitación lleva el nombre de un Pueblo Mágico de Michoacán</p>
               <span className="section__ornament" aria-hidden="true">✦ ─── ✦ ─── ✦</span>
-            </div>
+            </motion.div>
           </div>
 
           <div className="container">
-            <div className="rooms-page__list">
+            <motion.div
+              className="rooms-page__list"
+              variants={staggerContainer}
+              initial="hidden"
+              whileInView="show"
+              {...inView}
+            >
               {/* Suite Uruapan */}
-              <article className="room-row" id="suite-uruapan">
+              <motion.article className="room-row" id="suite-uruapan" variants={fadeUp}>
                 <div className="room-row__left">
                   <div className="room-card">
                     <div className="room-card__img-wrap">
@@ -74,10 +114,10 @@ export default function Habitaciones() {
                     <Link to="/reservaciones" className="btn btn--primary">Reservar Ahora</Link>
                   </div>
                 </div>
-              </article>
+              </motion.article>
 
               {/* Suite Yunuen */}
-            <article className="room-row" id="suite-yunuen">
+            <motion.article className="room-row" id="suite-yunuen" variants={fadeUp}>
               <div className="room-row__left">
                 <div className="room-card">
                   <div className="room-card__img-wrap">
@@ -148,10 +188,10 @@ export default function Habitaciones() {
                   </Link>
                 </div>
               </div>
-            </article>
+            </motion.article>
 
             {/* Suite Pátzcuaro */}
-            <article className="room-row" id="suite-patzcuaro">
+            <motion.article className="room-row" id="suite-patzcuaro" variants={fadeUp}>
               <div className="room-row__left">
                 <div className="room-card room-card--featured">
                   <div className="room-card__img-wrap">
@@ -230,10 +270,10 @@ export default function Habitaciones() {
                   </Link>
                 </div>
               </div>
-            </article>
+            </motion.article>
 
             {/* Suite Tlalpujagua */}
-            <article className="room-row" id="suite-tlalpujagua">
+            <motion.article className="room-row" id="suite-tlalpujagua" variants={fadeUp}>
               <div className="room-row__left">
                 <div className="room-card">
                   <div className="room-card__img-wrap">
@@ -304,10 +344,10 @@ export default function Habitaciones() {
                   </Link>
                 </div>
               </div>
-            </article>
+            </motion.article>
 
             {/* Suite Cuanajo */}
-            <article className="room-row" id="suite-cuanajo">
+            <motion.article className="room-row" id="suite-cuanajo" variants={fadeUp}>
               <div className="room-row__left">
                 <div className="room-card">
                   <div className="room-card__img-wrap">
@@ -379,10 +419,10 @@ export default function Habitaciones() {
                   </Link>
                 </div>
               </div>
-            </article>
+            </motion.article>
 
             {/* Suite Paracho */}
-            <article className="room-row" id="suite-paracho">
+            <motion.article className="room-row" id="suite-paracho" variants={fadeUp}>
               <div className="room-row__left">
                 <div className="room-card">
                   <div className="room-card__img-wrap">
@@ -454,12 +494,19 @@ export default function Habitaciones() {
                   </Link>
                 </div>
               </div>
-            </article>
-            </div>
+            </motion.article>
+            </motion.div>
           </div>
-        </section>
+        </motion.section>
 
-        <section className="cta-band" aria-label="Llamada a reservar">
+        <motion.section
+          className="cta-band"
+          aria-label="Llamada a reservar"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.65, ease: 'easeOut' }}
+          {...inView}
+        >
           <div className="cta-band__inner">
             <div className="cta-band__text">
               <span className="section__eyebrow section__eyebrow--gold">¿Lista tu suite favorita?</span>
@@ -471,8 +518,8 @@ export default function Habitaciones() {
               <Link to="/contacto" className="btn btn--ghost">Contáctanos</Link>
             </div>
           </div>
-        </section>
-      </main>
+        </motion.section>
+      </motion.main>
     </>
   );
 }

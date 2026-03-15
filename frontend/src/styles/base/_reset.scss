@@ -1,4 +1,33 @@
-html {
-    scrollbar-gutter: stable;
-    overflow-y: scroll;
+// ============================================================
+//  _reset.scss — Quinta Dalam (Refactorizado v2)
+//  Reset complementario al normalize.
+//
+//  UBICACIÓN: src/styles/base/_reset.scss
+// ============================================================
+@use '../abstracts/variables' as v;
+
+// Elimina margin/padding del normalize en h1 dentro de section/article
+h1 {
+  font-size: inherit;
+  margin: 0;
 }
+
+// Asegura que los SVG inline no desborden
+svg {
+  display: inline-block;
+  vertical-align: middle;
+  overflow: hidden;
+}
+
+// Inputs de tipo date/time — corrige apariencia en WebKit
+input[type="date"],
+input[type="time"],
+input[type="datetime-local"] {
+  -webkit-appearance: none;
+}
+
+// Imágenes responsive por defecto
+img { display: block; max-width: 100%; height: auto; }
+
+// Heredar box-sizing
+*, *::before, *::after { box-sizing: border-box; }

@@ -1,0 +1,107 @@
+// ============================================================
+//  _themes.scss — Quinta Dalam
+//  Sistema de doble paleta via CSS Custom Properties.
+//  Importar en main.scss ANTES que cualquier otro parcial.
+//
+//  UBICACIÓN: src/styles/abstracts/_themes.scss
+// ============================================================
+
+// ── Light Mode (por defecto) ─────────────────────────────────
+:root {
+  // Superficies
+  --color-bg:           #FDFBF7;       // Crema muy suave
+  --color-bg-alt:       #F5F0E8;       // Pergamino
+  --color-surface:      #FFFFFF;       // Tarjeta blanca pura
+  --color-surface-2:    #F5F0E8;       // Tarjeta secundaria
+
+  // Texto
+  --color-text:         #2A2118;       // Marrón sepia oscuro
+  --color-text-mid:     #574A3D;       // Texto medio
+  --color-text-light:   #9A8A7A;       // Texto claro
+
+  // Bordes
+  --color-border:       rgba(139, 62, 34, 0.18); // Adobe tenue
+  --color-border-mid:   rgba(139, 62, 34, 0.30);
+
+  // Acento primario — Adobe/Terracota
+  --color-accent:       #8B3E22;
+  --color-accent-light: #A84F2E;
+  --color-accent-dark:  #6A2D15;
+
+  // Acento dorado
+  --color-gold:         #C9973A;
+  --color-gold-light:   #DDB86A;
+  --color-gold-pale:    rgba(201, 151, 58, 0.15);
+
+  // Fondo oscuro permanente (header, footer, CTA band)
+  --color-forest:       #0E1E14;
+  --color-forest-mid:   #162A1C;
+
+  // Sombras
+  --shadow-sm:   0 2px 10px  rgba(30, 18, 8, 0.08);
+  --shadow-md:   0 8px 28px  rgba(30, 18, 8, 0.14);
+  --shadow-lg:   0 20px 56px rgba(30, 18, 8, 0.20);
+  --shadow-xl:   0 32px 80px rgba(30, 18, 8, 0.28);
+  --shadow-card: 0 4px 24px  rgba(30, 18, 8, 0.10);
+
+  // Sombra de botones
+  --shadow-accent: 0 8px 24px rgba(139, 62, 34, 0.35);
+  --shadow-gold:   0 8px 24px rgba(201, 151, 58, 0.30);
+
+  // Gradientes de fondo del body
+  --bg-gradient-1: rgba(201, 151, 58,  0.05);
+  --bg-gradient-2: rgba(139, 62,  34,  0.04);
+
+  // Toggle icon
+  --theme-icon: "☀️";
+}
+
+// ── Dark Mode ─────────────────────────────────────────────────
+[data-theme="dark"] {
+  // Superficies — Verde bosque casi negro / Carbón profundo
+  --color-bg:           #121614;
+  --color-bg-alt:       #0E1410;
+  --color-surface:      #1A201D;       // Tarjeta elevada
+  --color-surface-2:    #212B26;       // Tarjeta secundaria
+
+  // Texto — Crema luminoso sobre oscuro
+  --color-text:         #EDE8DE;
+  --color-text-mid:     rgba(237, 232, 222, 0.68);
+  --color-text-light:   rgba(237, 232, 222, 0.40);
+
+  // Bordes — Más sutiles en oscuro
+  --color-border:       rgba(201, 151, 58, 0.12);
+  --color-border-mid:   rgba(201, 151, 58, 0.22);
+
+  // Acento — Cobrizo que resalta en oscuro (sube luminosidad)
+  --color-accent:       #C2643A;
+  --color-accent-light: #D97A4F;
+  --color-accent-dark:  #A04E28;
+
+  // Dorado — Más brillante en dark mode para resaltar
+  --color-gold:         #D4A84A;
+  --color-gold-light:   #E8C270;
+  --color-gold-pale:    rgba(212, 168, 74, 0.18);
+
+  // Forest permanece similar pero ajustado
+  --color-forest:       #0A1410;
+  --color-forest-mid:   #0E1C14;
+
+  // Sombras — Más profundas sobre fondos oscuros
+  --shadow-sm:   0 2px 10px  rgba(0, 0, 0, 0.30);
+  --shadow-md:   0 8px 28px  rgba(0, 0, 0, 0.45);
+  --shadow-lg:   0 20px 56px rgba(0, 0, 0, 0.55);
+  --shadow-xl:   0 32px 80px rgba(0, 0, 0, 0.65);
+  --shadow-card: 0 4px 24px  rgba(0, 0, 0, 0.40);
+
+  // Sombra de botones — dorado/cobrizo más intenso
+  --shadow-accent: 0 8px 24px rgba(194, 100, 58, 0.40);
+  --shadow-gold:   0 8px 24px rgba(212, 168, 74, 0.35);
+
+  // Gradientes de fondo del body
+  --bg-gradient-1: rgba(212, 168, 74,  0.04);
+  --bg-gradient-2: rgba(194, 100, 58,  0.03);
+
+  // Toggle icon
+  --theme-icon: "🌙";
+}

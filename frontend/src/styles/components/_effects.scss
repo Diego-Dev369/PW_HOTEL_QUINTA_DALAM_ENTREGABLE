@@ -1,107 +1,27 @@
-@use '../abstracts/variables' as *;
+// ============================================================
+//  _effects.scss — Quinta Dalam (Refactorizado v2)
+//  Las animaciones de scroll (.reveal / .is-visible) han sido
+//  ELIMINADAS. Framer Motion las reemplaza en los componentes
+//  React. Este archivo conserva:
+//   - Estado scrolled del header
+//   - Keyframes globales
+//   - Skeleton loader
+//   - Utilidades visuales
+//
+//  UBICACIÓN: src/styles/components/_effects.scss
+// ============================================================
+@use '../abstracts/variables' as v;
 
-// ────────────────────────────────────────────────────────────
-//  REVEAL — scroll animation (bug-fixed version)
-//  Elements get .reveal added by JS. When in viewport, .is-visible is added.
-//  requestAnimationFrame in HtmlPage.jsx ensures layout is done before
-//  IntersectionObserver fires, preventing the disappearing-section bug.
-// ────────────────────────────────────────────────────────────
-.reveal {
-  opacity: 0;
-  transform: translateY(22px);
-  transition:
-    opacity   $transition-slow,
-    transform $transition-slow;
-  will-change: opacity, transform;
-}
-
-.reveal.is-visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-// Variantes de dirección
-.reveal--left {
-  transform: translateX(-28px);
-  &.is-visible { transform: translateX(0); }
-}
-
-.reveal--right {
-  transform: translateX(28px);
-  &.is-visible { transform: translateX(0); }
-}
-
-.reveal--scale {
-  transform: scale(0.94);
-  &.is-visible { transform: scale(1); }
-}
-
-// Delays escalonados para grupos
-.reveal-group > *:nth-child(1) { transition-delay: 0ms; }
-.reveal-group > *:nth-child(2) { transition-delay: 80ms; }
-.reveal-group > *:nth-child(3) { transition-delay: 160ms; }
-.reveal-group > *:nth-child(4) { transition-delay: 240ms; }
-.reveal-group > *:nth-child(5) { transition-delay: 320ms; }
-.reveal-group > *:nth-child(6) { transition-delay: 400ms; }
-
-@media (prefers-reduced-motion: reduce) {
-  .reveal,
-  .reveal--left,
-  .reveal--right,
-  .reveal--scale {
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
-}
-
-// ────────────────────────────────────────────────────────────
-//  HEADER SCROLL STATE
-// ────────────────────────────────────────────────────────────
+// ── Header scrolled ──────────────────────────────────────────
 .header.header--scrolled {
-  background: rgba($color-forest, 0.96) !important;
+  background: v.$color-forest !important;
   box-shadow: 0 4px 32px rgba(0, 0, 0, 0.25);
 }
 
-// ────────────────────────────────────────────────────────────
-//  GLOBAL SMOOTH SCROLL
-// ────────────────────────────────────────────────────────────
-html {
-  scroll-behavior: smooth;
-}
-
-// ────────────────────────────────────────────────────────────
-//  SKELETON LOADER (para estados de carga futuros)
-// ────────────────────────────────────────────────────────────
-@keyframes skeleton-shimmer {
-  0%   { background-position: -200% 0; }
-  100% { background-position:  200% 0; }
-}
-
-.skeleton {
-  background: linear-gradient(
-    90deg,
-    rgba($color-parchment-dark, 0.6) 25%,
-    rgba($color-parchment, 0.9)      50%,
-    rgba($color-parchment-dark, 0.6) 75%
-  );
-  background-size: 200% 100%;
-  animation: skeleton-shimmer 1.6s ease-in-out infinite;
-  border-radius: $radius-sm;
-}
-
-// ────────────────────────────────────────────────────────────
-//  FADE IN genérico (para elementos no observados)
-// ────────────────────────────────────────────────────────────
+// ── Keyframes globales ───────────────────────────────────────
 @keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes fadeIn {
@@ -114,9 +34,25 @@ html {
   50%       { transform: scale(1.04); }
 }
 
-// ────────────────────────────────────────────────────────────
-//  UTILIDADES VISUALES
-// ────────────────────────────────────────────────────────────
+@keyframes skeleton-shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
+}
+
+// ── Skeleton loader ──────────────────────────────────────────
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(v.$color-parchment-dark, 0.6) 25%,
+    rgba(v.$color-parchment, 0.9)      50%,
+    rgba(v.$color-parchment-dark, 0.6) 75%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.6s ease-in-out infinite;
+  border-radius: v.$radius-sm;
+}
+
+// ── Utilidades visuales ───────────────────────────────────────
 .visually-hidden {
   position: absolute;
   width: 1px;
@@ -130,7 +66,7 @@ html {
 }
 
 .text-gradient-gold {
-  background: $gradient-gold;
+  background: v.$gradient-gold;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -140,7 +76,21 @@ html {
   display: block;
   font-size: 0.7rem;
   letter-spacing: 0.3em;
-  color: $color-gold;
+  color: v.$color-gold;
   opacity: 0.8;
   user-select: none;
+}
+
+// ── Reducción de movimiento (accesibilidad) ───────────────────
+// Framer Motion respeta prefers-reduced-motion automáticamente
+// cuando se usa con useReducedMotion() o la config global.
+// Por seguridad, también lo cubrimos con CSS:
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

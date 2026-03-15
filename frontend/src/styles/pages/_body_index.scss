@@ -1,8 +1,16 @@
+// ============================================================
+//  _body_index.scss — Quinta Dalam (Refactorizado v2)
+//  Home page: Hero, Booking bar, Rooms preview, Experiences,
+//  Services, Lookbook, About, CTA Band.
+//  Usa var(--color-*) para light/dark theming.
+//  UBICACIÓN: src/styles/pages/_body_index.scss
+// ============================================================
 @use '../abstracts/variables' as v;
 @use '../abstracts/mixins'   as m;
 
+
 // ─────────────────────────────────────────────────────────────
-//  HERO
+//  HERO — siempre oscuro (foto + overlay)
 // ─────────────────────────────────────────────────────────────
 .hero {
   position: relative;
@@ -28,12 +36,7 @@
   height: 100%;
   object-fit: cover;
   object-position: center 30%;
-  animation: heroZoom 20s ease-in-out infinite alternate;
-}
-
-@keyframes heroZoom {
-  from { transform: scale(1.0); }
-  to   { transform: scale(1.08); }
+  will-change: transform, opacity;
 }
 
 .hero__overlay {
@@ -41,16 +44,15 @@
   inset: 0;
   z-index: 1;
   background: v.$gradient-hero;
-}
 
-// Noise texture overlay sutil
-.hero__overlay::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-  opacity: 0.5;
-  pointer-events: none;
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    opacity: 0.5;
+    pointer-events: none;
+  }
 }
 
 .hero__content {
@@ -59,12 +61,6 @@
   text-align: center;
   padding-inline: v.$space-6;
   max-width: 900px;
-  animation: heroFadeUp 1s ease both;
-}
-
-@keyframes heroFadeUp {
-  from { opacity: 0; transform: translateY(36px); }
-  to   { opacity: 1; transform: translateY(0); }
 }
 
 .hero__eyebrow {
@@ -80,19 +76,17 @@
   border: 1px solid rgba(v.$color-gold, 0.28);
   border-radius: v.$radius-pill;
   background: rgba(v.$color-gold, 0.08);
-  animation: heroFadeUp 1s ease 0.2s both;
 }
 
 .hero__title {
   font-family: v.$font-serif;
-  font-size: clamp(v.$fs-4xl, 8vw, v.$fs-6xl);
+  font-size: clamp(v.$fs-5xl, 9vw, v.$fs-6xl);
   font-weight: 700;
   font-style: italic;
   line-height: 1.06;
   color: v.$color-parchment-light;
   margin-bottom: v.$space-6;
   text-shadow: 0 4px 40px rgba(0, 0, 0, 0.4);
-  animation: heroFadeUp 1s ease 0.3s both;
 }
 
 .hero__subtitle {
@@ -104,18 +98,17 @@
   margin-inline: auto;
   margin-bottom: v.$space-10;
   line-height: 1.75;
-  animation: heroFadeUp 1s ease 0.45s both;
 }
 
 .hero__cta {
-  animation: heroFadeUp 1s ease 0.6s both;
   padding: v.$space-4 v.$space-12;
   font-size: v.$fs-md;
   border-radius: v.$radius-lg;
 }
 
+
 // ─────────────────────────────────────────────────────────────
-//  BARRA DE RESERVAS
+//  BARRA DE RESERVAS — adapta a Light/Dark
 // ─────────────────────────────────────────────────────────────
 .booking {
   position: relative;
@@ -132,14 +125,15 @@
 
 .booking__card {
   display: flex;
-  align-items: center; 
-  background: rgba(v.$color-parchment-light, 0.95); 
+  align-items: center;
+  background: var(--color-bg-alt);
   backdrop-filter: blur(16px);
-  border: 1px solid rgba(v.$color-gold, 0.2);
-  border-radius: v.$radius-pill; 
-  box-shadow: v.$shadow-xl, 0 16px 40px rgba(v.$color-adobe, 0.1);
-  padding: v.$space-2 v.$space-4; 
-  
+  border: 1px solid var(--color-border);
+  border-radius: v.$radius-pill;
+  box-shadow: var(--shadow-xl), 0 16px 40px var(--color-gold-pale);
+  padding: v.$space-2 v.$space-4;
+  transition: background-color v.$transition-base, border-color v.$transition-base;
+
   @include m.respond-to('md') {
     flex-direction: column;
     border-radius: v.$radius-xl;
@@ -157,7 +151,7 @@
 
   @include m.respond-to('md') {
     padding: v.$space-5 v.$space-6;
-    border-bottom: 1px solid v.$border-color;
+    border-bottom: 1px solid var(--color-border);
     width: 100%;
   }
 }
@@ -171,31 +165,31 @@
   font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: v.$color-text-light;
+  color: var(--color-text-light);
   margin-bottom: v.$space-2;
+  transition: color v.$transition-base;
 
-  i {
-    color: v.$color-adobe;
-    font-size: v.$fs-sm;
-  }
+  i { color: var(--color-accent); font-size: v.$fs-sm; }
 }
 
 .booking__input {
-  background: none;
+  background-color: var(--color-surface);
   border: none;
-  border-bottom: 1.5px solid v.$border-color;
+  border-bottom: 1.5px solid var(--color-border);
   padding: v.$space-2 0;
   font-family: v.$font-serif;
   font-size: v.$fs-lg;
   font-weight: 600;
-  color: v.$color-text;
+  color: var(--color-text);
   width: 100%;
   outline: none;
-  transition: border-color v.$transition-fast;
+  transition: border-color v.$transition-fast, color v.$transition-base;
   cursor: pointer;
+  color-scheme: light dark;
 
-  &:focus { border-color: v.$color-adobe; }
+  &:focus { border-color: var(--color-accent); }
 
+  // Flecha del select adaptada (hardcoded SVG neutral)
   &--select {
     appearance: none;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7' viewBox='0 0 12 7'%3E%3Cpath fill='none' stroke='%238B3E22' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
@@ -203,27 +197,35 @@
     background-position: right 4px center;
     padding-right: v.$space-6;
   }
+
+  &--select option {
+    background: var(--color-surface);
+    color: var(--color-text);
+  }
+}
+
+[data-theme="dark"] .booking__input {
+  color-scheme: dark;
+  background-color: var(--color-surface);
 }
 
 .booking__divider {
   width: 1px;
-  background: v.$border-color;
+  background: var(--color-border);
   margin-block: v.$space-4;
   flex-shrink: 0;
 
-  @include m.respond-to('md') {
-    display: none;
-  }
+  @include m.respond-to('md') { display: none; }
 }
 
 .booking__btn {
   flex-shrink: 0;
-  align-self: center; // Centrado vertical perfecto
+  align-self: center;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: v.$space-2;
-  border-radius: v.$radius-pill; // Corregido el doble ;;
+  border-radius: v.$radius-pill;
   padding-inline: v.$space-10;
   min-width: 140px;
   margin-right: v.$space-2;
@@ -242,69 +244,52 @@
   overflow: hidden;
   transition: letter-spacing v.$transition-base, transform v.$transition-fast;
 
-  // Efecto de brillo que pasa sobre el botón
   &::after {
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(
-      105deg,
-      transparent 40%,
-      rgba(255, 255, 255, 0.10) 50%,
-      transparent 60%
-    );
+    background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.10) 50%, transparent 60%);
     transform: translateX(-100%);
     transition: transform 0.5s ease;
   }
 
-  // Animaciones al pasar el mouse
   &:hover {
-    letter-spacing: 0.18em; // Expande un poco las letras
-    transform: scale(1.02); // Ligero zoom
-
-    &::after { 
-      transform: translateX(100%); // Activa el brillo
-    }
+    letter-spacing: 0.18em;
+    transform: scale(1.02);
+    &::after { transform: translateX(100%); }
   }
 
-  // Adaptación para celulares (se hace ancho completo)
   @include m.respond-to('md') {
     margin: v.$space-4;
     width: calc(100% - #{v.$space-8});
-    height: 54px; // Un poco más bajo en móvil para no estorbar
+    height: 54px;
   }
 }
 
+
 // ─────────────────────────────────────────────────────────────
-//  SECCIONES GLOBALES
+//  SECCIONES — usan vars para bg
 // ─────────────────────────────────────────────────────────────
 .section {
   padding-block: v.$space-24;
 
-  &--cream {
-    background-color: v.$color-parchment;
+  &--cream  { background-color: var(--color-bg-alt); }
+  &--white  { background-color: var(--color-surface); }
+  &--dark   {
+    background: linear-gradient(180deg, v.$color-forest 0%, v.$color-forest-mid 100%);
+    --color-text: #{v.$color-parchment-light};
+    --color-text-mid: rgba(v.$color-parchment, 0.78);
+    --color-text-light: rgba(v.$color-parchment, 0.6);
   }
 
-  &--white {
-    background-color: v.$color-parchment-light;
-  }
-
-  &--dark {
-    background: linear-gradient(180deg, v.$color-forest 0%, v.$admin-bg 100%);
-  }
-
-  @include m.respond-to('md') {
-    padding-block: v.$space-16;
-  }
+  @include m.respond-to('md') { padding-block: v.$space-16; }
 }
 
 .section__header {
   text-align: center;
   margin-bottom: v.$space-16;
 
-  @include m.respond-to('md') {
-    margin-bottom: v.$space-10;
-  }
+  @include m.respond-to('md') { margin-bottom: v.$space-10; }
 }
 
 .section__eyebrow {
@@ -314,7 +299,7 @@
   font-weight: 700;
   letter-spacing: 0.28em;
   text-transform: uppercase;
-  color: v.$color-gold;
+  color: var(--color-gold);
   margin-bottom: v.$space-4;
 
   &--gold { color: v.$color-gold-light; }
@@ -324,20 +309,16 @@
   font-family: v.$font-serif;
   font-size: clamp(v.$fs-2xl, 4vw, v.$fs-4xl);
   font-weight: 700;
-  color: v.$color-text;
+  color: var(--color-text);
   margin-bottom: v.$space-4;
   line-height: 1.15;
 
-  em {
-    color: v.$color-adobe;
-    font-style: italic;
-  }
+  em { color: var(--color-accent); font-style: italic; }
 }
 
 .section__subtitle {
-  font-family: v.$font-sans;
   font-size: v.$fs-lg;
-  color: v.$color-text-mid;
+  color: var(--color-text-mid);
   max-width: 52ch;
   margin-inline: auto;
   line-height: 1.75;
@@ -348,14 +329,35 @@
   margin-top: v.$space-5;
   font-size: 0.7rem;
   letter-spacing: 0.26em;
-  color: rgba(v.$color-gold, 0.45);
+  color: var(--color-gold-pale);
   user-select: none;
 }
 
+
 // ─────────────────────────────────────────────────────────────
-//  HABITACIONES (preview index)
+//  RITMO DE FONDOS — Full Width
+// ─────────────────────────────────────────────────────────────
+.hero { background-color: v.$color-forest; }
+
+.rooms.section {
+  background-color: var(--color-bg-alt);
+}
+
+[data-theme="dark"] .rooms.section {
+  background-color: v.$admin-bg;
+}
+
+
+// ─────────────────────────────────────────────────────────────
+//  HABITACIONES (preview)
 // ─────────────────────────────────────────────────────────────
 .rooms {
+  width: 100%;
+}
+
+.rooms > .section__header,
+.rooms__grid,
+.rooms__cta-wrap {
   @include m.container;
 }
 
@@ -377,12 +379,11 @@
   }
 }
 
-.rooms__cta-wrap {
-  text-align: center;
-}
+.rooms__cta-wrap { text-align: center; }
+
 
 // ─────────────────────────────────────────────────────────────
-//  EXPERIENCIAS
+//  EXPERIENCIAS — siempre oscura
 // ─────────────────────────────────────────────────────────────
 .experiences {
   padding-block: v.$space-24;
@@ -398,35 +399,28 @@
     background: linear-gradient(90deg, transparent, rgba(v.$color-gold, 0.3), transparent);
   }
 
-  @include m.respond-to('md') {
-    padding-block: v.$space-16;
-  }
+  @include m.respond-to('md') { padding-block: v.$space-16; }
 }
 
-.experiences__inner {
-  @include m.container;
-}
+.experiences__inner { @include m.container; }
 
 .experiences__grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: v.$space-8;
 
-  @include m.respond-to('lg') {
-    grid-template-columns: repeat(2, 1fr);
-    gap: v.$space-6;
-  }
-
-  @include m.respond-to('sm') {
-    grid-template-columns: 1fr 1fr;
-    gap: v.$space-4;
-  }
+  @include m.respond-to('lg') { grid-template-columns: repeat(2, 1fr); gap: v.$space-6; }
+  @include m.respond-to('sm') { grid-template-columns: 1fr 1fr; gap: v.$space-4; }
 }
+
 
 // ─────────────────────────────────────────────────────────────
 //  SERVICIOS
 // ─────────────────────────────────────────────────────────────
-.services {
+.services { width: 100%; }
+
+.services > .section__header,
+.services__grid {
   @include m.container;
 }
 
@@ -435,21 +429,17 @@
   grid-template-columns: repeat(4, 1fr);
   gap: v.$space-6;
 
-  @include m.respond-to('lg') {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  @include m.respond-to('sm') {
-    grid-template-columns: 1fr;
-    max-width: 380px;
-    margin-inline: auto;
-  }
+  @include m.respond-to('lg') { grid-template-columns: repeat(2, 1fr); }
+  @include m.respond-to('sm') { grid-template-columns: 1fr; max-width: 380px; margin-inline: auto; }
 }
+
 
 // ─────────────────────────────────────────────────────────────
 //  NOSOTROS (preview)
 // ─────────────────────────────────────────────────────────────
-.about {
+.about { width: 100%; }
+
+.about__inner {
   @include m.container;
 }
 
@@ -459,14 +449,8 @@
   gap: v.$space-16;
   align-items: center;
 
-  @include m.respond-to('lg') {
-    gap: v.$space-10;
-  }
-
-  @include m.respond-to('md') {
-    grid-template-columns: 1fr;
-    text-align: center;
-  }
+  @include m.respond-to('lg') { gap: v.$space-10; }
+  @include m.respond-to('md') { grid-template-columns: 1fr; text-align: center; }
 }
 
 .about__text {
@@ -475,29 +459,26 @@
   align-items: flex-start;
   gap: v.$space-5;
 
-  @include m.respond-to('md') {
-    align-items: center;
-  }
+  @include m.respond-to('md') { align-items: center; }
 }
 
 .about__title {
   font-family: v.$font-serif;
   font-size: clamp(v.$fs-2xl, 3.5vw, v.$fs-4xl);
   font-weight: 700;
-  color: v.$color-text;
+  color: var(--color-text);
   line-height: 1.15;
+  transition: color v.$transition-base;
 
-  em {
-    color: v.$color-adobe;
-    font-style: italic;
-  }
+  em { color: var(--color-accent); font-style: italic; }
 }
 
 .about__desc {
   font-size: v.$fs-md;
-  color: v.$color-text-mid;
+  color: var(--color-text-mid);
   line-height: 1.80;
   max-width: 48ch;
+  transition: color v.$transition-base;
 }
 
 .about__media {
@@ -505,10 +486,7 @@
   max-width: 480px;
   margin-inline: auto;
 
-  @include m.respond-to('md') {
-    max-width: 420px;
-    width: 85%;
-  }
+  @include m.respond-to('md') { max-width: 420px; width: 85%; }
 }
 
 .about__img {
@@ -517,7 +495,7 @@
   object-fit: cover;
   object-position: center top;
   border-radius: v.$radius-xl;
-  box-shadow: v.$shadow-xl;
+  box-shadow: var(--shadow-xl);
   transition: transform v.$transition-slow;
 
   .about__media:hover & { transform: scale(1.02); }
@@ -558,8 +536,9 @@
   opacity: 0.85;
 }
 
+
 // ─────────────────────────────────────────────────────────────
-//  CTA BAND
+//  CTA BAND — siempre oscura
 // ─────────────────────────────────────────────────────────────
 .cta-band {
   background: linear-gradient(135deg, v.$color-forest 0%, v.$color-forest-mid 100%);
@@ -571,21 +550,13 @@
   &::before {
     content: '';
     position: absolute;
-    top: -30%;
-    right: -5%;
-    width: 40%;
-    height: 160%;
-    background: radial-gradient(
-      ellipse,
-      rgba(v.$color-gold, 0.05) 0%,
-      transparent 65%
-    );
+    top: -30%; right: -5%;
+    width: 40%; height: 160%;
+    background: radial-gradient(ellipse, rgba(v.$color-gold, 0.05) 0%, transparent 65%);
     pointer-events: none;
   }
 
-  @include m.respond-to('md') {
-    padding-block: v.$space-16;
-  }
+  @include m.respond-to('md') { padding-block: v.$space-16; }
 }
 
 .cta-band__inner {
@@ -610,10 +581,7 @@
   margin-bottom: v.$space-3;
   line-height: 1.15;
 
-  em {
-    color: v.$color-gold;
-    font-style: italic;
-  }
+  em { color: v.$color-gold; font-style: italic; }
 }
 
 .cta-band__desc {
@@ -631,14 +599,11 @@
   @include m.respond-to('sm') {
     flex-direction: column;
     width: 100%;
-
     .btn { width: 100%; justify-content: center; }
   }
 }
 
-// ─────────────────────────────────────────────────────────────
-//  BOTONES GLOBALES (para contextos que no usan _buttons.scss)
-// ─────────────────────────────────────────────────────────────
+// Ghost button claro para fondo oscuro
 .btn--ghost-light {
   background: rgba(v.$color-parchment, 0.12);
   border: 1px solid rgba(v.$color-parchment, 0.35);
@@ -651,26 +616,20 @@
   }
 }
 
+
 // ─────────────────────────────────────────────────────────────
-//  LOOKBOOK (Masonry Grid)
+//  LOOKBOOK
 // ─────────────────────────────────────────────────────────────
-.lookbook {
-  background: linear-gradient(180deg, v.$color-forest 0%, v.$color-forest-mid 100%);
-}
 
 .lookbook__grid {
-  // Crea el efecto masonry usando columnas de CSS nativo
-  columns: 3 250px; 
+  columns: 3 250px;
   column-gap: v.$space-6;
-  
-  @include m.respond-to('md') {
-    columns: 2 200px;
-    column-gap: v.$space-4;
-  }
+
+  @include m.respond-to('md') { columns: 2 200px; column-gap: v.$space-4; }
 }
 
 .lookbook__item {
-  display: inline-block; // Vital para que las imágenes no se corten entre columnas
+  display: inline-block;
   width: 100%;
   margin-bottom: v.$space-6;
   border-radius: v.$radius-lg;
@@ -695,7 +654,7 @@
   width: 100%;
   height: auto;
   display: block;
-  filter: grayscale(30%); 
+  filter: grayscale(30%);
   transition: filter v.$transition-base, transform v.$transition-slow;
   object-fit: cover;
 }

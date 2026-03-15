@@ -1,4 +1,20 @@
-// ── Colores base ──────────────────────────────────────────────
+// ============================================================
+//  _variables.scss — Quinta Dalam (Refactorizado v2)
+//
+//  REGLA: Las variables SCSS ($) son para valores ESTÁTICOS
+//  que no cambian entre temas (tipografía, espaciado, radios,
+//  transiciones, breakpoints, layout, admin).
+//
+//  Los COLORES que cambian entre light/dark usan CSS Custom
+//  Properties definidas en _themes.scss y se referencian
+//  con var(--nombre) directamente en los parciales SCSS.
+//
+//  UBICACIÓN: src/styles/abstracts/_variables.scss
+// ============================================================
+
+// ── Colores estáticos (no cambian con el tema) ────────────────
+// Usados principalmente en admin, hero, footer, CTA band
+// (secciones siempre oscuras independiente del tema)
 $color-parchment:        #F5F0E8;
 $color-parchment-light:  #FDFAF5;
 $color-parchment-dark:   #EAE0CE;
@@ -17,6 +33,9 @@ $color-gold-pale:        rgba(#C9973A, 0.15);
 $color-text:             #2A2118;
 $color-text-mid:         #574A3D;
 $color-text-light:       #9A8A7A;
+
+// Borde global estático
+$border-color: rgba($color-adobe, 0.18);
 
 // ── Tipografía ───────────────────────────────────────────────
 $font-serif:        'Playfair Display', Georgia, serif;
@@ -56,22 +75,19 @@ $radius-lg:   20px;
 $radius-xl:   28px;
 $radius-pill: 999px;
 
-$border-color: rgba($color-adobe, 0.18);
-
-// ── Sombras ──────────────────────────────────────────────────
+// ── Sombras estáticas (usadas en contextos oscuros como admin) ─
 $shadow-sm:  0 2px 10px  rgba(30, 18, 8, 0.08);
 $shadow-md:  0 8px 28px  rgba(30, 18, 8, 0.14);
 $shadow-lg:  0 20px 56px rgba(30, 18, 8, 0.20);
 $shadow-xl:  0 32px 80px rgba(30, 18, 8, 0.28);
 
-// Sombra de color para botones
 $shadow-adobe:  0 8px 24px rgba($color-adobe, 0.35);
-$shadow-gold:   0 8px 24px rgba($color-gold, 0.3);
+$shadow-gold:   0 8px 24px rgba($color-gold,  0.30);
 
 // ── Transiciones ─────────────────────────────────────────────
-$transition-fast: 150ms ease;
-$transition-base: 600ms cubic-bezier(0.4, 0, 0.2, 1);
-$transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
+$transition-fast:   150ms ease;
+$transition-base:   300ms cubic-bezier(0.4, 0, 0.2, 1);
+$transition-slow:   500ms cubic-bezier(0.4, 0, 0.2, 1);
 $transition-spring: 400ms cubic-bezier(0.34, 1.56, 0.64, 1);
 
 // ── Breakpoints ──────────────────────────────────────────────
@@ -86,7 +102,7 @@ $container-max:        1240px;
 $header-height:        80px;
 $header-height-mobile: 68px;
 
-// ── Gradientes ────────────────────────────────────────────────
+// ── Gradientes estáticos ──────────────────────────────────────
 $gradient-gold:    linear-gradient(135deg, $color-gold-light, $color-gold);
 $gradient-adobe:   linear-gradient(135deg, $color-adobe-light, $color-adobe-dark);
 $gradient-forest:  linear-gradient(180deg, $color-forest, $color-forest-mid);
@@ -108,6 +124,7 @@ $bg-elevated:    #1a2620;
 $border-strong:  rgba(255, 255, 255, 0.12);
 
 // ── Panel de Administrador ────────────────────────────────────
+// El admin SIEMPRE es oscuro — usa valores fijos
 $admin-bg:         #0A1410;
 $admin-surface-2:  #122018;
 $admin-surface-3:  #1A2E20;

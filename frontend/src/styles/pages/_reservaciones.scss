@@ -1,169 +1,155 @@
-  @use '../abstracts/variables' as v;
-  @use '../abstracts/mixins'   as m;
+// ============================================================
+//  _reservaciones.scss — Quinta Dalam (Refactorizado v2)
+//
+//  UBICACIÓN: src/styles/pages/_reservaciones.scss
+// ============================================================
+@use '../abstracts/variables' as v;
+@use '../abstracts/mixins'   as m;
 
-  // ── Página contenedora ────────────────────────────────────
-  .reserva-page {
-    background-color: v.$color-parchment;
-    background-image:
-      radial-gradient(ellipse at 10% 20%, rgba(v.$color-adobe, 0.04) 0%, transparent 50%),
-      radial-gradient(ellipse at 90% 80%, rgba(v.$color-gold,  0.03) 0%, transparent 50%);
-    margin-top: calc(v.$header-height - 3rem);
+.reserva-page {
+  background-color: var(--color-bg);
+  background-image:
+    radial-gradient(ellipse at 10% 20%, var(--color-gold-pale) 0%, transparent 50%),
+    radial-gradient(ellipse at 90% 80%, var(--color-gold-pale) 0%, transparent 50%);
+  margin-top: calc(v.$header-height - 3rem);
+  transition: background-color v.$transition-base;
 
-    @include m.respond-to('md') {
-      padding-top: calc(v.$header-height-mobile + v.$space-8);
-    }
+  @include m.respond-to('md') {
+    padding-top: calc(v.$header-height-mobile + v.$space-8);
+  }
+}
+
+.reserva-wrapper {
+  width: 100%;
+  max-width: 680px;
+  margin-inline: auto;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: v.$radius-lg;
+  padding: v.$space-12 v.$space-10;
+  box-shadow: var(--shadow-lg), 0 0 0 1px var(--color-gold-pale);
+  position: relative;
+  transition: background-color v.$transition-base, border-color v.$transition-base;
+
+  &::before {
+    content: '✦';
+    position: absolute;
+    top: v.$space-6;
+    right: v.$space-8;
+    font-size: v.$fs-lg;
+    color: var(--color-gold-pale);
+    pointer-events: none;
   }
 
-  // ── Wrapper: card contenedora del formulario ──────────────
-  .reserva-wrapper {
-    width: 100%;
-    max-width: 680px;
-    margin-inline: auto;
-    background: v.$color-parchment-light;
-    border: 1px solid v.$border-color;
-    border-radius: v.$radius-lg;
-    padding: v.$space-12 v.$space-10;
-    box-shadow: v.$shadow-lg, 0 0 0 1px rgba(v.$color-gold, 0.08);
-    position: relative;
-
-    &::before {
-      content: '✦';
-      position: absolute;
-      top: v.$space-6;
-      right: v.$space-8;
-      font-size: v.$fs-lg;
-      color: rgba(v.$color-gold, 0.3);
-      pointer-events: none;
-    }
-
-    @include m.respond-to('sm') {
-      padding: v.$space-8 v.$space-6;
-      border-radius: v.$radius-md;
-    }
+  @include m.respond-to('sm') {
+    padding: v.$space-8 v.$space-6;
+    border-radius: v.$radius-md;
   }
+}
 
-  // ── Encabezado ────────────────────────────────────────────
-  .reserva__header {
-    margin-bottom: v.$space-10;
-    text-align: center;
+.reserva__header {
+  margin-bottom: v.$space-10;
+  text-align: center;
 
-    .section__title    { font-size: clamp(v.$fs-3xl, 5vw, v.$fs-4xl); margin-bottom: v.$space-3; }
-    .section__ornament { display: block; color: v.$color-gold; font-size: v.$fs-xs; letter-spacing: 0.3em; }
-  }
+  .section__title    { font-size: clamp(v.$fs-3xl, 5vw, v.$fs-4xl); margin-bottom: v.$space-3; }
+  .section__ornament { display: block; color: v.$color-gold; font-size: v.$fs-xs; letter-spacing: 0.3em; }
+}
 
-  // ── Ajustes de inputs dentro del form de reserva ─────────
-  .reserva__form {
-    textarea.form__input {
-      min-height: 110px;
-      line-height: 1.65;
-      resize: none;
-    }
-  }
+.reserva__submit {
+  width: 100%;
+  padding-block: v.$space-4;
+  font-size: v.$fs-sm;
+  letter-spacing: 0.14em;
+  margin-bottom: v.$space-6;
+}
 
-  // ── Botón submit ──────────────────────────────────────────
-  .reserva__submit {
-    width: 100%;
-    padding-block: v.$space-4;
+.reserva__notice {
+  display: flex;
+  align-items: flex-start;
+  gap: v.$space-3;
+  font-size: v.$fs-xs;
+  color: var(--color-text-light);
+  line-height: 1.6;
+  padding: v.$space-4 v.$space-5;
+  background: var(--color-gold-pale);
+  border: 1px dashed var(--color-border-mid);
+  border-radius: v.$radius-sm;
+  letter-spacing: 0.02em;
+  transition: background v.$transition-base;
+
+  i {
+    color: v.$color-gold;
     font-size: v.$fs-sm;
-    letter-spacing: 0.14em;
-    margin-bottom: v.$space-6;
+    flex-shrink: 0;
+    margin-top: 1px;
   }
+}
 
-  // ── Aviso "en desarrollo" ─────────────────────────────────
-  .reserva__notice {
+.reserva__layout {
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: v.$space-10;
+  align-items: start;
+
+  @include m.respond-to('lg') { grid-template-columns: 1fr; }
+}
+
+.reserva__info-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: v.$radius-md;
+  padding: v.$space-8;
+  box-shadow: var(--shadow-sm);
+  position: sticky;
+  top: calc(v.$header-height + v.$space-6);
+  transition: background-color v.$transition-base, border-color v.$transition-base;
+
+  @include m.respond-to('lg') { position: static; max-width: 480px; }
+}
+
+.reserva__info-title {
+  font-family: v.$font-serif;
+  font-size: v.$fs-2xl;
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: v.$space-6;
+  padding-bottom: v.$space-4;
+  border-bottom: 1px solid var(--color-border);
+  transition: color v.$transition-base, border-color v.$transition-base;
+
+  em { color: var(--color-accent); font-style: italic; }
+}
+
+.reserva__policy-list {
+  display: flex;
+  flex-direction: column;
+  gap: v.$space-4;
+  margin-bottom: v.$space-8;
+
+  li {
     display: flex;
     align-items: flex-start;
     gap: v.$space-3;
-    font-size: v.$fs-xs;
-    color: rgba(v.$color-text, 0.45);
+    font-size: v.$fs-sm;
+    color: var(--color-text-mid);
+    line-height: 1.5;
+    transition: color v.$transition-base;
+
+    i { color: var(--color-accent); flex-shrink: 0; margin-top: 2px; font-size: v.$fs-sm; }
+  }
+}
+
+.reserva__contact-cta {
+  border-top: 1px solid var(--color-border);
+  padding-top: v.$space-6;
+
+  p {
+    font-size: v.$fs-sm;
+    color: var(--color-text-mid);
+    margin-bottom: v.$space-4;
     line-height: 1.6;
-    padding: v.$space-4 v.$space-5;
-    background: rgba(v.$color-gold, 0.05);
-    border: 1px dashed rgba(v.$color-gold, 0.25);
-    border-radius: v.$radius-sm;
-    letter-spacing: 0.02em;
-
-    i {
-      color: v.$color-gold;
-      font-size: v.$fs-sm;
-      flex-shrink: 0;
-      margin-top: 1px;
-    }
+    transition: color v.$transition-base;
   }
 
-  // ── Layout con sidebar (futuro) ───────────────────────────
-  .reserva__layout {
-    display: grid;
-    grid-template-columns: 1fr 360px;
-    gap: v.$space-10;
-    align-items: start;
-
-    @include m.respond-to('lg') { grid-template-columns: 1fr; }
-  }
-
-  // ── Sidebar sticky ────────────────────────────────────────
-  .reserva__info-card {
-    background: v.$color-parchment-light;
-    border: 1px solid v.$border-color;
-    border-radius: v.$radius-md;
-    padding: v.$space-8;
-    box-shadow: v.$shadow-sm;
-    position: sticky;
-    top: calc(v.$header-height + v.$space-6);
-
-    @include m.respond-to('lg') {
-      position: static;
-      max-width: 480px;
-    }
-  }
-
-  .reserva__info-title {
-    font-family: v.$font-serif;
-    font-size: v.$fs-2xl;
-    font-weight: 700;
-    color: v.$color-text;
-    margin-bottom: v.$space-6;
-    padding-bottom: v.$space-4;
-    border-bottom: 1px solid v.$border-color;
-
-    em { color: v.$color-adobe; font-style: italic; }
-  }
-
-  // ── Lista de políticas ────────────────────────────────────
-  .reserva__policy-list {
-    display: flex;
-    flex-direction: column;
-    gap: v.$space-4;
-    margin-bottom: v.$space-8;
-
-    li {
-      display: flex;
-      align-items: flex-start;
-      gap: v.$space-3;
-      font-size: v.$fs-sm;
-      color: v.$color-text-mid;
-      line-height: 1.5;
-
-      i {
-        color: v.$color-adobe;
-        flex-shrink: 0;
-        margin-top: 2px;
-        font-size: v.$fs-sm;
-      }
-    }
-  }
-
-  // ── CTA de contacto en sidebar ────────────────────────────
-  .reserva__contact-cta {
-    border-top: 1px solid v.$border-color;
-    padding-top: v.$space-6;
-
-    p {
-      font-size: v.$fs-sm;
-      color: v.$color-text-mid;
-      margin-bottom: v.$space-4;
-      line-height: 1.6;
-    }
-
-    .btn { width: 100%; justify-content: center; }
-  }
+  .btn { width: 100%; justify-content: center; }
+}

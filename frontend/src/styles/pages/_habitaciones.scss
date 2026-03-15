@@ -1,11 +1,11 @@
+// ============================================================
+//  _habitaciones.scss — Quinta Dalam (Refactorizado v2)
+//  UBICACIÓN: src/styles/pages/_habitaciones.scss
+// ============================================================
 @use '../abstracts/variables' as v;
-@use '../abstracts/mixins' as m;
+@use '../abstracts/mixins'   as m;
 
-//  ROOMS PAGE — contenedor principal
-// ─────────────────────────────────────────────────────────────
-.rooms-page {
-  padding-bottom: 0;
-}
+.rooms-page { padding-bottom: 0; }
 
 .rooms-page__list {
   display: flex;
@@ -13,49 +13,37 @@
   counter-reset: room-counter;
 }
 
-//  ROOM ROW — fila individual de suite
-// ─────────────────────────────────────────────────────────────
 .room-row {
   display: grid;
-  grid-template-columns: 400px 1fr; 
+  grid-template-columns: 400px 1fr;
   gap: v.$space-12;
-  align-items: center; 
+  align-items: center;
   padding-block: v.$space-16;
-  border-bottom: 1px solid v.$border-color;
+  border-bottom: 1px solid var(--color-border);
   position: relative;
   counter-increment: room-counter;
+  transition: border-color v.$transition-base;
 
-  // Número decorativo de fondo lado derecho
   &::before {
     content: "0" counter(room-counter);
     position: absolute;
-    top: v.$space-10;
-    right: 0;
+    top: v.$space-10; right: 0;
     font-family: v.$font-serif;
     font-size: clamp(4rem, 8vw, 7rem);
     font-weight: 700;
     font-style: italic;
-    color: rgba(v.$color-adobe, 0.55);
+    color: var(--color-gold-pale);
     line-height: 1;
     pointer-events: none;
     user-select: none;
     z-index: 0;
+    transition: color v.$transition-base;
   }
 
-  &:last-child {
-    border-bottom: none;
-  }
+  &:last-child { border-bottom: none; }
+  &:first-child { padding-top: v.$space-6; }
 
-  &:first-child {
-    padding-top: v.$space-6;
-  }
-
-  @include m.respond-to('xl') { grid-template-columns: 400px 1fr; }
-  @include m.respond-to('lg') { 
-    grid-template-columns: 340px 1fr; 
-    gap: v.$space-8;
-  }
-
+  @include m.respond-to('lg') { grid-template-columns: 340px 1fr; gap: v.$space-8; }
   @include m.respond-to('md') {
     grid-template-columns: 1fr;
     max-width: 600px;
@@ -65,65 +53,20 @@
   }
 }
 
-//  ROOM ROW — columna izquierda
-// ─────────────────────────────────────────────────────────────
 .room-row__left {
   position: relative;
   z-index: 1;
 
-  .room-card {
-    box-shadow: v.$shadow-md;
-    transition: box-shadow v.$transition-base, transform v.$transition-slow;
-
-    &:hover {
-      transform: translateY(-8px);
-      box-shadow: v.$shadow-lg;
-    }
-  }
-
-  .room-card__img-wrap {
-    aspect-ratio: 4 / 3;
-  }
-
-  .room-card__body {
-    padding: v.$space-5 v.$space-6;
-  }
-
-  //Tendran que desaparecer luego
-  /*.room-card__desc, .room-card__title, .room-card__sub, .room-card__amenities, .room-card__link {
-    display: none; 
-  }*/
-
-  .room-card__title {
-    font-size: v.$fs-xl;
-    margin-bottom: v.$space-1;
-  }
-
-  .room-card__sub {
-    font-size: v.$fs-xs;
-    margin-bottom: v.$space-3;
-  }
-
-  .room-card__desc {
-    font-size: v.$fs-xs;
-    display: -webkit-box;
-    //-webkit-line-clamp: 2; //No funciona al parecer
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    margin-bottom: v.$space-3;
-  }
-
-  .room-card__amenities {
-    margin-bottom: 0;
-  }
-
-  .room-card__link {
-    display: none;
-  }
+  .room-card { box-shadow: var(--shadow-md); }
+  .room-card__img-wrap { aspect-ratio: 4 / 3; }
+  .room-card__body { padding: v.$space-5 v.$space-6; }
+  .room-card__title { font-size: v.$fs-xl; margin-bottom: v.$space-1; }
+  .room-card__sub { font-size: v.$fs-xs; margin-bottom: v.$space-3; }
+  .room-card__desc { font-size: v.$fs-xs; -webkit-box-orient: vertical; overflow: hidden; margin-bottom: v.$space-3; }
+  .room-card__amenities { margin-bottom: 0; }
+  .room-card__link { display: none; }
 }
 
-//  ROOM ROW — columna derecha (descripción + CTA)
-// ─────────────────────────────────────────────────────────────
 .room-row__right {
   display: flex;
   flex-direction: column;
@@ -133,39 +76,36 @@
   z-index: 1;
 }
 
-// ── Título ────────────────────────────────────────────────
 .room-row__title {
   font-family: v.$font-serif;
   font-size: clamp(v.$fs-xl, 2.5vw, v.$fs-3xl);
   font-weight: 700;
-  color: v.$color-text;
+  color: var(--color-text);
   line-height: 1.15;
   margin: 0;
+  transition: color v.$transition-base;
 
-  em {
-    color: v.$color-adobe;
-    font-style: italic;
-  }
+  em { color: var(--color-accent); font-style: italic; }
 }
 
-// ── Descripción larga ─────────────────────────────────────
 .room-row__text {
   font-family: v.$font-sans;
   font-size: v.$fs-md;
-  color: v.$color-text-mid;
+  color: var(--color-text-mid);
   line-height: 1.78;
   max-width: 56ch;
   margin: 0;
+  transition: color v.$transition-base;
 }
 
-// ── Especificaciones ──────────────────────────────────────
 .room-row__specs {
   display: flex;
   flex-wrap: wrap;
   gap: v.$space-2;
   padding-block: v.$space-4;
-  border-top: 1px solid v.$border-color;
-  border-bottom: 1px solid v.$border-color;
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+  transition: border-color v.$transition-base;
 
   span {
     display: inline-flex;
@@ -175,28 +115,23 @@
     font-size: v.$fs-xs;
     font-weight: 700;
     letter-spacing: 0.06em;
-    color: v.$color-text-mid;
-    background: v.$color-parchment;
-    border: 1px solid v.$border-color;
+    color: var(--color-text-mid);
+    background: var(--color-bg-alt);
+    border: 1px solid var(--color-border);
     border-radius: v.$radius-pill;
     padding: v.$space-1 v.$space-4;
     white-space: nowrap;
-    transition: border-color v.$transition-fast, color v.$transition-fast;
+    transition: all v.$transition-fast;
 
     &:hover {
-      border-color: rgba(v.$color-adobe, 0.4);
-      color: v.$color-adobe;
+      border-color: var(--color-border-mid);
+      color: var(--color-accent);
     }
 
-    i {
-      color: v.$color-adobe;
-      font-size: 0.7rem;
-      flex-shrink: 0;
-    }
+    i { color: var(--color-accent); font-size: 0.7rem; flex-shrink: 0; }
   }
 }
 
-// ── Acción: precio + botón ────────────────────────────────
 .room-row__action {
   display: flex;
   align-items: center;
@@ -206,15 +141,10 @@
     flex-direction: column;
     align-items: flex-start;
     gap: v.$space-4;
-
-    .btn {
-      width: 100%;
-      justify-content: center;
-    }
+    .btn { width: 100%; justify-content: center; }
   }
 }
 
-// ── Precio ────────────────────────────────────────────────
 .room-row__price {
   display: flex;
   flex-direction: column;
@@ -227,20 +157,22 @@
     font-weight: 700;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: v.$color-text-light;
+    color: var(--color-text-light);
+    transition: color v.$transition-base;
   }
 
   strong {
     font-family: v.$font-serif;
     font-size: v.$fs-3xl;
     font-weight: 700;
-    color: v.$color-text;
+    color: var(--color-text);
     line-height: 1;
+    transition: color v.$transition-base;
 
     span {
       font-size: v.$fs-sm;
       font-weight: 400;
-      color: v.$color-text-mid;
+      color: var(--color-text-mid);
       margin-left: v.$space-1;
       vertical-align: middle;
     }

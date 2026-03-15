@@ -1,18 +1,23 @@
+// ============================================================
+//  _login.scss — Quinta Dalam (Refactorizado v2)
+//  Usa var(--color-*) para soporte completo de Light/Dark.
+//
+//  UBICACIÓN: src/styles/pages/_login.scss
+// ============================================================
 @use '../abstracts/variables' as v;
 @use '../abstracts/mixins'   as m;
 
-// ── Página contenedora ────────────────────────────────────
 .login-page {
   min-height: 100svh;
   display: flex;
   align-items: center;
   margin-top: calc(v.$header-height - 4rem);
   padding-bottom: v.$space-16;
-  background-color: v.$color-parchment;
+  background-color: var(--color-bg);
   background-image:
-    radial-gradient(ellipse at 15% 25%, rgba(v.$color-adobe, 0.08) 0%, transparent 55%),
-    radial-gradient(ellipse at 85% 75%, rgba(v.$color-gold, 0.06) 0%, transparent 55%),
-    radial-gradient(ellipse at 50% 0%, rgba(v.$color-forest, 0.04) 0%, transparent 40%);
+    radial-gradient(ellipse at 15% 25%, var(--color-gold-pale) 0%, transparent 55%),
+    radial-gradient(ellipse at 85% 75%, var(--color-gold-pale) 0%, transparent 55%);
+  transition: background-color v.$transition-base;
 
   @include m.respond-to('md') {
     padding-top: calc(v.$header-height-mobile + v.$space-8);
@@ -20,22 +25,18 @@
   }
 }
 
-// ── Card del formulario ───────────────────────────────────
 .login-wrapper {
   width: 100%;
   max-width: 468px;
   margin-inline: auto;
-  background: v.$color-parchment-light;
-  border: 1px solid v.$border-color;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
   border-radius: v.$radius-xl;
   padding: v.$space-12 v.$space-10;
-  box-shadow:
-    v.$shadow-xl,
-    0 0 0 1px rgba(v.$color-gold, 0.06),
-    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  box-shadow: var(--shadow-xl), 0 0 0 1px var(--color-gold-pale);
   position: relative;
+  transition: background-color v.$transition-base, border-color v.$transition-base;
 
-  // Ornamento dorado
   &::before {
     content: '';
     position: absolute;
@@ -55,25 +56,15 @@
   }
 }
 
-// ── Encabezado ────────────────────────────────────────────
 .login__header {
   margin-bottom: v.$space-10;
   text-align: center;
 
   .section__eyebrow  { margin-bottom: v.$space-3; }
-  .section__title    {
-    margin-bottom: v.$space-3;
-    font-size: clamp(v.$fs-3xl, 5vw, v.$fs-4xl);
-  }
-  .section__ornament {
-    display: block;
-    font-size: v.$fs-xs;
-    color: v.$color-gold;
-    letter-spacing: 0.3em;
-  }
+  .section__title    { margin-bottom: v.$space-3; font-size: clamp(v.$fs-3xl, 5vw, v.$fs-4xl); }
+  .section__ornament { display: block; font-size: v.$fs-xs; color: v.$color-gold; letter-spacing: 0.3em; }
 }
 
-// ── Recordarme / Olvidaste contraseña ─────────────────────
 .login__options {
   display: flex;
   align-items: center;
@@ -81,7 +72,7 @@
   gap: v.$space-4;
   margin-bottom: v.$space-8;
   font-size: v.$fs-sm;
-  color: v.$color-text-mid;
+  color: var(--color-text-mid);
 }
 
 .login__remember {
@@ -90,7 +81,7 @@
   gap: v.$space-2;
   cursor: pointer;
   font-size: v.$fs-sm;
-  color: v.$color-text-mid;
+  color: var(--color-text-mid);
   user-select: none;
 
   input[type="checkbox"] {
@@ -102,20 +93,16 @@
 }
 
 .login__forgot {
-  color: v.$color-adobe;
+  color: var(--color-accent);
   font-size: v.$fs-xs;
   font-weight: 700;
   letter-spacing: 0.06em;
   text-decoration: none;
   transition: color v.$transition-fast;
 
-  &:hover {
-    color: v.$color-adobe-light;
-    text-decoration: underline;
-  }
+  &:hover { color: var(--color-accent-light); text-decoration: underline; }
 }
 
-// ── Botón submit ──────────────────────────────────────────
 .login__submit {
   width: 100%;
   padding-block: v.$space-4;
@@ -127,10 +114,9 @@
   i { font-size: v.$fs-md; }
 }
 
-// ── Pie ───────────────────────────────────────────────────
 .login__footer {
   text-align: center;
-  border-top: 1px solid rgba(v.$color-text, 0.07);
+  border-top: 1px solid var(--color-border);
   padding-top: v.$space-6;
   display: flex;
   flex-direction: column;
@@ -139,19 +125,16 @@
 
 .login__register {
   font-size: v.$fs-sm;
-  color: v.$color-text-mid;
+  color: var(--color-text-mid);
   margin: 0;
 
   &-link {
-    color: v.$color-adobe;
+    color: var(--color-accent);
     font-weight: 700;
     text-decoration: none;
     transition: color v.$transition-fast;
 
-    &:hover {
-      color: v.$color-adobe-light;
-      text-decoration: underline;
-    }
+    &:hover { color: var(--color-accent-light); text-decoration: underline; }
   }
 }
 
@@ -161,7 +144,7 @@
   justify-content: center;
   gap: v.$space-2;
   font-size: v.$fs-xs;
-  color: rgba(v.$color-text, 0.40);
+  color: var(--color-text-light);
   letter-spacing: 0.04em;
 
   i { color: v.$color-gold; font-size: v.$fs-sm; }
