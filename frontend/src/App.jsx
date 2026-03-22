@@ -1,4 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
+import { ThemeProvider } from './react/context/ThemeContext';
+
 import RouteEffects from './react/hooks/RouteEffects.jsx';
 import Home from './react/pages/Home.jsx';
 import Habitaciones from './react/pages/Habitaciones.jsx';
@@ -20,34 +23,39 @@ import PublicLayout from './react/components/PublicLayout.jsx';
 
 export default function App() {  
   return (
-    <BrowserRouter 
-      future={{ 
-        v7_startTransition: true, 
-        v7_relativeSplatPath: true 
-      }}>
-      <RouteEffects />
-      <Routes>
-        <Route element={<PublicLayout />}>
-          <Route path="/" element={<Home />} />
-          <Route path="/habitaciones" element={<Habitaciones />} />
-          <Route path="/nosotros" element={<Nosotros />} />
-          <Route path="/contacto" element={<Contacto />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/reservaciones" element={<Reservaciones />} />
-        </Route>
+    <ThemeProvider>
+      <BrowserRouter 
+        future={{ 
+          v7_startTransition: true, 
+          v7_relativeSplatPath: true 
+        }}>
+        <RouteEffects />
+        <Routes>
+          {/* Rutas Públicas (Header y Footer automáticos) */}
+          <Route element={<PublicLayout />}>
+            <Route path="/" element={<Home />} />
+            <Route path="/habitaciones" element={<Habitaciones />} />
+            <Route path="/nosotros" element={<Nosotros />} />
+            <Route path="/contacto" element={<Contacto />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/reservaciones" element={<Reservaciones />} />
+          </Route>
 
-        <Route path="/admin" element={<AdminLayout />}>
-          <Route path="dashboard" element={<AdminDashboard />} />
-          <Route path="reservaciones" element={<AdminReservaciones />} />
-          <Route path="habitaciones" element={<AdminHabitaciones />} />
-          <Route path="inicio" element={<AdminIndex />} />
-          <Route path="nosotros" element={<AdminNosotros />} />
-          <Route path="contacto" element={<AdminContacto />} />
-          <Route path="usuarios" element={<AdminUsuarios />} />
-        </Route>
+          {/* Rutas Administrativas */}
+          <Route path="/admin" element={<AdminLayout />}>
+            <Route path="dashboard" element={<AdminDashboard />} />
+            <Route path="reservaciones" element={<AdminReservaciones />} />
+            <Route path="habitaciones" element={<AdminHabitaciones />} />
+            <Route path="inicio" element={<AdminIndex />} />
+            <Route path="nosotros" element={<AdminNosotros />} />
+            <Route path="contacto" element={<AdminContacto />} />
+            <Route path="usuarios" element={<AdminUsuarios />} />
+          </Route>
 
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </BrowserRouter>
+          {/* 404 Not Found */}
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </BrowserRouter>
+    </ThemeProvider>
   );
 }

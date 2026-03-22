@@ -1,0 +1,63 @@
+// ============================================================
+//  _themes.scss — Quinta Dalam
+// ============================================================
+
+// ── Light Mode (por defecto) ─────────────────────────────────
+:root {
+  --color-bg:           #FDFBF7;
+  --color-bg-alt:       #F5F0E8;
+  --color-surface:      #FFFFFF;
+  --color-surface-2:    #F5F0E8;
+  --color-text:         #2A2118;
+  --color-text-mid:     #574A3D;
+  --color-text-light:   #9A8A7A;
+  --color-border:       rgba(139, 62, 34, 0.18);
+  --color-border-mid:   rgba(139, 62, 34, 0.30);
+  --color-accent:       #8B3E22;
+  --color-accent-light: #A84F2E;
+  --color-accent-dark:  #6A2D15;
+  --color-gold:         #C9973A;
+  --color-gold-light:   #DDB86A;
+  --color-gold-pale:    rgba(201, 151, 58, 0.15);
+  
+  --shadow-sm:   0 2px 10px  rgba(30, 18, 8, 0.08);
+  --shadow-md:   0 8px 28px  rgba(30, 18, 8, 0.14);
+  --shadow-lg:   0 20px 56px rgba(30, 18, 8, 0.20);
+  --shadow-xl:   0 32px 80px rgba(30, 18, 8, 0.28);
+  --shadow-card: 0 4px 24px  rgba(30, 18, 8, 0.10);
+}
+
+// ── Dark Mode (NUEVO DISEÑO LUXURY) ───────────────────────────
+[data-theme="dark"] {
+  // Superficies — Carbón profundo y elegante (cero verde)
+  --color-bg:           #121212;
+  --color-bg-alt:       #1A1A1A;
+  --color-surface:      #222222;
+  --color-surface-2:    #2A2A2A;
+
+  // Texto — Crema suave para lectura cómoda
+  --color-text:         #F2EFE9;
+  --color-text-mid:     rgba(242, 239, 233, 0.70);
+  --color-text-light:   rgba(242, 239, 233, 0.45);
+
+  // Bordes — Dorados muy sutiles
+  --color-border:       rgba(212, 168, 74, 0.15);
+  --color-border-mid:   rgba(212, 168, 74, 0.35);
+
+  // Acento — Terracota vibrante para resaltar sobre negro
+  --color-accent:       #D96C4A;
+  --color-accent-light: #E88363;
+  --color-accent-dark:  #B55233;
+
+  // Dorado — Fuerte, lujoso y luminoso
+  --color-gold:         #D4A84A;
+  --color-gold-light:   #E8C270;
+  --color-gold-pale:    rgba(212, 168, 74, 0.18);
+
+  // Sombras — Más pronunciadas para dar profundidad en fondos negros
+  --shadow-sm:   0 4px 12px  rgba(0, 0, 0, 0.50);
+  --shadow-md:   0 12px 32px rgba(0, 0, 0, 0.65);
+  --shadow-lg:   0 24px 64px rgba(0, 0, 0, 0.80);
+  --shadow-xl:   0 32px 90px rgba(0, 0, 0, 0.90);
+  --shadow-card: 0 8px 24px  rgba(0, 0, 0, 0.55);
+}

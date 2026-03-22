@@ -1,3 +1,35 @@
+import { motion } from 'framer-motion';
+
+const staggerContainer = {
+  hidden: {},
+  show: {
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.06,
+    },
+  },
+};
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 20 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.65, ease: 'easeOut' },
+  },
+};
+
+const mapReveal = {
+  hidden: { opacity: 0, x: 32 },
+  show: {
+    opacity: 1,
+    x: 0,
+    transition: { duration: 0.65, ease: 'easeOut' },
+  },
+};
+
+const inView = { viewport: { once: true, margin: '-80px' } };
+
 export default function Contacto() {
   return (
     <>
@@ -12,18 +44,30 @@ export default function Contacto() {
       </div>
 
       {/* MAIN */}
-      <main>
-        <section className="section" aria-labelledby="h2-contacto">
+      <motion.main
+        initial={{ opacity: 0, y: 14 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -10 }}
+        transition={{ duration: 0.55, ease: 'easeOut' }}
+      >
+        <motion.section
+          className="section"
+          aria-labelledby="h2-contacto"
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="show"
+          {...inView}
+        >
           <div className="container">
-            <div className="contacto__grid">
+            <motion.div className="contacto__grid" variants={staggerContainer}>
               
               {/* Formulario */}
-              <div className="contacto__form-wrap">
+              <motion.div className="contacto__form-wrap" variants={fadeUp}>
                 <h2 className="contacto__title" id="h2-contacto">
                   Envíanos un <em>Mensaje</em>
                 </h2>
 
-                <form className="form" action="#" method="get" noValidate>
+                <motion.form className="form" action="#" method="get" noValidate variants={staggerContainer}>
                   <div className="form__row">
                     <div className="form__group">
                       <label className="form__label" htmlFor="nombre">Nombre</label>
@@ -102,11 +146,11 @@ export default function Contacto() {
                     <i className="fa-solid fa-paper-plane" aria-hidden="true"></i>
                     Enviar mensaje
                   </button>
-                </form>
-              </div>
+                </motion.form>
+              </motion.div>
 
               {/* Info de contacto */}
-              <div className="contacto__info">
+              <motion.div className="contacto__info" variants={fadeUp}>
                 <h2 className="contacto__title">Visítanos en <em>Michoacán</em></h2>
 
                 <ul className="contacto__info-list">
@@ -151,7 +195,13 @@ export default function Contacto() {
                 </ul>
 
                 {/* Mapa con estilos en línea corregidos para React */}
-                <div className="contacto__map">
+                <motion.div
+                  className="contacto__map"
+                  variants={mapReveal}
+                  initial="hidden"
+                  whileInView="show"
+                  {...inView}
+                >
                   <iframe
                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d60358.93085988832!2d-101.22441!3d19.7059504!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x842d0e0cb4da6b29%3A0x82c1c42f9c3a44c5!2sMorelia%2C%20Michoac%C3%A1n!5e0!3m2!1ses!2smx!4v1700000000000"
                     style={{ border: 0, width: '100%', height: '300px' }}
@@ -160,13 +210,13 @@ export default function Contacto() {
                     referrerPolicy="no-referrer-when-downgrade"
                     title="Ubicación del Hotel Quinta Dalam en Morelia, Michoacán"
                   ></iframe>
-                </div>
-              </div>
+                </motion.div>
+              </motion.div>
 
-            </div>
+            </motion.div>
           </div>
-        </section>
-      </main>
+        </motion.section>
+      </motion.main>
     </>
   );
 }

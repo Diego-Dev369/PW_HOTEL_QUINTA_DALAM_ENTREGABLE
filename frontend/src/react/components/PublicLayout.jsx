@@ -6,7 +6,6 @@ export default function PublicLayout() {
   return (
     <>
       <Header />
-      {/* El Outlet renderiza el contenido dinámico de cada página (Home, Habitaciones, etc.) */}
       <Outlet />
       <Footer />
     </>

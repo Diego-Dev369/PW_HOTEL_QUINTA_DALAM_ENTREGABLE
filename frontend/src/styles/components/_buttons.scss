@@ -1,14 +1,15 @@
 @use '../abstracts/variables' as v;
 @use '../abstracts/mixins'   as m;
 
+// ─────────────────────────────────────────────────────────────
 //  BASE — .btn
-// ────────────────────────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: v.$space-2;
-  padding: v.$space-3;
+  padding: v.$space-3 v.$space-8;
   font-family: v.$font-sans;
   font-size: v.$fs-sm;
   font-weight: 700;
@@ -26,45 +27,59 @@
     background-color v.$transition-base,
     color            v.$transition-base;
 
-  // Shimmer line on hover
   &::after {
     content: '';
     position: absolute;
     inset: 0;
     background: linear-gradient(
-      105deg,
-      transparent 40%,
-      rgba(255, 255, 255, 0.12) 50%,
-      transparent 60%
+      110deg,
+      transparent 45%,
+      rgba(255, 255, 255, 0.7) 50%,
+      transparent 55%
     );
     transform: translateX(-100%);
-    transition: transform .6s ease;
+    transition: transform 0.4s ease-in-out;
     pointer-events: none;
   }
 
   &:hover::after { transform: translateX(100%); }
 
   &:focus-visible {
-    outline: 2px solid v.$color-gold;
+    outline: 2px solid var(--color-gold);
     outline-offset: 3px;
   }
 
   &:active { transform: translateY(1px) scale(0.99); }
 
-  &:disabled {
-    opacity: 0.42;
-    pointer-events: none;
-  }
+  &:disabled { opacity: 0.42; pointer-events: none; }
 }
 
-//  VARIANTES PÚBLICAS
-// ────────────────────────────────────────────────────────────
 
-// Primario — adobe con gradiente
+// ─────────────────────────────────────────────────────────────
+//  VARIANTES PÚBLICAS
+// ─────────────────────────────────────────────────────────────
+
+// Primario — adobe/terracota siempre (contraste garantizado)
 .btn--primary {
+  position: relative;
+  overflow: hidden;
   background: v.$gradient-adobe;
   color: v.$color-parchment-light;
   box-shadow: 0 2px 14px rgba(v.$color-adobe, 0.28);
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.3) 50%, transparent 60%);
+    transform: translateX(-100%);
+    transition: transform 0.4s ease-in-out;
+    pointer-events: none;
+  }
+
+  &:hover::after {
+    transform: translateX(100%);
+  }
 
   &:hover {
     transform: translateY(-2px);
@@ -72,33 +87,93 @@
   }
 }
 
+// ─────────────────────────────────────────────────────────────
+//  SHIMMER — Estrella fugaz obligatoria
+// ─────────────────────────────────────────────────────────────
+.btn--primary,
+.header__cta,
+.hero__cta,
+.booking__btn {
+  position: relative !important;
+  overflow: hidden !important;
+
+  &::after {
+    content: '' !important;
+    position: absolute !important;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      105deg,
+      transparent 40%,
+      rgba(255, 255, 255, 0.5) 50%,
+      transparent 60%
+    ) !important;
+    transform: translateX(-100%) !important;
+    transition: transform 0.45s ease-in-out !important;
+    pointer-events: none !important;
+    z-index: 10;
+  }
+
+  &:hover::after {
+    transform: translateX(100%) !important;
+  }
+}
+
 // Secundario — contorno dorado
 .btn--secondary {
   background: transparent;
-  color: v.$color-gold;
-  border: 1.5px solid v.$color-gold;
+  color: var(--color-gold);
+  border: 1.5px solid var(--color-gold);
 
   &:hover {
-    background: rgba(v.$color-gold, 0.08);
+    background: var(--color-gold-pale);
     box-shadow: 0 6px 20px rgba(v.$color-gold, 0.20);
     transform: translateY(-2px);
   }
 }
 
-// Ghost — neutro
-.btn--ghost {
+// Outline — borde con color de acento del tema
+.btn--outline {
   background: transparent;
-  color: v.$color-text-mid;
-  border: 1px solid v.$border-color;
+  color: var(--color-accent);
+  border: 1.5px solid var(--color-border-mid);
 
   &:hover {
-    border-color: rgba(v.$color-adobe, 0.4);
-    color: v.$color-adobe;
-    background: rgba(v.$color-adobe, 0.04);
+    border-color: var(--color-accent);
+    background: var(--color-gold-pale);
+    transform: translateY(-2px);
   }
 }
 
-// Dark — forestal
+// Ghost — neutro, adapta al tema
+.btn--ghost {
+  background: transparent;
+  color: var(--color-text-mid);
+  border: 1px solid var(--color-border);
+
+  &:hover {
+    border-color: var(--color-border-mid);
+    color: var(--color-accent);
+    background: var(--color-gold-pale);
+  }
+}
+
+// Ghost light — para fondos oscuros (CTA band, hero)
+.btn--ghost-light {
+  background: rgba(v.$color-parchment, 0.12);
+  border: 1px solid rgba(v.$color-parchment, 0.35);
+  color: v.$color-parchment-light;
+  backdrop-filter: blur(8px);
+
+  &:hover {
+    background: rgba(v.$color-parchment, 0.22);
+    border-color: rgba(v.$color-parchment, 0.60);
+  }
+}
+
+// Dark — forestal fijo
 .btn--dark {
   background: v.$color-forest;
   color: v.$color-parchment-light;
@@ -123,28 +198,20 @@
   }
 }
 
+
+// ─────────────────────────────────────────────────────────────
 //  TAMAÑOS
-// ────────────────────────────────────────────────────────────
-.btn--sm {
-  padding: v.$space-2 v.$space-4;
-  font-size: v.$fs-xs;
-  border-radius: v.$radius-sm;
-}
-
-.btn--lg {
-  padding: v.$space-4 v.$space-10;
-  font-size: v.$fs-md;
-  border-radius: v.$radius-lg;
-}
-
+// ─────────────────────────────────────────────────────────────
+.btn--sm { padding: v.$space-2 v.$space-4; font-size: v.$fs-xs; border-radius: v.$radius-sm; }
+.btn--lg { padding: v.$space-4 v.$space-10; font-size: v.$fs-md; border-radius: v.$radius-lg; }
 .btn--full { width: 100%; }
-
 .btn--icon-left  i { order: -1; }
 .btn--icon-right i { order: 1; }
 
 
-//  ADMIN BUTTONS — .admin-btn
-// ────────────────────────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────
+//  ADMIN BUTTONS — siempre oscuros, valores fijos
+// ─────────────────────────────────────────────────────────────
 .admin-btn {
   display: inline-flex;
   align-items: center;
@@ -176,65 +243,42 @@
 
   &:hover::after { transform: translateX(100%); }
   &:active { transform: translateY(1px); }
-
-  &:focus-visible {
-    outline: 2px solid v.$color-gold;
-    outline-offset: 2px;
-  }
+  &:focus-visible { outline: 2px solid v.$color-gold; outline-offset: 2px; }
 
   &--primary {
     background: v.$gradient-adobe;
     color: v.$color-parchment-light;
     box-shadow: 0 2px 12px rgba(v.$color-adobe, 0.28);
-
-    &:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 8px 20px rgba(v.$color-adobe, 0.4);
-    }
+    &:hover { transform: translateY(-1px); box-shadow: 0 8px 20px rgba(v.$color-adobe, 0.4); }
   }
 
   &--ghost {
     background: transparent;
     color: v.$admin-text-mid;
     border: 1px solid v.$admin-border;
-
-    &:hover {
-      background: rgba(255, 255, 255, 0.05);
-      color: v.$admin-text;
-      border-color: v.$admin-border-strong;
-    }
+    &:hover { background: rgba(255, 255, 255, 0.05); color: v.$admin-text; border-color: v.$admin-border-strong; }
   }
 
   &--danger {
     background: v.$admin-danger-light;
     color: #e05555;
     border: 1px solid rgba(224, 85, 85, 0.28);
-
-    &:hover {
-      background: rgba(224, 85, 85, 0.22);
-      transform: translateY(-1px);
-    }
+    &:hover { background: rgba(224, 85, 85, 0.22); transform: translateY(-1px); }
   }
 
   &--success {
     background: v.$admin-success-light;
     color: v.$admin-success;
     border: 1px solid rgba(v.$admin-success, 0.25);
-
     &:hover { background: rgba(v.$admin-success, 0.2); }
   }
 
-  &--sm {
-    padding: 0.3rem 0.75rem;
-    font-size: 0.7rem;
-    border-radius: v.$radius-sm;
-  }
+  &--sm { padding: 0.3rem 0.75rem; font-size: 0.7rem; border-radius: v.$radius-sm; }
 }
 
 .admin-icon-btn {
   @include m.flex-center;
-  width: 32px;
-  height: 32px;
+  width: 32px; height: 32px;
   border-radius: v.$radius-sm;
   border: 1px solid transparent;
   background: transparent;
@@ -245,35 +289,22 @@
   &--edit {
     color: v.$color-gold;
     border-color: rgba(v.$color-gold, 0.18);
-    &:hover {
-      background: rgba(v.$color-gold, 0.12);
-      border-color: rgba(v.$color-gold, 0.35);
-      transform: translateY(-1px);
-    }
+    &:hover { background: rgba(v.$color-gold, 0.12); border-color: rgba(v.$color-gold, 0.35); transform: translateY(-1px); }
   }
 
   &--delete {
     color: #e05555;
     border-color: rgba(224, 85, 85, 0.18);
-    &:hover {
-      background: rgba(224, 85, 85, 0.12);
-      border-color: rgba(224, 85, 85, 0.35);
-      transform: translateY(-1px);
-    }
+    &:hover { background: rgba(224, 85, 85, 0.12); border-color: rgba(224, 85, 85, 0.35); transform: translateY(-1px); }
   }
 
   &--view {
     color: v.$admin-text-mid;
     border-color: v.$admin-border;
-    &:hover {
-      color: v.$admin-text;
-      background: rgba(255, 255, 255, 0.06);
-      border-color: v.$admin-border-strong;
-    }
+    &:hover { color: v.$admin-text; background: rgba(255, 255, 255, 0.06); border-color: v.$admin-border-strong; }
   }
 }
 
-// Botones de acceso rápido del dashboard
 .admin-quick-btn {
   display: flex;
   flex-direction: column;
@@ -292,11 +323,7 @@
   text-transform: uppercase;
   transition: all v.$transition-base;
 
-  i {
-    font-size: 1.2rem;
-    color: v.$color-gold;
-    transition: transform v.$transition-spring;
-  }
+  i { font-size: 1.2rem; color: v.$color-gold; transition: transform v.$transition-spring; }
 
   &:hover {
     background: rgba(v.$color-gold, 0.07);
@@ -304,12 +331,8 @@
     color: v.$admin-text;
     transform: translateY(-2px);
     box-shadow: v.$shadow-md;
-
     i { transform: scale(1.15); }
   }
 }
 
-.admin-btn--sm {
-  padding: v.$space-1 v.$space-4;
-  font-size: 0.65rem;
-}
+.admin-btn--sm { padding: v.$space-1 v.$space-4; font-size: 0.65rem; }

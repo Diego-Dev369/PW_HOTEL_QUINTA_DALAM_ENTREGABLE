@@ -1,0 +1,527 @@
+@use '../abstracts/variables' as v;
+@use '../abstracts/mixins'   as m;
+
+// ─────────────────────────────────────────────────────────────
+//  HERO — siempre oscuro (foto + overlay)
+// ─────────────────────────────────────────────────────────────
+.hero {
+  position: relative;
+  width: 100%;
+  height: calc(100svh - v.$header-height);
+  min-height: 560px;
+  margin-top: v.$header-height;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: v.$color-forest;
+
+  @include m.respond-to('md') {
+    margin-top: v.$header-height-mobile;
+    height: calc(100svh - v.$header-height-mobile);
+  }
+}
+
+.hero__bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
+  will-change: transform, opacity;
+}
+
+.hero__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: v.$gradient-hero;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    opacity: 0.5;
+    pointer-events: none;
+  }
+}
+
+.hero__content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding-inline: v.$space-6;
+  max-width: 900px;
+}
+
+.hero__eyebrow {
+  display: inline-block;
+  font-family: v.$font-sans;
+  font-size: v.$fs-xs;
+  font-weight: 700;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: v.$color-gold;
+  margin-bottom: v.$space-5;
+  padding: v.$space-1 v.$space-5;
+  border: 1px solid rgba(v.$color-gold, 0.28);
+  border-radius: v.$radius-pill;
+  background: rgba(v.$color-gold, 0.08);
+}
+
+.hero__title {
+  font-family: v.$font-serif;
+  font-size: clamp(v.$fs-5xl, 9vw, v.$fs-6xl);
+  font-weight: 700;
+  font-style: italic;
+  line-height: 1.06;
+  color: v.$color-parchment-light;
+  margin-bottom: v.$space-6;
+  text-shadow: 0 4px 40px rgba(0, 0, 0, 0.4);
+}
+
+.hero__subtitle {
+  font-family: v.$font-sans;
+  font-size: clamp(v.$fs-md, 2vw, v.$fs-xl);
+  font-weight: 300;
+  color: rgba(v.$color-parchment, 0.82);
+  max-width: 52ch;
+  margin-inline: auto;
+  margin-bottom: v.$space-10;
+  line-height: 1.75;
+}
+
+.hero__cta {
+  padding: v.$space-4 v.$space-12;
+  font-size: v.$fs-md;
+  border-radius: v.$radius-lg;
+}
+
+// ─────────────────────────────────────────────────────────────
+//  BARRA DE RESERVAS — Diseño Moderno y Elegante
+// ─────────────────────────────────────────────────────────────
+.booking {
+  position: relative;
+  z-index: 10;
+  @include m.container;
+  margin-top: calc(-1 * v.$space-10);
+  margin-bottom: v.$space-6;
+
+  @include m.respond-to('md') {
+    margin-top: calc(-1 * v.$space-8);
+    margin-bottom: v.$space-4;
+  }
+}
+
+.booking__card {
+  display: flex;
+  align-items: center;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: v.$radius-xl;
+  box-shadow: var(--shadow-lg);
+  padding: v.$space-3 v.$space-4;
+  transition: background-color v.$transition-base, border-color v.$transition-base;
+
+  @include m.respond-to('md') {
+    flex-direction: column;
+    border-radius: v.$radius-xl;
+    padding: v.$space-4;
+    gap: v.$space-2;
+  }
+}
+
+.booking__field {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 v.$space-4;
+  min-width: 0;
+
+  @include m.respond-to('md') {
+    padding: 0;
+    width: 100%;
+    margin-bottom: v.$space-2;
+  }
+}
+
+.booking__label {
+  display: flex;
+  align-items: center;
+  gap: v.$space-2;
+  font-family: v.$font-sans;
+  font-size: 0.70rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-text-mid);
+  margin-bottom: v.$space-2;
+  transition: color v.$transition-base;
+
+  i { color: var(--color-accent); font-size: v.$fs-sm; }
+}
+
+.booking__input {
+  background-color: var(--color-bg-alt);
+  border: 1.5px solid var(--color-border);
+  border-radius: v.$radius-md;
+  padding: v.$space-3 v.$space-4;
+  font-family: v.$font-sans;
+  font-size: v.$fs-sm;
+  font-weight: 600;
+  color: var(--color-text);
+  width: 100%;
+  outline: none;
+  transition: border-color v.$transition-fast, box-shadow v.$transition-fast, background-color v.$transition-base;
+  cursor: pointer;
+  color-scheme: light dark;
+
+  &:hover { border-color: var(--color-border-mid); }
+
+  &:focus { 
+    border-color: var(--color-accent); 
+    box-shadow: 0 0 0 3px var(--color-gold-pale);
+    background-color: var(--color-surface);
+  }
+
+  &--select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7' viewBox='0 0 12 7'%3E%3Cpath fill='none' stroke='%23C2643A' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    padding-right: v.$space-8;
+  }
+
+  &--select option {
+    background: var(--color-surface);
+    color: var(--color-text);
+  }
+}
+
+[data-theme="dark"] .booking__input {
+  color-scheme: dark;
+}
+
+.booking__divider {
+  width: 1px;
+  background: var(--color-border);
+  margin-block: v.$space-2;
+  align-self: stretch;
+  flex-shrink: 0;
+
+  @include m.respond-to('md') { display: none; }
+}
+
+.booking__btn {
+  flex-shrink: 0;
+  align-self: stretch;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: v.$radius-lg;
+  
+  // ── ¡AQUÍ ESTÁ LA MAGIA DEL TAMAÑO! ──
+  padding: v.$space-4 v.$space-12; // Más espacio interno vertical y horizontal
+  min-width: 200px;                // Antes era 160px, ahora es más ancho
+  font-size: v.$fs-md;             // Antes era sm (pequeño), ahora es md (mediano)
+  min-height: 64px;                // Altura mínima garantizada
+  
+  margin-left: v.$space-4;         // Un poco más de separación con los inputs
+  font-family: v.$font-sans;
+  font-weight: 700;
+  letter-spacing: 0.14em;          // Letras un poco más separadas para más elegancia
+  text-transform: uppercase;
+  background: v.$gradient-adobe;
+  color: v.$color-parchment-light;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  box-shadow: 0 4px 14px rgba(139, 62, 34, 0.25); // Sombra base sutil
+  transition: transform v.$transition-fast, box-shadow v.$transition-fast;
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 28px rgba(139, 62, 34, 0.45); // Sombra más amplia al pasar el mouse
+  }
+
+  @include m.respond-to('md') {
+    margin-left: 0;
+    margin-top: v.$space-4;
+    width: 100%;
+    height: 60px;
+  }
+}
+
+//  SECCIONES GENERALES
+// ─────────────────────────────────────────────────────────────
+.section {
+  padding-block: v.$space-24;
+
+  &--cream  { background-color: var(--color-bg-alt); transition: background-color v.$transition-base;}
+  &--white  { background-color: var(--color-surface); transition: background-color v.$transition-base;}
+  &--dark   {
+    background: linear-gradient(180deg, v.$color-forest 0%, v.$color-forest-mid 100%);
+    --color-text: #{v.$color-parchment-light};
+    --color-text-mid: rgba(v.$color-parchment, 0.78);
+    --color-text-light: rgba(v.$color-parchment, 0.6);
+  }
+
+  @include m.respond-to('md') { padding-block: v.$space-16; }
+}
+
+.section__header {
+  text-align: center;
+  margin-bottom: v.$space-16;
+
+  @include m.respond-to('md') { margin-bottom: v.$space-10; }
+}
+
+.section__eyebrow {
+  display: inline-block;
+  font-family: v.$font-sans;
+  font-size: v.$fs-xs;
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--color-gold);
+  margin-bottom: v.$space-4;
+
+  &--gold { color: var(--color-gold-light); }
+}
+
+.section__title {
+  font-family: v.$font-serif;
+  font-size: clamp(v.$fs-2xl, 4vw, v.$fs-4xl);
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: v.$space-4;
+  line-height: 1.15;
+  transition: color v.$transition-base;
+
+  em { color: var(--color-accent); font-style: italic; }
+}
+
+.section__subtitle {
+  font-size: v.$fs-lg;
+  color: var(--color-text-mid);
+  max-width: 52ch;
+  margin-inline: auto;
+  line-height: 1.75;
+  transition: color v.$transition-base;
+}
+
+.section__ornament {
+  display: block;
+  margin-top: v.$space-5;
+  font-size: 0.7rem;
+  letter-spacing: 0.26em;
+  color: var(--color-gold-pale);
+  user-select: none;
+}
+
+// ─────────────────────────────────────────────────────────────
+//  HABITACIONES
+// ─────────────────────────────────────────────────────────────
+.rooms { width: 100%; }
+
+.rooms.section {
+  background-color: var(--color-bg-alt);
+  padding-top: v.$space-8;
+}
+
+[data-theme="dark"] .rooms.section {
+  background-color: var(--color-bg-alt);
+}
+
+.rooms > .section__header,
+.rooms__grid,
+.rooms__cta-wrap {
+  @include m.container;
+}
+
+.rooms__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 340px));
+  justify-content: center;
+  gap: v.$space-6;
+  margin-bottom: v.$space-12;
+
+  @include m.respond-to('lg') {
+    grid-template-columns: repeat(2, minmax(0, 380px));
+    gap: v.$space-5;
+  }
+
+  @include m.respond-to('md') {
+    grid-template-columns: minmax(0, 420px);
+    margin-inline: auto;
+  }
+}
+
+.rooms__cta-wrap { text-align: center; }
+
+// EXPERIENCIAS (Siempre oscura)
+.experiences {
+  padding-block: v.$space-24;
+  background: linear-gradient(180deg, v.$color-forest 0%, v.$color-forest-mid 100%);
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(v.$color-gold, 0.3), transparent);
+  }
+
+  @include m.respond-to('md') { padding-block: v.$space-16; }
+}
+
+.experiences__inner { @include m.container; }
+
+.experiences__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: v.$space-8;
+
+  @include m.respond-to('lg') { grid-template-columns: repeat(2, 1fr); gap: v.$space-6; }
+  @include m.respond-to('sm') { grid-template-columns: 1fr 1fr; gap: v.$space-4; }
+}
+
+// SERVICIOS
+.services { width: 100%; }
+.services > .section__header, .services__grid { @include m.container; }
+.services__grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: v.$space-6;
+  @include m.respond-to('lg') { grid-template-columns: repeat(2, 1fr); }
+  @include m.respond-to('sm') { grid-template-columns: 1fr; max-width: 380px; margin-inline: auto; }
+}
+
+// NOSOTROS (Preview)
+.about { width: 100%; }
+.about__inner {
+  @include m.container;
+  display: grid; grid-template-columns: 1fr 1fr; gap: v.$space-16; align-items: center;
+
+  @include m.respond-to('lg') { gap: v.$space-10; }
+  @include m.respond-to('md') { grid-template-columns: 1fr; text-align: center; }
+}
+
+.about__text {
+  display: flex; flex-direction: column; align-items: flex-start; gap: v.$space-5;
+  @include m.respond-to('md') { align-items: center; }
+}
+
+.about__title {
+  font-family: v.$font-serif; font-size: clamp(v.$fs-2xl, 3.5vw, v.$fs-4xl);
+  font-weight: 700; color: var(--color-text); line-height: 1.15; transition: color v.$transition-base;
+  em { color: var(--color-accent); font-style: italic; }
+}
+
+.about__desc {
+  font-size: v.$fs-md; color: var(--color-text-mid); line-height: 1.80; max-width: 48ch; transition: color v.$transition-base;
+}
+
+.about__media {
+  position: relative; max-width: 480px; margin-inline: auto;
+  @include m.respond-to('md') { max-width: 420px; width: 85%; }
+}
+
+.about__img {
+  width: 100%; aspect-ratio: 4 / 4; object-fit: cover; object-position: center top; border-radius: v.$radius-xl;
+  box-shadow: var(--shadow-xl); transition: transform v.$transition-slow;
+  .about__media:hover & { transform: scale(1.02); }
+}
+
+.about__badge {
+  position: absolute; bottom: calc(-1 * v.$space-6); left: calc(-1 * v.$space-6);
+  background: v.$gradient-adobe; color: v.$color-parchment-light; border-radius: v.$radius-lg;
+  padding: v.$space-5 v.$space-6; text-align: center; box-shadow: v.$shadow-adobe; border: 2px solid rgba(v.$color-gold, 0.35);
+  @include m.respond-to('md') { bottom: v.$space-4; left: 50%; transform: translateX(-50%); }
+}
+
+.about__badge-num { display: block; font-family: v.$font-serif; font-size: v.$fs-4xl; font-weight: 700; line-height: 1; }
+.about__badge-text { font-family: v.$font-sans; font-size: v.$fs-xs; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.85; }
+
+// CTA BAND (Siempre oscura)
+.cta-band {
+  background: linear-gradient(135deg, v.$color-forest 0%, v.$color-forest-mid 100%);
+  border-top: 1px solid rgba(v.$color-gold, 0.12); padding-block: v.$space-24; position: relative; overflow: hidden;
+  &::before {
+    content: ''; position: absolute; top: -30%; right: -5%; width: 40%; height: 160%;
+    background: radial-gradient(ellipse, rgba(v.$color-gold, 0.05) 0%, transparent 65%); pointer-events: none;
+  }
+  @include m.respond-to('md') { padding-block: v.$space-16; }
+}
+
+.cta-band__inner {
+  @include m.container; display: flex; align-items: center; justify-content: space-between; gap: v.$space-12;
+  @include m.respond-to('md') { flex-direction: column; text-align: center; gap: v.$space-8; }
+}
+
+.cta-band__title {
+  font-family: v.$font-serif; font-size: clamp(v.$fs-2xl, 4vw, v.$fs-4xl); font-weight: 700;
+  color: v.$color-parchment-light; margin-bottom: v.$space-3; line-height: 1.15;
+  em { color: v.$color-gold; font-style: italic; }
+}
+
+.cta-band__desc { font-size: v.$fs-lg; color: rgba(v.$color-parchment, 0.70); max-width: 46ch; line-height: 1.7; }
+.cta-band__actions {
+  display: flex; gap: v.$space-4; flex-shrink: 0;
+  @include m.respond-to('sm') { flex-direction: column; width: 100%; .btn { width: 100%; justify-content: center; } }
+}
+
+.btn--ghost-light {
+  background: rgba(v.$color-parchment, 0.12); border: 1px solid rgba(v.$color-parchment, 0.35); color: v.$color-parchment-light; backdrop-filter: blur(8px);
+  &:hover { background: rgba(v.$color-parchment, 0.22); border-color: rgba(v.$color-parchment, 0.60); }
+}
+
+// ─────────────────────────────────────────────────────────────
+//  LOOKBOOK (Galería corregida)
+// ─────────────────────────────────────────────────────────────
+.lookbook__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); // 3 columnas exactamente iguales
+  gap: v.$space-6;
+
+  @include m.respond-to('md') { 
+    grid-template-columns: repeat(2, 1fr); 
+    gap: v.$space-4; 
+  }
+  @include m.respond-to('sm') { 
+    grid-template-columns: 1fr; // 1 columna en celulares
+  }
+}
+
+.lookbook__item {
+  display: block; 
+  width: 100%; 
+  // Ya no usamos margin-bottom porque el 'gap' del grid hace el trabajo
+  border-radius: v.$radius-xl; 
+  overflow: hidden;
+  box-shadow: var(--shadow-sm); 
+  border: 1px solid var(--color-border);
+  position: relative;
+  transform: translateZ(0); 
+  transition: transform v.$transition-slow, box-shadow v.$transition-slow, border-color v.$transition-slow;
+
+  &:hover { 
+    transform: translateY(-6px); 
+    box-shadow: var(--shadow-lg); 
+    border-color: var(--color-gold); 
+    
+    .lookbook__img { transform: scale(1.08); } 
+  }
+}
+
+.lookbook__img {
+  width: 100%; 
+  height: 100%; 
+  aspect-ratio: 4 / 3; /* ← ESTA ES LA MAGIA: Todas miden lo mismo (formato paisaje) */
+  display: block; 
+  transition: transform v.$transition-slow; 
+  object-fit: cover; /* ← Recorta la foto suavemente para que llene el cuadrado sin aplastarse */
+}

@@ -1,31 +1,34 @@
 @use '../abstracts/variables' as v;
 @use '../abstracts/mixins'   as m;
 
-
+// ─────────────────────────────────────────────────────────────
 //  ROOM CARD
-// ────────────────────────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────
 .room-card {
-  background: v.$color-parchment-light;
-  border: 1px solid v.$border-color;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
   border-radius: v.$radius-lg;
   overflow: hidden;
-  box-shadow: v.$shadow-sm;
+  box-shadow: var(--shadow-card);
   display: flex;
   flex-direction: column;
-  transition: box-shadow v.$transition-base, transform v.$transition-slow,
-              border-color v.$transition-base;
+  transition:
+    box-shadow       v.$transition-base,
+    transform        v.$transition-slow,
+    border-color     v.$transition-base,
+    background-color v.$transition-base;
 
   &:hover {
-    box-shadow: v.$shadow-lg;
+    box-shadow: var(--shadow-lg);
     transform: translateY(-8px);
-    border-color: rgba(v.$color-adobe, 0.22);
+    border-color: var(--color-border-mid);
 
     .room-card__img { transform: scale(1.06); }
   }
 
   &--featured {
-    border-color: rgba(v.$color-gold, 0.4);
-    box-shadow: v.$shadow-md, 0 0 0 1px rgba(v.$color-gold, 0.12);
+    border-color: var(--color-gold-pale);
+    box-shadow: var(--shadow-md), 0 0 0 1px var(--color-gold-pale);
 
     &::before {
       content: '✦ Recomendado ✦';
@@ -55,7 +58,6 @@
   aspect-ratio: 3 / 2;
   flex-shrink: 0;
 
-  // Gradient overlay sutil en hover
   &::after {
     content: '';
     position: absolute;
@@ -103,47 +105,36 @@
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  background: v.$color-parchment-light;
+  background: var(--color-surface);
+  transition: background-color v.$transition-base;
 }
 
 .room-card__title {
   font-family: v.$font-serif;
   font-size: v.$fs-2xl;
   font-weight: 700;
-  color: v.$color-text;
+  color: var(--color-text);
   margin-bottom: v.$space-2;
   line-height: 1.15;
-}
-
-.room-card__meta {
-  display: flex;
-  flex-direction: column;
-  gap: v.$space-1;
-  margin-bottom: v.$space-4;
+  transition: color v.$transition-base;
 }
 
 .room-card__sub {
   font-family: v.$font-serif;
   font-size: v.$fs-md;
   font-style: italic;
-  color: v.$color-adobe;
+  color: var(--color-accent);
   font-weight: 400;
-}
-
-.room-card__ornament {
-  font-size: 0.62rem;
-  color: v.$color-gold;
-  letter-spacing: 0.18em;
-  opacity: 0.75;
 }
 
 .room-card__desc {
   font-family: v.$font-sans;
   font-size: v.$fs-sm;
-  color: v.$color-text-mid;
+  color: var(--color-text-mid);
   line-height: 1.65;
   margin-bottom: v.$space-5;
   flex-grow: 1;
+  transition: color v.$transition-base;
 }
 
 .room-card__amenities {
@@ -157,34 +148,18 @@
   @include m.flex-center;
   width: 34px;
   height: 34px;
-  border: 1px solid v.$border-color;
+  border: 1px solid var(--color-border);
   border-radius: v.$radius-sm;
   font-size: v.$fs-sm;
-  color: v.$color-text-mid;
-  background: v.$color-parchment;
+  color: var(--color-text-mid);
+  background: var(--color-bg-alt);
   transition: all v.$transition-fast;
 
   &:hover {
-    border-color: v.$color-adobe;
-    color: v.$color-adobe;
-    background: rgba(v.$color-adobe, 0.06);
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+    background: rgba(139, 62, 34, 0.06);
     transform: translateY(-2px);
-  }
-}
-
-.room-card__price {
-  font-family: v.$font-serif;
-  font-size: v.$fs-xl;
-  font-weight: 700;
-  color: v.$color-adobe;
-  margin-bottom: v.$space-4;
-
-  span {
-    font-family: v.$font-sans;
-    font-size: v.$fs-xs;
-    font-weight: 400;
-    color: v.$color-text-light;
-    letter-spacing: 0.1em;
   }
 }
 
@@ -195,41 +170,44 @@
 }
 
 
+// ─────────────────────────────────────────────────────────────
 //  SERVICE CARD
-// ────────────────────────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────
 .service-card {
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
   padding: v.$space-10 v.$space-8;
-  background: v.$color-parchment-light;
-  border: 1px solid v.$border-color;
+  background-color: rgba(201, 151, 58, 0.08);
+  border: 1px solid rgba(201, 151, 58, 0.25);
+  backdrop-filter: blur(8px);
   border-radius: v.$radius-xl;
-  box-shadow: v.$shadow-sm;
+  box-shadow: var(--shadow-card);
   position: relative;
   overflow: hidden;
-  transition: all v.$transition-base;
+  transition:
+    transform        v.$transition-slow,
+    box-shadow       v.$transition-slow,
+    border-color     v.$transition-base,
+    background-color v.$transition-base;
 
-  // Barra degradada abajo
   &::before {
     content: '';
     position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
+    bottom: 0; left: 0; right: 0;
     height: 3px;
     background: v.$gradient-adobe;
     transform: scaleX(0);
     transform-origin: left;
-    transition: transform v.$transition-base;
+    transition: transform v.$transition-slow;
     border-radius: 0 0 v.$radius-xl v.$radius-xl;
   }
 
   &:hover {
-    box-shadow: v.$shadow-md;
+    box-shadow: var(--shadow-md);
     transform: translateY(-6px);
-    border-color: rgba(v.$color-adobe, 0.28);
+    border-color: var(--color-border-mid);
 
     &::before { transform: scaleX(1); }
 
@@ -250,15 +228,15 @@
   width: 72px;
   height: 72px;
   border-radius: 50%;
-  border: 1.5px solid rgba(v.$color-adobe, 0.25);
-  background: rgba(v.$color-adobe, 0.06);
+  border: 1.5px solid var(--color-border-mid);
+  background: var(--color-gold-pale);
   margin-bottom: v.$space-5;
-  transition: all v.$transition-base;
+  transition: all v.$transition-slow;
 }
 
 .service-card__icon {
   font-size: v.$fs-2xl;
-  color: v.$color-adobe;
+  color: var(--color-accent);
   transition: all v.$transition-slow;
 }
 
@@ -266,20 +244,23 @@
   font-family: v.$font-serif;
   font-size: v.$fs-xl;
   font-weight: 600;
-  color: v.$color-text;
+  color: var(--color-text);
   margin-bottom: v.$space-3;
+  transition: color v.$transition-base;
 }
 
 .service-card__text {
   font-family: v.$font-sans;
   font-size: v.$fs-sm;
-  color: v.$color-text-mid;
+  color: var(--color-text-mid);
   line-height: 1.7;
+  transition: color v.$transition-base;
 }
 
 
-//  EXP CARD (Experiencias — arco de medio punto)
-// ────────────────────────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────
+//  EXP CARD (arco de medio punto)
+// ─────────────────────────────────────────────────────────────
 .exp-card {
   display: flex;
   flex-direction: column;
@@ -302,11 +283,10 @@
   overflow: hidden;
   border: 2px solid rgba(v.$color-gold, 0.25);
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
-  transition: transform v.$transition-slow, box-shadow v.$transition-slow, 
-    border-color v.$transition-base;;
+  transition: transform v.$transition-slow, box-shadow v.$transition-slow;
 
-  @include m.respond-to('sm') { 
-    width: min(180px, 90%); 
+  @include m.respond-to('sm') {
+    width: min(180px, 90%);
     border-radius: 150px 150px 12px 12px;
   }
 }

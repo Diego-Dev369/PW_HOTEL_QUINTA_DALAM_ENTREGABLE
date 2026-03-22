@@ -101,7 +101,7 @@ export default function Reservaciones() {
                     Comentarios adicionales
                   </label>
                   <textarea
-                    className="form__input"
+                    className="form-textarea"
                     id="comentarios"
                     rows="4"
                     placeholder="Escriba aquí alguna solicitud especial..."

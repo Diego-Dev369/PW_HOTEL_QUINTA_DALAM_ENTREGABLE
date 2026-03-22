@@ -1,7 +1,69 @@
+// ============================================================
+//  _nosotros.scss — Quinta Dalam (Refactorizado v2)
+//
+//  UBICACIÓN: src/styles/pages/_nosotros.scss
+// ============================================================
 @use '../abstracts/variables' as v;
-@use '../abstracts/mixins' as m;
+@use '../abstracts/mixins'   as m;
 
-// ── Sección Misión / Visión ───────────────────────────────
+.historia-family {
+  padding-top: v.$space-20;
+}
+
+.historia-family__editorial {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 900px;
+  margin-inline: auto;
+}
+
+.historia-family__hero-img {
+  width: 100%;
+  margin-bottom: v.$space-12;
+  text-align: center;
+
+  .historia-family__image-main {
+    width: 100%;
+    max-height: 500px;
+    object-fit: cover;
+    border-radius: v.$radius-xl;
+    box-shadow: v.$shadow-lg;
+  }
+}
+
+.historia-family__caption {
+  font-family: v.$font-serif;
+  font-size: clamp(v.$fs-sm, 1.5vw, v.$fs-md);
+  color: var(--color-text-mid);
+  margin-top: v.$space-4;
+  font-style: italic;
+}
+
+.historia-family__content {
+  width: 100%;
+  max-width: 760px;
+  text-align: left;
+}
+
+.historia-family__lead {
+  font-size: clamp(v.$fs-xl, 2.5vw, v.$fs-2xl);
+  color: var(--color-accent);
+  margin-bottom: v.$space-8;
+  font-family: v.$font-serif;
+  font-style: italic;
+  line-height: 1.4;
+  text-align: center;
+}
+
+.historia-family__text {
+  font-size: clamp(v.$fs-md, 1.2vw, v.$fs-lg);
+  line-height: 1.8;
+  color: var(--color-text);
+  margin-bottom: v.$space-6;
+}
+
 .nosotros-split {
   display: grid;
   grid-template-columns: 88px 1fr;
@@ -9,105 +71,80 @@
   align-items: start;
   max-width: 820px;
   margin-inline: auto;
-  padding: v.$space-10 v.$space-10;
+  padding: v.$space-10;
   border-radius: v.$radius-md;
-  background: v.$color-parchment-light;
-  border: 1px solid v.$border-color;
-  box-shadow: v.$shadow-sm;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
   margin-bottom: v.$space-6;
-  transition: box-shadow v.$transition-base;
+  transition:
+    box-shadow       v.$transition-base,
+    background-color v.$transition-base,
+    border-color     v.$transition-base;
 
-  &:hover {
-    box-shadow: v.$shadow-md;
-  }
+  &:hover { box-shadow: var(--shadow-md); }
 
-  // Variante invertida: icono a la derecha
   &--reverse {
     grid-template-columns: 1fr 88px;
-
-    .nosotros-split__icon {
-      order: 2;
-    }
-
-    .nosotros-split__content {
-      order: 1;
-      text-align: right;
-
-      // En móvil siempre centrado
-      @include m.respond-to('md') {
-        text-align: left;
-      }
+    .nosotros-split__icon { order: 2; }
+    .nosotros-split__content { 
+      order: 1; 
+      text-align: right; 
+      align-items: flex-end; 
+      
+      @include m.respond-to('md') { 
+        text-align: left; 
+        align-items: flex-start;
+      } 
     }
   }
 
   @include m.respond-to('md') {
     grid-template-columns: 1fr;
     padding: v.$space-8 v.$space-6;
-
-    &--reverse {
-      .nosotros-split__icon { order: 0; }
-      .nosotros-split__content { order: 0; }
-    }
+    &--reverse { .nosotros-split__icon { order: 0; } .nosotros-split__content { order: 0; } }
   }
 }
 
-// ── Icono decorativo ──────────────────────────────────────
 .nosotros-split__icon {
   @include m.flex-center;
   width: 80px;
   height: 80px;
   flex-shrink: 0;
-  background: linear-gradient(
-    135deg,
-    rgba(v.$color-adobe, 0.1) 0%,
-    rgba(v.$color-gold, 0.06) 100%
-  );
-  border: 1.5px solid rgba(v.$color-adobe, 0.2);
-  border-radius: v.$radius-md; // Cuadrado redondeado, más boutique que círculo
+  background: var(--color-gold-pale);
+  border: 1.5px solid var(--color-border-mid);
+  border-radius: v.$radius-md;
   font-size: v.$fs-2xl;
-  color: v.$color-adobe;
+  color: var(--color-accent);
   position: relative;
+  transition: background v.$transition-base, border-color v.$transition-base;
 
-  // Acento de oro en esquina
   &::after {
     content: '';
     position: absolute;
-    top: -3px;
-    right: -3px;
-    width: 10px;
-    height: 10px;
+    top: -3px; right: -3px;
+    width: 10px; height: 10px;
     background: v.$color-gold;
     border-radius: 50%;
   }
 
-  @include m.respond-to('md') {
-    margin-inline: auto;
-  }
+  @include m.respond-to('md') { margin-inline: auto; }
 }
 
-// ── Contenido textual ─────────────────────────────────────
-.nosotros-split__content {
-  display: flex;
-  flex-direction: column;
-  gap: v.$space-3;
-}
+.nosotros-split__content { display: flex; flex-direction: column; gap: v.$space-3; }
 
-// Título dentro del split — reemplaza los inline styles del HTML
 .nosotros-split__title {
   font-family: v.$font-serif;
   font-size: clamp(v.$fs-xl, 2.5vw, v.$fs-2xl);
   font-weight: 700;
-  color: v.$color-text;
+  color: var(--color-text);
   line-height: 1.2;
   margin: 0;
+  transition: color v.$transition-base;
 
-  em {
-    color: v.$color-adobe;
-    font-style: italic;
-  }
+  em { color: var(--color-accent); font-style: italic; }
 }
 
-// Separador ornamental entre Misión y Visión
 .nosotros-split__divider {
   display: flex;
   align-items: center;
@@ -124,31 +161,23 @@
 .nosotros-split__text {
   font-family: v.$font-sans;
   font-size: v.$fs-md;
-  color: v.$color-text-mid;
+  color: var(--color-text-mid);
   line-height: 1.8;
   max-width: 58ch;
+  transition: color v.$transition-base;
 }
 
-
-
-// ── Grid de Valores ───────────────────────────────────────
+// ── Valores ──────────────────────────────────────────────────
 .valores__grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: v.$space-5;
 
-  @include m.respond-to('lg') {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  @include m.respond-to('sm') {
-    grid-template-columns: 1fr;
-    max-width: 380px;
-    margin-inline: auto;
-  }
+  @include m.respond-to('lg') { grid-template-columns: repeat(2, 1fr); }
+  @include m.respond-to('sm') { grid-template-columns: 1fr; max-width: 380px; margin-inline: auto; }
 }
 
-// ── Tarjeta de Valor ──────────────────────────────────────
+// Las valor-card viven siempre en sección oscura, sin CSS vars necesarias
 .valor-card {
   text-align: center;
   padding: v.$space-8 v.$space-5 v.$space-10;
@@ -159,13 +188,10 @@
   overflow: hidden;
   transition: all v.$transition-base;
 
-  // Línea inferior dorada que crece con hover
   &::after {
     content: '';
     position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
+    bottom: 0; left: 0; right: 0;
     height: 2px;
     background: linear-gradient(90deg, v.$color-gold, rgba(v.$color-adobe, 0.6));
     transform: scaleX(0);
@@ -179,18 +205,13 @@
     transform: translateY(-5px);
     box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25);
 
-    &::after {
-      transform: scaleX(1);
-    }
-
-    .valor-card__icon {
-      transform: scale(1.1) rotate(-5deg);
-    }
+    &::after { transform: scaleX(1); }
+    .valor-card__icon { transform: scale(1.1) rotate(-5deg); }
   }
 }
 
 .valor-card__icon {
-  font-size: v.$fs-2xl;  // menos grande que fs-3xl, más equilibrado
+  font-size: v.$fs-2xl;
   color: v.$color-gold;
   margin-bottom: v.$space-4;
   display: block;
@@ -203,7 +224,6 @@
   font-weight: 600;
   color: v.$color-parchment-light;
   margin-bottom: v.$space-3;
-  letter-spacing: 0.01em;
 }
 
 .valor-card__text {
