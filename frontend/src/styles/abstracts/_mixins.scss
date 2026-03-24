@@ -1,9 +1,12 @@
 // ============================================================
-//  MIXINS — Hotel Quinta Dalam
+// ARCHIVO: _mixins.scss
+// DESCRIPCIÓN: Colección de mixins y funciones SCSS para 
+// mantener el código DRY, gestionar media queries y aplicar 
+// efectos visuales recurrentes en toda la plataforma.
 // ============================================================
 @use 'variables' as v;
 
-// ── Breakpoints ──────────────────────────────────────────────
+// ── Breakpoints y Media Queries ─────────────────────────────────────
 @mixin respond-to($bp) {
   @if      $bp == 'xs'    { @media (max-width: #{v.$bp-xs})  { @content; } }
   @else if $bp == 'sm'    { @media (max-width: #{v.$bp-sm})  { @content; } }
@@ -14,7 +17,7 @@
   @else if $bp == 'up-lg' { @media (min-width: #{v.$bp-lg})  { @content; } }
 }
 
-// ── Contenedor centrado ──────────────────────────────────────
+// ── Layout: Contenedor Principal ────────────────────────────────────
 @mixin container {
   width: 100%;
   max-width: v.$container-max;
@@ -26,14 +29,14 @@
   }
 }
 
-// ── Flex center ──────────────────────────────────────────────
+// ── Layout: Flex Center ─────────────────────────────────────────────
 @mixin flex-center {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-// ── Botón base ───────────────────────────────────────────────
+// ── Componentes: Botón Base ─────────────────────────────────────────
 @mixin btn-base {
   display: inline-flex;
   align-items: center;
@@ -53,7 +56,7 @@
   white-space: nowrap;
 }
 
-// ── Image cover ──────────────────────────────────────────────
+// ── Utilidades: Imagen Cover ────────────────────────────────────────
 @mixin img-cover {
   width: 100%;
   height: 100%;
@@ -61,7 +64,7 @@
   object-position: center;
 }
 
-// ── Glass surface ────────────────────────────────────────────
+// ── Efectos: Glassmorphism ──────────────────────────────────────────
 @mixin glass($bg: v.$glass-bg) {
   background: $bg;
   backdrop-filter: v.$glass-blur;
@@ -69,7 +72,7 @@
   border: 1px solid v.$glass-border;
 }
 
-// ── Sheen (línea de brillo animada en hover) ─────────────────
+// ── Efectos: Sheen (Brillo al Hover) ────────────────────────────────
 @mixin sheen {
   overflow: hidden;
   &::after {
@@ -89,7 +92,7 @@
   &:hover::after { transform: translateX(100%); }
 }
 
-// ── Gradient text ────────────────────────────────────────────
+// ── Efectos: Texto con Degradado ────────────────────────────────────
 @mixin gradient-text($gradient) {
   background: $gradient;
   -webkit-background-clip: text;

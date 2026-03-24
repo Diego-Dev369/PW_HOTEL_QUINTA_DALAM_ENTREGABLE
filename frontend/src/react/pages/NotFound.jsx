@@ -10,7 +10,6 @@ export default function NotFound() {
     <main className="not-found">
       <div className="not-found__content">
         
-        {/* Ícono temático (Brújula) */}
         <div className="not-found__icon">
           <i className="fa-regular fa-compass"></i>
         </div>

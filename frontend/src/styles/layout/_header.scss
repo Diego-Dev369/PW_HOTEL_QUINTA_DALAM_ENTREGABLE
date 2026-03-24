@@ -279,6 +279,56 @@
   }
 }
 
+// ── Extras Móvil (Idiomas y Redes) ──────────────────────────
+.header__mobile-extras {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: v.$space-6;
+  margin-top: v.$space-4;
+  padding-top: v.$space-6;
+  border-top: 1px dashed rgba(v.$color-gold, 0.25);
+  width: 100%;
+}
+
+.header__mobile-lang {
+  display: flex;
+  align-items: center;
+  gap: v.$space-4;
+  
+  .header__divider {
+    height: 14px;
+    background: rgba(v.$color-parchment, 0.3);
+  }
+}
+
+.header__mobile-socials {
+  display: flex;
+  gap: v.$space-5;
+
+  a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(v.$color-parchment, 0.05);
+    color: v.$color-gold-pale;
+    border: 1px solid rgba(v.$color-gold, 0.2);
+    font-size: v.$fs-md;
+    transition: all v.$transition-fast;
+    text-decoration: none;
+
+    &:hover {
+      background: rgba(v.$color-gold, 0.15);
+      color: v.$color-gold-light;
+      border-color: rgba(v.$color-gold, 0.5);
+      transform: translateY(-2px);
+    }
+  }
+}
+
 // ── Acciones desktop ────────────────────────────────────────
 .header__actions {
   display: flex;
@@ -310,6 +360,7 @@
   text-transform: uppercase;
   color: rgba(v.$color-parchment, 0.55);
   transition: color v.$transition-fast;
+  text-decoration: none;
 
   &:hover { color: v.$color-gold-light; }
 }
@@ -327,6 +378,7 @@
   transition: all v.$transition-base;
   white-space: nowrap;
   flex-shrink: 0;
+  text-decoration: none;
 
   &:hover {
     color: v.$color-parchment-light;
@@ -354,6 +406,7 @@
   box-shadow: 0 2px 12px rgba(v.$color-adobe, 0.3);
   position: relative;
   overflow: hidden;
+  text-decoration: none;
 
   &::after {
     content: '';

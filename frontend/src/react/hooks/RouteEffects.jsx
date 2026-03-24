@@ -5,10 +5,8 @@ export default function RouteEffects() {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    // 1. Scroll hacia arriba al cambiar de página
     window.scrollTo({ top: 0, behavior: 'instant' });
 
-    // 2. Lógica para animaciones al hacer scroll (Reveal)
     const REVEAL_SELECTORS = [
       '.section', '.section__header', '.room-card', '.room-row', 
       '.exp-card', '.service-card', '.about__media', '.cta-band', 
@@ -31,18 +29,16 @@ export default function RouteEffects() {
       targets.forEach(target => {
         const rect = target.getBoundingClientRect();
         if (rect.top < window.innerHeight && rect.bottom > 0) {
-          target.classList.add('is-visible'); // Si ya está en pantalla
+          target.classList.add('is-visible'); 
         } else {
-          observer.observe(target); // Si está más abajo
+          observer.observe(target); 
         }
       });
 
       return () => observer.disconnect();
     } else {
-      // Si el navegador no soporta el observer
       targets.forEach(target => target.classList.add('is-visible'));
     }
-  }, [pathname]); // Se vuelve a ejecutar cada vez que cambia la ruta
-
+  }, [pathname]); 
   return null;
 }

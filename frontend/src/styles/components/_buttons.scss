@@ -1,9 +1,12 @@
+// ============================================================
+// ARCHIVO: _buttons.scss
+// DESCRIPCIÓN: Sistema modular de botones. Incluye estilos base, 
+// variantes públicas y botones específicos para la administración.
+// ============================================================
 @use '../abstracts/variables' as v;
 @use '../abstracts/mixins'   as m;
 
-// ─────────────────────────────────────────────────────────────
-//  BASE — .btn
-// ─────────────────────────────────────────────────────────────
+// ── Clase Base (.btn) ───────────────────────────────────────────────
 .btn {
   display: inline-flex;
   align-items: center;
@@ -21,45 +24,25 @@
   cursor: pointer;
   position: relative;
   overflow: hidden;
-  transition:
-    transform        v.$transition-base,
-    box-shadow       v.$transition-base,
-    background-color v.$transition-base,
-    color            v.$transition-base;
+  transition: transform v.$transition-base, box-shadow v.$transition-base, background-color v.$transition-base, color v.$transition-base;
 
   &::after {
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(
-      110deg,
-      transparent 45%,
-      rgba(255, 255, 255, 0.7) 50%,
-      transparent 55%
-    );
+    background: linear-gradient(110deg, transparent 45%, rgba(255, 255, 255, 0.7) 50%, transparent 55%);
     transform: translateX(-100%);
     transition: transform 0.4s ease-in-out;
     pointer-events: none;
   }
 
   &:hover::after { transform: translateX(100%); }
-
-  &:focus-visible {
-    outline: 2px solid var(--color-gold);
-    outline-offset: 3px;
-  }
-
+  &:focus-visible { outline: 2px solid var(--color-gold); outline-offset: 3px; }
   &:active { transform: translateY(1px) scale(0.99); }
-
   &:disabled { opacity: 0.42; pointer-events: none; }
 }
 
-
-// ─────────────────────────────────────────────────────────────
-//  VARIANTES PÚBLICAS
-// ─────────────────────────────────────────────────────────────
-
-// Primario — adobe/terracota siempre (contraste garantizado)
+// ── Variante: Primario ──────────────────────────────────────────────
 .btn--primary {
   position: relative;
   overflow: hidden;
@@ -77,19 +60,11 @@
     pointer-events: none;
   }
 
-  &:hover::after {
-    transform: translateX(100%);
-  }
-
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 28px rgba(v.$color-adobe, 0.42);
-  }
+  &:hover::after { transform: translateX(100%); }
+  &:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(v.$color-adobe, 0.42); }
 }
 
-// ─────────────────────────────────────────────────────────────
-//  SHIMMER — Estrella fugaz obligatoria
-// ─────────────────────────────────────────────────────────────
+// ── Efecto Shimmer (Brillo Animado) ─────────────────────────────────
 .btn--primary,
 .header__cta,
 .hero__cta,
@@ -104,114 +79,79 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(
-      105deg,
-      transparent 40%,
-      rgba(255, 255, 255, 0.5) 50%,
-      transparent 60%
-    ) !important;
+    background: linear-gradient(105deg, transparent 40%, rgba(255, 255, 255, 0.5) 50%, transparent 60%) !important;
     transform: translateX(-100%) !important;
     transition: transform 0.45s ease-in-out !important;
     pointer-events: none !important;
     z-index: 10;
   }
 
-  &:hover::after {
-    transform: translateX(100%) !important;
-  }
+  &:hover::after { transform: translateX(100%) !important; }
 }
 
-// Secundario — contorno dorado
+// ── Variante: Secundario ────────────────────────────────────────────
 .btn--secondary {
   background: transparent;
   color: var(--color-gold);
   border: 1.5px solid var(--color-gold);
 
-  &:hover {
-    background: var(--color-gold-pale);
-    box-shadow: 0 6px 20px rgba(v.$color-gold, 0.20);
-    transform: translateY(-2px);
-  }
+  &:hover { background: var(--color-gold-pale); box-shadow: 0 6px 20px rgba(v.$color-gold, 0.20); transform: translateY(-2px); }
 }
 
-// Outline — borde con color de acento del tema
+// ── Variante: Outline ───────────────────────────────────────────────
 .btn--outline {
   background: transparent;
   color: var(--color-accent);
   border: 1.5px solid var(--color-border-mid);
 
-  &:hover {
-    border-color: var(--color-accent);
-    background: var(--color-gold-pale);
-    transform: translateY(-2px);
-  }
+  &:hover { border-color: var(--color-accent); background: var(--color-gold-pale); transform: translateY(-2px); }
 }
 
-// Ghost — neutro, adapta al tema
+// ── Variante: Ghost ─────────────────────────────────────────────────
 .btn--ghost {
   background: transparent;
   color: var(--color-text-mid);
   border: 1px solid var(--color-border);
 
-  &:hover {
-    border-color: var(--color-border-mid);
-    color: var(--color-accent);
-    background: var(--color-gold-pale);
-  }
+  &:hover { border-color: var(--color-border-mid); color: var(--color-accent); background: var(--color-gold-pale); }
 }
 
-// Ghost light — para fondos oscuros (CTA band, hero)
+// ── Variante: Ghost Light ───────────────────────────────────────────
 .btn--ghost-light {
   background: rgba(v.$color-parchment, 0.12);
   border: 1px solid rgba(v.$color-parchment, 0.35);
   color: v.$color-parchment-light;
   backdrop-filter: blur(8px);
 
-  &:hover {
-    background: rgba(v.$color-parchment, 0.22);
-    border-color: rgba(v.$color-parchment, 0.60);
-  }
+  &:hover { background: rgba(v.$color-parchment, 0.22); border-color: rgba(v.$color-parchment, 0.60); }
 }
 
-// Dark — forestal fijo
+// ── Variante: Dark ──────────────────────────────────────────────────
 .btn--dark {
   background: v.$color-forest;
   color: v.$color-parchment-light;
   border: 1px solid rgba(v.$color-gold, 0.18);
 
-  &:hover {
-    background: v.$color-forest-mid;
-    transform: translateY(-2px);
-    box-shadow: v.$shadow-md;
-  }
+  &:hover { background: v.$color-forest-mid; transform: translateY(-2px); box-shadow: v.$shadow-md; }
 }
 
-// Gold — dorado sólido
+// ── Variante: Gold ──────────────────────────────────────────────────
 .btn--gold {
   background: v.$gradient-gold;
   color: v.$color-forest;
   box-shadow: 0 2px 12px rgba(v.$color-gold, 0.25);
 
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 28px rgba(v.$color-gold, 0.38);
-  }
+  &:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(v.$color-gold, 0.38); }
 }
 
-
-// ─────────────────────────────────────────────────────────────
-//  TAMAÑOS
-// ─────────────────────────────────────────────────────────────
+// ── Tamaños y Modificadores ─────────────────────────────────────────
 .btn--sm { padding: v.$space-2 v.$space-4; font-size: v.$fs-xs; border-radius: v.$radius-sm; }
 .btn--lg { padding: v.$space-4 v.$space-10; font-size: v.$fs-md; border-radius: v.$radius-lg; }
 .btn--full { width: 100%; }
 .btn--icon-left  i { order: -1; }
 .btn--icon-right i { order: 1; }
 
-
-// ─────────────────────────────────────────────────────────────
-//  ADMIN BUTTONS — siempre oscuros, valores fijos
-// ─────────────────────────────────────────────────────────────
+// ── Botones de Administración ───────────────────────────────────────
 .admin-btn {
   display: inline-flex;
   align-items: center;
@@ -232,13 +172,8 @@
   overflow: hidden;
 
   &::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.08) 50%, transparent 60%);
-    transform: translateX(-100%);
-    transition: transform 0.45s ease;
-    pointer-events: none;
+    content: ''; position: absolute; inset: 0; background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.08) 50%, transparent 60%);
+    transform: translateX(-100%); transition: transform 0.45s ease; pointer-events: none;
   }
 
   &:hover::after { transform: translateX(100%); }
@@ -246,30 +181,22 @@
   &:focus-visible { outline: 2px solid v.$color-gold; outline-offset: 2px; }
 
   &--primary {
-    background: v.$gradient-adobe;
-    color: v.$color-parchment-light;
-    box-shadow: 0 2px 12px rgba(v.$color-adobe, 0.28);
+    background: v.$gradient-adobe; color: v.$color-parchment-light; box-shadow: 0 2px 12px rgba(v.$color-adobe, 0.28);
     &:hover { transform: translateY(-1px); box-shadow: 0 8px 20px rgba(v.$color-adobe, 0.4); }
   }
 
   &--ghost {
-    background: transparent;
-    color: v.$admin-text-mid;
-    border: 1px solid v.$admin-border;
+    background: transparent; color: v.$admin-text-mid; border: 1px solid v.$admin-border;
     &:hover { background: rgba(255, 255, 255, 0.05); color: v.$admin-text; border-color: v.$admin-border-strong; }
   }
 
   &--danger {
-    background: v.$admin-danger-light;
-    color: #e05555;
-    border: 1px solid rgba(224, 85, 85, 0.28);
+    background: v.$admin-danger-light; color: #e05555; border: 1px solid rgba(224, 85, 85, 0.28);
     &:hover { background: rgba(224, 85, 85, 0.22); transform: translateY(-1px); }
   }
 
   &--success {
-    background: v.$admin-success-light;
-    color: v.$admin-success;
-    border: 1px solid rgba(v.$admin-success, 0.25);
+    background: v.$admin-success-light; color: v.$admin-success; border: 1px solid rgba(v.$admin-success, 0.25);
     &:hover { background: rgba(v.$admin-success, 0.2); }
   }
 
@@ -286,51 +213,22 @@
   font-size: 0.8rem;
   transition: all v.$transition-fast;
 
-  &--edit {
-    color: v.$color-gold;
-    border-color: rgba(v.$color-gold, 0.18);
-    &:hover { background: rgba(v.$color-gold, 0.12); border-color: rgba(v.$color-gold, 0.35); transform: translateY(-1px); }
-  }
-
-  &--delete {
-    color: #e05555;
-    border-color: rgba(224, 85, 85, 0.18);
-    &:hover { background: rgba(224, 85, 85, 0.12); border-color: rgba(224, 85, 85, 0.35); transform: translateY(-1px); }
-  }
-
-  &--view {
-    color: v.$admin-text-mid;
-    border-color: v.$admin-border;
-    &:hover { color: v.$admin-text; background: rgba(255, 255, 255, 0.06); border-color: v.$admin-border-strong; }
-  }
+  &--edit { color: v.$color-gold; border-color: rgba(v.$color-gold, 0.18); &:hover { background: rgba(v.$color-gold, 0.12); border-color: rgba(v.$color-gold, 0.35); transform: translateY(-1px); } }
+  &--delete { color: #e05555; border-color: rgba(224, 85, 85, 0.18); &:hover { background: rgba(224, 85, 85, 0.12); border-color: rgba(224, 85, 85, 0.35); transform: translateY(-1px); } }
+  &--view { color: v.$admin-text-mid; border-color: v.$admin-border; &:hover { color: v.$admin-text; background: rgba(255, 255, 255, 0.06); border-color: v.$admin-border-strong; } }
 }
 
 .admin-quick-btn {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 1.2rem 1rem;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid v.$admin-border;
-  border-radius: v.$radius-md;
-  text-decoration: none;
-  color: v.$admin-text-mid;
-  font-family: v.$font-sans;
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.07em;
-  text-transform: uppercase;
-  transition: all v.$transition-base;
+  display: flex; flex-direction: column; align-items: center; gap: 0.5rem; padding: 1.2rem 1rem;
+  background: rgba(255, 255, 255, 0.03); border: 1px solid v.$admin-border; border-radius: v.$radius-md;
+  text-decoration: none; color: v.$admin-text-mid; font-family: v.$font-sans; font-size: 0.7rem;
+  font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; transition: all v.$transition-base;
 
   i { font-size: 1.2rem; color: v.$color-gold; transition: transform v.$transition-spring; }
 
   &:hover {
-    background: rgba(v.$color-gold, 0.07);
-    border-color: rgba(v.$color-gold, 0.28);
-    color: v.$admin-text;
-    transform: translateY(-2px);
-    box-shadow: v.$shadow-md;
+    background: rgba(v.$color-gold, 0.07); border-color: rgba(v.$color-gold, 0.28); color: v.$admin-text;
+    transform: translateY(-2px); box-shadow: v.$shadow-md;
     i { transform: scale(1.15); }
   }
 }

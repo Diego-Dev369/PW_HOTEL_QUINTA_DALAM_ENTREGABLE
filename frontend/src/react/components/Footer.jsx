@@ -13,8 +13,8 @@ export default function Footer() {
             width="52"
             height="52"
           />
-          <p className="footer__brand-name">Hotel Quinta Dalam</p>
-          <p className="footer__brand-tagline">Pueblos Mágicos · Michoacán</p>
+          <h2 className="footer__brand-name">Hotel Quinta Dalam</h2>
+          <p className="footer__brand-tagline">Hotel Boutique</p>
           <p className="footer__brand-desc">
             Un refugio colonial donde la tradición y el lujo se encuentran en el
             corazón de Michoacán.
@@ -108,20 +108,23 @@ export default function Footer() {
           <small>&copy; 2026 Hotel Quinta Dalam. Todos los derechos reservados.</small>
         </p>
         <div className="footer__certifications">
-          <p>
-            <a href="https://validator.w3.org/check?uri=referer">
-              <img src="https://www.w3.org/Icons/valid-html401" alt="Valid HTML 4.01 Transitional" height="31" width="88" />
-            </a>
-          </p>
-          <p>
-            <a href="https://jigsaw.w3.org/css-validator/check/referer">
-              <img
-                style={{ border: 0, width: '88px', height: '31px' }}
-                src="https://jigsaw.w3.org/css-validator/images/vcss"
-                alt="¡CSS Válido!"
-              />
-            </a>
-          </p>
+          {/* Sello CSS */}
+          <a href="https://jigsaw.w3.org/css-validator/check/referer" target="_blank" rel="noopener">
+            <img 
+              style={{ border: 0, width: '88px', height: '31px' }}
+              src="https://jigsaw.w3.org/css-validator/images/vcss"
+              alt="¡CSS Válido!" 
+            />
+          </a>
+
+          {/* Sello HTML */}
+          <a href="https://validator.w3.org/check?uri=referer" target="_blank" rel="noopener">
+            <img 
+              style={{ border: 0, width: '88px', height: '31px' }}
+              src="https://www.w3.org/Icons/valid-xhtml10" 
+              alt="¡HTML5 Válido!" 
+            />
+          </a>
         </div>
       </div>
     </footer>

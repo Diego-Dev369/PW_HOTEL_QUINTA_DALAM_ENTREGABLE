@@ -1,371 +1,139 @@
+// ============================================================
+// ARCHIVO: _forms.scss
+// DESCRIPCIÓN: Estilos para todos los formularios del sitio, 
+// incluyendo inputs públicos, de administración, checkboxes y toggles.
+// ============================================================
 @use '../abstracts/variables' as v;
 @use '../abstracts/mixins'   as m;
 
-// ─────────────────────────────────────────────────────────────
-//  ADMIN FORMS
-// ─────────────────────────────────────────────────────────────
+// ── Formularios de Administración ───────────────────────────────────
 .admin-form-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem 1.5rem;
-  margin-bottom: 1rem;
-
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1rem 1.5rem; margin-bottom: 1rem;
   @include m.respond-to('sm') { grid-template-columns: 1fr; }
 }
 
 .admin-form__group {
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
-
+  display: flex; flex-direction: column; gap: 0.4rem;
   &--full { grid-column: 1 / -1; }
 }
 
 .admin-editor-actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: v.$space-3;
-  margin-top: v.$space-5;
-  padding-top: v.$space-4;
-  border-top: 1px solid v.$admin-border;
+  display: flex; justify-content: flex-end; gap: v.$space-3; margin-top: v.$space-5; padding-top: v.$space-4; border-top: 1px solid v.$admin-border;
 }
 
 .admin-form__label {
-  font-family: v.$font-sans;
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: v.$admin-text-muted;
+  font-family: v.$font-sans; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: v.$admin-text-muted;
 }
 
-.admin-form__required {
-  color: v.$admin-danger;
-  margin-left: 2px;
-}
+.admin-form__required { color: v.$admin-danger; margin-left: 2px; }
 
 .admin-form__hint {
-  font-size: 0.72rem;
-  color: v.$admin-text-muted;
-  margin-top: 0.22rem;
-  line-height: 1.4;
-
+  font-size: 0.72rem; color: v.$admin-text-muted; margin-top: 0.22rem; line-height: 1.4;
   i { margin-right: 0.3rem; color: v.$color-gold; opacity: 0.6; }
 }
 
 .admin-form__input {
-  background: rgba(0, 0, 0, 0.2);
-  border: 1px solid v.$admin-border;
-  border-radius: v.$radius-md;
-  padding: v.$space-3 v.$space-4;
-  font-family: v.$font-sans;
-  font-size: v.$fs-sm;
-  color: v.$admin-text;
-  width: 100%;
-  outline: none;
-  transition: border-color v.$transition-fast, box-shadow v.$transition-fast;
+  background: rgba(0, 0, 0, 0.2); border: 1px solid v.$admin-border; border-radius: v.$radius-md; padding: v.$space-3 v.$space-4;
+  font-family: v.$font-sans; font-size: v.$fs-sm; color: v.$admin-text; width: 100%; outline: none; transition: border-color v.$transition-fast, box-shadow v.$transition-fast;
 
   &::placeholder { color: v.$admin-text-muted; font-style: italic; }
   &:hover        { border-color: v.$admin-border-strong; }
-
-  &:focus {
-    border-color: rgba(v.$color-gold, 0.55);
-    background: rgba(0, 0, 0, 0.28);
-    box-shadow: 0 0 0 3px rgba(v.$color-gold, 0.08);
-  }
+  &:focus { border-color: rgba(v.$color-gold, 0.55); background: rgba(0, 0, 0, 0.28); box-shadow: 0 0 0 3px rgba(v.$color-gold, 0.08); }
 
   &[rows] { resize: vertical; min-height: 96px; line-height: 1.65; }
   &--sm   { padding: v.$space-2 v.$space-3; font-size: v.$fs-xs; border-radius: v.$radius-sm; }
 }
 
-// Select admin — SVG hardcoded (crema sobre oscuro)
 select.admin-form__input {
-  appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7' viewBox='0 0 12 7'%3E%3Cpath fill='none' stroke='rgba(237,232,222,0.4)' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 0.85rem center;
-  padding-right: 2.2rem;
-  cursor: pointer;
-
-  option {
-    background: v.$admin-surface-3;
-    color: v.$admin-text;
-  }
+  appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7' viewBox='0 0 12 7'%3E%3Cpath fill='none' stroke='rgba(237,232,222,0.4)' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 0.85rem center; padding-right: 2.2rem; cursor: pointer;
+  option { background: v.$admin-surface-3; color: v.$admin-text; }
 }
 
-// ─────────────────────────────────────────────────────────────
-//  CHECKBOXES / TOGGLE / UPLOAD
-// ─────────────────────────────────────────────────────────────
-.admin-checkboxes {
-  display: flex;
-  flex-wrap: wrap;
-  gap: v.$space-2;
-}
+// ── Checkboxes, Toggles y Upload (Admin) ────────────────────────────
+.admin-checkboxes { display: flex; flex-wrap: wrap; gap: v.$space-2; }
 
 .admin-checkbox {
-  display: inline-flex;
-  align-items: center;
-  gap: v.$space-2;
-  font-family: v.$font-sans;
-  font-size: 0.78rem;
-  color: v.$admin-text-mid;
-  cursor: pointer;
-  padding: v.$space-2 v.$space-4;
-  border: 1px solid v.$admin-border;
-  border-radius: v.$radius-md;
-  transition: all v.$transition-fast;
-  user-select: none;
+  display: inline-flex; align-items: center; gap: v.$space-2; font-family: v.$font-sans; font-size: 0.78rem; color: v.$admin-text-mid;
+  cursor: pointer; padding: v.$space-2 v.$space-4; border: 1px solid v.$admin-border; border-radius: v.$radius-md; transition: all v.$transition-fast; user-select: none;
 
-  input[type="checkbox"] {
-    accent-color: v.$color-adobe;
-    cursor: pointer;
-    width: 14px;
-    height: 14px;
-  }
-
-  &:hover {
-    border-color: rgba(v.$color-adobe, 0.38);
-    color: v.$admin-text;
-    background: rgba(v.$color-adobe, 0.05);
-  }
+  input[type="checkbox"] { accent-color: v.$color-adobe; cursor: pointer; width: 14px; height: 14px; }
+  &:hover { border-color: rgba(v.$color-adobe, 0.38); color: v.$admin-text; background: rgba(v.$color-adobe, 0.05); }
 
   &--featured {
-    width: 100%;
-    padding: v.$space-3 v.$space-4;
-    border-color: rgba(v.$color-gold, 0.18);
-    color: v.$admin-text-mid;
+    width: 100%; padding: v.$space-3 v.$space-4; border-color: rgba(v.$color-gold, 0.18); color: v.$admin-text-mid;
     i { color: v.$color-gold; }
-
-    &:hover {
-      border-color: rgba(v.$color-gold, 0.40);
-      background: rgba(v.$color-gold, 0.05);
-    }
+    &:hover { border-color: rgba(v.$color-gold, 0.40); background: rgba(v.$color-gold, 0.05); }
   }
 }
 
 .admin-toggle { display: inline-flex; align-items: center; cursor: pointer; }
-
-.admin-toggle__input {
-  position: absolute;
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
+.admin-toggle__input { position: absolute; opacity: 0; width: 0; height: 0; }
 
 .admin-toggle__track {
-  width: 38px;
-  height: 22px;
-  background: v.$admin-surface-3;
-  border: 1px solid v.$admin-border;
-  border-radius: v.$radius-pill;
-  position: relative;
-  transition: all v.$transition-base;
-
-  &::after {
-    content: '';
-    position: absolute;
-    top: 3px; left: 3px;
-    width: 14px; height: 14px;
-    border-radius: 50%;
-    background: v.$admin-text-muted;
-    transition: all v.$transition-base;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
-  }
+  width: 38px; height: 22px; background: v.$admin-surface-3; border: 1px solid v.$admin-border; border-radius: v.$radius-pill; position: relative; transition: all v.$transition-base;
+  &::after { content: ''; position: absolute; top: 3px; left: 3px; width: 14px; height: 14px; border-radius: 50%; background: v.$admin-text-muted; transition: all v.$transition-base; box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3); }
 }
 
 .admin-toggle__input:checked + .admin-toggle__track {
-  background: rgba(v.$color-gold, 0.22);
-  border-color: rgba(v.$color-gold, 0.5);
-
-  &::after {
-    left: calc(100% - 17px);
-    background: v.$color-gold;
-    box-shadow: 0 2px 6px rgba(v.$color-gold, 0.4);
-  }
+  background: rgba(v.$color-gold, 0.22); border-color: rgba(v.$color-gold, 0.5);
+  &::after { left: calc(100% - 17px); background: v.$color-gold; box-shadow: 0 2px 6px rgba(v.$color-gold, 0.4); }
 }
 
 .admin-upload {
-  position: relative;
-  border: 2px dashed v.$admin-border-strong;
-  border-radius: v.$radius-lg;
-  padding: v.$space-10 v.$space-8;
-  text-align: center;
-  cursor: pointer;
-  transition: all v.$transition-base;
-  background: rgba(0, 0, 0, 0.12);
-
-  &:hover {
-    border-color: rgba(v.$color-gold, 0.45);
-    background: rgba(v.$color-gold, 0.03);
-    i { opacity: 0.7; transform: scale(1.08); }
-  }
-
-  i {
-    font-size: v.$fs-3xl;
-    color: v.$color-gold;
-    opacity: 0.4;
-    margin-bottom: v.$space-3;
-    display: block;
-    transition: all v.$transition-base;
-  }
-
+  position: relative; border: 2px dashed v.$admin-border-strong; border-radius: v.$radius-lg; padding: v.$space-10 v.$space-8; text-align: center; cursor: pointer; transition: all v.$transition-base; background: rgba(0, 0, 0, 0.12);
+  &:hover { border-color: rgba(v.$color-gold, 0.45); background: rgba(v.$color-gold, 0.03); i { opacity: 0.7; transform: scale(1.08); } }
+  i { font-size: v.$fs-3xl; color: v.$color-gold; opacity: 0.4; margin-bottom: v.$space-3; display: block; transition: all v.$transition-base; }
   p { font-family: v.$font-sans; color: v.$admin-text-mid; font-size: v.$fs-sm; margin: 0 0 v.$space-1; span { color: v.$color-gold; font-weight: 700; } }
   small { color: v.$admin-text-muted; font-size: v.$fs-xs; }
-
   &__input { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
 }
 
 .admin-icono-preview-wrap { display: flex; align-items: center; gap: v.$space-2; }
+.admin-icono-preview { @include m.flex-center; width: 36px; height: 36px; border-radius: v.$radius-md; border: 1px solid v.$admin-border; background: rgba(255, 255, 255, 0.04); color: v.$color-gold; font-size: 0.9rem; flex-shrink: 0; }
 
-.admin-icono-preview {
-  @include m.flex-center;
-  width: 36px; height: 36px;
-  border-radius: v.$radius-md;
-  border: 1px solid v.$admin-border;
-  background: rgba(255, 255, 255, 0.04);
-  color: v.$color-gold;
-  font-size: 0.9rem;
-  flex-shrink: 0;
-}
+.admin-password-wrap { position: relative; display: flex; align-items: center; .admin-form__input { padding-right: 2.8rem; } }
+.admin-password-toggle { position: absolute; right: 0.7rem; background: transparent; border: none; color: v.$admin-text-muted; cursor: pointer; font-size: 0.82rem; transition: color v.$transition-fast; padding: 0; &:hover { color: v.$admin-text-mid; } }
 
-.admin-password-wrap {
-  position: relative;
-  display: flex;
-  align-items: center;
-  .admin-form__input { padding-right: 2.8rem; }
-}
-
-.admin-password-toggle {
-  position: absolute;
-  right: 0.7rem;
-  background: transparent;
-  border: none;
-  color: v.$admin-text-muted;
-  cursor: pointer;
-  font-size: 0.82rem;
-  transition: color v.$transition-fast;
-  padding: 0;
-  &:hover { color: v.$admin-text-mid; }
-}
-
-
-// ─────────────────────────────────────────────────────────────
-//  FORMULARIOS PÚBLICOS — adaptan a Light/Dark con CSS vars
-// ─────────────────────────────────────────────────────────────
+// ── Formularios Públicos (Soporte Light/Dark) ───────────────────────
 .form-group { display: flex; flex-direction: column; gap: v.$space-2; }
 
 .form-label {
-  font-family: v.$font-sans;
-  font-size: v.$fs-xs;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--color-text-mid);
-  transition: color v.$transition-base;
+  font-family: v.$font-sans; font-size: v.$fs-xs; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-text-mid); transition: color v.$transition-base;
 }
 
-.form-input,
-.form-select,
-.form-textarea {
-  width: 100%;
-  background: var(--color-bg-alt);
-  border: 1.5px solid var(--color-border);
-  border-radius: v.$radius-md;
-  padding: v.$space-3 v.$space-5;
-  font-family: v.$font-sans;
-  font-size: v.$fs-sm;
-  color: var(--color-text);
-  outline: none;
-  transition:
-    border-color     v.$transition-fast,
-    box-shadow       v.$transition-fast,
-    background-color v.$transition-base,
-    color            v.$transition-base;
-
+.form-input, .form-select, .form-textarea {
+  width: 100%; background: var(--color-bg-alt); border: 1.5px solid var(--color-border); border-radius: v.$radius-md; padding: v.$space-3 v.$space-5;
+  font-family: v.$font-sans; font-size: v.$fs-sm; color: var(--color-text); outline: none; transition: border-color v.$transition-fast, box-shadow v.$transition-fast, background-color v.$transition-base, color v.$transition-base;
   &::placeholder { color: var(--color-text-light); }
   &:hover        { border-color: var(--color-border-mid); }
-
-  &:focus {
-    border-color: var(--color-accent);
-    box-shadow: 0 0 0 3px var(--color-gold-pale);
-    background: var(--color-surface);
-  }
+  &:focus { border-color: var(--color-accent); box-shadow: 0 0 0 3px var(--color-gold-pale); background: var(--color-surface); }
 }
 
-// Aquí SÍ van las reglas exclusivas para las cajas de texto grandes
-.form-textarea { 
-  resize: none; 
-  min-height: 130px; 
-  line-height: 1.7; 
-  overflow-y: auto;
-}
+.form-textarea { resize: none; min-height: 130px; line-height: 1.7; overflow-y: auto; }
 
-// Select público — flecha neutra gris medio (funciona en ambos temas)
 select.form-select {
-  appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7' viewBox='0 0 12 7'%3E%3Cpath fill='none' stroke='%239A8A7A' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 1rem center;
-  padding-right: 2.5rem;
-  cursor: pointer;
+  appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7' viewBox='0 0 12 7'%3E%3Cpath fill='none' stroke='%239A8A7A' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 1rem center; padding-right: 2.5rem; cursor: pointer;
 }
 
 .form-error   { font-size: v.$fs-xs; color: v.$admin-danger;  margin-top: v.$space-1; }
 .form-success { font-size: v.$fs-xs; color: v.$admin-success; margin-top: v.$space-1; }
 
-// ─────────────────────────────────────────────────────────────
-//  BARRA DE BÚSQUEDA ADMIN
-// ─────────────────────────────────────────────────────────────
+// ── Barra de Búsqueda Admin ─────────────────────────────────────────
 .admin-search {
-  position: relative;
-  display: flex;
-  align-items: center;
-  width: 100%;
-  max-width: 320px;
-
-  i {
-    position: absolute;
-    left: v.$space-4;
-    color: v.$color-gold;
-    font-size: 0.85rem;
-    pointer-events: none;
-    transition: transform v.$transition-fast, color v.$transition-fast;
-  }
-
-  &:focus-within i {
-    transform: scale(1.1);
-    color: v.$color-gold-light;
-  }
+  position: relative; display: flex; align-items: center; width: 100%; max-width: 320px;
+  i { position: absolute; left: v.$space-4; color: v.$color-gold; font-size: 0.85rem; pointer-events: none; transition: transform v.$transition-fast, color v.$transition-fast; }
+  &:focus-within i { transform: scale(1.1); color: v.$color-gold-light; }
 }
 
 .admin-search__input {
-  width: 100%;
-  height: 42px;
-  background-color: v.$admin-surface-2;
-  border: 1px solid v.$admin-border;
-  border-radius: v.$radius-pill;
-  padding: 0 v.$space-4 0 v.$space-10;
-  font-family: v.$font-sans;
-  font-size: v.$fs-xs;
-  color: v.$admin-text;
-  transition: all v.$transition-base;
-
+  width: 100%; height: 42px; background-color: v.$admin-surface-2; border: 1px solid v.$admin-border; border-radius: v.$radius-pill; padding: 0 v.$space-4 0 v.$space-10;
+  font-family: v.$font-sans; font-size: v.$fs-xs; color: v.$admin-text; transition: all v.$transition-base;
   &::placeholder { color: v.$admin-text-muted; font-style: italic; }
   &:hover        { border-color: rgba(v.$color-gold, 0.4); background-color: v.$admin-surface-3; }
-
-  &:focus {
-    outline: none;
-    background-color: v.$admin-surface-3;
-    border-color: v.$color-gold;
-    box-shadow: 0 0 0 4px rgba(v.$color-gold, 0.1);
-  }
-
+  &:focus { outline: none; background-color: v.$admin-surface-3; border-color: v.$color-gold; box-shadow: 0 0 0 4px rgba(v.$color-gold, 0.1); }
   &::-webkit-search-cancel-button {
-    -webkit-appearance: none;
-    height: 1em; width: 1em;
-    background: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23C9973A' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M18 6L6 18M6 6l12 12'/%3E%3C/svg%3E") no-repeat 50% 50%;
-    background-size: contain;
-    cursor: pointer;
-    margin-right: v.$space-1;
+    -webkit-appearance: none; height: 1em; width: 1em; background: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23C9973A' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M18 6L6 18M6 6l12 12'/%3E%3C/svg%3E") no-repeat 50% 50%; background-size: contain; cursor: pointer; margin-right: v.$space-1;
   }
 }

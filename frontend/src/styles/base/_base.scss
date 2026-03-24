@@ -1,7 +1,12 @@
+// ============================================================
+// ARCHIVO: _base.scss
+// DESCRIPCIÓN: Estilos base globales, configuración de scrollbar, 
+// tipografía del body y estructuras contenedoras de nivel superior.
+// ============================================================
 @use '../abstracts/variables' as v;
 @use '../abstracts/mixins'   as m;
 
-// ── Reset ────────────────────────────────────────────────────
+// ── Reset Global ────────────────────────────────────────────────────
 *,
 *::before,
 *::after {
@@ -10,7 +15,7 @@
   padding: 0;
 }
 
-// ── Scrollbar personalizada ───────────────────────────────
+// ── Scrollbar Personalizada ─────────────────────────────────────────
 ::-webkit-scrollbar          { width: 8px; height: 6px; }
 ::-webkit-scrollbar-track    { background: var(--color-bg); }
 ::-webkit-scrollbar-thumb    {
@@ -20,6 +25,7 @@
 }
 ::-webkit-scrollbar-thumb:hover { background: var(--color-gold); }
 
+// ── Estilos de Documento (Body & HTML) ──────────────────────────────
 html {
   font-size: v.$font-size-base;
   scroll-behavior: smooth;
@@ -31,17 +37,15 @@ body {
   font-family: v.$font-sans;
   font-size: v.$fs-md;
   line-height: v.$line-height-base;
-  
-  // ¡LA MAGIA OCURRE AQUÍ! Variables dinámicas y transición suave
   color: var(--color-text);
   background-color: var(--color-bg);
   transition: background-color 0.4s ease, color 0.4s ease;
-  
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
 }
 
+// ── Tipografía y Elementos Base ─────────────────────────────────────
 img, video { display: block; max-width: 100%; height: auto; }
 ul, ol { list-style: none; }
 address { font-style: normal; }
@@ -60,11 +64,11 @@ h1, h2, h3, h4, h5, h6 {
 em { font-style: italic; }
 strong { font-weight: 700; }
 
-// ── Accesibilidad ────────────────────────────────────────────
+// ── Accesibilidad ───────────────────────────────────────────────────
 :focus-visible { outline: 2px solid var(--color-gold); outline-offset: 3px; border-radius: 2px; }
 .visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
 
-// ── Contenedor y Secciones ───────────────────────────────────
+// ── Layout: Contenedores y Secciones ────────────────────────────────
 .container { @include m.container; }
 
 .section {
@@ -101,14 +105,14 @@ strong { font-weight: 700; }
 }
 
 .section__subtitle { font-size: v.$fs-lg; color: var(--color-text-mid); max-width: 52ch; margin-inline: auto; line-height: 1.75; }
-.section__ornament { display: block; font-size: 0.7rem; color: var(--color-gold-pale); letter-spacing: 0.26em; margin-top: v.$space-5; user-select: none; }
+.section__ornament { display: block; font-size: 1.5rem; color: var(--color-gold-pale); letter-spacing: 0.26em; margin-top: v.$space-5; user-select: none; }
 
 .section__header--light {
   .section__title { color: v.$color-parchment-light; }
   .section__subtitle { color: rgba(v.$color-parchment, 0.72); }
 }
 
-// ── Page Hero genérico ────────────────────────────────────────
+// ── Page Hero Genérico ──────────────────────────────────────────────
 .page-hero {
   background: linear-gradient(180deg, v.$color-forest 0%, v.$color-forest-mid 100%);
   padding-block: v.$space-20 v.$space-16;

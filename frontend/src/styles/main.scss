@@ -1,24 +1,30 @@
-// ── 1. Abstracts (Variables y Temas primero) ──
+// ============================================================
+// ARCHIVO: main.scss
+// DESCRIPCIÓN: Punto de entrada principal de SCSS. Importa y 
+// compila secuencialmente todos los módulos de Quinta Dalam.
+// ============================================================
+
+// ── 1. Abstracts ────────────────────────────────────────────────────
 @use 'abstracts/themes';
 @use 'abstracts/variables' as v;
 @use 'abstracts/mixins' as m;
 
-// ── 2. Base ──────────────────────────────────────────────────
+// ── 2. Base ─────────────────────────────────────────────────────────
 @use 'base/normalize';
 @use 'base/base';
 @use 'base/reset';
 
-// ── 3. Layout ────────────────────────────────────────────────
+// ── 3. Layout ───────────────────────────────────────────────────────
 @use 'layout/header';
 @use 'layout/footer';
 
-// ── 4. COMPONENTS ─────────────────────────────────────────────
+// ── 4. Componentes ──────────────────────────────────────────────────
 @use 'components/buttons'; 
 @use 'components/forms'; 
 @use 'components/cards';
 @use 'components/effects';
 
-// ── 5. Pages ─────────────────────────────────────────────────
+// ── 5. Páginas ──────────────────────────────────────────────────────
 @use 'pages/contacto';
 @use 'pages/habitaciones';
 @use 'pages/login';

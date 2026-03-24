@@ -31,7 +31,7 @@ export default function App() {
         }}>
         <RouteEffects />
         <Routes>
-          {/* Rutas Públicas (Header y Footer automáticos) */}
+          {/* Rutas Públicas */}
           <Route element={<PublicLayout />}>
             <Route path="/" element={<Home />} />
             <Route path="/habitaciones" element={<Habitaciones />} />

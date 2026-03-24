@@ -72,6 +72,26 @@ export default function Header() {
           <div className="header__mobile-actions">
             <Link to="/login" onClick={closeMobileMenu} className="header__mobile-login">Iniciar Sesión</Link>
             <Link to="/reservaciones" onClick={closeMobileMenu} className="header__mobile-cta">Reservar Ahora</Link>
+            
+            {/* ── Extras Móvil (Idiomas y Redes) ── */}
+            <div className="header__mobile-extras">
+              <div className="header__mobile-lang">
+                <a href="#" className="header__lang-switch">
+                  <img src={banderaMex} alt="ES" className="header__flag" width="18" height="12" /> ES
+                </a>
+                <span className="header__divider" aria-hidden="true"></span>
+                <a href="#" className="header__lang-switch">
+                  <img src={banderaEu} alt="EN" className="header__flag" width="18" height="12" /> EN
+                </a>
+              </div>
+              
+              <div className="header__mobile-socials">
+                <a href="#" aria-label="Facebook"><i className="fa-brands fa-facebook-f"></i></a>
+                <a href="#" aria-label="Instagram"><i className="fa-brands fa-instagram"></i></a>
+                <a href="#" aria-label="WhatsApp"><i className="fa-brands fa-whatsapp"></i></a>
+              </div>
+            </div>
+            {/* ──────────────────────────────────── */}
           </div>
         </nav>
 
@@ -98,7 +118,10 @@ export default function Header() {
             {theme === 'dark' ? <SunIcon /> : <MoonIcon />}
           </button>
 
-          <label htmlFor="nav-toggle" className="header__hamburger" style={{ marginLeft: 0 }}>
+          <label 
+            htmlFor="nav-toggle" className="header__hamburger" style={{ marginLeft: 0 }}
+            aria-label="Abrir menú de navegación"
+          >
             <span className="header__hamburger-bar"></span>
             <span className="header__hamburger-bar"></span>
             <span className="header__hamburger-bar"></span>

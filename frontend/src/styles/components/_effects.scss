@@ -1,42 +1,20 @@
+// ============================================================
+// ARCHIVO: _effects.scss
+// DESCRIPCIÓN: Animaciones de revelado al hacer scroll, 
+// estados globales de interacción y utilidades visuales dinámicas.
+// ============================================================
 @use '../abstracts/variables' as *;
 
-// ────────────────────────────────────────────────────────────
-//  REVEAL — scroll animation (bug-fixed version)
-//  Elements get .reveal added by JS. When in viewport, .is-visible is added.
-//  requestAnimationFrame in HtmlPage.jsx ensures layout is done before
-//  IntersectionObserver fires, preventing the disappearing-section bug.
-// ────────────────────────────────────────────────────────────
+// ── Animaciones Reveal (Scroll) ─────────────────────────────────────
 .reveal {
-  opacity: 0;
-  transform: translateY(22px);
-  transition:
-    opacity   $transition-slow,
-    transform $transition-slow;
-  will-change: opacity, transform;
+  opacity: 0; transform: translateY(22px); transition: opacity $transition-slow, transform $transition-slow; will-change: opacity, transform;
 }
+.reveal.is-visible { opacity: 1; transform: translateY(0); }
 
-.reveal.is-visible {
-  opacity: 1;
-  transform: translateY(0);
-}
+.reveal--left { transform: translateX(-28px); &.is-visible { transform: translateX(0); } }
+.reveal--right { transform: translateX(28px); &.is-visible { transform: translateX(0); } }
+.reveal--scale { transform: scale(0.94); &.is-visible { transform: scale(1); } }
 
-// Variantes de dirección
-.reveal--left {
-  transform: translateX(-28px);
-  &.is-visible { transform: translateX(0); }
-}
-
-.reveal--right {
-  transform: translateX(28px);
-  &.is-visible { transform: translateX(0); }
-}
-
-.reveal--scale {
-  transform: scale(0.94);
-  &.is-visible { transform: scale(1); }
-}
-
-// Delays escalonados para grupos
 .reveal-group > *:nth-child(1) { transition-delay: 0ms; }
 .reveal-group > *:nth-child(2) { transition-delay: 80ms; }
 .reveal-group > *:nth-child(3) { transition-delay: 160ms; }
@@ -45,102 +23,29 @@
 .reveal-group > *:nth-child(6) { transition-delay: 400ms; }
 
 @media (prefers-reduced-motion: reduce) {
-  .reveal,
-  .reveal--left,
-  .reveal--right,
-  .reveal--scale {
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
+  .reveal, .reveal--left, .reveal--right, .reveal--scale { opacity: 1; transform: none; transition: none; }
 }
 
-// ────────────────────────────────────────────────────────────
-//  HEADER SCROLL STATE
-// ────────────────────────────────────────────────────────────
-.header.header--scrolled {
-  background: rgba($color-forest, 0.96) !important;
-  box-shadow: 0 4px 32px rgba(0, 0, 0, 0.25);
-}
+// ── Header Scroll State ─────────────────────────────────────────────
+.header.header--scrolled { background: rgba($color-forest, 0.96) !important; box-shadow: 0 4px 32px rgba(0, 0, 0, 0.25); }
 
-// ────────────────────────────────────────────────────────────
-//  GLOBAL SMOOTH SCROLL
-// ────────────────────────────────────────────────────────────
-html {
-  scroll-behavior: smooth;
-}
+// ── Global Smooth Scroll ────────────────────────────────────────────
+html { scroll-behavior: smooth; }
 
-// ────────────────────────────────────────────────────────────
-//  SKELETON LOADER (para estados de carga futuros)
-// ────────────────────────────────────────────────────────────
-@keyframes skeleton-shimmer {
-  0%   { background-position: -200% 0; }
-  100% { background-position:  200% 0; }
-}
+// ── Skeleton Loader ─────────────────────────────────────────────────
+@keyframes skeleton-shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
 
 .skeleton {
-  background: linear-gradient(
-    90deg,
-    rgba($color-parchment-dark, 0.6) 25%,
-    rgba($color-parchment, 0.9)      50%,
-    rgba($color-parchment-dark, 0.6) 75%
-  );
-  background-size: 200% 100%;
-  animation: skeleton-shimmer 1.6s ease-in-out infinite;
-  border-radius: $radius-sm;
+  background: linear-gradient(90deg, rgba($color-parchment-dark, 0.6) 25%, rgba($color-parchment, 0.9) 50%, rgba($color-parchment-dark, 0.6) 75%);
+  background-size: 200% 100%; animation: skeleton-shimmer 1.6s ease-in-out infinite; border-radius: $radius-sm;
 }
 
-// ────────────────────────────────────────────────────────────
-//  FADE IN genérico (para elementos no observados)
-// ────────────────────────────────────────────────────────────
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
+// ── Animaciones Base (Fade In, Pulse) ───────────────────────────────
+@keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.04); } }
 
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
-
-@keyframes pulse {
-  0%, 100% { transform: scale(1); }
-  50%       { transform: scale(1.04); }
-}
-
-// ────────────────────────────────────────────────────────────
-//  UTILIDADES VISUALES
-// ────────────────────────────────────────────────────────────
-.visually-hidden {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
-}
-
-.text-gradient-gold {
-  background: $gradient-gold;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.ornament {
-  display: block;
-  font-size: 0.7rem;
-  letter-spacing: 0.3em;
-  color: $color-gold;
-  opacity: 0.8;
-  user-select: none;
-}
+// ── Utilidades Visuales ─────────────────────────────────────────────
+.visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+.text-gradient-gold { background: $gradient-gold; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.ornament { display: block; font-size: 0.7rem; letter-spacing: 0.3em; color: $color-gold; opacity: 0.8; user-select: none; }

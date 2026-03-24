@@ -3,7 +3,6 @@ import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
 export default function AdminLayout() {
     const location = useLocation();
 
-    // Diccionario para generar los breadcrumbs dinámicamente según la ruta
     const breadcrumbs = {
         "/admin/dashboard": "Dashboard",
         "/admin/reservaciones": "Reservaciones",
