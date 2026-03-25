@@ -1,18 +1,36 @@
 import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import ConfirmDeleteModal from '../../components/admin/ConfirmDeleteModal';
 
+const mockValores = [
+  { id: 1, titulo: 'Hospitalidad', icono: 'fa-handshake', descripcion: 'Cada huésped es parte de nuestra familia. El calor michoacano en cada gesto.' },
+  { id: 2, titulo: 'Sustentabilidad', icono: 'fa-leaf', descripcion: 'Compromiso con el medio ambiente y las comunidades locales de Michoacán.' },
+  { id: 3, titulo: 'Cultura', icono: 'fa-palette', descripcion: 'Preservamos y celebramos las tradiciones artesanales y gastronómicas.' }
+];
+
 export default function AdminNosotros() {
+  const [valores, setValores] = useState(mockValores);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [iconPreview, setIconPreview] = useState('fa-solid fa-star');
   const [editingId, setEditingId] = useState(null);
 
+  // Configuración de React Hook Form para el modal de "Nuevo Valor"
+  const { register, handleSubmit, formState: { errors }, reset } = useForm();
+
   const handleEditClick = (id) => setEditingId(id);
   const handleCancelEdit = () => setEditingId(null);
   
-  const handleDeleteConfirm = () => {
-    console.log("Valor eliminado");
-    setIsDeleteModalOpen(false);
+  const closeModal = () => {
+    setIsModalOpen(false);
+    reset();
+  };
+
+  // Función al enviar el formulario válido
+  const onSubmitValor = (data) => {
+    console.log("Nuevo valor listo para BD:", data);
+    alert("¡Valor creado con éxito!");
+    closeModal();
   };
 
   return (
@@ -96,7 +114,7 @@ export default function AdminNosotros() {
           </form>
         </section>
 
-        {/* ── VALORES ── */}
+        {/* ── SECCIÓN: VALORES DINÁMICOS ── */}
         <section className="admin-card admin-editor-section">
           <div className="admin-card__header">
             <h2 className="admin-card__title"><i className="fa-solid fa-gem"></i> Valores</h2>
@@ -104,60 +122,98 @@ export default function AdminNosotros() {
               <i className="fa-solid fa-plus"></i> Nuevo valor
             </button>
           </div>
+          
           <div className="admin-valores-list" style={{ padding: '1.5rem' }}>
-            <div className={`admin-valor-item ${editingId === 1 ? 'admin-valor-item--editing' : ''}`} style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start', paddingBottom: '1rem', borderBottom: '1px solid rgba(201,151,58,0.1)' }}>
-              <div className="admin-valor-item__icon" style={{ fontSize: '1.5rem', color: '#C9973A', paddingTop: '0.2rem' }}><i className="fa-solid fa-handshake"></i></div>
-              
-              {editingId !== 1 && (
-                <>
-                  <div className="admin-valor-item__read" style={{ flex: 1, minWidth: 0 }}>
-                    <strong style={{ display: 'block', color: '#EDE8DE', marginBottom: '0.2rem' }}>Hospitalidad</strong>
-                    <span style={{ color: 'rgba(237,232,222,0.6)', fontSize: '0.85rem' }}>Cada huésped es parte de nuestra familia. El calor michoacano en cada gesto.</span>
-                  </div>
-                  <div className="admin-valor-item__actions-read" style={{ display: 'flex', gap: '0.5rem' }}>
-                    <button type="button" className="admin-icon-btn admin-icon-btn--edit" onClick={() => handleEditClick(1)}><i className="fa-solid fa-pen"></i></button>
-                    <button type="button" className="admin-icon-btn admin-icon-btn--delete" onClick={() => setIsDeleteModalOpen(true)}><i className="fa-solid fa-trash"></i></button>
-                  </div>
-                </>
-              )}
+            {/* 3. RENDERIZADO DINÁMICO DE VALORES */}
+            {valores.map((valor) => (
+              <div key={valor.id} className={`admin-valor-item ${editingId === valor.id ? 'admin-valor-item--editing' : ''}`} style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start', paddingBottom: '1rem', borderBottom: '1px solid rgba(201,151,58,0.1)' }}>
+                <div className="admin-valor-item__icon" style={{ fontSize: '1.5rem', color: '#C9973A', paddingTop: '0.2rem' }}>
+                  <i className={`fa-solid ${valor.icono}`}></i>
+                </div>
+                
+                {editingId !== valor.id && (
+                  <>
+                    <div className="admin-valor-item__read" style={{ flex: 1, minWidth: 0 }}>
+                      <strong style={{ display: 'block', color: '#EDE8DE', marginBottom: '0.2rem' }}>{valor.titulo}</strong>
+                      <span style={{ color: 'rgba(237,232,222,0.6)', fontSize: '0.85rem' }}>{valor.descripcion}</span>
+                    </div>
+                    <div className="admin-valor-item__actions-read" style={{ display: 'flex', gap: '0.5rem' }}>
+                      <button type="button" className="admin-icon-btn admin-icon-btn--edit" onClick={() => handleEditClick(valor.id)}><i className="fa-solid fa-pen"></i></button>
+                      <button type="button" className="admin-icon-btn admin-icon-btn--delete" onClick={() => setIsDeleteModalOpen(true)}><i className="fa-solid fa-trash"></i></button>
+                    </div>
+                  </>
+                )}
 
-              {editingId === 1 && (
-                <>
-                  <div className="admin-valor-item__edit admin-form-grid" style={{ flex: 1, gap: '0.75rem 1.5rem' }}>
-                    <div className="admin-form__group"><label className="admin-form__label">Título</label><input className="admin-form__input" type="text" defaultValue="Hospitalidad" /></div>
-                    <div className="admin-form__group"><label className="admin-form__label">Ícono FA</label><input className="admin-form__input" type="text" defaultValue="fa-solid fa-handshake" /></div>
-                    <div className="admin-form__group admin-form__group--full"><label className="admin-form__label">Descripción</label><input className="admin-form__input" type="text" defaultValue="Cada huésped es parte de nuestra familia. El calor michoacano en cada gesto." /></div>
-                  </div>
-                  <div className="admin-valor-item__actions-edit" style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                    <button type="button" className="admin-btn admin-btn--primary admin-btn--sm" onClick={handleCancelEdit}><i className="fa-solid fa-check"></i> Guardar</button>
-                    <button type="button" className="admin-btn admin-btn--ghost admin-btn--sm" onClick={handleCancelEdit}>Cancelar</button>
-                  </div>
-                </>
-              )}
-            </div>
+                {/* Modo Edición Inline */}
+                {editingId === valor.id && (
+                  <>
+                    <div className="admin-valor-item__edit admin-form-grid" style={{ flex: 1, gap: '0.75rem 1.5rem' }}>
+                      <div className="admin-form__group"><label className="admin-form__label">Título</label><input className="admin-form__input" type="text" defaultValue={valor.titulo} /></div>
+                      <div className="admin-form__group"><label className="admin-form__label">Ícono FA</label><input className="admin-form__input" type="text" defaultValue={`fa-solid ${valor.icono}`} /></div>
+                      <div className="admin-form__group admin-form__group--full"><label className="admin-form__label">Descripción</label><input className="admin-form__input" type="text" defaultValue={valor.descripcion} /></div>
+                    </div>
+                    <div className="admin-valor-item__actions-edit" style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                      <button type="button" className="admin-btn admin-btn--primary admin-btn--sm" onClick={handleCancelEdit}><i className="fa-solid fa-check"></i> Guardar</button>
+                      <button type="button" className="admin-btn admin-btn--ghost admin-btn--sm" onClick={handleCancelEdit}>Cancelar</button>
+                    </div>
+                  </>
+                )}
+              </div>
+            ))}
           </div>
         </section>
       </main>
 
-      {/* Modales */}
+      {/* 4. MODAL VALIDADO: NUEVO VALOR */}
       <div className={`admin-modal-backdrop ${isModalOpen ? 'is-open' : ''}`}>
         <div className="admin-modal admin-modal--sm">
           <div className="admin-modal__header">
             <h3 className="admin-modal__title"><i className="fa-solid fa-plus"></i> Nuevo valor</h3>
-            <button type="button" className="admin-modal__close" onClick={() => setIsModalOpen(false)}><i className="fa-solid fa-xmark"></i></button>
+            <button type="button" className="admin-modal__close" onClick={closeModal}><i className="fa-solid fa-xmark"></i></button>
           </div>
-          <form className="admin-modal__form" noValidate>
-            <div className="admin-form__group"><label className="admin-form__label">Título *</label><input className="admin-form__input" type="text" required /></div>
+          
+          <form className="admin-modal__form" onSubmit={handleSubmit(onSubmitValor)} noValidate>
+            <div className="admin-form__group">
+              <label className="admin-form__label">Título *</label>
+              <input 
+                className={`admin-form__input ${errors.titulo ? 'input-error' : ''}`} 
+                type="text" 
+                {...register("titulo", { required: "El título es obligatorio" })} 
+              />
+              {errors.titulo && <span style={{color: '#d9534f', fontSize: '12px'}}>{errors.titulo.message}</span>}
+            </div>
+
             <div className="admin-form__group">
               <label className="admin-form__label">Ícono FA *</label>
               <div className="admin-icono-preview-wrap" style={{ display: 'flex', gap: '0.5rem' }}>
-                <input className="admin-form__input" type="text" onChange={(e) => setIconPreview(e.target.value)} required />
-                <span style={{ width: '38px', height: '38px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(201,151,58,0.2)', borderRadius: '6px', color: '#C9973A' }}><i className={iconPreview}></i></span>
+                <input 
+                  className={`admin-form__input ${errors.icono ? 'input-error' : ''}`} 
+                  type="text" 
+                  placeholder="fa-solid fa-star"
+                  {...register("icono", { 
+                    required: "El ícono es obligatorio",
+                    onChange: (e) => setIconPreview(e.target.value)
+                  })} 
+                />
+                <span style={{ width: '38px', height: '38px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(201,151,58,0.2)', borderRadius: '6px', color: '#C9973A' }}>
+                  <i className={iconPreview}></i>
+                </span>
               </div>
+              {errors.icono && <span style={{color: '#d9534f', fontSize: '12px'}}>{errors.icono.message}</span>}
             </div>
-            <div className="admin-form__group"><label className="admin-form__label">Descripción *</label><input className="admin-form__input" type="text" required /></div>
+
+            <div className="admin-form__group">
+              <label className="admin-form__label">Descripción *</label>
+              <input 
+                className={`admin-form__input ${errors.descripcion ? 'input-error' : ''}`} 
+                type="text" 
+                {...register("descripcion", { required: "La descripción es obligatoria" })} 
+              />
+              {errors.descripcion && <span style={{color: '#d9534f', fontSize: '12px'}}>{errors.descripcion.message}</span>}
+            </div>
+
             <div className="admin-modal__actions">
-              <button type="button" className="admin-btn admin-btn--ghost" onClick={() => setIsModalOpen(false)}>Cancelar</button>
+              <button type="button" className="admin-btn admin-btn--ghost" onClick={closeModal}>Cancelar</button>
               <button type="submit" className="admin-btn admin-btn--primary"><i className="fa-solid fa-floppy-disk"></i> Crear valor</button>
             </div>
           </form>

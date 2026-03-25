@@ -66,7 +66,6 @@ export default function Header() {
             <li><NavLink to="/habitaciones" onClick={closeMobileMenu} className={({ isActive }) => `header__link ${isActive ? 'header__link--active' : ''}`}>Habitaciones</NavLink></li>
             <li><NavLink to="/nosotros" onClick={closeMobileMenu} className={({ isActive }) => `header__link ${isActive ? 'header__link--active' : ''}`}>Nosotros</NavLink></li>
             <li><NavLink to="/contacto" onClick={closeMobileMenu} className={({ isActive }) => `header__link ${isActive ? 'header__link--active' : ''}`}>Contacto</NavLink></li>
-            <li><NavLink to="/admin/dashboard" onClick={closeMobileMenu} className={({ isActive }) => `header__link ${isActive ? 'header__link--active' : ''}`} style={{ color: '#C9973A', fontWeight: 'bold' }}>ADMIN</NavLink></li>
           </ul>
 
           <div className="header__mobile-actions">

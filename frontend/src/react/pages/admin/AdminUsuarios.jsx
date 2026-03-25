@@ -1,13 +1,29 @@
 import { useState } from 'react';
+import { useForm } from 'react-hook-form'; 
 import ConfirmDeleteModal from '../../components/admin/ConfirmDeleteModal';
 
+const mockUsuarios = [
+  { id: 1, nombre: 'Carolina Mendoza', correo: 'carolina@quintadalam.mx', rol: 'Administrador', estado: 'Activo', ultimoAcceso: 'Hoy, 10:42 am', iniciales: 'CM', colorBg: '' },
+  { id: 2, nombre: 'Tomás Guerrero', correo: 'tomas@quintadalam.mx', rol: 'Recepción', estado: 'Inactivo', ultimoAcceso: 'Hace 2 meses', iniciales: 'TG', colorBg: '#5c6b7a' }
+];
+
 export default function AdminUsuarios() {
-  const [activeModal, setActiveModal] = useState(null); // 'create', 'edit', 'delete', 'toggle'
+  const [usuarios, setUsuarios] = useState(mockUsuarios); 
+  const [activeModal, setActiveModal] = useState(null); 
   const [userToDelete, setUserToDelete] = useState(null);
   const [showPassword1, setShowPassword1] = useState(false);
-  const [nameInitials, setNameInitials] = useState('CM');
+  const [nameInitials, setNameInitials] = useState('??');
+  
+  // ── ESTADO DE LA BÚSQUEDA ──
+  const [searchTerm, setSearchTerm] = useState('');
 
-  const closeModal = () => setActiveModal(null);
+  const { register, handleSubmit, formState: { errors }, reset } = useForm();
+
+  const closeModal = () => {
+    setActiveModal(null);
+    reset(); 
+    setNameInitials('??');
+  };
 
   const handleNameChange = (e) => {
     const name = e.target.value;
@@ -19,6 +35,21 @@ export default function AdminUsuarios() {
     setUserToDelete(userName);
     setActiveModal('delete');
   };
+
+  const onSubmitUsuario = (data) => {
+    console.log("Datos del usuario listos para BD:", data);
+    alert(`¡Usuario ${activeModal === 'create' ? 'creado' : 'editado'} con éxito!`);
+    closeModal();
+  };
+
+  // ── LÓGICA DE FILTRADO ──
+  const filteredUsuarios = usuarios.filter((user) => {
+    const term = searchTerm.toLowerCase();
+    return (
+      user.nombre.toLowerCase().includes(term) ||
+      user.correo.toLowerCase().includes(term)
+    );
+  });
 
   return (
     <>
@@ -39,7 +70,13 @@ export default function AdminUsuarios() {
             <div className="admin-usuarios-toolbar" style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
               <div className="admin-search">
                 <i className="fa-solid fa-magnifying-glass"></i>
-                <input className="admin-search__input" type="search" placeholder="Buscar por nombre..." />
+                <input 
+                  className="admin-search__input" 
+                  type="search" 
+                  placeholder="Buscar por nombre o correo..." 
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
               </div>
             </div>
           </div>
@@ -52,52 +89,54 @@ export default function AdminUsuarios() {
                 </tr>
               </thead>
               <tbody>
-                {/* ── USUARIO 1 ── */}
-                <tr>
-                  <td>
-                    <div className="admin-table__guest">
-                      <div className="admin-table__avatar">CM</div>
-                      <div><strong>Carolina Mendoza</strong><small>carolina@quintadalam.mx</small></div>
-                    </div>
-                  </td>
-                  <td><span className="admin-badge admin-badge--gold">Administrador</span></td>
-                  <td><span className="admin-badge admin-badge--confirmed">Activo</span></td>
-                  <td className="admin-usuarios-table__date">Hoy, 10:42 am</td>
-                  <td>
-                    <div className="admin-table__actions">
-                      <button className="admin-icon-btn admin-icon-btn--edit" onClick={() => setActiveModal('edit')}><i className="fa-solid fa-pen"></i></button>
-                      <button className="admin-icon-btn admin-icon-btn--view" onClick={() => setActiveModal('toggle')}><i className="fa-solid fa-power-off"></i></button>
-                      <button className="admin-icon-btn admin-icon-btn--delete" onClick={() => openDeleteModal('Carolina Mendoza')}><i className="fa-solid fa-trash"></i></button>
-                    </div>
-                  </td>
-                </tr>
-
-                {/* ── USUARIO 2 ── */}
-                <tr className="admin-table__row--muted">
-                  <td>
-                    <div className="admin-table__guest">
-                      <div className="admin-table__avatar" style={{ background: '#5c6b7a' }}>TG</div>
-                      <div><strong>Tomás Guerrero</strong><small>tomas@quintadalam.mx</small></div>
-                    </div>
-                  </td>
-                  <td><span className="admin-badge admin-badge--neutral">Recepción</span></td>
-                  <td><span className="admin-badge admin-badge--cancelled">Inactivo</span></td>
-                  <td className="admin-usuarios-table__date">Hace 2 meses</td>
-                  <td>
-                    <div className="admin-table__actions">
-                      <button className="admin-icon-btn admin-icon-btn--edit" onClick={() => setActiveModal('edit')}><i className="fa-solid fa-pen"></i></button>
-                      <button className="admin-icon-btn admin-icon-btn--view" onClick={() => setActiveModal('toggle')}><i className="fa-solid fa-power-off"></i></button>
-                      <button className="admin-icon-btn admin-icon-btn--delete" onClick={() => openDeleteModal('Tomás Guerrero')}><i className="fa-solid fa-trash"></i></button>
-                    </div>
-                  </td>
-                </tr>
+                {/* ── Uso del array filtrado ── */}
+                {filteredUsuarios.length > 0 ? (
+                  filteredUsuarios.map((user) => (
+                    <tr key={user.id} className={user.estado === 'Inactivo' ? 'admin-table__row--muted' : ''}>
+                      <td>
+                        <div className="admin-table__guest">
+                          <div className="admin-table__avatar" style={user.colorBg ? { background: user.colorBg } : {}}>
+                            {user.iniciales}
+                          </div>
+                          <div>
+                            <strong>{user.nombre}</strong>
+                            <small>{user.correo}</small>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <span className={`admin-badge ${user.rol === 'Administrador' ? 'admin-badge--gold' : 'admin-badge--neutral'}`}>
+                          {user.rol}
+                        </span>
+                      </td>
+                      <td>
+                        <span className={`admin-badge ${user.estado === 'Activo' ? 'admin-badge--confirmed' : 'admin-badge--cancelled'}`}>
+                          {user.estado}
+                        </span>
+                      </td>
+                      <td className="admin-usuarios-table__date">{user.ultimoAcceso}</td>
+                      <td>
+                        <div className="admin-table__actions">
+                          <button className="admin-icon-btn admin-icon-btn--edit" onClick={() => setActiveModal('edit')}><i className="fa-solid fa-pen"></i></button>
+                          <button className="admin-icon-btn admin-icon-btn--delete" onClick={() => openDeleteModal(user.nombre)}><i className="fa-solid fa-trash"></i></button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="5" style={{ textAlign: 'center', padding: '2rem', color: 'var(--admin-text-muted)' }}>
+                      No se encontraron usuarios para "{searchTerm}"
+                    </td>
+                  </tr>
+                )}
               </tbody>
             </table>
           </div>
         </div>
       </main>
 
-      {/* MODAL: Crear/Editar Usuario */}
+      {/* Modal con formualrio validado */}
       <div className={`admin-modal-backdrop ${activeModal === 'create' || activeModal === 'edit' ? 'is-open' : ''}`}>
         <div className="admin-modal admin-modal--sm">
           <div className="admin-modal__header">
@@ -106,26 +145,45 @@ export default function AdminUsuarios() {
             </h3>
             <button type="button" className="admin-modal__close" onClick={closeModal}><i className="fa-solid fa-xmark"></i></button>
           </div>
-          <form className="admin-modal__form" noValidate>
+          
+          <form className="admin-modal__form" onSubmit={handleSubmit(onSubmitUsuario)} noValidate>
             <div className="admin-usuario-form-top" style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
               <div className="admin-table__avatar" style={{ width: '50px', height: '50px', fontSize: '1.2rem' }}>{nameInitials}</div>
               <div className="admin-form-grid" style={{ flex: 1 }}>
                 <div className="admin-form__group admin-form__group--full">
                   <label className="admin-form__label">Nombre completo</label>
-                  <input className="admin-form__input" type="text" defaultValue="Carolina Mendoza" onChange={handleNameChange} required />
+                  <input 
+                    className={`admin-form__input ${errors.nombre ? 'input-error' : ''}`} 
+                    type="text" 
+                    placeholder="Ej. Carolina Mendoza"
+                    {...register("nombre", { 
+                      required: "El nombre es obligatorio",
+                      onChange: handleNameChange
+                    })} 
+                  />
+                  {errors.nombre && <span style={{color: '#d9534f', fontSize: '12px'}}>{errors.nombre.message}</span>}
                 </div>
               </div>
             </div>
 
             <div className="admin-form__group">
               <label className="admin-form__label">Correo electrónico</label>
-              <input className="admin-form__input" type="email" defaultValue="carolina@quintadalam.mx" required />
+              <input 
+                className={`admin-form__input ${errors.correo ? 'input-error' : ''}`} 
+                type="email" 
+                placeholder="usuario@quintadalam.mx"
+                {...register("correo", { 
+                  required: "El correo es obligatorio",
+                  pattern: { value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i, message: "Correo inválido" }
+                })} 
+              />
+              {errors.correo && <span style={{color: '#d9534f', fontSize: '12px'}}>{errors.correo.message}</span>}
             </div>
 
             <div className="admin-form-grid">
               <div className="admin-form__group">
                 <label className="admin-form__label">Rol</label>
-                <select className="admin-form__input" defaultValue="Administrador">
+                <select className="admin-form__input" defaultValue="Administrador" {...register("rol")}>
                   <option>Administrador</option>
                   <option>Editor</option>
                   <option>Recepción</option>
@@ -133,7 +191,7 @@ export default function AdminUsuarios() {
               </div>
               <div className="admin-form__group">
                 <label className="admin-form__label">Estado</label>
-                <select className="admin-form__input" defaultValue="activo">
+                <select className="admin-form__input" defaultValue="activo" {...register("estado")}>
                   <option value="activo">Activo</option>
                   <option value="inactivo">Inactivo</option>
                 </select>
@@ -144,9 +202,22 @@ export default function AdminUsuarios() {
               <div className="admin-form__group">
                 <label className="admin-form__label">Contraseña</label>
                 <div className="admin-search">
-                  <input className="admin-form__input" type={showPassword1 ? "text" : "password"} style={{ paddingLeft: '1rem' }} />
-                  <i className={`fa-solid ${showPassword1 ? "fa-eye-slash" : "fa-eye"}`} style={{ left: 'auto', right: '1rem', cursor: 'pointer', pointerEvents: 'auto' }} onClick={() => setShowPassword1(!showPassword1)}></i>
+                  <input 
+                    className={`admin-form__input ${errors.password ? 'input-error' : ''}`} 
+                    type={showPassword1 ? "text" : "password"} 
+                    style={{ paddingLeft: '1rem' }} 
+                    {...register("password", { 
+                      required: "Requerida para usuarios nuevos",
+                      minLength: { value: 6, message: "Mínimo 6 caracteres" }
+                    })}
+                  />
+                  <i 
+                    className={`fa-solid ${showPassword1 ? "fa-eye-slash" : "fa-eye"}`} 
+                    style={{ left: 'auto', right: '1rem', cursor: 'pointer', pointerEvents: 'auto' }} 
+                    onClick={() => setShowPassword1(!showPassword1)}
+                  ></i>
                 </div>
+                {errors.password && <span style={{color: '#d9534f', fontSize: '12px'}}>{errors.password.message}</span>}
               </div>
             )}
 

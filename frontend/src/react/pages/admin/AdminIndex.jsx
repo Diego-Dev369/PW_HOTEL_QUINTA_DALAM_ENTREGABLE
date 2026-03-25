@@ -1,12 +1,45 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
 import ConfirmDeleteModal from '../../components/admin/ConfirmDeleteModal';
 
+const mockExperiencias = [
+  { id: 1, titulo: 'Artesanía Tradicional', imagen: '/images/interiores/decoracion1.jpeg' },
+  { id: 2, titulo: 'Naturaleza Asombrosa', imagen: '/images/exteriores/vista_manantial.jpeg' }
+];
+
+const mockServicios = [
+  { id: 1, titulo: 'Habitaciones Premium', descripcion: 'Diseño boutique con máximo confort...', icono: 'fa-bed' },
+  { id: 2, titulo: 'Entorno Natural', descripcion: 'Tranquilidad y conexión profunda...', icono: 'fa-tree' }
+];
+
+const mockGaleria = [
+  { id: 1, imagen: '/images/interiores/decoracion1.jpeg' },
+  { id: 2, imagen: '/images/exteriores/vista_manantial.jpeg' }
+];
+
 export default function AdminIndex() {
+  const [experiencias] = useState(mockExperiencias);
+  const [servicios] = useState(mockServicios);
+  const [galeria] = useState(mockGaleria);
+
   const [modalType, setModalType] = useState(null); 
   const [iconPreview, setIconPreview] = useState('fa-solid fa-bed');
 
-  const closeModal = () => setModalType(null);
+  // Hook Form para los Modales y Formularios
+  const { register, handleSubmit, formState: { errors }, reset } = useForm();
+
+  const closeModal = () => {
+    setModalType(null);
+    reset();
+  };
+
+  // Función genérica al enviar cualquier formulario o modal
+  const onSubmitData = (data) => {
+    console.log(`Datos guardados/actualizados listos para BD:`, data);
+    alert(`¡Cambios guardados con éxito!`);
+    if(modalType) closeModal();
+  };
 
   return (
     <>
@@ -31,7 +64,11 @@ export default function AdminIndex() {
             <i className="fa-solid fa-chevron-right admin-index-map__sep"></i>
             <a href="#sec-servicios" className="admin-index-map__item"><i className="fa-solid fa-concierge-bell"></i> Servicios</a>
             <i className="fa-solid fa-chevron-right admin-index-map__sep"></i>
-            <a href="#sec-about" className="admin-index-map__item"><i className="fa-solid fa-heart"></i> Nosotros (Resumen)</a>
+            <a href="#sec-galeria" className="admin-index-map__item"><i className="fa-solid fa-images"></i> Galería</a>
+            <i className="fa-solid fa-chevron-right admin-index-map__sep"></i>
+            <a href="#sec-about" className="admin-index-map__item"><i className="fa-solid fa-heart"></i> Nosotros</a>
+            <i className="fa-solid fa-chevron-right admin-index-map__sep"></i>
+            <a href="#sec-cta" className="admin-index-map__item"><i className="fa-solid fa-bullhorn"></i> CTA</a>
           </div>
         </nav>
 
@@ -40,15 +77,15 @@ export default function AdminIndex() {
           <div className="admin-card__header">
             <h2 className="admin-card__title"><i className="fa-solid fa-image"></i> Hero principal</h2>
           </div>
-          <form className="admin-editor-form" noValidate>
+          <form className="admin-editor-form" onSubmit={handleSubmit(onSubmitData)} noValidate>
             <div className="admin-form-grid">
               <div className="admin-form__group">
                 <label className="admin-form__label">Título</label>
-                <input className="admin-form__input" type="text" defaultValue="Vive la Magia de Michoacán" />
+                <input className={`admin-form__input ${errors.heroTitulo ? 'input-error' : ''}`} type="text" defaultValue="Vive la Magia de Michoacán" {...register("heroTitulo", { required: "Requerido" })} />
               </div>
               <div className="admin-form__group admin-form__group--full">
                 <label className="admin-form__label">Subtítulo</label>
-                <input className="admin-form__input" type="text" defaultValue="Descubre la hospitalidad, artesanía y cultura de los Pueblos Mágicos." />
+                <input className={`admin-form__input ${errors.heroSubtitulo ? 'input-error' : ''}`} type="text" defaultValue="Descubre la hospitalidad, artesanía y cultura de los Pueblos Mágicos." {...register("heroSubtitulo", { required: "Requerido" })} />
               </div>
             </div>
             <div className="admin-editor-actions">
@@ -58,7 +95,7 @@ export default function AdminIndex() {
           </form>
         </section>
 
-        {/* ── 2. EXPERIENCIAS ── */}
+        {/* ── 2. EXPERIENCIAS DINÁMICAS ── */}
         <section className="admin-card" id="sec-experiencias">
           <div className="admin-card__header">
             <h2 className="admin-card__title"><i className="fa-solid fa-camera"></i> Experiencias</h2>
@@ -68,19 +105,21 @@ export default function AdminIndex() {
           </div>
           <div className="admin-editor-subsection">
             <div className="admin-crud-list">
-              <div className="admin-crud-item">
-                <div className="admin-crud-item__icon-wrap" style={{ background: 'url("/images/interiores/decoracion1.jpeg") center/cover' }}></div>
-                <div className="admin-crud-item__info"><strong>Artesanía Tradicional</strong></div>
-                <div className="admin-crud-item__actions">
-                  <button className="admin-icon-btn admin-icon-btn--edit" onClick={() => setModalType('experiencia')}><i className="fa-solid fa-pen"></i></button>
-                  <button className="admin-icon-btn admin-icon-btn--delete" onClick={() => setModalType('delete')}><i className="fa-solid fa-trash"></i></button>
+              {experiencias.map(exp => (
+                <div key={exp.id} className="admin-crud-item">
+                  <div className="admin-crud-item__icon-wrap" style={{ background: `url("${exp.imagen}") center/cover` }}></div>
+                  <div className="admin-crud-item__info"><strong>{exp.titulo}</strong></div>
+                  <div className="admin-crud-item__actions">
+                    <button className="admin-icon-btn admin-icon-btn--edit" onClick={() => setModalType('experiencia')}><i className="fa-solid fa-pen"></i></button>
+                    <button className="admin-icon-btn admin-icon-btn--delete" onClick={() => setModalType('delete')}><i className="fa-solid fa-trash"></i></button>
+                  </div>
                 </div>
-              </div>
+              ))}
             </div>
           </div>
         </section>
 
-        {/* ── 3. SERVICIOS ── */}
+        {/* ── 3. SERVICIOS DINÁMICOS ── */}
         <section className="admin-card" id="sec-servicios">
           <div className="admin-card__header">
             <h2 className="admin-card__title"><i className="fa-solid fa-concierge-bell"></i> Servicios de Distinción</h2>
@@ -88,29 +127,24 @@ export default function AdminIndex() {
               <i className="fa-solid fa-plus"></i> Nuevo servicio
             </button>
           </div>
-          <form className="admin-editor-form" style={{ borderBottom: '1px solid rgba(201,151,58,0.2)', paddingBottom: '1.5rem' }}>
-            <div className="admin-form-grid">
-              <div className="admin-form__group"><label className="admin-form__label">Eyebrow</label><input className="admin-form__input" type="text" defaultValue="Lo que ofrecemos" /></div>
-              <div className="admin-form__group"><label className="admin-form__label">Título de Sección</label><input className="admin-form__input" type="text" defaultValue="Servicios de Distinción" /></div>
-              <div className="admin-form__group admin-form__group--full"><label className="admin-form__label">Subtítulo</label><input className="admin-form__input" type="text" defaultValue="Todo lo necesario para una estancia verdaderamente inolvidable" /></div>
-            </div>
-            <div style={{ textAlign: 'right', marginTop: '1rem' }}><button className="admin-btn admin-btn--ghost admin-btn--sm">Guardar Textos</button></div>
-          </form>
+          
           <div className="admin-editor-subsection">
             <div className="admin-crud-list">
-              <div className="admin-crud-item">
-                <div className="admin-crud-item__icon-wrap"><i className="fa-solid fa-bed"></i></div>
-                <div className="admin-crud-item__info"><strong>Habitaciones Premium</strong><small>Diseño boutique con máximo confort...</small></div>
-                <div className="admin-crud-item__actions">
-                  <button className="admin-icon-btn admin-icon-btn--edit" onClick={() => setModalType('servicio')}><i className="fa-solid fa-pen"></i></button>
-                  <button className="admin-icon-btn admin-icon-btn--delete" onClick={() => setModalType('delete')}><i className="fa-solid fa-trash"></i></button>
+              {servicios.map(serv => (
+                <div key={serv.id} className="admin-crud-item">
+                  <div className="admin-crud-item__icon-wrap"><i className={`fa-solid ${serv.icono}`}></i></div>
+                  <div className="admin-crud-item__info"><strong>{serv.titulo}</strong><small>{serv.descripcion}</small></div>
+                  <div className="admin-crud-item__actions">
+                    <button className="admin-icon-btn admin-icon-btn--edit" onClick={() => setModalType('servicio')}><i className="fa-solid fa-pen"></i></button>
+                    <button className="admin-icon-btn admin-icon-btn--delete" onClick={() => setModalType('delete')}><i className="fa-solid fa-trash"></i></button>
+                  </div>
                 </div>
-              </div>
+              ))}
             </div>
           </div>
         </section>
 
-        {/* ── GALERÍA (LOOKBOOK) ── */}
+        {/* ── 4. GALERÍA DINÁMICA ── */}
         <section className="admin-card" id="sec-galeria">
           <div className="admin-card__header">
             <h2 className="admin-card__title"><i className="fa-solid fa-images"></i> Galería (Atmósfera)</h2>
@@ -118,68 +152,53 @@ export default function AdminIndex() {
               <i className="fa-solid fa-plus"></i> Nueva imagen
             </button>
           </div>
-          
-          {/* Textos de la sección */}
-          <form className="admin-editor-form" style={{ borderBottom: '1px solid rgba(201,151,58,0.2)', paddingBottom: '1.5rem' }} noValidate>
-            <div className="admin-form-grid">
-              <div className="admin-form__group"><label className="admin-form__label">Eyebrow</label><input className="admin-form__input" type="text" defaultValue="Atmósfera" /></div>
-              <div className="admin-form__group"><label className="admin-form__label">Título de Sección</label><input className="admin-form__input" type="text" defaultValue="Nuestra Esencia" /></div>
-              <div className="admin-form__group admin-form__group--full"><label className="admin-form__label">Subtítulo</label><input className="admin-form__input" type="text" defaultValue="Capturamos los momentos que definen la estancia en Quinta Dalam." /></div>
-            </div>
-            <div style={{ textAlign: 'right', marginTop: '1rem' }}><button className="admin-btn admin-btn--ghost admin-btn--sm">Guardar Textos</button></div>
-          </form>
 
-          {/* Grid de Imágenes actuales */}
           <div className="admin-editor-subsection">
             <div className="admin-crud-list" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))', gap: '1rem', padding: '1.5rem' }}>
-              
-              {/* Imagen 1 */}
-              <div style={{ position: 'relative', borderRadius: '8px', overflow: 'hidden', border: '1px solid rgba(201,151,58,0.2)', aspectRatio: '1/1' }}>
-                <div style={{ width: '100%', height: '100%', background: 'url("/images/interiores/decoracion1.jpeg") center/cover' }}></div>
-                <button 
-                  type="button" 
-                  className="admin-icon-btn admin-icon-btn--delete" 
-                  style={{ position: 'absolute', top: '0.5rem', right: '0.5rem', background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(4px)' }} 
-                  onClick={() => setModalType('delete')}
-                  title="Eliminar imagen"
-                >
-                  <i className="fa-solid fa-trash"></i>
-                </button>
-              </div>
-
-              {/* Imagen 2 */}
-              <div style={{ position: 'relative', borderRadius: '8px', overflow: 'hidden', border: '1px solid rgba(201,151,58,0.2)', aspectRatio: '1/1' }}>
-                <div style={{ width: '100%', height: '100%', background: 'url("/images/exteriores/vista_manantial.jpeg") center/cover' }}></div>
-                <button 
-                  type="button" 
-                  className="admin-icon-btn admin-icon-btn--delete" 
-                  style={{ position: 'absolute', top: '0.5rem', right: '0.5rem', background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(4px)' }} 
-                  onClick={() => setModalType('delete')}
-                  title="Eliminar imagen"
-                >
-                  <i className="fa-solid fa-trash"></i>
-                </button>
-              </div>
-
+              {galeria.map(img => (
+                <div key={img.id} style={{ position: 'relative', borderRadius: '8px', overflow: 'hidden', border: '1px solid rgba(201,151,58,0.2)', aspectRatio: '1/1' }}>
+                  <div style={{ width: '100%', height: '100%', background: `url("${img.imagen}") center/cover` }}></div>
+                  <button 
+                    type="button" 
+                    className="admin-icon-btn admin-icon-btn--delete" 
+                    style={{ position: 'absolute', top: '0.5rem', right: '0.5rem', background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(4px)' }} 
+                    onClick={() => setModalType('delete')}
+                  >
+                    <i className="fa-solid fa-trash"></i>
+                  </button>
+                </div>
+              ))}
             </div>
           </div>
         </section>
 
-        {/* ── 4. NOSOTROS (PREVIEW) ── */}
+        {/* ── 5. NOSOTROS (PREVIEW) ── */}
         <section className="admin-card" id="sec-about">
           <div className="admin-card__header">
             <h2 className="admin-card__title"><i className="fa-solid fa-heart"></i> Sobre Nosotros (Resumen)</h2>
           </div>
-          <form className="admin-editor-form" noValidate>
+          <form className="admin-editor-form" onSubmit={handleSubmit(onSubmitData)} noValidate>
             <div className="admin-form-grid">
-              <div className="admin-form__group"><label className="admin-form__label">Eyebrow</label><input className="admin-form__input" type="text" defaultValue="Nuestra Historia" /></div>
-              <div className="admin-form__group"><label className="admin-form__label">Título</label><input className="admin-form__input" type="text" defaultValue="Una Experiencia Boutique sin igual" /></div>
+              <div className="admin-form__group">
+                <label className="admin-form__label">Eyebrow</label>
+                <input className="admin-form__input" type="text" defaultValue="Nuestra Historia" {...register("aboutEyebrow")} />
+              </div>
+              <div className="admin-form__group">
+                <label className="admin-form__label">Título</label>
+                <input className={`admin-form__input ${errors.aboutTitulo ? 'input-error' : ''}`} type="text" defaultValue="Una Experiencia Boutique sin igual" {...register("aboutTitulo", { required: "Requerido" })} />
+              </div>
               <div className="admin-form__group admin-form__group--full">
                 <label className="admin-form__label">Descripción</label>
-                <textarea className="admin-form__input" rows="3" defaultValue="Hotel Quinta Dalam nació del amor por la cultura michoacana y el arte de la hospitalidad..."></textarea>
+                <textarea className={`admin-form__input ${errors.aboutDesc ? 'input-error' : ''}`} rows="3" defaultValue="Hotel Quinta Dalam nació del amor por la cultura michoacana..." {...register("aboutDesc", { required: "Requerido" })}></textarea>
               </div>
-              <div className="admin-form__group"><label className="admin-form__label">Insignia: Número</label><input className="admin-form__input" type="number" defaultValue="2" /></div>
-              <div className="admin-form__group"><label className="admin-form__label">Insignia: Texto</label><input className="admin-form__input" type="text" defaultValue="años de hospitalidad" /></div>
+              <div className="admin-form__group">
+                <label className="admin-form__label">Insignia: Número</label>
+                <input className="admin-form__input" type="number" defaultValue="2" {...register("aboutNum")} />
+              </div>
+              <div className="admin-form__group">
+                <label className="admin-form__label">Insignia: Texto</label>
+                <input className="admin-form__input" type="text" defaultValue="años de hospitalidad" {...register("aboutNumText")} />
+              </div>
             </div>
             <div className="admin-editor-actions">
               <button type="button" className="admin-btn admin-btn--ghost">Descartar</button>
@@ -188,18 +207,24 @@ export default function AdminIndex() {
           </form>
         </section>
 
-        {/* ── 5. CTA FINAL ── */}
+        {/* ── 6. CTA FINAL ── */}
         <section className="admin-card" id="sec-cta">
           <div className="admin-card__header">
             <h2 className="admin-card__title"><i className="fa-solid fa-bullhorn"></i> Llamada a la acción (Final)</h2>
           </div>
-          <form className="admin-editor-form" noValidate>
+          <form className="admin-editor-form" onSubmit={handleSubmit(onSubmitData)} noValidate>
             <div className="admin-form-grid">
-              <div className="admin-form__group"><label className="admin-form__label">Eyebrow</label><input className="admin-form__input" type="text" defaultValue="¿Listo para tu escapada?" /></div>
-              <div className="admin-form__group"><label className="admin-form__label">Título</label><input className="admin-form__input" type="text" defaultValue="Reserva tu estancia perfecta" /></div>
+              <div className="admin-form__group">
+                <label className="admin-form__label">Eyebrow</label>
+                <input className="admin-form__input" type="text" defaultValue="¿Listo para tu escapada?" {...register("ctaEyebrow")} />
+              </div>
+              <div className="admin-form__group">
+                <label className="admin-form__label">Título</label>
+                <input className={`admin-form__input ${errors.ctaTitulo ? 'input-error' : ''}`} type="text" defaultValue="Reserva tu estancia perfecta" {...register("ctaTitulo", { required: "Requerido" })} />
+              </div>
               <div className="admin-form__group admin-form__group--full">
                 <label className="admin-form__label">Descripción</label>
-                <input className="admin-form__input" type="text" defaultValue="Vive una experiencia inolvidable en el corazón de Michoacán." />
+                <input className="admin-form__input" type="text" defaultValue="Vive una experiencia inolvidable en el corazón de Michoacán." {...register("ctaDesc")} />
               </div>
             </div>
             <div className="admin-editor-actions">
@@ -211,7 +236,7 @@ export default function AdminIndex() {
 
       </main>
 
-      {/* ── MODALES DINÁMICOS ── */}
+      {/* ── MODALES DINAMICOS VALIDADOS ── */}
       
       {/* Modal: Experiencia */}
       <div className={`admin-modal-backdrop ${modalType === 'experiencia' ? 'is-open' : ''}`}>
@@ -220,32 +245,18 @@ export default function AdminIndex() {
             <h2 className="admin-modal__title"><i className="fa-solid fa-camera"></i> Tarjeta de experiencia</h2>
             <button type="button" className="admin-modal__close" onClick={closeModal}><i className="fa-solid fa-xmark"></i></button>
           </div>
-          <form className="admin-modal__form" noValidate>
+          <form className="admin-modal__form" onSubmit={handleSubmit(onSubmitData)} noValidate>
             <div className="admin-form__group">
-              <label className="admin-form__label">Título (usa {"<br/>"} para salto de línea)</label>
-              <input className="admin-form__input" type="text" placeholder="Ej. Artesanía<br/>Tradicional" />
-            </div>
-            <div className="admin-form__group">
-              <label className="admin-form__label">Texto alternativo de imagen (SEO)</label>
-              <input className="admin-form__input" type="text" placeholder="Artesanía michoacana..." />
-            </div>
-            <div className="admin-form__group">
-              <span className="admin-form__label">Subir Imagen</span>
-              <label 
-                style={{ display: 'block', padding: '1rem', border: '1px dashed rgba(201,151,58,0.3)', textAlign: 'center', borderRadius: '6px', cursor: 'pointer', transition: 'background 0.2s' }}
-                onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(201,151,58,0.05)'} 
-                onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
-              >
-                {/* Input oculto que hace la magia */}
-                <input type="file" accept="image/png, image/jpeg" style={{ display: 'none' }} />
-                
-                <i className="fa-solid fa-cloud-arrow-up" style={{ color: 'rgba(237,232,222,0.3)', fontSize: '1.5rem' }}></i>
-                <p style={{ fontSize: '0.75rem', color: 'rgba(237,232,222,0.5)', marginTop: '0.5rem', margin: 0 }}>Clic para subir (Máx 2MB)</p>
-              </label>
+              <label className="admin-form__label">Título</label>
+              <input 
+                className={`admin-form__input ${errors.tituloExp ? 'input-error' : ''}`} 
+                type="text" 
+                {...register("tituloExp", { required: "Requerido" })} 
+              />
             </div>
             <div className="admin-modal__actions">
               <button type="button" className="admin-btn admin-btn--ghost" onClick={closeModal}>Cancelar</button>
-              <button type="submit" className="admin-btn admin-btn--primary">Guardar experiencia</button>
+              <button type="submit" className="admin-btn admin-btn--primary">Guardar</button>
             </div>
           </form>
         </div>
@@ -258,25 +269,28 @@ export default function AdminIndex() {
             <h2 className="admin-modal__title"><i className="fa-solid fa-concierge-bell"></i> Tarjeta de servicio</h2>
             <button type="button" className="admin-modal__close" onClick={closeModal}><i className="fa-solid fa-xmark"></i></button>
           </div>
-          <form className="admin-modal__form" noValidate>
+          <form className="admin-modal__form" onSubmit={handleSubmit(onSubmitData)} noValidate>
             <div className="admin-form__group">
               <label className="admin-form__label">Ícono Font Awesome</label>
               <div style={{ display: 'flex', gap: '0.5rem' }}>
-                <input className="admin-form__input" type="text" placeholder="fa-solid fa-bed" onChange={(e) => setIconPreview(e.target.value)} />
+                <input 
+                  className={`admin-form__input ${errors.iconoServ ? 'input-error' : ''}`} 
+                  type="text" 
+                  {...register("iconoServ", { 
+                    required: "Requerido",
+                    onChange: (e) => setIconPreview(e.target.value)
+                  })} 
+                />
                 <span style={{ width: '38px', height: '38px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(201,151,58,0.2)', borderRadius: '6px', color: '#C9973A' }}><i className={iconPreview}></i></span>
               </div>
             </div>
             <div className="admin-form__group">
               <label className="admin-form__label">Título</label>
-              <input className="admin-form__input" type="text" placeholder="Ej. Habitaciones Premium" />
-            </div>
-            <div className="admin-form__group">
-              <label className="admin-form__label">Descripción</label>
-              <textarea className="admin-form__input" rows="2" placeholder="Descripción breve..."></textarea>
+              <input className={`admin-form__input ${errors.tituloServ ? 'input-error' : ''}`} type="text" {...register("tituloServ", { required: "Requerido" })} />
             </div>
             <div className="admin-modal__actions">
               <button type="button" className="admin-btn admin-btn--ghost" onClick={closeModal}>Cancelar</button>
-              <button type="submit" className="admin-btn admin-btn--primary">Guardar servicio</button>
+              <button type="submit" className="admin-btn admin-btn--primary">Guardar</button>
             </div>
           </form>
         </div>
@@ -289,10 +303,15 @@ export default function AdminIndex() {
             <h2 className="admin-modal__title"><i className="fa-solid fa-images"></i> Nueva imagen de galería</h2>
             <button type="button" className="admin-modal__close" onClick={closeModal}><i className="fa-solid fa-xmark"></i></button>
           </div>
-          <form className="admin-modal__form" noValidate>
+          <form className="admin-modal__form" onSubmit={handleSubmit(onSubmitData)} noValidate>
             <div className="admin-form__group">
               <label className="admin-form__label">Texto alternativo (Para SEO y accesibilidad)</label>
-              <input className="admin-form__input" type="text" placeholder="Ej. Detalle de artesanía en sala de estar" />
+              <input 
+                className={`admin-form__input ${errors.altImagen ? 'input-error' : ''}`} 
+                type="text" 
+                placeholder="Ej. Detalle de artesanía..."
+                {...register("altImagen", { required: "Requerido" })} 
+              />
             </div>
 
             <div className="admin-form__group">
@@ -302,14 +321,14 @@ export default function AdminIndex() {
                 onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(201,151,58,0.05)'} 
                 onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
               >
-                {/* Input oculto que hace la magia */}
-                <input type="file" accept="image/png, image/jpeg" style={{ display: 'none' }} />
-                
+                <input type="file" accept="image/png, image/jpeg" style={{ display: 'none' }} {...register("archivoImagen", { required: "Sube una imagen" })} />
                 <i className="fa-solid fa-cloud-arrow-up" style={{ color: '#C9973A', fontSize: '2rem' }}></i>
                 <p style={{ fontSize: '0.8rem', color: 'rgba(237,232,222,0.8)', marginTop: '0.8rem', marginBottom: '0.2rem' }}>Haz clic para seleccionar</p>
-                <p style={{ fontSize: '0.65rem', color: 'rgba(237,232,222,0.4)', margin: 0 }}>JPG o PNG. Máximo 2MB. Relación 1:1 recomendada.</p>
+                <p style={{ fontSize: '0.65rem', color: 'rgba(237,232,222,0.4)', margin: 0 }}>JPG o PNG. Máximo 2MB.</p>
               </label>
+              {errors.archivoImagen && <span style={{color: '#d9534f', fontSize: '12px', display: 'block', marginTop: '0.5rem', textAlign: 'center'}}>{errors.archivoImagen.message}</span>}
             </div>
+            
             <div className="admin-modal__actions">
               <button type="button" className="admin-btn admin-btn--ghost" onClick={closeModal}>Cancelar</button>
               <button type="submit" className="admin-btn admin-btn--primary">Guardar imagen</button>
@@ -319,12 +338,7 @@ export default function AdminIndex() {
       </div>
 
       {/* Modal de Eliminar Reutilizable */}
-      <ConfirmDeleteModal 
-        isOpen={modalType === 'delete'} 
-        onClose={closeModal} 
-        onConfirm={closeModal}
-        itemName="este elemento" 
-      />
+      <ConfirmDeleteModal isOpen={modalType === 'delete'} onClose={closeModal} onConfirm={closeModal} itemName="este elemento" />
     </>
   );
 }
