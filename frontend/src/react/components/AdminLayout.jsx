@@ -10,6 +10,7 @@ export default function AdminLayout() {
         "/admin/inicio": "Editor — Página de Inicio",
         "/admin/nosotros": "Editor — Nosotros",
         "/admin/contacto": "Editor — Contacto",
+        "/admin/globals": "Globals",
         "/admin/usuarios": "Usuarios",
     };
 
@@ -112,6 +113,19 @@ export default function AdminLayout() {
                 >
                     <i className="fa-solid fa-location-dot"></i>
                     <span>Contacto</span>
+                </NavLink>
+                </li>
+                <li>
+                <NavLink
+                    to="/admin/globals"
+                    className={({ isActive }) =>
+                    isActive
+                        ? "admin-nav__link admin-nav__link--active"
+                        : "admin-nav__link"
+                    }
+                >
+                    <i className="fa-solid fa-location-dot"></i>
+                    <span>Globals</span>
                 </NavLink>
                 </li>
             </ul>

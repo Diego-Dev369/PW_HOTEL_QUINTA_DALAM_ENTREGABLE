@@ -1,5 +1,5 @@
-import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import CTA from '../components/CTA';
 
 import exteriorHotel from '../../assets/images/exteriores/exterior_hotel_dalam.jpg';
 
@@ -222,26 +222,7 @@ export default function Nosotros() {
           </div>
         </motion.section>
 
-        <motion.section
-          className="cta-band"
-          aria-label="Llamada a reservar"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.65, ease: 'easeOut' }}
-          {...inView}
-        >
-          <div className="cta-band__inner">
-            <div className="cta-band__text">
-              <span className="section__eyebrow section__eyebrow--gold">Ven a conocernos</span>
-              <h2 className="cta-band__title">Reserva tu <em>experiencia</em></h2>
-              <p className="cta-band__desc">Descubre de cerca lo que nos hace únicos en Michoacán.</p>
-            </div>
-            <div className="cta-band__actions">
-              <Link to="/reservaciones" className="btn btn--primary">Reservar ahora</Link>
-              <Link to="/contacto" className="btn btn--ghost-light">Contáctanos</Link>
-            </div>
-          </div>
-        </motion.section>
+        <CTA />
       </motion.main>
     </>
   );

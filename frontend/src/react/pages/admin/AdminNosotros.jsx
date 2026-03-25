@@ -2,10 +2,12 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import ConfirmDeleteModal from '../../components/admin/ConfirmDeleteModal';
 
+// Mock de la BD para los valores
 const mockValores = [
   { id: 1, titulo: 'Hospitalidad', icono: 'fa-handshake', descripcion: 'Cada huésped es parte de nuestra familia. El calor michoacano en cada gesto.' },
   { id: 2, titulo: 'Sustentabilidad', icono: 'fa-leaf', descripcion: 'Compromiso con el medio ambiente y las comunidades locales de Michoacán.' },
-  { id: 3, titulo: 'Cultura', icono: 'fa-palette', descripcion: 'Preservamos y celebramos las tradiciones artesanales y gastronómicas.' }
+  { id: 3, titulo: 'Cultura', icono: 'fa-palette', descripcion: 'Preservamos y celebramos las tradiciones artesanales y gastronómicas.' },
+  { id: 4, titulo: 'Excelencia', icono: 'fa-gem', descripcion: 'Estándares de calidad que elevan cada detalle de tu experiencia.' }
 ];
 
 export default function AdminNosotros() {
@@ -15,7 +17,7 @@ export default function AdminNosotros() {
   const [iconPreview, setIconPreview] = useState('fa-solid fa-star');
   const [editingId, setEditingId] = useState(null);
 
-  // Configuración de React Hook Form para el modal de "Nuevo Valor"
+  // Configuración de React Hook Form 
   const { register, handleSubmit, formState: { errors }, reset } = useForm();
 
   const handleEditClick = (id) => setEditingId(id);
@@ -26,11 +28,17 @@ export default function AdminNosotros() {
     reset();
   };
 
-  // Función al enviar el formulario válido
+  // Función al enviar el formulario del modal de valores
   const onSubmitValor = (data) => {
     console.log("Nuevo valor listo para BD:", data);
-    alert("¡Valor creado con éxito!");
+    alert("¡Valor guardado con éxito!");
     closeModal();
+  };
+
+  // Función genérica para guardar secciones estáticas
+  const onSubmitData = (data) => {
+    console.log("Sección actualizada:", data);
+    alert("¡Sección guardada correctamente!");
   };
 
   return (
@@ -43,24 +51,24 @@ export default function AdminNosotros() {
           </div>
         </div>
 
-        {/* ── HERO ── */}
+        {/* ── 1. HERO ── */}
         <section className="admin-card admin-editor-section" aria-labelledby="h2-nos-hero">
           <div className="admin-card__header">
             <h2 className="admin-card__title" id="h2-nos-hero"><i className="fa-solid fa-image"></i> Hero de la página</h2>
           </div>
-          <form className="admin-editor-form" noValidate>
+          <form className="admin-editor-form" onSubmit={handleSubmit(onSubmitData)} noValidate>
             <div className="admin-form-grid">
               <div className="admin-form__group">
                 <label className="admin-form__label">Eyebrow</label>
-                <input className="admin-form__input" type="text" defaultValue="Quiénes somos" />
+                <input className="admin-form__input" type="text" defaultValue="Hotel Quinta Dalam" {...register("heroEyebrow")} />
               </div>
               <div className="admin-form__group">
                 <label className="admin-form__label">Título</label>
-                <input className="admin-form__input" type="text" defaultValue="Nuestra Historia" />
+                <input className="admin-form__input" type="text" defaultValue="Nuestra Historia" {...register("heroTitle")} />
               </div>
               <div className="admin-form__group admin-form__group--full">
                 <label className="admin-form__label">Subtítulo</label>
-                <input className="admin-form__input" type="text" defaultValue="Tradición, hospitalidad y amor por Michoacán desde nuestra fundación." />
+                <input className="admin-form__input" type="text" defaultValue="Pasión por Michoacán, vocación por la hospitalidad" {...register("heroSubtitle")} />
               </div>
             </div>
             <div className="admin-editor-actions">
@@ -70,12 +78,49 @@ export default function AdminNosotros() {
           </form>
         </section>
 
-        {/* ── MISIÓN Y VISIÓN ── */}
+        {/* ── 2. HISTORIA ── */}
+        <section className="admin-card admin-editor-section" aria-labelledby="h2-historia">
+          <div className="admin-card__header">
+            <h2 className="admin-card__title" id="h2-historia"><i className="fa-solid fa-book-open"></i> Nuestra Historia (Legado Familiar)</h2>
+          </div>
+          <form className="admin-editor-form" onSubmit={handleSubmit(onSubmitData)} noValidate>
+            <div className="admin-form-grid">
+              <div className="admin-form__group">
+                <label className="admin-form__label">Eyebrow</label>
+                <input className="admin-form__input" type="text" defaultValue="Legado Familiar" {...register("historiaEyebrow")} />
+              </div>
+              <div className="admin-form__group">
+                <label className="admin-form__label">Título</label>
+                <input className="admin-form__input" type="text" defaultValue="Nuestra Historia" {...register("historiaTitle")} />
+              </div>
+              <div className="admin-form__group admin-form__group--full">
+                <label className="admin-form__label">Pie de foto (Caption de la imagen)</label>
+                <input className="admin-form__input" type="text" defaultValue="El refugio familiar que se transformó en un tributo a Michoacán." {...register("historiaCaption")} />
+              </div>
+              
+              <div className="admin-form__group admin-form__group--full">
+                <label className="admin-form__label">Párrafo Introductorio (Lead)</label>
+                <textarea className="admin-form__input" rows="2" defaultValue="Quinta Dalam nace en Quencio, un pueblito pintoresco de Michoacán con un hermoso nacimiento de agua." {...register("historiaP1")}></textarea>
+              </div>
+              
+              <div className="admin-form__group admin-form__group--full">
+                <label className="admin-form__label">Párrafo 2</label>
+                <textarea className="admin-form__input" rows="3" defaultValue="Originalmente concebido por Daniel, un joven visionario, y su padre Roberto, el proyecto comenzó como un hogar familiar destinado a dejar una huella positiva..." {...register("historiaP2")}></textarea>
+              </div>
+            </div>
+            <div className="admin-editor-actions">
+              <button type="button" className="admin-btn admin-btn--ghost">Descartar</button>
+              <button type="submit" className="admin-btn admin-btn--primary"><i className="fa-solid fa-floppy-disk"></i> Guardar Historia</button>
+            </div>
+          </form>
+        </section>
+
+        {/* ── 3. MISIÓN Y VISIÓN ── */}
         <section className="admin-card admin-editor-section" aria-labelledby="h2-mision">
           <div className="admin-card__header">
             <h2 className="admin-card__title" id="h2-mision"><i className="fa-solid fa-eye"></i> Misión & Visión</h2>
           </div>
-          <form className="admin-editor-form" noValidate>
+          <form className="admin-editor-form" onSubmit={handleSubmit(onSubmitData)} noValidate>
             <div className="admin-form-grid">
               {/* Bloque Misión */}
               <div className="admin-form__group admin-form__group--full" style={{ borderBottom: '1px dashed rgba(201,151,58,0.3)', paddingBottom: '1rem' }}>
@@ -83,11 +128,11 @@ export default function AdminNosotros() {
                 <div className="admin-form-grid">
                   <div className="admin-form__group">
                     <label className="admin-form__label">Título Misión</label>
-                    <input className="admin-form__input" type="text" defaultValue="Nuestra Misión" />
+                    <input className="admin-form__input" type="text" defaultValue="Nuestra Misión" {...register("misionTitle")} />
                   </div>
                   <div className="admin-form__group admin-form__group--full">
                     <label className="admin-form__label">Texto Misión</label>
-                    <textarea className="admin-form__input" rows="3" defaultValue="Brindar una experiencia de hospitalidad auténtica que celebre la riqueza cultural de los Pueblos Mágicos de Michoacán. Cada detalle de nuestra casa refleja el compromiso con la tradición, el arte local y el bienestar de cada huésped."></textarea>
+                    <textarea className="admin-form__input" rows="3" defaultValue="Brindar una experiencia de hospitalidad auténtica que celebre la riqueza cultural de los Pueblos Mágicos de Michoacán..." {...register("misionText")}></textarea>
                   </div>
                 </div>
               </div>
@@ -98,11 +143,11 @@ export default function AdminNosotros() {
                 <div className="admin-form-grid">
                   <div className="admin-form__group">
                     <label className="admin-form__label">Título Visión</label>
-                    <input className="admin-form__input" type="text" defaultValue="Nuestra Visión" />
+                    <input className="admin-form__input" type="text" defaultValue="Nuestra Visión" {...register("visionTitle")} />
                   </div>
                   <div className="admin-form__group admin-form__group--full">
                     <label className="admin-form__label">Texto Visión</label>
-                    <textarea className="admin-form__input" rows="3" defaultValue="Ser el referente de hospitalidad boutique en Michoacán, reconocidos por preservar el patrimonio cultural mientras ofrecemos experiencias que conectan a nuestros huéspedes con la esencia profunda de esta tierra mágica."></textarea>
+                    <textarea className="admin-form__input" rows="3" defaultValue="Ser el referente de hospitalidad boutique en Michoacán, reconocidos por preservar el patrimonio cultural..." {...register("visionText")}></textarea>
                   </div>
                 </div>
               </div>
@@ -114,7 +159,7 @@ export default function AdminNosotros() {
           </form>
         </section>
 
-        {/* ── SECCIÓN: VALORES DINÁMICOS ── */}
+        {/* ── 4. VALORES DINÁMICOS ── */}
         <section className="admin-card admin-editor-section">
           <div className="admin-card__header">
             <h2 className="admin-card__title"><i className="fa-solid fa-gem"></i> Valores</h2>
@@ -124,9 +169,8 @@ export default function AdminNosotros() {
           </div>
           
           <div className="admin-valores-list" style={{ padding: '1.5rem' }}>
-            {/* 3. RENDERIZADO DINÁMICO DE VALORES */}
             {valores.map((valor) => (
-              <div key={valor.id} className={`admin-valor-item ${editingId === valor.id ? 'admin-valor-item--editing' : ''}`} style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start', paddingBottom: '1rem', borderBottom: '1px solid rgba(201,151,58,0.1)' }}>
+              <div key={valor.id} className={`admin-valor-item ${editingId === valor.id ? 'admin-valor-item--editing' : ''}`} style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start', paddingBottom: '1rem', borderBottom: '1px solid rgba(201,151,58,0.1)', marginBottom: '1rem' }}>
                 <div className="admin-valor-item__icon" style={{ fontSize: '1.5rem', color: '#C9973A', paddingTop: '0.2rem' }}>
                   <i className={`fa-solid ${valor.icono}`}></i>
                 </div>
@@ -146,25 +190,26 @@ export default function AdminNosotros() {
 
                 {/* Modo Edición Inline */}
                 {editingId === valor.id && (
-                  <>
+                  <div style={{ flex: 1, display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
                     <div className="admin-valor-item__edit admin-form-grid" style={{ flex: 1, gap: '0.75rem 1.5rem' }}>
                       <div className="admin-form__group"><label className="admin-form__label">Título</label><input className="admin-form__input" type="text" defaultValue={valor.titulo} /></div>
                       <div className="admin-form__group"><label className="admin-form__label">Ícono FA</label><input className="admin-form__input" type="text" defaultValue={`fa-solid ${valor.icono}`} /></div>
                       <div className="admin-form__group admin-form__group--full"><label className="admin-form__label">Descripción</label><input className="admin-form__input" type="text" defaultValue={valor.descripcion} /></div>
                     </div>
-                    <div className="admin-valor-item__actions-edit" style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                      <button type="button" className="admin-btn admin-btn--primary admin-btn--sm" onClick={handleCancelEdit}><i className="fa-solid fa-check"></i> Guardar</button>
-                      <button type="button" className="admin-btn admin-btn--ghost admin-btn--sm" onClick={handleCancelEdit}>Cancelar</button>
+                    <div className="admin-valor-item__actions-edit" style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', marginTop: '1.5rem' }}>
+                      <button type="button" className="admin-btn admin-btn--primary admin-btn--sm" onClick={handleCancelEdit}><i className="fa-solid fa-check"></i></button>
+                      <button type="button" className="admin-btn admin-btn--ghost admin-btn--sm" onClick={handleCancelEdit}><i className="fa-solid fa-xmark"></i></button>
                     </div>
-                  </>
+                  </div>
                 )}
               </div>
             ))}
           </div>
         </section>
+
       </main>
 
-      {/* 4. MODAL VALIDADO: NUEVO VALOR */}
+      {/* ── MODAL VALIDADO: NUEVO VALOR ── */}
       <div className={`admin-modal-backdrop ${isModalOpen ? 'is-open' : ''}`}>
         <div className="admin-modal admin-modal--sm">
           <div className="admin-modal__header">

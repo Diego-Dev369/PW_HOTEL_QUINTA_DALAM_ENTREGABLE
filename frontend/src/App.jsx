@@ -16,6 +16,7 @@ import AdminReservaciones from './react/pages/admin/AdminReservaciones.jsx';
 import AdminHabitaciones from './react/pages/admin/AdminHabitaciones.jsx';
 import AdminNosotros from './react/pages/admin/AdminNosotros.jsx';
 import AdminContacto from './react/pages/admin/AdminContacto.jsx';
+import AdminGlobals from './react/pages/admin/AdminGlobals.jsx';
 import AdminUsuarios from './react/pages/admin/AdminUsuarios.jsx';
 import NotFound from './react/pages/NotFound.jsx';
 
@@ -49,6 +50,7 @@ export default function App() {
             <Route path="inicio" element={<AdminIndex />} />
             <Route path="nosotros" element={<AdminNosotros />} />
             <Route path="contacto" element={<AdminContacto />} />
+            <Route path="globals" element={<AdminGlobals />} />
             <Route path="usuarios" element={<AdminUsuarios />} />
           </Route>
 

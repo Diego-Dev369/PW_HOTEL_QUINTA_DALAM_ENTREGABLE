@@ -12,6 +12,7 @@ export default function AdminContacto() {
     ctcHeroSub: "¿Tienes dudas o deseas una reservación personalizada? Escríbenos.",
     ctcTelefono: "+52 443 000 0000",
     ctcEmail: "reservas@quintadalam.mx",
+    ctcHorario: "Lunes a domingo · 8:00 – 20:00 hrs", // <--- NUEVO CAMPO AGREGADO
     ctcDireccion: "Calle Ejemplo 123, Centro Histórico, Morelia, Michoacán",
     ctcFacebook: "https://www.facebook.com/profile.php?id=61584681841684",
     ctcInstagram: "https://www.instagram.com/quintadalam",
@@ -24,7 +25,7 @@ export default function AdminContacto() {
     defaultValues: defaultContactData
   });
 
-  // pra observar el input del mapa en tiempo real
+  // Para observar el input del mapa en tiempo real
   const mapInputUrl = watch("ctcMapEmbed");
 
   const handlePreviewMap = () => {
@@ -40,7 +41,7 @@ export default function AdminContacto() {
     alert("¡Información actualizada con éxito!");
   };
 
-  // Restaurar los valores originales si el usuario cancel
+  // Restaurar los valores originales si el usuario cancela
   const handleDiscard = () => {
     if(window.confirm("¿Seguro que deseas descartar los cambios?")) {
       reset(defaultContactData);
@@ -83,7 +84,7 @@ export default function AdminContacto() {
         </form>
       </section>
 
-      {/* ── SECCIÓN 2: Datos de contacto ── */}
+      {/* ── SECCIÓN 2: Datos de contacto (ACTUALIZADA) ── */}
       <section className="admin-card admin-editor-section">
         <div className="admin-card__header">
           <h2 className="admin-card__title"><i className="fa-solid fa-address-card"></i> Datos de contacto</h2>
@@ -98,6 +99,13 @@ export default function AdminContacto() {
               <label className="admin-form__label">Correo electrónico</label>
               <input className={`admin-form__input ${errors.ctcEmail ? 'input-error' : ''}`} type="email" {...register("ctcEmail", { required: "Requerido", pattern: /^\S+@\S+$/i })} />
             </div>
+            
+            {/* NUEVO CAMPO AGREGADO */}
+            <div className="admin-form__group">
+              <label className="admin-form__label">Horario de atención</label>
+              <input className={`admin-form__input ${errors.ctcHorario ? 'input-error' : ''}`} type="text" {...register("ctcHorario", { required: "Requerido" })} />
+            </div>
+
             <div className="admin-form__group admin-form__group--full">
               <label className="admin-form__label">Dirección completa</label>
               <input className={`admin-form__input ${errors.ctcDireccion ? 'input-error' : ''}`} type="text" {...register("ctcDireccion", { required: "Requerido" })} />

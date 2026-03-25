@@ -1,7 +1,8 @@
 import { motion } from 'framer-motion';
-import { useForm } from 'react-hook-form'; // Importamos la librería de validación
+import { useForm } from 'react-hook-form'; 
+import CTA from '../components/CTA';
 
-// ── Animaciones de Framer Motion (intactas) ──
+// ── Animaciones de Framer Motion ──
 const staggerContainer = {
   hidden: {},
   show: { transition: { staggerChildren: 0.1, delayChildren: 0.06 } },
@@ -21,19 +22,18 @@ const inView = { viewport: { once: true, margin: '-80px' } };
 
 export default function Contacto() {
   
-  // Inicializamos React Hook Form
   const { 
     register, 
     handleSubmit, 
     formState: { errors },
-    reset // Lo usaremos para limpiar el formulario después de enviar
+    reset 
   } = useForm();
 
   // Función que se ejecuta al pasar las validaciones
   const onSubmit = (data) => {
     alert("¡Mensaje enviado correctamente!\n\nDatos:\n" + JSON.stringify(data, null, 2));
     console.log("Mensaje de contacto:", data);
-    reset(); // Limpia los campos del formulario tras enviarlo
+    reset();
   };
 
   return (
@@ -99,7 +99,7 @@ export default function Contacto() {
                         id="apellido"
                         className="form__input"
                         placeholder="Tu apellido"
-                        {...register("apellido")} // Campo opcional, no lleva validación
+                        {...register("apellido")}
                       />
                     </div>
                   </div>
@@ -211,6 +211,8 @@ export default function Contacto() {
             </motion.div>
           </div>
         </motion.section>
+
+        <CTA />
       </motion.main>
     </>
   );

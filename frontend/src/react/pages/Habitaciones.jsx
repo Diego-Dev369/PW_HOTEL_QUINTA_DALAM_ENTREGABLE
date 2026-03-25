@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import CTA from '../components/CTA';
 
 import roomUruapan from '../../assets/images/rooms/204-uruapan.jpeg';
 import roomPatzcuaro from '../../assets/images/rooms/104-patzcuaro.jpeg';
@@ -499,26 +500,7 @@ export default function Habitaciones() {
           </div>
         </motion.section>
 
-        <motion.section
-          className="cta-band"
-          aria-label="Llamada a reservar"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.65, ease: 'easeOut' }}
-          {...inView}
-        >
-          <div className="cta-band__inner">
-            <div className="cta-band__text">
-              <span className="section__eyebrow section__eyebrow--gold">¿Lista tu suite favorita?</span>
-              <h2 className="cta-band__title">Confirma tu <em>reservación</em></h2>
-              <p className="cta-band__desc">Disponibilidad limitada. Asegura tu estancia hoy.</p>
-            </div>
-            <div className="cta-band__actions">
-              <Link to="/reservaciones" className="btn btn--primary">Ver disponibilidad</Link>
-              <Link to="/contacto" className="btn btn--ghost">Contáctanos</Link>
-            </div>
-          </div>
-        </motion.section>
+        <CTA />
       </motion.main>
     </>
   );

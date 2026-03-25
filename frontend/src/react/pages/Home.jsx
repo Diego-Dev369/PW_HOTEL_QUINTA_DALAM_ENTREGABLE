@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
+import CTA from '../components/CTA';
 
 import roomUruapan    from '../../assets/images/rooms/204-uruapan.jpeg';
 import roomPatzcuaro  from '../../assets/images/rooms/104-patzcuaro.jpeg';
@@ -303,18 +304,7 @@ export default function Home() {
       </section>
 
       {/* ═══ CTA FINAL ══════════════════════════════════════ */}
-      <section className="cta-band">
-        <div className="cta-band__inner">
-          <motion.div className="cta-band__text" variants={staggerContainer} initial="hidden" whileInView="show" {...inView}>
-            <motion.span className="section__eyebrow section__eyebrow--gold" variants={fadeUp}>¿Listo para tu escapada?</motion.span>
-            <motion.h2 className="cta-band__title" variants={fadeUp}>Reserva tu estancia <em>perfecta</em></motion.h2>
-          </motion.div>
-          <motion.div className="cta-band__actions" initial={{ opacity: 0, x: 24 }} whileInView={{ opacity: 1, x: 0 }} {...inView}>
-            <Link to="/reservaciones" className="btn btn--primary">Ver disponibilidad</Link>
-            <Link to="/contacto" className="btn btn--ghost-light">Contáctanos</Link>
-          </motion.div>
-        </div>
-      </section>
+      <CTA />
     </motion.main>
   );
 }
