@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import CTA from '../components/CTA';
+import EventSection from '../components/EventSection.jsx';
 
 import roomUruapan    from '../../assets/images/rooms/204-uruapan.jpeg';
 import roomPatzcuaro  from '../../assets/images/rooms/104-patzcuaro.jpeg';
@@ -263,6 +264,8 @@ export default function Home() {
           {services.map((svc) => <ServiceCard key={svc.title} {...svc} />)}
         </motion.div>
       </section>
+
+      <EventSection />
 
       {/* ═══ GALERÍA LOOKBOOK ═══════════════════════════════ */}
       <section className="lookbook section section--dark">

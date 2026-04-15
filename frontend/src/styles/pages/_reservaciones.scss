@@ -1,155 +1,178 @@
-// ============================================================
-//  _reservaciones.scss — Quinta Dalam (Refactorizado v2)
-//
-//  UBICACIÓN: src/styles/pages/_reservaciones.scss
-// ============================================================
 @use '../abstracts/variables' as v;
-@use '../abstracts/mixins'   as m;
+@use '../abstracts/mixins' as m;
 
 .reserva-page {
   background-color: var(--color-bg);
   background-image:
-    radial-gradient(ellipse at 10% 20%, var(--color-gold-pale) 0%, transparent 50%),
-    radial-gradient(ellipse at 90% 80%, var(--color-gold-pale) 0%, transparent 50%);
-  margin-top: calc(v.$header-height - 3rem);
+    radial-gradient(ellipse at 8% 18%, var(--color-gold-pale) 0%, transparent 48%),
+    radial-gradient(ellipse at 92% 80%, var(--color-gold-pale) 0%, transparent 48%);
+  margin-top: calc(v.$header-height - 2rem);
   transition: background-color v.$transition-base;
 
   @include m.respond-to('md') {
-    padding-top: calc(v.$header-height-mobile + v.$space-8);
+    margin-top: v.$header-height-mobile;
   }
 }
 
 .reserva-wrapper {
   width: 100%;
-  max-width: 680px;
+  max-width: 1240px;
   margin-inline: auto;
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: v.$radius-lg;
-  padding: v.$space-12 v.$space-10;
-  box-shadow: var(--shadow-lg), 0 0 0 1px var(--color-gold-pale);
-  position: relative;
-  transition: background-color v.$transition-base, border-color v.$transition-base;
-
-  &::before {
-    content: '✦';
-    position: absolute;
-    top: v.$space-6;
-    right: v.$space-8;
-    font-size: v.$fs-lg;
-    color: var(--color-gold-pale);
-    pointer-events: none;
-  }
-
-  @include m.respond-to('sm') {
-    padding: v.$space-8 v.$space-6;
-    border-radius: v.$radius-md;
-  }
-}
-
-.reserva__header {
-  margin-bottom: v.$space-10;
-  text-align: center;
-
-  .section__title    { font-size: clamp(v.$fs-3xl, 5vw, v.$fs-4xl); margin-bottom: v.$space-3; }
-  .section__ornament { display: block; color: v.$color-gold; font-size: v.$fs-xs; letter-spacing: 0.3em; }
-}
-
-.reserva__submit {
-  width: 100%;
-  padding-block: v.$space-4;
-  font-size: v.$fs-sm;
-  letter-spacing: 0.14em;
-  margin-bottom: v.$space-6;
-}
-
-.reserva__notice {
-  display: flex;
-  align-items: flex-start;
-  gap: v.$space-3;
-  font-size: v.$fs-xs;
-  color: var(--color-text-light);
-  line-height: 1.6;
-  padding: v.$space-4 v.$space-5;
-  background: var(--color-gold-pale);
-  border: 1px dashed var(--color-border-mid);
-  border-radius: v.$radius-sm;
-  letter-spacing: 0.02em;
-  transition: background v.$transition-base;
-
-  i {
-    color: v.$color-gold;
-    font-size: v.$fs-sm;
-    flex-shrink: 0;
-    margin-top: 1px;
-  }
 }
 
 .reserva__layout {
   display: grid;
-  grid-template-columns: 1fr 360px;
-  gap: v.$space-10;
+  grid-template-columns: minmax(0, 1fr) 380px;
+  gap: v.$space-8;
   align-items: start;
 
-  @include m.respond-to('lg') { grid-template-columns: 1fr; }
+  @include m.respond-to('lg') {
+    grid-template-columns: 1fr;
+  }
 }
 
-.reserva__info-card {
+.reserva__main {
   background: var(--color-surface);
   border: 1px solid var(--color-border);
-  border-radius: v.$radius-md;
-  padding: v.$space-8;
-  box-shadow: var(--shadow-sm);
+  border-radius: v.$radius-lg;
+  box-shadow: var(--shadow-lg), 0 0 0 1px var(--color-gold-pale);
+  padding: v.$space-10;
+  transition: border-color v.$transition-base, background-color v.$transition-base;
+
+  @include m.respond-to('sm') {
+    padding: v.$space-8 v.$space-6;
+  }
+}
+
+.reserva__summary {
   position: sticky;
   top: calc(v.$header-height + v.$space-6);
-  transition: background-color v.$transition-base, border-color v.$transition-base;
 
-  @include m.respond-to('lg') { position: static; max-width: 480px; }
+  @include m.respond-to('lg') {
+    position: static;
+  }
 }
 
-.reserva__info-title {
-  font-family: v.$font-serif;
-  font-size: v.$fs-2xl;
-  font-weight: 700;
-  color: var(--color-text);
-  margin-bottom: v.$space-6;
-  padding-bottom: v.$space-4;
-  border-bottom: 1px solid var(--color-border);
-  transition: color v.$transition-base, border-color v.$transition-base;
-
-  em { color: var(--color-accent); font-style: italic; }
+.reserva-room-card {
+  height: fit-content;
 }
 
-.reserva__policy-list {
+.reserva__header {
+  margin-bottom: v.$space-8;
+  text-align: center;
+
+  .section__title {
+    font-size: clamp(v.$fs-3xl, 5vw, v.$fs-4xl);
+    margin-bottom: v.$space-2;
+  }
+
+  .section__ornament {
+    font-size: v.$fs-xs;
+    letter-spacing: 0.3em;
+  }
+}
+
+.reserva__form {
   display: flex;
   flex-direction: column;
-  gap: v.$space-4;
-  margin-bottom: v.$space-8;
+  gap: v.$space-6;
+}
+
+.form__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: v.$space-5;
+
+  @include m.respond-to('sm') {
+    grid-template-columns: 1fr;
+  }
+}
+
+.form__group--full {
+  grid-column: 1 / -1;
+}
+
+.form__input.input-error {
+  border-color: v.$admin-danger;
+  box-shadow: 0 0 0 3px rgba(v.$admin-danger, 0.14);
+}
+
+.reserva__date-meta {
+  display: inline-flex;
+  align-items: center;
+  gap: v.$space-2;
+  font-size: v.$fs-xs;
+  letter-spacing: 0.04em;
+  color: var(--color-text-mid);
+  margin-top: v.$space-2;
+
+  i {
+    color: var(--color-accent);
+  }
+}
+
+.reserva__submit {
+  width: 100%;
+  min-height: 50px;
+  letter-spacing: 0.12em;
+}
+
+.reserva__notice {
+  margin-top: v.$space-6;
+  display: flex;
+  align-items: flex-start;
+  gap: v.$space-2;
+  font-size: v.$fs-xs;
+  line-height: 1.65;
+  color: var(--color-text-light);
+  background: var(--color-gold-pale);
+  border: 1px dashed var(--color-border-mid);
+  border-radius: v.$radius-sm;
+  padding: v.$space-4 v.$space-5;
+
+  i {
+    margin-top: 2px;
+    color: var(--color-gold);
+    flex-shrink: 0;
+  }
+}
+
+.reserva-room-card__price {
+  border-top: 1px solid var(--color-border);
+  padding-top: v.$space-4;
+  margin-bottom: v.$space-4;
+
+  small {
+    display: block;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-size: 0.68rem;
+    color: var(--color-text-light);
+    margin-bottom: v.$space-1;
+  }
+
+  strong {
+    font-family: v.$font-serif;
+    font-size: v.$fs-xl;
+    color: var(--color-accent);
+  }
+}
+
+.reserva-room-card__meta {
+  display: grid;
+  gap: v.$space-2;
 
   li {
     display: flex;
-    align-items: flex-start;
-    gap: v.$space-3;
+    align-items: center;
+    gap: v.$space-2;
     font-size: v.$fs-sm;
     color: var(--color-text-mid);
-    line-height: 1.5;
-    transition: color v.$transition-base;
 
-    i { color: var(--color-accent); flex-shrink: 0; margin-top: 2px; font-size: v.$fs-sm; }
+    i {
+      color: var(--color-accent);
+      width: 14px;
+      text-align: center;
+    }
   }
-}
-
-.reserva__contact-cta {
-  border-top: 1px solid var(--color-border);
-  padding-top: v.$space-6;
-
-  p {
-    font-size: v.$fs-sm;
-    color: var(--color-text-mid);
-    margin-bottom: v.$space-4;
-    line-height: 1.6;
-    transition: color v.$transition-base;
-  }
-
-  .btn { width: 100%; justify-content: center; }
 }

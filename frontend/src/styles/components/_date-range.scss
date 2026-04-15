@@ -1,0 +1,95 @@
+@use '../abstracts/variables' as v;
+@use '../abstracts/mixins' as m;
+
+.date-range {
+  position: relative;
+}
+
+.date-range__label {
+  margin-bottom: v.$space-2;
+}
+
+.date-range__trigger-wrap {
+  position: relative;
+}
+
+.date-range__trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-align: left;
+  gap: v.$space-4;
+  cursor: pointer;
+}
+
+.date-range__clear {
+  position: absolute;
+  right: v.$space-3;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: v.$fs-xs;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+.date-range__panel {
+  position: absolute;
+  z-index: 24;
+  top: calc(100% + v.$space-2);
+  left: 0;
+  border: 1px solid var(--color-border);
+  border-radius: v.$radius-md;
+  background: var(--color-surface);
+  box-shadow: var(--shadow-lg);
+  padding: v.$space-4;
+
+  @include m.respond-to('md') {
+    width: min(100%, 356px);
+  }
+}
+
+.date-range__calendar {
+  .rdp-root {
+    --rdp-accent-color: var(--color-accent);
+    --rdp-accent-background-color: var(--color-gold-pale);
+    --rdp-day-width: 40px;
+    --rdp-day-height: 40px;
+    --rdp-day_button-border-radius: 50%;
+    --rdp-nav_button-height: 34px;
+    --rdp-nav_button-width: 34px;
+    --rdp-border-radius: #{v.$radius-sm};
+    --rdp-range_middle-background-color: var(--color-gold-pale);
+    --rdp-range_middle-color: var(--color-text);
+    --rdp-range_start-color: var(--color-surface);
+    --rdp-range_end-color: var(--color-surface);
+    font-family: v.$font-sans;
+    color: var(--color-text);
+  }
+
+  .rdp-caption_label {
+    font-family: v.$font-serif;
+    font-size: v.$fs-md;
+  }
+
+  .rdp-button_previous,
+  .rdp-button_next {
+    color: var(--color-accent);
+  }
+
+  .rdp-day_button {
+    border: 1px solid transparent;
+    transition: all v.$transition-fast;
+
+    &:hover {
+      border-color: var(--color-border-mid);
+      background: var(--color-gold-pale);
+    }
+  }
+
+  .rdp-selected .rdp-day_button {
+    background: var(--color-accent);
+    color: var(--color-surface);
+  }
+}

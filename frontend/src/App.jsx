@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import { ThemeProvider } from './react/context/ThemeContext';
+import { BookingDateProvider } from './react/context/BookingDateContext.jsx';
 
 import RouteEffects from './react/hooks/RouteEffects.jsx';
 import Home from './react/pages/Home.jsx';
@@ -25,39 +26,41 @@ import PublicLayout from './react/components/PublicLayout.jsx';
 export default function App() {  
   return (
     <ThemeProvider>
-      <BrowserRouter 
-        future={{ 
-          v7_startTransition: true, 
-          v7_relativeSplatPath: true 
-        }}>
-        <RouteEffects />
-        <Routes>
-          {/* Rutas Públicas */}
-          <Route element={<PublicLayout />}>
-            <Route path="/" element={<Home />} />
-            <Route path="/habitaciones" element={<Habitaciones />} />
-            <Route path="/nosotros" element={<Nosotros />} />
-            <Route path="/contacto" element={<Contacto />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/reservaciones" element={<Reservaciones />} />
-          </Route>
+      <BookingDateProvider>
+        <BrowserRouter 
+          future={{ 
+            v7_startTransition: true, 
+            v7_relativeSplatPath: true 
+          }}>
+          <RouteEffects />
+          <Routes>
+            {/* Rutas Públicas */}
+            <Route element={<PublicLayout />}>
+              <Route path="/" element={<Home />} />
+              <Route path="/habitaciones" element={<Habitaciones />} />
+              <Route path="/nosotros" element={<Nosotros />} />
+              <Route path="/contacto" element={<Contacto />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/reservaciones" element={<Reservaciones />} />
+            </Route>
 
-          {/* Rutas Administrativas */}
-          <Route path="/admin" element={<AdminLayout />}>
-            <Route path="dashboard" element={<AdminDashboard />} />
-            <Route path="reservaciones" element={<AdminReservaciones />} />
-            <Route path="habitaciones" element={<AdminHabitaciones />} />
-            <Route path="inicio" element={<AdminIndex />} />
-            <Route path="nosotros" element={<AdminNosotros />} />
-            <Route path="contacto" element={<AdminContacto />} />
-            <Route path="globals" element={<AdminGlobals />} />
-            <Route path="usuarios" element={<AdminUsuarios />} />
-          </Route>
+            {/* Rutas Administrativas */}
+            <Route path="/admin" element={<AdminLayout />}>
+              <Route path="dashboard" element={<AdminDashboard />} />
+              <Route path="reservaciones" element={<AdminReservaciones />} />
+              <Route path="habitaciones" element={<AdminHabitaciones />} />
+              <Route path="inicio" element={<AdminIndex />} />
+              <Route path="nosotros" element={<AdminNosotros />} />
+              <Route path="contacto" element={<AdminContacto />} />
+              <Route path="globals" element={<AdminGlobals />} />
+              <Route path="usuarios" element={<AdminUsuarios />} />
+            </Route>
 
-          {/* 404 Not Found */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
+            {/* 404 Not Found */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </BookingDateProvider>
     </ThemeProvider>
   );
 }

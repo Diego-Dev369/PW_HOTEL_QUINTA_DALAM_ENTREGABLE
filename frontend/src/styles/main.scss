@@ -23,6 +23,9 @@
 @use 'components/forms'; 
 @use 'components/cards';
 @use 'components/effects';
+@use 'components/event-section';
+@use 'components/checkout-wizard';
+@use 'components/date-range';
 
 // ── 5. Páginas ──────────────────────────────────────────────────────
 @use 'pages/contacto';
