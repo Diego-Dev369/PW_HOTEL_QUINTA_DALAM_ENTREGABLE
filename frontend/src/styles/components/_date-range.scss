@@ -24,14 +24,23 @@
 
 .date-range__clear {
   position: absolute;
-  right: v.$space-3;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: v.$fs-xs;
+  right: 0;
+  top: -24px; /* Lo mueve hacia arriba, a la altura de la etiqueta */
+  background: transparent; /* Quita el fondo gris feo */
+  border: none; /* Quita el borde nativo del botón */
+  font-size: 0.65rem;
   font-weight: 700;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--color-accent);
+  color: var(--color-text-mid);
+  cursor: pointer;
+  padding: 0;
+  text-decoration: underline;
+  transition: color v.$transition-fast;
+
+  &:hover {
+    color: var(--color-accent);
+  }
 }
 
 .date-range__panel {
