@@ -3,9 +3,9 @@ spring:
     name: quintadalam-backend
 
   datasource:
-    url: ${DB_URL:jdbc:postgresql://localhost:5432/quintadalam}
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/quinta_dalam_db}
     username: ${DB_USERNAME:postgres}
-    password: ${DB_PASSWORD:postgres}
+    password: ${DB_PASSWORD:admin}
     driver-class-name: org.postgresql.Driver
 
   jpa:

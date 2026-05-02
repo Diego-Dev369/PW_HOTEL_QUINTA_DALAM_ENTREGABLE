@@ -1,6 +1,11 @@
+// ============================================================
+// _account.scss (ACTUALIZADO)
+// MyReservations premium + checkout-wizard breakdown
+// ============================================================
 @use '../abstracts/variables' as v;
 @use '../abstracts/mixins' as m;
 
+// ── Ajuste de offset header ──────────────────────────────────────────
 .account-page,
 .payment-page {
   margin-top: calc(v.$header-height - 2rem);
@@ -12,7 +17,7 @@
 
 .account-page__header {
   text-align: center;
-  margin-bottom: v.$space-8;
+  margin-bottom: v.$space-10;
 }
 
 .account-page__grid {
@@ -20,23 +25,348 @@
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: v.$space-6;
 
+  @include m.respond-to('md') { grid-template-columns: 1fr; }
+}
+
+.account-page__stack { display: grid; gap: v.$space-10; }
+
+// ── Secciones de reservas ────────────────────────────────────────────
+.res-section { }
+
+.res-section__title {
+  font-family: v.$font-serif;
+  font-size: v.$fs-xl;
+  color: var(--color-text);
+  margin-bottom: v.$space-5;
+  padding-bottom: v.$space-3;
+  border-bottom: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  gap: v.$space-2;
+}
+
+.res-section__empty {
+  color: var(--color-text-mid);
+  font-size: v.$fs-sm;
+  padding: v.$space-4 0;
+}
+
+// ── Grid de tarjetas ─────────────────────────────────────────────────
+.res-grid {
+  display: grid;
+  gap: v.$space-5;
+}
+
+// ── Skeleton loader ──────────────────────────────────────────────────
+.res-skeleton-grid {
+  display: grid;
+  gap: v.$space-5;
+}
+
+.res-skeleton {
+  height: 200px;
+  border-radius: v.$radius-lg;
+  background: linear-gradient(
+    90deg,
+    var(--color-surface) 25%,
+    var(--color-surface-2) 50%,
+    var(--color-surface) 75%
+  );
+  background-size: 200% 100%;
+  animation: skeletonShimmer 1.6s ease-in-out infinite;
+}
+
+@keyframes skeletonShimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+// ── Estado vacío ─────────────────────────────────────────────────────
+.res-empty {
+  text-align: center;
+  padding: v.$space-16 0;
+  display: grid;
+  gap: v.$space-4;
+  justify-items: center;
+}
+
+.res-empty__icon {
+  font-size: 3.5rem;
+  color: var(--color-border-mid);
+}
+
+.res-empty__title {
+  font-family: v.$font-serif;
+  font-size: v.$fs-2xl;
+  color: var(--color-text);
+}
+
+.res-empty__text {
+  color: var(--color-text-mid);
+  max-width: 440px;
+}
+
+// ── Tarjeta de reserva ───────────────────────────────────────────────
+.res-card {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  border-radius: v.$radius-lg;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+  transition: box-shadow v.$transition-base, transform v.$transition-base;
+
+  &:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+
+  &--pending {
+    border-color: rgba(201, 151, 58, 0.40);
+    box-shadow: 0 0 0 1px rgba(201, 151, 58, 0.20), var(--shadow-card);
+  }
+
+  &--confirmed {
+    border-color: rgba(46, 204, 113, 0.30);
+  }
+
   @include m.respond-to('md') {
     grid-template-columns: 1fr;
   }
 }
 
-.account-page__stack {
-  display: grid;
-  gap: v.$space-5;
+// ── Imagen ────────────────────────────────────────────────────────────
+.res-card__img-wrap {
+  height: 220px;
+  max-height: 220px;
+  overflow: hidden;
 }
 
-.account-page__subheading {
+.res-card__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+// ── Body ─────────────────────────────────────────────────────────────
+.res-card__body {
+  padding: v.$space-5 v.$space-6;
+  display: flex;
+  flex-direction: column;
+  gap: v.$space-3;
+
+  @include m.respond-to('sm') { padding: v.$space-4; }
+}
+
+.res-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: v.$space-3;
+}
+
+.res-card__code {
+  font-size: v.$fs-xs;
+  color: var(--color-text-light);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-bottom: v.$space-1;
+}
+
+.res-card__room-name {
   font-family: v.$font-serif;
-  color: var(--color-text-main);
   font-size: v.$fs-xl;
-  margin-bottom: v.$space-2;
+  color: var(--color-text);
+  margin: 0;
 }
 
+.res-card__category {
+  font-size: v.$fs-xs;
+  color: var(--color-text-mid);
+  margin-top: v.$space-1;
+}
+
+.res-card__total {
+  font-family: v.$font-serif;
+  font-size: v.$fs-xl;
+  font-weight: 700;
+  color: var(--color-gold);
+  white-space: nowrap;
+}
+
+// ── Meta de fechas ────────────────────────────────────────────────────
+.res-card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: v.$space-2 v.$space-4;
+  font-size: v.$fs-sm;
+  color: var(--color-text-mid);
+  align-items: center;
+
+  i { color: var(--color-gold); margin-right: v.$space-1; }
+}
+
+.res-card__arrow { font-size: 0.7rem; color: var(--color-border-mid); }
+
+.res-card__nights {
+  background: var(--color-gold-pale);
+  color: var(--color-gold);
+  font-weight: 700;
+  font-size: v.$fs-xs;
+  padding: 2px v.$space-2;
+  border-radius: v.$radius-pill;
+  letter-spacing: 0.04em;
+}
+
+// ── Acciones ──────────────────────────────────────────────────────────
+.res-card__actions {
+  display: flex;
+  align-items: center;
+  gap: v.$space-3;
+  flex-wrap: wrap;
+  margin-top: auto;
+  padding-top: v.$space-3;
+  border-top: 1px solid var(--color-border);
+}
+
+.res-card__detail-btn {
+  font-size: v.$fs-sm;
+  padding: v.$space-2 v.$space-3;
+  gap: v.$space-2;
+  display: flex;
+  align-items: center;
+}
+
+.res-card__pay-btn {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: v.$space-2;
+
+  @include m.respond-to('xs') { margin-left: 0; width: 100%; justify-content: center; }
+}
+
+.res-card__paid-label {
+  display: flex;
+  align-items: center;
+  gap: v.$space-2;
+  font-size: v.$fs-sm;
+  color: #2ECC71;
+  font-weight: 600;
+  margin-left: auto;
+
+  i { font-size: 1rem; }
+}
+
+// ── Panel expandible ──────────────────────────────────────────────────
+.res-card__detail-panel {
+  border-top: 1px solid var(--color-border);
+  padding-top: v.$space-4;
+  display: grid;
+  gap: v.$space-4;
+  animation: panelReveal 200ms ease-out;
+}
+
+@keyframes panelReveal {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.res-card__guest-info {
+  display: grid;
+  gap: v.$space-1;
+  font-size: v.$fs-sm;
+  color: var(--color-text-mid);
+
+  strong { color: var(--color-text); }
+}
+
+.res-card__stripe-id {
+  code {
+    font-size: 0.7rem;
+    background: var(--color-surface-2);
+    padding: 2px v.$space-2;
+    border-radius: v.$radius-sm;
+    border: 1px solid var(--color-border);
+    word-break: break-all;
+    display: block;
+    margin-top: 2px;
+  }
+}
+
+// ── Badge de estado ───────────────────────────────────────────────────
+.res-badge {
+  position: absolute;
+  top: v.$space-3;
+  left: v.$space-3;
+  display: inline-flex;
+  align-items: center;
+  gap: v.$space-1;
+  padding: v.$space-1 v.$space-3;
+  border-radius: v.$radius-pill;
+  font-size: v.$fs-xs;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  backdrop-filter: blur(8px);
+
+  &--pending   { background: rgba(201, 151, 58, 0.90); color: #1A1200; }
+  &--confirmed { background: rgba(46, 204, 113, 0.90); color: #003010; }
+  &--active    { background: rgba(52, 152, 219, 0.90); color: #001020; }
+  &--done      { background: rgba(149, 165, 166, 0.90); color: #111; }
+  &--cancelled { background: rgba(231, 76, 60, 0.90);  color: #fff; }
+}
+
+// ── Desglose financiero (compartido) ─────────────────────────────────
+.res-breakdown {
+  background: var(--color-bg-alt);
+  border: 1px solid var(--color-border);
+  border-radius: v.$radius-md;
+  padding: v.$space-4 v.$space-5;
+  display: grid;
+  gap: v.$space-2;
+}
+
+.res-breakdown__row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: v.$fs-sm;
+  color: var(--color-text-mid);
+
+  &--total {
+    padding-top: v.$space-2;
+    border-top: 1px solid var(--color-border-mid);
+    font-size: v.$fs-md;
+    color: var(--color-text);
+  }
+}
+
+.res-breakdown__incl {
+  font-size: v.$fs-xs;
+  background: var(--color-gold-pale);
+  color: var(--color-gold);
+  padding: 1px v.$space-2;
+  border-radius: v.$radius-pill;
+  font-weight: 700;
+}
+
+.res-breakdown__payment-info {
+  display: flex;
+  align-items: center;
+  gap: v.$space-2;
+  font-size: v.$fs-xs;
+  color: #2ECC71;
+  padding-top: v.$space-2;
+  border-top: 1px solid var(--color-border);
+
+  i { font-size: 0.9rem; }
+}
+
+// ── Tarjetas legacy (sin cambios) ────────────────────────────────────
 .account-card {
   background: var(--color-surface);
   border: 1px solid var(--color-border);
@@ -51,20 +381,14 @@
   margin-bottom: v.$space-4;
 }
 
-.account-card__empty {
-  color: var(--color-text-mid);
-}
-
-.account-card--table {
-  overflow-x: auto;
-}
+.account-card__empty { color: var(--color-text-mid); }
+.account-card--table { overflow-x: auto; }
 
 .account-table {
   width: 100%;
   border-collapse: collapse;
 
-  th,
-  td {
+  th, td {
     text-align: left;
     padding: v.$space-3;
     border-bottom: 1px solid var(--color-border);

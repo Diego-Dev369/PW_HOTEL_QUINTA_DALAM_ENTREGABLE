@@ -82,6 +82,16 @@ public class PaymentService {
         payment.setAmount(reservation.getTotalAmount());
         payment.setCurrency(reservation.getCurrency());
         payment.setStripeSessionId(session.getId());
+
+        if (session.getPaymentIntent() != null) {
+            payment.setStripePaymentIntentId(session.getPaymentIntent());
+        }
+
+        payment.setStatus(PaymentStatus.CREATED);
+
+        paymentRepository.save(payment);
+
+        System.out.println("PAYMENT CREATED SESSION: " + session.getId());
         payment.setStripePaymentIntentId(session.getPaymentIntent());
         paymentRepository.save(payment);
 
@@ -89,20 +99,58 @@ public class PaymentService {
     }
 
     @Transactional
-    public void markPaymentSucceeded(String paymentIntentId) {
-        Payment payment = paymentRepository.findByStripePaymentIntentId(paymentIntentId)
-            .orElseThrow(() -> new BusinessException(HttpStatus.NOT_FOUND, "PAYMENT_NOT_FOUND", "No se encontró pago para este payment_intent."));
+public void markPaymentSucceeded(String paymentIntentId) {
+    var paymentOpt = paymentRepository.findByStripePaymentIntentId(paymentIntentId);
 
-        if (payment.getStatus() == PaymentStatus.SUCCEEDED) {
-            return;
-        }
-
-        payment.setStatus(PaymentStatus.SUCCEEDED);
-        payment.setPaidAt(java.time.Instant.now());
-        paymentRepository.save(payment);
-
-        reservationService.confirmReservation(payment.getReservation().getId());
+    if (paymentOpt.isEmpty()) {
+        System.out.println("PAYMENT NOT FOUND FOR PAYMENT INTENT: " + paymentIntentId);
+        return;
     }
+
+    Payment payment = paymentOpt.get();
+
+    if (payment.getStatus() == PaymentStatus.SUCCEEDED) {
+        return;
+    }
+
+    payment.setStatus(PaymentStatus.SUCCEEDED);
+    payment.setPaidAt(java.time.Instant.now());
+
+    paymentRepository.save(payment);
+
+    reservationService.confirmReservation(payment.getReservation().getId());
+
+    System.out.println("PAYMENT SUCCESS VIA PAYMENT INTENT: " + paymentIntentId);
+}
+@Transactional
+public void markCheckoutSessionCompleted(String stripeSessionId, String paymentIntentId) {
+
+    var paymentOpt = paymentRepository.findByStripeSessionId(stripeSessionId);
+
+    if (paymentOpt.isEmpty()) {
+        System.out.println("PAYMENT NOT FOUND FOR SESSION: " + stripeSessionId);
+        return;
+    }
+
+    Payment payment = paymentOpt.get();
+
+    if (payment.getStatus() == PaymentStatus.SUCCEEDED) {
+        return;
+    }
+
+    System.out.println("CHECKOUT SESSION FOUND: " + stripeSessionId);
+    System.out.println("PAYMENT INTENT RECEIVED: " + paymentIntentId);
+
+    payment.setStripePaymentIntentId(paymentIntentId);
+    payment.setStatus(PaymentStatus.SUCCEEDED);
+    payment.setPaidAt(java.time.Instant.now());
+
+    paymentRepository.save(payment);
+
+    reservationService.confirmReservation(payment.getReservation().getId());
+
+    System.out.println("PAYMENT SUCCESSFULLY CONFIRMED.");
+}
 
     @Transactional
     public void markPaymentFailed(String paymentIntentId) {
@@ -111,7 +159,32 @@ public class PaymentService {
         payment.setStatus(PaymentStatus.FAILED);
         paymentRepository.save(payment);
     }
+    @Transactional
+public void markReservationPaidByReservationId(String reservationId, String paymentIntentId) {
 
+    Reservation reservation = reservationService.getReservationEntity(UUID.fromString(reservationId));
+
+    Payment payment = paymentRepository.findTopByReservationIdOrderByCreatedAtDesc(reservation.getId())
+        .orElseThrow(() -> new BusinessException(
+            HttpStatus.NOT_FOUND,
+            "PAYMENT_NOT_FOUND",
+            "No se encontró el pago asociado."
+        ));
+
+    if (payment.getStatus() == PaymentStatus.SUCCEEDED) {
+        return;
+    }
+
+    payment.setStripePaymentIntentId(paymentIntentId);
+    payment.setStatus(PaymentStatus.SUCCEEDED);
+    payment.setPaidAt(java.time.Instant.now());
+
+    paymentRepository.save(payment);
+
+    reservationService.confirmReservation(reservation.getId());
+
+    System.out.println("RESERVATION CONFIRMED FROM CHARGE EVENT: " + reservation.getReservationCode());
+}
     private SessionCreateParams.LineItem buildLineItem(Reservation reservation) {
         BigDecimal cents = reservation.getTotalAmount().multiply(BigDecimal.valueOf(100));
 

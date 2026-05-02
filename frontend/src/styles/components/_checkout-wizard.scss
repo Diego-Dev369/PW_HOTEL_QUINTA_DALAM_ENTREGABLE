@@ -1,3 +1,7 @@
+// ============================================================
+// _checkout-wizard.scss (ACTUALIZADO)
+// Desglose financiero real + estados de pago confirmado
+// ============================================================
 @use '../abstracts/variables' as v;
 @use '../abstracts/mixins' as m;
 
@@ -10,9 +14,7 @@
   padding: v.$space-8;
   transition: border-color v.$transition-base, background-color v.$transition-base;
 
-  @include m.respond-to('sm') {
-    padding: v.$space-6 v.$space-5;
-  }
+  @include m.respond-to('sm') { padding: v.$space-6 v.$space-5; }
 }
 
 .checkout-wizard__header {
@@ -23,142 +25,142 @@
   font-size: clamp(v.$fs-xl, 3vw, v.$fs-2xl);
   margin-top: v.$space-2;
 
-  em {
-    color: var(--color-accent);
-    font-style: italic;
-  }
+  em { color: var(--color-accent); font-style: italic; }
 }
 
-.checkout-wizard__progress {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: v.$space-3;
-  margin-bottom: v.$space-8;
-
-  @include m.respond-to('lg') {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
-  @include m.respond-to('sm') {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-.checkout-wizard__progress-item {
-  display: flex;
-  align-items: center;
-  gap: v.$space-2;
-  border: 1px solid var(--color-border);
-  background: var(--color-bg-alt);
-  border-radius: v.$radius-md;
-  padding: v.$space-2 v.$space-3;
-  color: var(--color-text-mid);
-  transition: all v.$transition-fast;
-
-  &.is-active {
-    border-color: var(--color-accent);
-    box-shadow: 0 0 0 2px var(--color-gold-pale);
-    color: var(--color-text);
-  }
-
-  &.is-done {
-    border-color: var(--color-border-mid);
-    color: var(--color-text);
-  }
-}
-
-.checkout-wizard__progress-dot {
-  @include m.flex-center;
-  width: 26px;
-  height: 26px;
-  border-radius: 50%;
-  background: var(--color-gold-pale);
-  border: 1px solid var(--color-border-mid);
-  font-size: v.$fs-xs;
-  font-weight: 700;
-  flex-shrink: 0;
-}
-
-.checkout-wizard__progress-label {
-  font-size: v.$fs-xs;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  font-weight: 700;
-}
-
+// ── Panel principal ───────────────────────────────────────────────────
 .checkout-wizard__panel {
   border: 1px solid var(--color-border);
   border-radius: v.$radius-md;
-  padding: v.$space-6;
+  padding: v.$space-5 v.$space-6;
   background: var(--color-bg-alt);
+  display: grid;
+  gap: v.$space-4;
 }
 
-.checkout-wizard__step-title {
+// ── Fila de suite ─────────────────────────────────────────────────────
+.checkout-wizard__suite-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: v.$space-3;
+  padding-bottom: v.$space-4;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.checkout-wizard__suite-name {
   font-family: v.$font-serif;
   font-size: v.$fs-xl;
   color: var(--color-text);
-  margin-bottom: v.$space-5;
+  margin: 0;
 }
 
-.checkout-wizard__grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: v.$space-4;
-
-  @include m.respond-to('sm') {
-    grid-template-columns: 1fr;
-  }
-}
-
-.checkout-wizard__summary {
-  display: grid;
-  gap: v.$space-3;
-  margin-bottom: v.$space-5;
-
-  li {
-    display: flex;
-    gap: v.$space-2;
-    font-size: v.$fs-sm;
-    color: var(--color-text-mid);
-    line-height: 1.65;
-  }
-
-  strong {
-    color: var(--color-text);
-    min-width: 96px;
-  }
-}
-
-.checkout-wizard__step-body--success {
-  text-align: center;
-}
-
-.checkout-wizard__success-copy {
+.checkout-wizard__suite-category {
+  font-size: v.$fs-xs;
   color: var(--color-text-mid);
-  margin-bottom: v.$space-6;
-  line-height: 1.7;
+  margin-top: v.$space-1;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
 }
 
+.checkout-wizard__folio {
+  font-size: v.$fs-xs;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-mid);
+  color: var(--color-gold);
+  padding: v.$space-1 v.$space-3;
+  border-radius: v.$radius-pill;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+// ── Fechas ────────────────────────────────────────────────────────────
+.checkout-wizard__dates {
+  display: flex;
+  align-items: center;
+  gap: v.$space-3;
+  font-size: v.$fs-sm;
+  color: var(--color-text-mid);
+
+  i { color: var(--color-gold); }
+}
+
+// ── Desglose financiero ───────────────────────────────────────────────
+.checkout-wizard__breakdown {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: v.$radius-md;
+  padding: v.$space-4;
+  display: grid;
+  gap: v.$space-2;
+}
+
+.checkout-wizard__breakdown-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: v.$fs-sm;
+  color: var(--color-text-mid);
+
+  i { color: var(--color-text-light); margin-right: v.$space-1; font-size: 0.75rem; }
+
+  &--taxes { color: var(--color-text-light); font-size: v.$fs-xs; }
+
+  &--total {
+    padding-top: v.$space-3;
+    margin-top: v.$space-1;
+    border-top: 1px solid var(--color-border-mid);
+    font-size: v.$fs-md;
+    color: var(--color-text);
+  }
+}
+
+.checkout-wizard__incl {
+  font-size: v.$fs-xs;
+  background: var(--color-gold-pale);
+  color: var(--color-gold);
+  padding: 1px v.$space-2;
+  border-radius: v.$radius-pill;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.checkout-wizard__total-amount {
+  font-family: v.$font-serif;
+  font-size: v.$fs-xl;
+  color: var(--color-gold);
+}
+
+// ── Estado pagado ─────────────────────────────────────────────────────
+.checkout-wizard__paid-notice {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: v.$space-2;
+  padding: v.$space-3 v.$space-4;
+  border-radius: v.$radius-md;
+  background: rgba(46, 204, 113, 0.10);
+  border: 1px solid rgba(46, 204, 113, 0.25);
+  color: #2ECC71;
+  font-size: v.$fs-sm;
+  font-weight: 600;
+
+  i { font-size: 1.1rem; }
+}
+
+// ── Acciones ──────────────────────────────────────────────────────────
 .checkout-wizard__actions {
   margin-top: v.$space-6;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  align-items: stretch;
   gap: v.$space-3;
 
-  .btn {
-    min-width: 120px;
-  }
-
-  @include m.respond-to('sm') {
-    flex-direction: column-reverse;
-
-    .btn {
-      width: 100%;
-    }
-  }
+  .btn { width: 100%; justify-content: center; display: flex; align-items: center; gap: v.$space-2; }
 }
 
-.checkout-wizard__actions--inline {
-  margin-top: v.$space-4;
-  justify-content: center;
+.checkout-wizard__hint {
+  font-size: v.$fs-xs;
+  color: var(--color-text-light);
+  text-align: center;
 }
