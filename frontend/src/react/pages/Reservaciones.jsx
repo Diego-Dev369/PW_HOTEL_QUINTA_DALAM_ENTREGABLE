@@ -1,5 +1,6 @@
-import { useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 
 import roomUruapan from '../../assets/images/rooms/204-uruapan.jpeg';
 import roomPatzcuaro from '../../assets/images/rooms/104-patzcuaro.jpeg';
@@ -10,153 +11,237 @@ import roomTlalpujagua from '../../assets/images/rooms/205-tlalpujagua.jpeg';
 
 import CheckoutWizard from '../components/CheckoutWizard.jsx';
 import DateRangePicker from '../components/DateRangePicker.jsx';
+import ToastStack from '../components/ToastStack.jsx';
 import { useBookingDates } from '../context/BookingDateContext.jsx';
+import { useAuth } from '../context/AuthContext.jsx';
+import { useToast } from '../hooks/useToast.js';
+import { getAvailability } from '../services/roomService.js';
+import { createReservation } from '../services/reservationService.js';
 
-const roomCatalog = [
-  {
-    id: 'uruapan',
-    nombre: 'Suite Uruapan',
-    tipo: 'Suite Deluxe',
-    precio: '$2,500 MXN',
-    capacidad: '2 personas',
-    superficie: '28 m²',
-    cama: '1 King Size',
+const roomVisualMap = {
+  uruapan: {
+    image: roomUruapan,
     tagline: 'Naturaleza & Tradición',
-    descripcion: 'Frescura, armonía y descanso entre ecos de bosque y artesanía local.',
-    imagen: roomUruapan,
-    amenidades: [
-      { icon: 'fa-solid fa-wifi', label: 'Wi-Fi' },
-      { icon: 'fa-solid fa-snowflake', label: 'Aire acondicionado' },
-      { icon: 'fa-solid fa-mug-hot', label: 'Desayuno incluido' }
-    ]
+    description: 'Frescura, armonía y descanso entre ecos de bosque y artesanía local.',
+    bedType: '1 King Size'
   },
-  {
-    id: 'patzcuaro',
-    nombre: 'Suite Pátzcuaro',
-    tipo: 'Suite Superior',
-    precio: '$3,200 MXN',
-    capacidad: '2 personas',
-    superficie: '35 m²',
-    cama: '1 King Size',
+  patzcuaro: {
+    image: roomPatzcuaro,
     tagline: 'Historia & Elegancia',
-    descripcion: 'Elegancia clásica y serenidad a orillas del lago más místico de México.',
-    imagen: roomPatzcuaro,
-    amenidades: [
-      { icon: 'fa-solid fa-wifi', label: 'Wi-Fi' },
-      { icon: 'fa-solid fa-bath', label: 'Tina' },
-      { icon: 'fa-solid fa-mug-hot', label: 'Desayuno incluido' }
-    ]
+    description: 'Elegancia clásica y serenidad a orillas del lago más místico de México.',
+    bedType: '1 King Size'
   },
-  {
-    id: 'paracho',
-    nombre: 'Suite Paracho',
-    tipo: 'Suite Deluxe',
-    precio: '$3,100 MXN',
-    capacidad: '4 personas',
-    superficie: '28 m²',
-    cama: '2 matrimoniales',
+  paracho: {
+    image: roomParacho,
     tagline: 'Sofisticación & Cultura',
-    descripcion: 'Diseño cálido y materiales locales para una estancia íntima y relajante.',
-    imagen: roomParacho,
-    amenidades: [
-      { icon: 'fa-solid fa-wifi', label: 'Wi-Fi' },
-      { icon: 'fa-solid fa-snowflake', label: 'Aire acondicionado' },
-      { icon: 'fa-solid fa-mug-hot', label: 'Desayuno incluido' }
-    ]
+    description: 'Diseño cálido y materiales locales para una estancia íntima y relajante.',
+    bedType: '2 matrimoniales'
   },
-  {
-    id: 'yunuen',
-    nombre: 'Suite Yunuen',
-    tipo: 'Suite Deluxe',
-    precio: '$2,700 MXN',
-    capacidad: '2 personas',
-    superficie: '30 m²',
-    cama: '1 King Size',
+  yunuen: {
+    image: roomYunuen,
     tagline: 'Lago & Serenidad',
-    descripcion: 'Inspirada en la tranquilidad lacustre, con atmósfera de descanso total.',
-    imagen: roomYunuen,
-    amenidades: [
-      { icon: 'fa-solid fa-wifi', label: 'Wi-Fi' },
-      { icon: 'fa-solid fa-snowflake', label: 'Aire acondicionado' },
-      { icon: 'fa-solid fa-mug-hot', label: 'Desayuno incluido' }
-    ]
+    description: 'Inspirada en la tranquilidad lacustre, con atmósfera de descanso total.',
+    bedType: '1 King Size'
   },
-  {
-    id: 'tlalpujagua',
-    nombre: 'Suite Tlalpujagua',
-    tipo: 'Suite Estudio',
-    precio: '$2,500 MXN',
-    capacidad: '2 personas',
-    superficie: '26 m²',
-    cama: '1 Queen Size',
+  tlalpujagua: {
+    image: roomTlalpujagua,
     tagline: 'Color & Artesanía',
-    descripcion: 'Una suite luminosa y artesanal con identidad michoacana.',
-    imagen: roomTlalpujagua,
-    amenidades: [
-      { icon: 'fa-solid fa-wifi', label: 'Wi-Fi' },
-      { icon: 'fa-solid fa-snowflake', label: 'Aire acondicionado' },
-      { icon: 'fa-solid fa-mug-hot', label: 'Desayuno incluido' }
-    ]
+    description: 'Una suite luminosa y artesanal con identidad michoacana.',
+    bedType: '1 Queen Size'
   },
-  {
-    id: 'cuanajo',
-    nombre: 'Suite Cuanajo',
-    tipo: 'Suite Deluxe',
-    precio: '$1,700 MXN',
-    capacidad: '4 personas',
-    superficie: '28 m²',
-    cama: '2 matrimoniales',
+  cuanajo: {
+    image: roomCuanajo,
     tagline: 'Madera & Calidez',
-    descripcion: 'Acabados en madera tallada y descanso profundo entre tonos tierra.',
-    imagen: roomCuanajo,
-    amenidades: [
-      { icon: 'fa-solid fa-wifi', label: 'Wi-Fi' },
-      { icon: 'fa-solid fa-snowflake', label: 'Aire acondicionado' },
-      { icon: 'fa-solid fa-mug-hot', label: 'Desayuno incluido' }
-    ]
+    description: 'Acabados en madera tallada y descanso profundo entre tonos tierra.',
+    bedType: '2 matrimoniales'
   }
+};
+
+const defaultAmenities = [
+  { icon: 'fa-solid fa-wifi', label: 'Wi-Fi' },
+  { icon: 'fa-solid fa-snowflake', label: 'Aire acondicionado' },
+  { icon: 'fa-solid fa-mug-hot', label: 'Desayuno incluido' }
 ];
 
-const roomById = roomCatalog.reduce((acc, room) => ({ ...acc, [room.id]: room }), {});
+function normalizeKey(value) {
+  return value
+    ?.toString()
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]/g, ' ');
+}
+
+function findVisual(room) {
+  const key = normalizeKey(`${room.code} ${room.name}`);
+  if (key.includes('uruapan')) return roomVisualMap.uruapan;
+  if (key.includes('patzcuaro')) return roomVisualMap.patzcuaro;
+  if (key.includes('paracho')) return roomVisualMap.paracho;
+  if (key.includes('yunuen')) return roomVisualMap.yunuen;
+  if (key.includes('tlalpujagua')) return roomVisualMap.tlalpujagua;
+  if (key.includes('cuanajo')) return roomVisualMap.cuanajo;
+  return {
+    image: roomUruapan,
+    tagline: room.category || 'Suite Quinta Dalam',
+    description: room.subtitle || 'Habitación disponible para tus fechas seleccionadas.',
+    bedType: 'Por confirmar'
+  };
+}
+
+function formatPrice(amount, currency) {
+  if (amount == null) return 'Tarifa por confirmar';
+  return new Intl.NumberFormat('es-MX', {
+    style: 'currency',
+    currency: currency || 'MXN',
+    maximumFractionDigits: 0
+  }).format(amount);
+}
+
+function formatError(error) {
+  const status = error?.response?.status;
+  if (status === 409) return 'Las fechas seleccionadas ya no están disponibles.';
+  if (status === 401) return 'Tu sesión expiró. Inicia sesión nuevamente.';
+  if (status === 403) return 'No tienes permisos para esta acción.';
+  return error?.response?.data?.message || 'No se pudo completar la operación.';
+}
 
 export default function Reservaciones() {
-  const { checkInISO, checkOutISO, checkInLabel, checkOutLabel, nights } = useBookingDates();
+  const navigate = useNavigate();
+  const { isAuthenticated, user } = useAuth();
+  const { checkInISO, checkOutISO, checkInLabel, checkOutLabel, nights, hasValidRange } = useBookingDates();
+  const { toasts, removeToast, pushError, pushSuccess, pushInfo } = useToast();
   const [dateError, setDateError] = useState('');
+  const [availability, setAvailability] = useState([]);
+  const [availabilityLoading, setAvailabilityLoading] = useState(false);
+  const [availabilityError, setAvailabilityError] = useState('');
+  const [reservationLoading, setReservationLoading] = useState(false);
+  const [createdReservation, setCreatedReservation] = useState(null);
 
   const {
     register,
     handleSubmit,
     watch,
+    getValues,
+    setValue,
     formState: { errors }
   } = useForm({
     defaultValues: {
       personas: 2,
-      habitacion: roomCatalog[0].id
+      habitacion: ''
     }
   });
 
+  const guests = Number(watch('personas') || 1);
   const selectedRoomId = watch('habitacion');
-  const selectedRoom = useMemo(
-    () => roomById[selectedRoomId] || roomCatalog[0],
-    [selectedRoomId]
+
+  const availabilityCards = useMemo(
+    () =>
+      availability.map((room) => {
+        const visual = findVisual(room);
+        return {
+          ...room,
+          ...visual,
+          priceLabel: formatPrice(room.nightlyRateAmount, room.currency),
+          capacityLabel: `${room.capacity} personas`,
+          sizeLabel: '28 m²',
+          amenities: defaultAmenities
+        };
+      }),
+    [availability]
   );
 
-  const onSubmit = (data) => {
+  const selectedRoom = useMemo(() => {
+    return availabilityCards.find((room) => room.id === selectedRoomId) || availabilityCards[0] || null;
+  }, [availabilityCards, selectedRoomId]);
+
+  useEffect(() => {
+    if (!user) return;
+    setValue('nombre', `${user.firstName || ''} ${user.lastName || ''}`.trim());
+    setValue('correo', user.email || '');
+    setValue('telefono', user.phone || '');
+  }, [user, setValue]);
+
+  const loadAvailableRooms = useCallback(async () => {
+    if (!hasValidRange || !checkInISO || !checkOutISO || !guests) return;
+
+    setAvailabilityLoading(true);
+    setAvailabilityError('');
+    try {
+      const response = await getAvailability({
+        checkIn: checkInISO,
+        checkOut: checkOutISO,
+        guests
+      });
+
+      const rooms = response?.data?.data || [];
+      setAvailability(rooms);
+
+      if (rooms.length > 0) {
+        const currentValue = getValues('habitacion');
+        const hasCurrent = rooms.some((room) => room.id === currentValue);
+        if (!hasCurrent) setValue('habitacion', rooms[0].id);
+      } else {
+        setValue('habitacion', '');
+        setAvailabilityError('No hay habitaciones disponibles para ese rango');
+      }
+    } catch (error) {
+      console.error('Error loading rooms:', error);
+      setAvailability([]);
+      setValue('habitacion', '');
+      setAvailabilityError(formatError(error));
+    } finally {
+      setAvailabilityLoading(false);
+    }
+  }, [hasValidRange, checkInISO, checkOutISO, guests, getValues, setValue]);
+
+  useEffect(() => {
+    if (!hasValidRange || !checkInISO || !checkOutISO || !guests) {
+      setAvailability([]);
+      setAvailabilityError('');
+      setValue('habitacion', '');
+      return;
+    }
+
+    loadAvailableRooms();
+  }, [hasValidRange, checkInISO, checkOutISO, guests, loadAvailableRooms, setValue]);
+
+  const onSubmit = async (data) => {
+    if (!isAuthenticated) {
+      pushInfo('Primero inicia sesión para crear tu reservación.');
+      navigate('/login');
+      return;
+    }
+
     if (!checkInISO || !checkOutISO) {
       setDateError('Selecciona un rango de fechas para continuar.');
       return;
     }
 
+    if (!selectedRoom?.id) {
+      pushError('Selecciona una habitación disponible antes de continuar.');
+      return;
+    }
+
     setDateError('');
-
-    const payload = {
-      ...data,
-      entrada: checkInISO,
-      salida: checkOutISO,
-      noches: nights
-    };
-
-    alert(`UI validada. Datos listos para integración:\n${JSON.stringify(payload, null, 2)}`);
+    setReservationLoading(true);
+    try {
+      const reservation = await createReservation({
+        roomId: selectedRoom.id,
+        checkIn: checkInISO,
+        checkOut: checkOutISO,
+        guestsCount: Number(data.personas),
+        guestFullName: data.nombre,
+        guestEmail: data.correo,
+        guestPhone: data.telefono,
+        specialRequests: data.comentarios || null
+      });
+      setCreatedReservation(reservation);
+      pushSuccess(`Reservación creada: ${reservation.reservationCode}. Continúa al checkout.`);
+    } catch (error) {
+      pushError(formatError(error));
+    } finally {
+      setReservationLoading(false);
+    }
   };
 
   return (
@@ -187,6 +272,7 @@ export default function Reservaciones() {
                           required: 'El nombre es obligatorio',
                           minLength: { value: 3, message: 'Mínimo 3 caracteres' }
                         })}
+                        readOnly={isAuthenticated}
                       />
                       {errors.nombre && <span className="form-error">{errors.nombre.message}</span>}
                     </div>
@@ -205,6 +291,7 @@ export default function Reservaciones() {
                             message: 'Ingresa un correo válido'
                           }
                         })}
+                        readOnly={isAuthenticated}
                       />
                       {errors.correo && <span className="form-error">{errors.correo.message}</span>}
                     </div>
@@ -223,6 +310,7 @@ export default function Reservaciones() {
                             message: 'Ingresa un teléfono válido'
                           }
                         })}
+                        readOnly={isAuthenticated}
                       />
                       {errors.telefono && <span className="form-error">{errors.telefono.message}</span>}
                     </div>
@@ -256,20 +344,28 @@ export default function Reservaciones() {
                     </div>
 
                     <div className="form__group">
-                      <label className="form__label" htmlFor="habitacion">Tipo de habitación</label>
-                      <select
-                        className={`form__input ${errors.habitacion ? 'input-error' : ''}`}
-                        id="habitacion"
-                        {...register('habitacion', {
-                          required: 'Selecciona una habitación'
-                        })}
-                      >
-                        {roomCatalog.map((room) => (
-                          <option key={room.id} value={room.id}>
-                            {room.nombre}
-                          </option>
-                        ))}
-                      </select>
+                      <label className="form__label" htmlFor="habitacion">Habitación disponible</label>
+                      {availabilityLoading ? (
+                        <div className="skeleton" style={{ height: '46px' }}></div>
+                      ) : (
+                        <select
+                          className={`form__input ${errors.habitacion ? 'input-error' : ''}`}
+                          id="habitacion"
+                          {...register('habitacion', {
+                            required: 'Selecciona una habitación'
+                          })}
+                          disabled={!hasValidRange || availabilityLoading}
+                        >
+                          {!hasValidRange && <option value="">Selecciona fechas para ver disponibilidad</option>}
+                          {hasValidRange && !availabilityCards.length && <option value="">No hay habitaciones disponibles para ese rango</option>}
+                          {availabilityCards.map((room) => (
+                            <option key={room.id} value={room.id}>
+                              {room.name} - {room.priceLabel}
+                            </option>
+                          ))}
+                        </select>
+                      )}
+                      {availabilityError && <span className="form-error">{availabilityError}</span>}
                       {errors.habitacion && <span className="form-error">{errors.habitacion.message}</span>}
                     </div>
 
@@ -285,61 +381,76 @@ export default function Reservaciones() {
                     </div>
                   </div>
 
-                  <button type="submit" className="btn btn--primary reserva__submit">
-                    Completar Reservación
+                  <button type="submit" className="btn btn--primary reserva__submit" disabled={reservationLoading || !availabilityCards.length}>
+                    {reservationLoading ? <span className="btn__spinner" aria-hidden="true" /> : null}
+                    {reservationLoading ? 'Creando reservación...' : 'Completar Reservación'}
                   </button>
                 </form>
 
                 <p className="reserva__notice">
                   <i className="fa-solid fa-code"></i>
-                  Este módulo está en modo visual. La pasarela de pago real se conectará en la etapa final.
+                  {createdReservation?.reservationCode
+                    ? `Reservación ${createdReservation.reservationCode} creada en PENDING_PAYMENT.`
+                    : 'Flujo conectado al backend. Completa el formulario para crear tu reservación real.'}
                 </p>
               </div>
 
               <aside className="reserva__summary" aria-label="Resumen de habitación seleccionada">
                 <article className="room-card reserva-room-card">
-                  <div className="room-card__img-wrap">
-                    <img
-                      src={selectedRoom.imagen}
-                      alt={selectedRoom.nombre}
-                      className="room-card__img"
-                      loading="lazy"
-                    />
-                    <span className="room-card__badge">{selectedRoom.tipo}</span>
-                  </div>
+                  {selectedRoom ? (
+                    <>
+                      <div className="room-card__img-wrap">
+                        <img
+                          src={selectedRoom.image}
+                          alt={selectedRoom.name}
+                          className="room-card__img"
+                          loading="lazy"
+                        />
+                        <span className="room-card__badge">{selectedRoom.category || 'Suite'}</span>
+                      </div>
 
-                  <div className="room-card__body">
-                    <h2 className="room-card__title">{selectedRoom.nombre}</h2>
-                    <em className="room-card__sub">{selectedRoom.tagline}</em>
-                    <p className="room-card__desc">{selectedRoom.descripcion}</p>
+                      <div className="room-card__body">
+                        <h2 className="room-card__title">{selectedRoom.name}</h2>
+                        <em className="room-card__sub">{selectedRoom.tagline || 'Quinta Dalam'}</em>
+                        <p className="room-card__desc">{selectedRoom.description || 'Suite disponible para tu estancia.'}</p>
 
-                    <ul className="room-card__amenities" aria-label="Amenidades">
-                      {selectedRoom.amenidades.map((item) => (
-                        <li key={item.label} className="room-card__amenity" title={item.label}>
-                          <i className={item.icon} aria-hidden="true"></i>
-                        </li>
-                      ))}
-                    </ul>
+                        <ul className="room-card__amenities" aria-label="Amenidades">
+                          {(selectedRoom.amenities || defaultAmenities).map((item) => (
+                            <li key={item.label} className="room-card__amenity" title={item.label}>
+                              <i className={item.icon} aria-hidden="true"></i>
+                            </li>
+                          ))}
+                        </ul>
 
-                    <div className="reserva-room-card__price">
-                      <small>Tarifa por noche</small>
-                      <strong>{selectedRoom.precio}</strong>
+                        <div className="reserva-room-card__price">
+                          <small>Tarifa por noche</small>
+                          <strong>{selectedRoom.priceLabel}</strong>
+                        </div>
+
+                        <ul className="reserva-room-card__meta">
+                          <li><i className="fa-solid fa-user-group" aria-hidden="true"></i>{selectedRoom.capacityLabel}</li>
+                          <li><i className="fa-solid fa-bed" aria-hidden="true"></i>{selectedRoom.bedType}</li>
+                          <li><i className="fa-solid fa-expand" aria-hidden="true"></i>{selectedRoom.sizeLabel}</li>
+                        </ul>
+                      </div>
+                    </>
+                  ) : (
+                    <div className="room-card__body room-card__body--empty">
+                      <h2 className="room-card__title">Sin suites para este rango</h2>
+                      <p className="room-card__desc">
+                        Ajusta tus fechas o número de huéspedes para consultar disponibilidad real.
+                      </p>
                     </div>
-
-                    <ul className="reserva-room-card__meta">
-                      <li><i className="fa-solid fa-user-group" aria-hidden="true"></i>{selectedRoom.capacidad}</li>
-                      <li><i className="fa-solid fa-bed" aria-hidden="true"></i>{selectedRoom.cama}</li>
-                      <li><i className="fa-solid fa-expand" aria-hidden="true"></i>{selectedRoom.superficie}</li>
-                    </ul>
-                  </div>
+                  )}
                 </article>
               </aside>
             </div>
 
-            <CheckoutWizard selectedRoom={selectedRoom} />
+            <CheckoutWizard selectedRoom={selectedRoom} reservation={createdReservation} />
           </div>
         </div>
       </section>
+      <ToastStack toasts={toasts} onClose={removeToast} />
     </main>
   );
 }

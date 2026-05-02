@@ -1,0 +1,94 @@
+@use '../abstracts/variables' as v;
+@use '../abstracts/mixins' as m;
+
+.account-page,
+.payment-page {
+  margin-top: calc(v.$header-height - 2rem);
+
+  @include m.respond-to('md') {
+    margin-top: v.$header-height-mobile;
+  }
+}
+
+.account-page__header {
+  text-align: center;
+  margin-bottom: v.$space-8;
+}
+
+.account-page__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: v.$space-6;
+
+  @include m.respond-to('md') {
+    grid-template-columns: 1fr;
+  }
+}
+
+.account-page__stack {
+  display: grid;
+  gap: v.$space-5;
+}
+
+.account-page__subheading {
+  font-family: v.$font-serif;
+  color: var(--color-text-main);
+  font-size: v.$fs-xl;
+  margin-bottom: v.$space-2;
+}
+
+.account-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: v.$radius-lg;
+  box-shadow: var(--shadow-md);
+  padding: v.$space-6;
+}
+
+.account-card__title {
+  font-family: v.$font-serif;
+  font-size: v.$fs-xl;
+  margin-bottom: v.$space-4;
+}
+
+.account-card__empty {
+  color: var(--color-text-mid);
+}
+
+.account-card--table {
+  overflow-x: auto;
+}
+
+.account-table {
+  width: 100%;
+  border-collapse: collapse;
+
+  th,
+  td {
+    text-align: left;
+    padding: v.$space-3;
+    border-bottom: 1px solid var(--color-border);
+    font-size: v.$fs-sm;
+  }
+
+  th {
+    color: var(--color-text-mid);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.68rem;
+  }
+}
+
+.payment-page__card {
+  max-width: 720px;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.payment-page__actions {
+  margin-top: v.$space-5;
+  display: flex;
+  justify-content: center;
+  gap: v.$space-3;
+  flex-wrap: wrap;
+}

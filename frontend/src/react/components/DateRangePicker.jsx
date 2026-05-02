@@ -35,9 +35,28 @@ export default function DateRangePicker({ label = 'Fechas de estancia' }) {
   }, []);
 
   const handleSelect = (range) => {
-    setDateRange(range || { from: undefined, to: undefined });
+    if (!range) {
+      setDateRange({ from: undefined, to: undefined });
+      return;
+    }
 
-    if (range?.from && range?.to) {
+    const sameDaySelection =
+      range.from &&
+      range.to &&
+      range.from.getFullYear() === range.to.getFullYear() &&
+      range.from.getMonth() === range.to.getMonth() &&
+      range.from.getDate() === range.to.getDate();
+
+    const normalized = {
+      from: range.from ? new Date(range.from.getFullYear(), range.from.getMonth(), range.from.getDate()) : undefined,
+      to: range.to && !sameDaySelection
+        ? new Date(range.to.getFullYear(), range.to.getMonth(), range.to.getDate())
+        : undefined
+    };
+
+    setDateRange(normalized);
+
+    if (normalized.from && normalized.to) {
       setOpen(false);
     }
   };

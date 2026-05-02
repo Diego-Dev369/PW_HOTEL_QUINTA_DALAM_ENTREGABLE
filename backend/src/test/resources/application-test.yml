@@ -1,0 +1,32 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/quintadalam_test
+    username: test
+    password: test
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        default_schema: hotel
+        jdbc:
+          time_zone: UTC
+
+  flyway:
+    enabled: false
+
+app:
+  security:
+    jwt-secret: test-secret-key-with-at-least-32-characters
+    jwt-expiration-seconds: 3600
+    jwt-refresh-expiration-seconds: 604800
+  stripe:
+    secret-key: sk_test_dummy
+    webhook-secret: whsec_dummy
+
+server:
+  ssl:
+    enabled: false

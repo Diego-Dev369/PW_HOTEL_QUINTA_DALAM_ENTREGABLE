@@ -237,6 +237,8 @@
   display: block;
   width: 100%;
   text-align: center;
+  background: transparent;
+  cursor: pointer;
   padding: v.$space-3 v.$space-6;
   font-family: v.$font-sans;
   font-size: v.$fs-sm;
@@ -367,6 +369,8 @@
 
 .header__login {
   padding: v.$space-2 v.$space-5;
+  background: transparent;
+  cursor: pointer;
   font-family: v.$font-sans;
   font-size: v.$fs-xs;
   font-weight: 700;
@@ -519,4 +523,53 @@
   .header__hamburger-bar:nth-child(3) {
     transform: translateY(-7px) rotate(-45deg);
   }
+}
+
+.header__profile {
+  position: relative;
+}
+
+.header__profile-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: v.$space-2;
+}
+
+.header__profile-menu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 8px);
+  min-width: 220px;
+  background: rgba(v.$color-forest, 0.98);
+  border: 1px solid rgba(v.$color-gold, 0.2);
+  border-radius: v.$radius-md;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.25);
+  padding: v.$space-2;
+  display: flex;
+  flex-direction: column;
+  gap: v.$space-1;
+  z-index: 1200;
+}
+
+.header__profile-item {
+  border: none;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+  color: v.$color-parchment;
+  text-decoration: none;
+  font-family: v.$font-sans;
+  font-size: v.$fs-sm;
+  padding: v.$space-2 v.$space-3;
+  border-radius: v.$radius-sm;
+  transition: background v.$transition-fast, color v.$transition-fast;
+
+  &:hover {
+    background: rgba(v.$color-gold, 0.15);
+    color: v.$color-parchment-light;
+  }
+}
+
+.header__profile-item--danger {
+  color: v.$color-adobe-light;
 }

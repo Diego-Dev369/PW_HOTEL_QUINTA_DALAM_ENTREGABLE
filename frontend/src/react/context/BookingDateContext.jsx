@@ -13,7 +13,10 @@ function formatShortDate(date) {
 
 function toIsoDate(date) {
   if (!date) return '';
-  return date.toISOString().split('T')[0];
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
 }
 
 export function BookingDateProvider({ children }) {
@@ -23,6 +26,7 @@ export function BookingDateProvider({ children }) {
     const fromTime = dateRange.from ? dateRange.from.getTime() : null;
     const toTime = dateRange.to ? dateRange.to.getTime() : null;
     const nights = fromTime && toTime ? Math.max(Math.round((toTime - fromTime) / 86400000), 0) : 0;
+    const hasValidRange = Boolean(fromTime && toTime && toTime > fromTime);
 
     return {
       dateRange,
@@ -30,8 +34,9 @@ export function BookingDateProvider({ children }) {
       clearDateRange: () => setDateRange({ from: undefined, to: undefined }),
       checkInLabel: formatShortDate(dateRange.from),
       checkOutLabel: formatShortDate(dateRange.to),
-      checkInISO: toIsoDate(dateRange.from),
-      checkOutISO: toIsoDate(dateRange.to),
+      checkInISO: hasValidRange ? toIsoDate(dateRange.from) : '',
+      checkOutISO: hasValidRange ? toIsoDate(dateRange.to) : '',
+      hasValidRange,
       nights
     };
   }, [dateRange]);

@@ -26,6 +26,7 @@
 @use 'components/event-section';
 @use 'components/checkout-wizard';
 @use 'components/date-range';
+@use 'components/feedback';
 
 // ── 5. Páginas ──────────────────────────────────────────────────────
 @use 'pages/contacto';
@@ -36,3 +37,4 @@
 @use 'pages/home';
 @use 'pages/admin';
 @use 'pages/not-found';
+@use 'pages/account';

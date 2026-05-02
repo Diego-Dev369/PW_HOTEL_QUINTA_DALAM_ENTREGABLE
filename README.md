@@ -52,3 +52,36 @@ src/
 │   └── pages/              # Estilos únicos para cada vista del sitio
 ├── App.jsx                 # Enrutador principal y configuración de AnimatePresence
 └── main.jsx                # Punto de entrada de la aplicación
+## Estructura General Actual
+
+```text
+backend/                    # Spring Boot API REST + Flyway + JWT + Stripe
+database/
+└── postgresql/             # SQL base y consultas de apoyo
+frontend/
+└── src/                    # React + SCSS modular
+docker-compose.yml          # PostgreSQL + pgAdmin opcional
+start-all.ps1               # Arranque integrado local
+stop-all.ps1                # Detiene frontend y backend
+```
+
+## Levantar Todo Junto (Localhost)
+
+Desde la raiz del repo:
+
+```powershell
+cd C:\ProyectoPW\PW_HOTEL_QUINTA_DALAM_ENTREGABLE
+.\start-all.ps1
+```
+
+Si quieres levantar PostgreSQL en Docker:
+
+```powershell
+.\start-all.ps1 -UseDockerDb
+```
+
+Detener servicios:
+
+```powershell
+.\stop-all.ps1
+```

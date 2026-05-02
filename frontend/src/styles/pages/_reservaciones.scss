@@ -57,6 +57,14 @@
   height: fit-content;
 }
 
+.room-card__body--empty {
+  min-height: 320px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
 .reserva__header {
   margin-bottom: v.$space-8;
   text-align: center;

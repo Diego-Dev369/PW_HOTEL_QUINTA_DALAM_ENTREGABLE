@@ -1,0 +1,88 @@
+@use '../abstracts/variables' as v;
+@use '../abstracts/mixins' as m;
+
+.btn__spinner {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  border-top-color: rgba(255, 255, 255, 0.95);
+  animation: spin 0.7s linear infinite;
+}
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--color-bg-alt) 0%,
+    var(--color-surface) 45%,
+    var(--color-bg-alt) 100%
+  );
+  background-size: 180% 100%;
+  border-radius: v.$radius-md;
+  animation: shimmer 1.5s infinite;
+}
+
+.toast-stack {
+  position: fixed;
+  right: v.$space-4;
+  bottom: v.$space-4;
+  z-index: 9999;
+  display: grid;
+  gap: v.$space-3;
+  width: min(360px, calc(100vw - 2rem));
+}
+
+.toast {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+  border-radius: v.$radius-md;
+  box-shadow: var(--shadow-lg);
+  padding: v.$space-3 v.$space-4;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: v.$space-3;
+
+  p {
+    margin: 0;
+    font-size: v.$fs-sm;
+    line-height: 1.5;
+  }
+
+  button {
+    border: none;
+    background: transparent;
+    color: var(--color-text-mid);
+    cursor: pointer;
+    font-size: v.$fs-lg;
+    line-height: 1;
+  }
+}
+
+.toast--success {
+  border-color: rgba(v.$admin-success, 0.45);
+}
+
+.toast--error {
+  border-color: rgba(v.$admin-danger, 0.45);
+}
+
+.toast--info {
+  border-color: var(--color-border-mid);
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 180% 0;
+  }
+  100% {
+    background-position: -20% 0;
+  }
+}

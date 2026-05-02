@@ -1,6 +1,7 @@
 import { NavLink, Link } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useTheme } from '../context/ThemeContext';
+import { useAuth } from '../context/AuthContext.jsx';
 
 import logoImg from '../../assets/icons/posible_logo.jpeg';
 import banderaMex from '../../assets/icons/bandera_mexico.png';
@@ -32,7 +33,11 @@ function MoonIcon() {
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
+  const [profileMenuOpen, setProfileMenuOpen] = useState(false);
   const { theme, toggleTheme } = useTheme();
+  const { isAuthenticated, user, logout } = useAuth();
+  const profileRef = useRef(null);
+  const displayName = user?.firstName ? `${user.firstName} ${user.lastName || ''}`.trim() : 'Mi cuenta';
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 10);
@@ -40,9 +45,21 @@ export default function Header() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    const onClickOutside = (event) => {
+      if (!profileRef.current?.contains(event.target)) {
+        setProfileMenuOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', onClickOutside);
+    return () => document.removeEventListener('mousedown', onClickOutside);
+  }, []);
+
   const closeMobileMenu = () => {
     const checkbox = document.getElementById('nav-toggle');
     if (checkbox) checkbox.checked = false;
+    setProfileMenuOpen(false);
   };
 
   return (
@@ -69,7 +86,18 @@ export default function Header() {
           </ul>
 
           <div className="header__mobile-actions">
-            <Link to="/login" onClick={closeMobileMenu} className="header__mobile-login">Iniciar Sesión</Link>
+            {isAuthenticated ? (
+              <>
+                <Link to="/mi-cuenta" onClick={closeMobileMenu} className="header__mobile-login">Mi cuenta</Link>
+                <Link to="/mis-reservaciones" onClick={closeMobileMenu} className="header__mobile-login">Mis reservaciones</Link>
+                <button type="button" onClick={() => { closeMobileMenu(); logout(); }} className="header__mobile-login">Cerrar Sesión</button>
+              </>
+            ) : (
+              <>
+                <Link to="/login" onClick={closeMobileMenu} className="header__mobile-login">Iniciar Sesión</Link>
+                <Link to="/registro" onClick={closeMobileMenu} className="header__mobile-login">Registrarse</Link>
+              </>
+            )}
             <Link to="/reservaciones" onClick={closeMobileMenu} className="header__mobile-cta">Reservar Ahora</Link>
             
             {/* ── Extras Móvil (Idiomas y Redes) ── */}
@@ -103,7 +131,30 @@ export default function Header() {
             <img src={banderaEu} alt="EN" className="header__flag" width="18" height="12" /> EN
           </a>
 
-          <Link to="/login" className="header__login"> Iniciar Sesión </Link>
+          {isAuthenticated ? (
+            <div className="header__profile" ref={profileRef}>
+              <button type="button" className="header__login header__profile-trigger" onClick={() => setProfileMenuOpen((open) => !open)}>
+                {displayName} <i className={`fa-solid ${profileMenuOpen ? 'fa-chevron-up' : 'fa-chevron-down'}`} aria-hidden="true"></i>
+              </button>
+              {profileMenuOpen && (
+                <div className="header__profile-menu">
+                  <Link to="/mi-cuenta" className="header__profile-item" onClick={closeMobileMenu}>Mi cuenta</Link>
+                  <Link to="/mis-reservaciones" className="header__profile-item" onClick={closeMobileMenu}>Mis reservaciones</Link>
+                  {(user?.roles || []).includes('ADMIN') && (
+                    <Link to="/admin/dashboard" className="header__profile-item" onClick={closeMobileMenu}>Panel admin</Link>
+                  )}
+                  <button type="button" className="header__profile-item header__profile-item--danger" onClick={() => { closeMobileMenu(); logout(); }}>
+                    Cerrar sesión
+                  </button>
+                </div>
+              )}
+            </div>
+          ) : (
+            <>
+              <Link to="/login" className="header__login"> Iniciar Sesión </Link>
+              <Link to="/registro" className="header__login"> Registrarse </Link>
+            </>
+          )}
           <Link to="/reservaciones" className="header__cta"> Reservar </Link>
         </div>
 
