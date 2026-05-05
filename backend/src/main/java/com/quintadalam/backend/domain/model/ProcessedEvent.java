@@ -40,4 +40,7 @@ public class ProcessedEvent {
 
     @Column(name = "processed_at", nullable = false)
     private Instant processedAt = Instant.now();
+
+    @Column(name = "completed", nullable = false)
+    private boolean completed;
 }

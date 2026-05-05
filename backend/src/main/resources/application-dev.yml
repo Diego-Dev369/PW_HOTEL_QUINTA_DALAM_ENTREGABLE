@@ -1,0 +1,92 @@
+spring:
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/quinta_dalam_db}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:postgres}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    show-sql: true
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        default_schema: hotel
+        jdbc:
+          time_zone: UTC
+        format_sql: false
+
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    baseline-version: 1
+    default-schema: hotel
+    schemas: hotel
+    locations: classpath:db/migration
+    out-of-order: true
+
+  jackson:
+    time-zone: UTC
+    serialization:
+      write-dates-as-timestamps: false
+  mail:
+    host: ${MAIL_HOST:}
+    port: ${MAIL_PORT:587}
+    username: ${MAIL_USERNAME:}
+    password: ${MAIL_PASSWORD:}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+springdoc:
+  api-docs:
+    enabled: true
+    path: /api-docs
+
+server:
+  port: 8080
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: when_authorized
+  health:
+    mail:
+      enabled: false
+
+app:
+  mail:
+    from: ${MAIL_FROM:no-reply@quintadalam.mx}
+  frontend:
+    base-url: ${APP_FRONTEND_BASE_URL:http://localhost:5173}
+  cors:
+    allowed-origins: ${APP_CORS_ALLOWED_ORIGINS:http://localhost:5173,http://127.0.0.1:5173,http://localhost:3000,http://127.0.0.1:3000}
+  security:
+    jwt-secret: ${JWT_SECRET:zxc_development_fallback_replace_minimum_32_characters}
+    jwt-expiration-seconds: ${JWT_EXPIRATION_SECONDS:7200}
+    jwt-refresh-expiration-seconds: ${JWT_REFRESH_EXPIRATION_SECONDS:604800}
+    require-strong-jwt-secret: false
+  stripe:
+    secret-key: ${PAYMENT_STRIPE_SECRET_KEY:}
+    webhook-secret: ${PAYMENT_WEBHOOK_SECRET:}
+  rate-limit:
+    login-requests-per-ip-per-minute: ${QD_LOGIN_RL:80}
+  outbox:
+    worker:
+      enabled: ${OUTBOX_WORKER_ENABLED:true}
+      fixed-delay-ms: ${OUTBOX_WORKER_FIXED_DELAY_MS:15000}
+      batch-size: ${OUTBOX_WORKER_BATCH_SIZE:20}
+      max-attempts: ${OUTBOX_WORKER_MAX_ATTEMPTS:6}
+
+logging:
+  level:
+    root: INFO
+    com.quintadalam: INFO

@@ -23,6 +23,7 @@ app:
     jwt-secret: test-secret-key-with-at-least-32-characters
     jwt-expiration-seconds: 3600
     jwt-refresh-expiration-seconds: 604800
+    require-strong-jwt-secret: false
   stripe:
     secret-key: sk_test_dummy
     webhook-secret: whsec_dummy

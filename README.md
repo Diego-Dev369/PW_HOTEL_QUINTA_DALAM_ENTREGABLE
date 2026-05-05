@@ -32,6 +32,29 @@ El proyecto está diseñado bajo principios de escalabilidad y separación de re
     * UserModal: Interfaz para la administración de usuarios del sistema.
     * ConfirmDeleteModal: Sistema de confirmación para acciones destructivas.
 
+## Estado de producto (lectura ejecutiva honesta — 2026-05)
+
+Este repositorio ahora incluye núcleos **realmente ejecutables**:
+
+- Migraciones **`V8`–`V10`**: `V8` sólo extiende ENUMs; `V9` núcleo SaaS (ledger, settings, impuestos, `PARTIALLY_PAID` en constraints); `V10` `processed_events.completed`. Rol **`RECEPTION`**, políticas/feature flags/outbox inicial.
+- **Fiscal México (MVP técnico)**: `TaxMxService` arma base hospedaje + **IVA 16% / ISH 3% parametrizables** en `hotel_settings.tax.mx`; el total cobrado vía Stripe refleja el gran total MXN.
+- **Stripe**: sólo **`checkout.session.completed`** confirma económicamente; `PaymentService` saneado; **`StripeCheckoutCompletionHandler`** escribe ledger + **`ReservationFinanceSynchronizer`** ajusta `PENDING / PARTIAL / CONFIRMED` sin mocks.
+- **Recepción / Admin API**: `/api/v1/reception/**` *(ADMIN ó RECEPTION)* y `/api/v1/admin/reservations*` *(ADMIN)* con walk-in, cobros manuales, check-in/out guiados por ledger.
+- **Export iCal público**: `GET /api/public/ical/export` *(sin ACL todavía: proteja en Nginx en Internet real)*.
+
+**Aún pendiente antes de llamarlo “lista para facturación empresarial + SaaS público multi-hotel”** (lista no exhaustiva): motor de **reembolsos Stripe** orquestado desde UI/legal, modificaciones/amendments con historia y reprogramaciones completas UI, automatización SMTP/PDF desde `notifications_outbox`, import iCal Airbnb/Booking, auditoría seguridad granular, infra `nginx/systemd`/CI reproducible multi-tenant — ver issues internos siguientes PRs.
+
+> **PostgreSQL Docker:** define siempre `POSTGRES_PASSWORD` en `.env`; el archivo compose incluye un fallback *sólo* para desarrollo.
+
+Para asignar recepción a un usuario tras migración:
+
+```sql
+INSERT INTO hotel.user_roles(user_id, role_id)
+SELECT u.id, r.id FROM hotel.users u, hotel.roles r
+WHERE u.email = 'TU_CORREO' AND r.code = 'RECEPTION'
+ON CONFLICT DO NOTHING;
+```
+
 ## Estructura de Carpetas
 
 ```text
@@ -67,6 +90,10 @@ stop-all.ps1                # Detiene frontend y backend
 
 ## Levantar Todo Junto (Localhost)
 
+Requisitos: **JDK 21**, **Node.js + npm**, y PostgreSQL accesible en `DB_URL` (por defecto `localhost:5432/quinta_dalam_db`) **o** Docker para `-UseDockerDb`.
+
+`start-all.ps1` crea `.env` desde `.env.example` si falta, carga variables, opcionalmente levanta Postgres en Docker, ejecuta `mvn clean compile`, `flyway:repair`, arranca el backend y **espera** `actuator/health` antes de lanzar Vite.
+
 Desde la raiz del repo:
 
 ```powershell
@@ -74,14 +101,15 @@ cd C:\ProyectoPW\PW_HOTEL_QUINTA_DALAM_ENTREGABLE
 .\start-all.ps1
 ```
 
-Si quieres levantar PostgreSQL en Docker:
+PostgreSQL en Docker (recomendado en Windows):
 
 ```powershell
 .\start-all.ps1 -UseDockerDb
 ```
 
-Detener servicios:
+Detener servicios (no detiene Docker salvo flag):
 
 ```powershell
 .\stop-all.ps1
+.\stop-all.ps1 -StopDockerDb
 ```

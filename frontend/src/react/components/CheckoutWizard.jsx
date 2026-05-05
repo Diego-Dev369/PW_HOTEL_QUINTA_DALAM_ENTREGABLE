@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useCallback } from 'react';
 import { useBookingDates } from '../context/BookingDateContext.jsx';
 import { createCheckoutSession } from '../services/paymentService.js';
 import { useToast } from '../hooks/useToast.js';
@@ -12,16 +12,36 @@ function fMoney(amount, currency = 'MXN') {
 
 function getErrorMessage(error) {
   const status = error?.response?.status;
+  const message = error?.response?.data?.message;
+  const errorCode = error?.response?.data?.error;
+  
   if (status === 401) return 'Debes iniciar sesión para continuar al pago.';
-  if (status === 409) return 'La reservación ya no está disponible para pago.';
-  if (status === 503) return 'Stripe no está configurado todavía en el backend.';
-  return error?.response?.data?.message || 'No se pudo iniciar checkout.';
+  if (status === 409) return message || 'La reservación ya no está disponible para pago.';
+  if (status === 503) return 'El sistema de pagos no está disponible. Por favor, inténtalo más tarde.';
+  if (status === 400) return message || 'Datos inválidos para el pago.';
+  if (errorCode === 'STRIPE_NOT_CONFIGURED') return 'El sistema de pagos no está configurado. Contacta al administrador.';
+  if (errorCode === 'INVALID_PAYMENT_AMOUNT') return 'El monto de la reservación no es válido.';
+  return message || 'No se pudo iniciar el proceso de pago. Por favor, inténtalo de nuevo.';
+}
+
+// Generar UUID compatible con todos los navegadores
+function generateIdempotencyKey() {
+  if (typeof crypto !== 'undefined' && crypto.randomUUID) {
+    return crypto.randomUUID();
+  }
+  // Fallback para navegadores antiguos
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    const r = Math.random() * 16 | 0;
+    const v = c === 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
 }
 
 export default function CheckoutWizard({ selectedRoom, reservation }) {
   const { checkInLabel, checkOutLabel, nights } = useBookingDates();
   const [isCreatingSession, setIsCreatingSession] = useState(false);
-  const { toasts, removeToast, pushError, pushInfo } = useToast();
+  const [checkoutError, setCheckoutError] = useState(null);
+  const { toasts, removeToast, pushError, pushInfo, pushSuccess } = useToast();
 
   // ── Desglose financiero calculado desde los datos reales ────────────
   const breakdown = useMemo(() => {
@@ -47,31 +67,69 @@ export default function CheckoutWizard({ selectedRoom, reservation }) {
     isPaid:          reservation?.status === 'CONFIRMED',
   }), [selectedRoom, checkInLabel, checkOutLabel, reservation]);
 
-  const startCheckout = async () => {
+  const startCheckout = useCallback(async () => {
+    // Validar que existe la reservación
     if (!reservation?.id) {
       pushInfo('Primero crea tu reservación para habilitar el checkout.');
       return;
     }
+
+    // Validar que el ID sea un UUID válido
+    const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+    if (!uuidRegex.test(reservation.id)) {
+      pushError('ID de reservación inválido. Por favor, intenta crear una nueva reservación.');
+      return;
+    }
+
+    // Prevenir múltiples clicks
+    if (isCreatingSession) {
+      return;
+    }
+
+    setCheckoutError(null);
     setIsCreatingSession(true);
+
     try {
       const baseUrl = window.location.origin;
-      const session = await createCheckoutSession({
-        reservationId:  reservation.id,
-        successUrl:     `${baseUrl}/pago/exitoso`,
-        cancelUrl:      `${baseUrl}/pago/cancelado`,
-        idempotencyKey: crypto.randomUUID(),
+      const idempotencyKey = generateIdempotencyKey();
+
+      console.log('[CheckoutWizard] Iniciando checkout:', {
+        reservationId: reservation.id,
+        reservationCode: reservation.reservationCode,
+        successUrl: `${baseUrl}/pago/exitoso`,
+        cancelUrl: `${baseUrl}/pago/cancelado`
       });
+
+      const session = await createCheckoutSession({
+        reservationId: reservation.id,
+        successUrl: `${baseUrl}/pago/exitoso`,
+        cancelUrl: `${baseUrl}/pago/cancelado`,
+        idempotencyKey: idempotencyKey,
+      });
+
+      console.log('[CheckoutWizard] Sesión creada:', session);
+
+      // Validar que la respuesta tenga checkoutUrl
       if (!session?.checkoutUrl) {
-        pushError('Stripe respondió sin URL de checkout.');
+        const errorMsg = 'Stripe respondió sin URL de checkout. Por favor, inténtalo de nuevo.';
+        setCheckoutError(errorMsg);
+        pushError(errorMsg);
         return;
       }
+
+      // Redireccionar a Stripe Checkout
+      console.log('[CheckoutWizard] Redireccionando a:', session.checkoutUrl);
       window.location.href = session.checkoutUrl;
+
     } catch (error) {
-      pushError(getErrorMessage(error));
+      console.error('[CheckoutWizard] Error en checkout:', error);
+      const errorMsg = getErrorMessage(error);
+      setCheckoutError(errorMsg);
+      pushError(errorMsg);
     } finally {
       setIsCreatingSession(false);
     }
-  };
+  }, [reservation, isCreatingSession, pushError, pushInfo]);
 
   // No renderizar si no hay suite seleccionada aún
   if (!selectedRoom && !reservation) return null;

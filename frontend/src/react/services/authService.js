@@ -47,6 +47,16 @@ export async function changePassword(payload) {
   return unwrap(response);
 }
 
+export async function forgotPassword(payload) {
+  const response = await api.post('/api/v1/auth/forgot-password', payload);
+  return unwrap(response);
+}
+
+export async function resetPassword(payload) {
+  const response = await api.post('/api/v1/auth/reset-password', payload);
+  return unwrap(response);
+}
+
 export function clearSession() {
   localStorage.removeItem(TOKEN_KEY);
   localStorage.removeItem(USER_KEY);

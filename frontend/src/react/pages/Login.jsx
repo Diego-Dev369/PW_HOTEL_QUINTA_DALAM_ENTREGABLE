@@ -83,7 +83,7 @@ export default function Login() {
                 <label className="login__remember">
                   <input type="checkbox" /> Recordarme
                 </label>
-                <a href="#" className="login__forgot">¿Olvidaste tu contraseña?</a>
+                <Link to="/forgot-password" className="login__forgot">¿Olvidaste tu contraseña?</Link>
               </div>
 
               <button type="submit" className="btn btn--primary login__submit" disabled={loading}>

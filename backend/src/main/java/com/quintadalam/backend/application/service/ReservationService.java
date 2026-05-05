@@ -6,6 +6,8 @@ import com.quintadalam.backend.application.dto.response.ReservationResponse;
 import com.quintadalam.backend.application.dto.response.RoomAvailabilityResponse;
 import com.quintadalam.backend.application.mapper.ReservationMapper;
 import com.quintadalam.backend.application.mapper.RoomMapper;
+import com.quintadalam.backend.application.service.fiscal.TaxMxBreakdown;
+import com.quintadalam.backend.application.service.fiscal.TaxMxService;
 import com.quintadalam.backend.common.error.BusinessException;
 import com.quintadalam.backend.domain.enums.ReservationStatus;
 import com.quintadalam.backend.domain.enums.RoomStatus;
@@ -20,6 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
@@ -33,6 +36,7 @@ public class ReservationService {
     private final ReservationRepository reservationRepository;
     private final RoomMapper roomMapper;
     private final ReservationMapper reservationMapper;
+    private final TaxMxService taxMxService;
     private final EntityManager entityManager;
 
     public ReservationService(
@@ -41,6 +45,7 @@ public class ReservationService {
         ReservationRepository reservationRepository,
         RoomMapper roomMapper,
         ReservationMapper reservationMapper,
+        TaxMxService taxMxService,
         EntityManager entityManager
     ) {
         this.roomRepository = roomRepository;
@@ -48,6 +53,7 @@ public class ReservationService {
         this.reservationRepository = reservationRepository;
         this.roomMapper = roomMapper;
         this.reservationMapper = reservationMapper;
+        this.taxMxService = taxMxService;
         this.entityManager = entityManager;
     }
 
@@ -75,8 +81,9 @@ public class ReservationService {
         RoomRateRepository.RateSnapshot snapshot = roomRateRepository.findRateForDate(room.getId(), request.checkIn())
             .orElseThrow(() -> new BusinessException(HttpStatus.CONFLICT, "RATE_NOT_FOUND", "No existe tarifa vigente para la fecha seleccionada."));
 
-        long nights = ChronoUnit.DAYS.between(request.checkIn(), request.checkOut());
-        BigDecimal subtotal = snapshot.getNightlyRateAmount().multiply(BigDecimal.valueOf(nights));
+        long nightsLong = ChronoUnit.DAYS.between(request.checkIn(), request.checkOut());
+        int nights = Math.toIntExact(nightsLong);
+        TaxMxBreakdown fx = taxMxService.computeLodgingTotals(snapshot.getNightlyRateAmount(), nights);
 
         Reservation reservation = new Reservation();
         reservation.setGuestUserId(guestUserId);
@@ -89,22 +96,29 @@ public class ReservationService {
         reservation.setGuestEmail(request.guestEmail().trim().toLowerCase());
         reservation.setGuestPhone(request.guestPhone());
         reservation.setSpecialRequests(request.specialRequests());
-        reservation.setNightlyRateAmount(snapshot.getNightlyRateAmount());
+        reservation.setNightlyRateAmount(snapshot.getNightlyRateAmount().setScale(2, RoundingMode.HALF_EVEN));
         reservation.setCurrency(snapshot.getCurrency());
-        reservation.setSubtotalAmount(subtotal);
-        reservation.setTaxesAmount(BigDecimal.ZERO);
-        reservation.setTotalAmount(subtotal);
-
+        reservation.setRoomBaseAmount(fx.roomBaseTotal().setScale(2, RoundingMode.HALF_EVEN));
+        reservation.setIvaAmount(fx.ivaAmount().setScale(2, RoundingMode.HALF_EVEN));
+        reservation.setIshAmount(fx.ishAmount().setScale(2, RoundingMode.HALF_EVEN));
+        reservation.setSubtotalAmount(fx.roomBaseTotal().setScale(2, RoundingMode.HALF_EVEN));
+        reservation.setTaxesAmount(fx.taxesTotal().setScale(2, RoundingMode.HALF_EVEN));
+        reservation.setTotalAmount(fx.grandTotal().setScale(2, RoundingMode.HALF_EVEN));
+        reservation.setPricingSnapshot(fx.toSnapshot());
+        reservation.setReservationCode(generateReservationCode());
         Reservation saved = reservationRepository.saveAndFlush(reservation);
         entityManager.refresh(saved);
         return reservationMapper.toResponse(saved);
     }
 
+    /**
+     * @deprecated El estado económico ahora lo gobierna payment_ledger + ReservationFinanceSynchronizer.
+     */
+    @Deprecated(forRemoval = true)
     @Transactional
     public void confirmReservation(UUID reservationId) {
         Reservation reservation = reservationRepository.findByIdAndDeletedAtIsNull(reservationId)
             .orElseThrow(() -> new BusinessException(HttpStatus.NOT_FOUND, "RESERVATION_NOT_FOUND", "Reservación no encontrada."));
-
         reservation.setStatus(ReservationStatus.CONFIRMED);
         reservationRepository.save(reservation);
     }
@@ -140,4 +154,17 @@ public class ReservationService {
             throw new BusinessException(HttpStatus.BAD_REQUEST, "INVALID_DATES", "La fecha de salida debe ser posterior a la de entrada.");
         }
     }
+    private String generateReservationCode() {
+    Long folio = ((Number) entityManager
+        .createNativeQuery("SELECT nextval('hotel.reservation_folio_seq')")
+        .getSingleResult())
+        .longValue();
+
+    return "RES-" +
+        java.time.LocalDate.now().format(
+            java.time.format.DateTimeFormatter.BASIC_ISO_DATE
+        ) +
+        "-" +
+        String.format("%05d", folio);
+}
 }

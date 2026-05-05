@@ -45,7 +45,7 @@ public class Payment extends AuditableSoftDeleteEntity {
     @Column(name = "currency", nullable = false, length = 3)
     private String currency;
 
-    @Column(name = "stripe_session_id", nullable = false, unique = true)
+    @Column(name = "stripe_session_id", unique = true, length = 255)
     private String stripeSessionId;
 
     @Column(name = "stripe_payment_intent_id")

@@ -8,46 +8,45 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.util.UUID;
 
-/**
- * DTO de respuesta extendido para reservaciones.
- * Incluye snapshot de suite, desglose financiero y datos de pago.
- */
 public record ReservationResponse(
 
-    // ── Identidad de la reserva ──────────────────────────────
     UUID id,
     String reservationCode,
     ReservationStatus status,
     Instant createdAt,
 
-    // ── Datos de la suite ────────────────────────────────────
     UUID roomId,
-    String roomCode,        // Ej. "suite-patzcuaro"
-    String roomName,        // Ej. "Suite Pátzcuaro"
-    String roomCategory,    // Ej. "Suite Superior"
-    Short  roomCapacity,
+    String roomCode,
+    String roomName,
+    String roomCategory,
+    Short roomCapacity,
     String roomBedType,
 
-    // ── Fechas y duración ────────────────────────────────────
     LocalDate checkIn,
     LocalDate checkOut,
-    int nights,             // check_out - check_in
+    int nights,
 
-    // ── Huésped ──────────────────────────────────────────────
     short guestsCount,
     String guestFullName,
     String guestEmail,
 
-    // ── Desglose financiero ──────────────────────────────────
     String currency,
     BigDecimal nightlyRateAmount,
+
+    BigDecimal roomBaseAmount,
+    BigDecimal ivaAmount,
+    BigDecimal ishAmount,
+
     BigDecimal subtotalAmount,
     BigDecimal taxesAmount,
     BigDecimal totalAmount,
 
-    // ── Datos de pago (null si aún no se pagó) ───────────────
-    PaymentStatus paymentStatus,       // CREATED, SUCCEEDED, FAILED…
+    BigDecimal ledgerNetPaid,
+    BigDecimal balanceDue,
+
+    PaymentStatus paymentStatus,
     String stripeSessionId,
     String stripePaymentIntentId,
     Instant paidAt
-) {}
+) {
+}

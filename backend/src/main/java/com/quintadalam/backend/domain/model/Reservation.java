@@ -21,6 +21,7 @@ import java.math.BigDecimal;
 import java.sql.Types;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.util.Map;
 import java.util.UUID;
 
 @Getter
@@ -70,6 +71,22 @@ public class Reservation extends AuditableSoftDeleteEntity {
     @JdbcTypeCode(Types.CHAR)
     @Column(name = "currency", nullable = false, length = 3)
     private String currency;
+
+    /**
+     * Base hospedaje (gravable antes IVA / ISH) sumarizada para la estadía según modelo fiscal MX.
+     */
+    @Column(name = "room_base_amount", nullable = false, precision = 12, scale = 2)
+    private BigDecimal roomBaseAmount;
+
+    @Column(name = "iva_amount", nullable = false, precision = 12, scale = 2)
+    private BigDecimal ivaAmount = BigDecimal.ZERO;
+
+    @Column(name = "ish_amount", nullable = false, precision = 12, scale = 2)
+    private BigDecimal ishAmount = BigDecimal.ZERO;
+
+    @JdbcTypeCode(SqlTypes.JSON)
+    @Column(name = "pricing_snapshot", columnDefinition = "jsonb")
+    private Map<String, Object> pricingSnapshot;
 
     @Column(name = "subtotal_amount", nullable = false, precision = 12, scale = 2)
     private BigDecimal subtotalAmount;

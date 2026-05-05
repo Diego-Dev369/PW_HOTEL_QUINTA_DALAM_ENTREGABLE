@@ -2,10 +2,9 @@ package com.quintadalam.backend.config;
 
 import com.quintadalam.backend.security.CustomUserDetailsService;
 import com.quintadalam.backend.security.JwtAuthenticationFilter;
-import com.quintadalam.backend.security.JwtProperties;
+import com.quintadalam.backend.security.LoginRateLimitFilter;
 import com.quintadalam.backend.security.RestAccessDeniedHandler;
 import com.quintadalam.backend.security.RestAuthenticationEntryPoint;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -23,10 +22,10 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableMethodSecurity
-@EnableConfigurationProperties(JwtProperties.class)
 public class SecurityConfig {
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    private final LoginRateLimitFilter loginRateLimitFilter;
     private final CustomUserDetailsService userDetailsService;
     private final PasswordEncoder passwordEncoder;
     private final RestAuthenticationEntryPoint restAuthenticationEntryPoint;
@@ -34,12 +33,14 @@ public class SecurityConfig {
 
     public SecurityConfig(
         JwtAuthenticationFilter jwtAuthenticationFilter,
+        LoginRateLimitFilter loginRateLimitFilter,
         CustomUserDetailsService userDetailsService,
         PasswordEncoder passwordEncoder,
         RestAuthenticationEntryPoint restAuthenticationEntryPoint,
         RestAccessDeniedHandler restAccessDeniedHandler
     ) {
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
+        this.loginRateLimitFilter = loginRateLimitFilter;
         this.userDetailsService = userDetailsService;
         this.passwordEncoder = passwordEncoder;
         this.restAuthenticationEntryPoint = restAuthenticationEntryPoint;
@@ -64,13 +65,22 @@ public class SecurityConfig {
                     "/actuator/health",
                     "/actuator/info"
                 ).permitAll()
-                .requestMatchers(HttpMethod.POST, "/api/v1/auth/register", "/api/v1/auth/login").permitAll()
+                .requestMatchers(
+                    HttpMethod.POST,
+                    "/api/v1/auth/register",
+                    "/api/v1/auth/login",
+                    "/api/v1/auth/forgot-password",
+                    "/api/v1/auth/reset-password"
+                ).permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/v1/rooms/availability").permitAll()
-                .requestMatchers(HttpMethod.POST, "/api/v1/webhooks/stripe").permitAll()
+                .requestMatchers(HttpMethod.POST, "/api/v1/webhooks/**").permitAll()
                 .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
+                .requestMatchers("/api/v1/reception/**").hasAnyRole("ADMIN", "RECEPTION")
+                .requestMatchers(HttpMethod.GET, "/api/public/ical/export").permitAll()
                 .anyRequest().authenticated()
             )
             .authenticationProvider(authenticationProvider())
+            .addFilterBefore(loginRateLimitFilter, UsernamePasswordAuthenticationFilter.class)
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();

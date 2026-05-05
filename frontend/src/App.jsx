@@ -11,6 +11,8 @@ import Nosotros from './react/pages/Nosotros.jsx';
 import Contacto from './react/pages/Contacto.jsx';
 import Login from './react/pages/Login.jsx';
 import Register from './react/pages/Register.jsx';
+import ForgotPassword from './react/pages/ForgotPassword.jsx';
+import ResetPassword from './react/pages/ResetPassword.jsx';
 import Reservaciones from './react/pages/Reservaciones.jsx';
 import MyAccount from './react/pages/MyAccount.jsx';
 import MyReservations from './react/pages/MyReservations.jsx';
@@ -25,6 +27,8 @@ import AdminNosotros from './react/pages/admin/AdminNosotros.jsx';
 import AdminContacto from './react/pages/admin/AdminContacto.jsx';
 import AdminGlobals from './react/pages/admin/AdminGlobals.jsx';
 import AdminUsuarios from './react/pages/admin/AdminUsuarios.jsx';
+import ReceptionDashboard from './react/pages/reception/ReceptionDashboard.jsx';
+import ReceptionReservations from './react/pages/reception/ReceptionReservations.jsx';
 import NotFound from './react/pages/NotFound.jsx';
 
 import PublicLayout from './react/components/PublicLayout.jsx';
@@ -50,6 +54,8 @@ export default function App() {
                 <Route path="/contacto" element={<Contacto />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/registro" element={<Register />} />
+                <Route path="/forgot-password" element={<ForgotPassword />} />
+                <Route path="/reset-password" element={<ResetPassword />} />
                 <Route path="/reservaciones" element={<Reservaciones />} />
                 <Route path="/pago/exitoso" element={<PaymentSuccess />} />
                 <Route path="/pago/cancelado" element={<PaymentCancel />} />
@@ -59,6 +65,13 @@ export default function App() {
                 <Route element={<PublicLayout />}>
                   <Route path="/mi-cuenta" element={<MyAccount />} />
                   <Route path="/mis-reservaciones" element={<MyReservations />} />
+                </Route>
+              </Route>
+
+              <Route element={<ProtectedRoute allowedRoles={['ADMIN', 'RECEPTION']} />}>
+                <Route path="/reception" element={<AdminLayout />}>
+                  <Route path="dashboard" element={<ReceptionDashboard />} />
+                  <Route path="reservations" element={<ReceptionReservations />} />
                 </Route>
               </Route>
 
