@@ -83,11 +83,14 @@ public class NotificationOutboxWorker {
             return;
         }
 
+        log.info("Outbox enviando kind={} id={} to={}", row.getKind(), row.getId(),
+            row.getPayload() != null ? row.getPayload().get("email") : "<reserva>");
         try {
             NotificationEmailComposer.EmailEnvelope email = emailComposer.compose(row);
             emailSender.sendHtml(email.to(), email.subject(), email.htmlBody());
             markAsSent(id);
         } catch (Exception ex) {
+            log.error("Outbox excepción SMTP kind={} id={}: {}", row.getKind(), row.getId(), ex.getMessage());
             markAsFailed(id, ex);
         }
     }

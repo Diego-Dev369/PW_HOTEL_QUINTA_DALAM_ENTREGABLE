@@ -138,19 +138,38 @@ public class PaymentService {
     }
 
     private SessionCreateParams.LineItem buildLineItem(Reservation reservation) {
-        BigDecimal cents = reservation.getTotalAmount().multiply(BigDecimal.valueOf(100));
-        String cur = reservation.getCurrency() == null ? "mxn" : reservation.getCurrency().trim().toLowerCase();
+        // Precio por noche (bruto, impuestos incluidos) en centavos para Stripe
+        BigDecimal nightlyCents = reservation.getNightlyRateAmount()
+            .multiply(BigDecimal.valueOf(100))
+            .setScale(0, java.math.RoundingMode.HALF_EVEN);
+
+        // Número de noches como quantity → el recibo de Stripe mostrará precio/noche × noches
+        long nights = java.time.temporal.ChronoUnit.DAYS.between(
+            reservation.getCheckIn(), reservation.getCheckOut());
+
+        String cur = reservation.getCurrency() == null
+            ? "mxn"
+            : reservation.getCurrency().trim().toLowerCase();
+
+        String roomName = reservation.getRoom() != null && reservation.getRoom().getName() != null
+            ? reservation.getRoom().getName()
+            : "Suite";
+
+        log.debug("buildLineItem: room={} nightlyCents={} nights={} currency={}",
+            roomName, nightlyCents, nights, cur);
 
         return SessionCreateParams.LineItem.builder()
-            .setQuantity(1L)
+            .setQuantity(nights)
             .setPriceData(
                 SessionCreateParams.LineItem.PriceData.builder()
                     .setCurrency(cur)
-                    .setUnitAmountDecimal(cents)
+                    .setUnitAmountDecimal(nightlyCents)
                     .setProductData(
                         SessionCreateParams.LineItem.PriceData.ProductData.builder()
-                            .setName("Estancia — " + reservation.getReservationCode() + " (IVA + ISH incl. en total)")
+                            .setName("Noche en " + roomName + " · " + reservation.getReservationCode())
+                            .setDescription("Precio incluye IVA 16% e ISH 3%")
                             .putMetadata("room_id", reservation.getRoom().getId().toString())
+                            .putMetadata("reservation_code", reservation.getReservationCode())
                             .build()
                     )
                     .build()

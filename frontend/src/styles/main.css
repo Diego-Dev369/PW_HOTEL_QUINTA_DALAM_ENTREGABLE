@@ -6267,6 +6267,7 @@ html {
 }
 
 .res-card__img-wrap {
+  position: relative; /* FIX: ancla el .res-badge (position:absolute) dentro de la imagen */
   height: 220px;
   max-height: 220px;
   overflow: hidden;

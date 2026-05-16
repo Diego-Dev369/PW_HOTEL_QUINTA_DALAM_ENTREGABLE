@@ -34,7 +34,7 @@ public class NotificationEmailSender {
             helper.setText(htmlBody, true);
             mailSender.send(message);
         } catch (Exception ex) {
-            throw new BusinessException(HttpStatus.BAD_GATEWAY, "MAIL_DELIVERY_FAILED", "No fue posible entregar el correo.");
+            throw new BusinessException(HttpStatus.BAD_GATEWAY, "MAIL_DELIVERY_FAILED", "Fallo SMTP real: " + ex.getMessage());
         }
     }
 }

@@ -23,25 +23,49 @@ public class TaxMxService {
         this.objectMapper = objectMapper;
     }
 
-    public TaxMxBreakdown computeLodgingTotals(BigDecimal nightlyRateBeforeTax, int nights) {
-        if (nightlyRateBeforeTax == null || nightlyRateBeforeTax.signum() <= 0 || nights <= 0) {
+    /**
+     * MODELO GROSS PRICE (precio bruto, impuestos incluidos).
+     *
+     * El parámetro {@code nightlyRateGross} es el precio POR NOCHE que ya incluye IVA + ISH,
+     * tal como se almacena en hotel.room_rates y se muestra al cliente.
+     *
+     * grandTotal  = nightlyRateGross × nights           ← lo que cobra Stripe exactamente
+     * taxDivisor  = 1 + ivaRate + ishRate               ← p.ej. 1.19
+     * roomBase    = grandTotal / taxDivisor             ← base neta (solo informativo fiscal)
+     * ivaAmount   = roomBase × ivaRate
+     * ishAmount   = roomBase × ishRate
+     *
+     * NUNCA se suma nada encima del precio almacenado en BD.
+     */
+    public TaxMxBreakdown computeLodgingTotals(BigDecimal nightlyRateGross, int nights) {
+        if (nightlyRateGross == null || nightlyRateGross.signum() <= 0 || nights <= 0) {
             throw new IllegalArgumentException("Tarifa noches inválidas");
         }
 
         Rates r = resolveRates();
 
-        BigDecimal roomBaseTotal = nightlyRateBeforeTax.multiply(BigDecimal.valueOf(nights), MathContext.DECIMAL64)
+        // Total final que ve y paga el cliente — exactamente lo que irá a Stripe
+        BigDecimal grand = nightlyRateGross
+            .multiply(BigDecimal.valueOf(nights), MathContext.DECIMAL64)
             .setScale(2, RoundingMode.HALF_EVEN);
 
+        // Divisor para extraer la base neta del bruto: 1 + IVA + ISH
+        BigDecimal taxDivisor = BigDecimal.ONE
+            .add(r.ivaRate, MathContext.DECIMAL64)
+            .add(r.ishRate, MathContext.DECIMAL64);
+
+        // Base neta = bruto / (1 + IVA + ISH)  — solo desglose fiscal interno
+        BigDecimal roomBaseTotal = grand
+            .divide(taxDivisor, 6, RoundingMode.HALF_EVEN)
+            .setScale(2, RoundingMode.HALF_EVEN);
+
+        // Impuestos extraídos desde el bruto
         BigDecimal iva = roomBaseTotal.multiply(r.ivaRate, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_EVEN);
         BigDecimal ish = roomBaseTotal.multiply(r.ishRate, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_EVEN);
-
         BigDecimal taxes = iva.add(ish, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_EVEN);
 
-        BigDecimal grand = roomBaseTotal.add(taxes, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_EVEN);
-
         return new TaxMxBreakdown(
-            nightlyRateBeforeTax,
+            nightlyRateGross,
             nights,
             roomBaseTotal,
             iva,

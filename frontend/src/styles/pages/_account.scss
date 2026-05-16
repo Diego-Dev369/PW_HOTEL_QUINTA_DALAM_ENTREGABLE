@@ -138,9 +138,14 @@
 
 // ── Imagen ────────────────────────────────────────────────────────────
 .res-card__img-wrap {
+  position: relative;   // ← CRÍTICO: ancla el .res-badge (position:absolute)
   height: 220px;
   max-height: 220px;
   overflow: hidden;
+
+  @include m.respond-to('md') {
+    height: 200px; // Ligeramente más compacto en móvil
+  }
 }
 
 .res-card__img {
