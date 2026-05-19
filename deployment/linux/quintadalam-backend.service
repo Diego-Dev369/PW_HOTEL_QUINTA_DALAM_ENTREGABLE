@@ -1,0 +1,18 @@
+[Unit]
+Description=Quinta Dalam Backend Service
+After=network.target
+
+[Service]
+Type=simple
+User=www-data
+Group=www-data
+WorkingDirectory=/opt/quintadalam-backend
+EnvironmentFile=/opt/quintadalam-backend/.env
+ExecStart=/usr/bin/java -jar /opt/quintadalam-backend/app.jar
+SuccessExitStatus=143
+Restart=on-failure
+RestartSec=5
+NoNewPrivileges=true
+
+[Install]
+WantedBy=multi-user.target

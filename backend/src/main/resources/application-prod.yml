@@ -47,6 +47,7 @@ springdoc:
 
 server:
   port: ${SERVER_PORT:8080}
+  forward-headers-strategy: framework
 
 management:
   endpoints:
@@ -62,6 +63,8 @@ app:
     from: ${MAIL_FROM}
   frontend:
     base-url: ${APP_FRONTEND_BASE_URL}
+  ical:
+    export-token: ${APP_ICAL_EXPORT_TOKEN}
   cors:
     allowed-origins: ${APP_CORS_ALLOWED_ORIGINS}
   security:
@@ -70,6 +73,7 @@ app:
     jwt-refresh-expiration-seconds: ${JWT_REFRESH_EXPIRATION_SECONDS:604800}
     require-strong-jwt-secret: ${JWT_REQUIRE_STRONG_SECRET:true}
   stripe:
+    mode: ${PAYMENT_STRIPE_MODE:live}
     secret-key: ${PAYMENT_STRIPE_SECRET_KEY}
     webhook-secret: ${PAYMENT_WEBHOOK_SECRET}
   rate-limit:
@@ -82,5 +86,7 @@ app:
       max-attempts: ${OUTBOX_WORKER_MAX_ATTEMPTS:8}
 
 logging:
+  file:
+    name: ${APP_LOG_FILE:/var/log/quintadalam/backend-prod.log}
   pattern:
     console: "{\"time\":\"%d{yyyy-MM-dd'T'HH:mm:ss.SSSXXX}\",\"level\":\"%p\",\"thread\":\"%t\",\"logger\":\"%c\",\"msg\":\"%replace(%replace(%msg%){'\n','\n'}){'\"','\\\\\"'}\"}%n"
