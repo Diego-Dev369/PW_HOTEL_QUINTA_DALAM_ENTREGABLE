@@ -3,9 +3,11 @@ import { DayPicker } from 'react-day-picker';
 import 'react-day-picker/style.css';
 
 import { useBookingDates } from '../context/BookingDateContext.jsx';
+import { useLanguage } from '../context/LanguageContext.jsx';
 
 export default function DateRangePicker({ label = 'Fechas de estancia' }) {
   const { dateRange, setDateRange, checkInLabel, checkOutLabel, clearDateRange } = useBookingDates();
+  const { t } = useLanguage();
   const [open, setOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const rootRef = useRef(null);
@@ -63,7 +65,7 @@ export default function DateRangePicker({ label = 'Fechas de estancia' }) {
 
   const triggerText = checkInLabel && checkOutLabel
     ? `${checkInLabel} - ${checkOutLabel}`
-    : 'Selecciona check-in y check-out';
+    : t.common.selectDates;
 
   return (
     <div className="date-range" ref={rootRef}>
@@ -75,7 +77,7 @@ export default function DateRangePicker({ label = 'Fechas de estancia' }) {
           className="form-input date-range__trigger"
           onClick={() => setOpen((current) => !current)}
           aria-expanded={open}
-          aria-label="Abrir selector de fechas"
+          aria-label={t.common.datePicker}
         >
           <span>{triggerText}</span>
           <i className="fa-regular fa-calendar-days" aria-hidden="true"></i>
@@ -83,7 +85,7 @@ export default function DateRangePicker({ label = 'Fechas de estancia' }) {
 
         {(dateRange.from || dateRange.to) && (
           <button type="button" className="date-range__clear" onClick={clearDateRange}>
-            Limpiar
+            {t.common.clear}
           </button>
         )}
       </div>

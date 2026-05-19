@@ -1,4 +1,4 @@
-#Requires -Version 5.1
+﻿#Requires -Version 5.1
 param(
   [switch]$UseDockerDb,
   [switch]$SkipNpmInstall,
@@ -139,8 +139,34 @@ function Ensure-PgDatabase {
 # --- validacion basica ---
 if (!(Test-Path -LiteralPath $backendDir)) { throw "No existe backend en $backendDir." }
 if (!(Test-Path -LiteralPath $frontendDir)) { throw "No existe frontend en $frontendDir." }
-if (!(Get-Command npm -ErrorAction SilentlyContinue)) { throw 'npm no esta instalado o no esta en PATH.' }
-if (!(Get-Command java -ErrorAction SilentlyContinue)) { throw 'java no esta instalado o JAVA_HOME/JDK no configurado para el wrapper.' }
+$npmCommand = if (Get-Command npm.cmd -ErrorAction SilentlyContinue) { 'npm.cmd' } elseif (Get-Command npm -ErrorAction SilentlyContinue) { 'npm' } else { $null }
+if (-not $npmCommand) { throw 'npm no esta instalado o no esta en PATH.' }
+
+if (-not $env:JAVA_HOME -or -not (Test-Path -LiteralPath (Join-Path $env:JAVA_HOME 'bin\java.exe'))) {
+  $env:JAVA_HOME = $null
+  $javaCmd = Get-Command java -ErrorAction SilentlyContinue
+  if ($javaCmd) {
+    $javaExe = $javaCmd.Source
+    $candidateJavaHome = Split-Path -Parent (Split-Path -Parent $javaExe)
+    if (Test-Path -LiteralPath (Join-Path $candidateJavaHome 'bin\javac.exe')) {
+      $env:JAVA_HOME = $candidateJavaHome
+    }
+  }
+}
+
+if (-not $env:JAVA_HOME) {
+  $knownJdks = @('C:\Program Files\Java\jdk-24', 'C:\Program Files\Java\jdk-21')
+  foreach ($jdk in $knownJdks) {
+    if (Test-Path -LiteralPath (Join-Path $jdk 'bin\javac.exe')) {
+      $env:JAVA_HOME = $jdk
+      break
+    }
+  }
+}
+
+if (-not $env:JAVA_HOME -or -not (Test-Path -LiteralPath (Join-Path $env:JAVA_HOME 'bin\java.exe'))) {
+  throw 'JAVA_HOME no esta configurado y no se pudo detectar un JDK valido.'
+}
 
 # --- detener instancia previa (no toca Docker) ---
 $stopScript = Join-Path $root 'stop-all.ps1'
@@ -243,7 +269,7 @@ if (!$SkipFlywayRepair) {
     )
     & .\mvnw.cmd @flyArgs
     if ($LASTEXITCODE -ne 0) {
-      Write-Host 'flyway:repair fallo (si la base es nueva y vacia, suele ser conexion). Revise DB_URL y credenciales.' -ForegroundColor DarkYellow
+      throw 'No se pudo conectar a PostgreSQL/Flyway. Revisa DB_URL, DB_USERNAME y DB_PASSWORD en .env antes de arrancar.'
     }
   }
   finally {
@@ -256,7 +282,7 @@ if (!(Test-Path (Join-Path $frontendDir 'node_modules')) -and !$SkipNpmInstall) 
   Write-Host 'npm install en frontend...' -ForegroundColor Cyan
   Push-Location $frontendDir
   try {
-    npm install --no-audit --no-fund
+    & $npmCommand install --no-audit --no-fund
     if ($LASTEXITCODE -ne 0) { throw 'Fallo npm install.' }
   }
   finally {
@@ -269,7 +295,7 @@ $frontendLog = Join-Path $runtimeDir 'frontend.log'
 $pidFile = Join-Path $runtimeDir 'pids.json'
 
 $backendCmd = '.\\mvnw.cmd -Dmaven.repo.local=' + $mavenRepoLocal + ' spring-boot:run >> "' + $backendLog + '" 2>&1'
-$frontendCmd = 'npm run dev -- --host 0.0.0.0 --port 5173 >> "' + $frontendLog + '" 2>&1'
+$frontendCmd = $npmCommand + ' run dev -- --host 0.0.0.0 --port 5173 >> "' + $frontendLog + '" 2>&1'
 
 $backendProc = Start-Process -FilePath 'cmd.exe' -ArgumentList '/c', $backendCmd -WorkingDirectory $backendDir -PassThru -WindowStyle Hidden
 if (-not $backendProc) { throw 'No se pudo lanzar backend.' }
@@ -313,3 +339,7 @@ Write-Host "  $backendLog"
 Write-Host "  $frontendLog"
 Write-Host ''
 Write-Host 'Detener: .\\stop-all.ps1  (opcional Docker: .\\stop-all.ps1 -StopDockerDb)' -ForegroundColor Cyan
+
+
+
+

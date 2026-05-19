@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import CTA from "../components/CTA";
 import EventSection from "../components/EventSection.jsx";
 import DateRangePicker from "../components/DateRangePicker.jsx";
+import { useLanguage } from "../context/LanguageContext.jsx";
 import roomUruapan from "../../assets/images/rooms/204-uruapan.jpeg";
 import roomPatzcuaro from "../../assets/images/rooms/104-patzcuaro.jpeg";
 import roomParacho from "../../assets/images/rooms/102-paracho.jpeg";
@@ -102,6 +103,7 @@ function RoomCard({
   sub,
   desc,
   amenities,
+  detailsLabel,
   featured = false,
 }) {
   return (
@@ -134,7 +136,7 @@ function RoomCard({
           ))}
         </ul>
         <Link to="/habitaciones" className="room-card__link btn btn--outline">
-          Ver detalles
+          {detailsLabel}
         </Link>
       </div>
     </motion.article>
@@ -263,6 +265,7 @@ const heroSlides = [
 // ── COMPONENTE PRINCIPAL ──────────────────────────────────────
 export default function Home() {
   const [heroIndex, setHeroIndex] = useState(0);
+  const { t } = useLanguage();
 
   // Obtener la fecha de hoy en formato YYYY-MM-DD para bloquear fechas pasadas
   // Obtener la fecha de hoy en formato YYYY-MM-DD para bloquear fechas pasadas
@@ -280,6 +283,21 @@ export default function Home() {
   }, [heroIndex]);
 
   const activeHero = heroSlides[heroIndex];
+  const localizedRooms = rooms.map((room, index) => ({
+    ...room,
+    sub: t.home.roomsData[index]?.sub || room.sub,
+    desc: t.home.roomsData[index]?.desc || room.desc,
+    detailsLabel: t.common.viewDetails,
+  }));
+  const localizedServices = services.map((service, index) => ({
+    ...service,
+    title: t.home.services[index]?.title || service.title,
+    text: t.home.services[index]?.text || service.text,
+  }));
+  const localizedExperiences = experiences.map((experience, index) => ({
+    ...experience,
+    title: t.home.experiences[index] || experience.title,
+  }));
 
   return (
     <motion.main
@@ -329,17 +347,16 @@ export default function Home() {
           animate="show"
         >
           <motion.h1 className="hero__title" variants={heroFadeUp}>
-            Vive la Magia
+            {t.home.heroTitleLine1}
             <br />
-            de Michoacán
+            {t.home.heroTitleLine2}
           </motion.h1>
           <motion.p className="hero__subtitle" variants={heroFadeUp}>
-            Descubre la hospitalidad, artesanía y cultura de los Pueblos
-            Mágicos.
+            {t.home.heroSubtitle}
           </motion.p>
           <motion.div variants={heroFadeUp}>
             <Link to="/reservaciones" className="hero__cta btn btn--primary">
-              Reservar Ahora
+              {t.common.bookNow}
             </Link>
           </motion.div>
         </motion.div>
@@ -357,29 +374,29 @@ export default function Home() {
             
             {/* NUEVO SELECTOR GLOBAL INTEGRADO */}
             <div className="booking__field">
-              <DateRangePicker label="Fechas de Llegada y Salida" />
+              <DateRangePicker label={t.home.bookingDates} />
             </div>
 
             <div className="booking__divider" />
             
             <div className="booking__field">
               <label className="booking__label" htmlFor="guests">
-                <i className="fa-regular fa-user"></i>Huéspedes
+                <i className="fa-regular fa-user"></i>{t.common.guests}
               </label>
               <select
                 id="guests"
                 className="booking__input booking__input--select"
                 defaultValue="2"
               >
-                <option value="1">1 Persona</option>
-                <option value="2">2 Personas</option>
-                <option value="3">3 Personas</option>
-                <option value="4">4+ Personas</option>
+                <option value="1">1 {t.common.person}</option>
+                <option value="2">2 {t.common.people}</option>
+                <option value="3">3 {t.common.people}</option>
+                <option value="4">4+ {t.common.people}</option>
               </select>
             </div>
             <motion.div whileTap={{ scale: 0.95 }} style={{ display: "flex" }}>
               <Link to="/reservaciones" className="booking__btn">
-                Buscar
+                {t.common.search}
               </Link>
             </motion.div>
           </div>
@@ -389,10 +406,10 @@ export default function Home() {
       {/* ═══ HABITACIONES ═══════════════════════════════════ */}
       <section className="rooms section" id="habitaciones">
         <SectionHeader
-          eyebrow="Nuestras Suites"
-          title="Habitaciones con"
-          titleEm="Encanto"
-          subtitle="Diseño inspirado en la tradición y el confort contemporáneo"
+          eyebrow={t.home.roomsEyebrow}
+          title={t.home.roomsTitle}
+          titleEm={t.home.roomsTitleEm}
+          subtitle={t.home.roomsSubtitle}
         />
         <motion.div
           className="rooms__grid"
@@ -401,7 +418,7 @@ export default function Home() {
           whileInView="show"
           {...inView}
         >
-          {rooms.map((room) => (
+          {localizedRooms.map((room) => (
             <RoomCard key={room.title} {...room} />
           ))}
         </motion.div>
@@ -412,7 +429,7 @@ export default function Home() {
           {...inView}
         >
           <Link to="/habitaciones" className="btn btn--primary">
-            Ver todas las habitaciones
+            {t.common.viewAllRooms}
           </Link>
         </motion.div>
       </section>
@@ -421,10 +438,10 @@ export default function Home() {
       <section className="experiences section--dark" id="experiencias">
         <div className="experiences__inner">
           <SectionHeader
-            eyebrow="La Experiencia Dalam"
-            title="Momentos que"
-            titleEm="Perduran"
-            subtitle="Cada rincón de Michoacán tiene una historia que contarte"
+            eyebrow={t.home.experiencesEyebrow}
+            title={t.home.experiencesTitle}
+            titleEm={t.home.experiencesTitleEm}
+            subtitle={t.home.experiencesSubtitle}
           />
           <motion.div
             className="experiences__grid"
@@ -433,7 +450,7 @@ export default function Home() {
             whileInView="show"
             {...inView}
           >
-            {experiences.map((exp) => (
+            {localizedExperiences.map((exp) => (
               <ExpCard key={exp.title} {...exp} />
             ))}
           </motion.div>
@@ -443,10 +460,10 @@ export default function Home() {
       {/* ═══ SERVICIOS ══════════════════════════════════════ */}
       <section className="services section section--cream" id="servicios">
         <SectionHeader
-          eyebrow="Lo que ofrecemos"
-          title="Servicios de"
-          titleEm="Distinción"
-          subtitle="Todo lo necesario para una estancia verdaderamente inolvidable"
+          eyebrow={t.home.servicesEyebrow}
+          title={t.home.servicesTitle}
+          titleEm={t.home.servicesTitleEm}
+          subtitle={t.home.servicesSubtitle}
         />
         <motion.div
           className="services__grid"
@@ -455,7 +472,7 @@ export default function Home() {
           whileInView="show"
           {...inView}
         >
-          {services.map((svc) => (
+          {localizedServices.map((svc) => (
             <ServiceCard key={svc.title} {...svc} />
           ))}
         </motion.div>
@@ -467,10 +484,10 @@ export default function Home() {
       <section className="lookbook section section--dark">
         <div className="container">
           <SectionHeader
-            eyebrow="Atmósfera"
-            title="Nuestra"
-            titleEm="Esencia"
-            subtitle="Capturamos los momentos que definen la estancia en Quinta Dalam"
+            eyebrow={t.home.lookbookEyebrow}
+            title={t.home.lookbookTitle}
+            titleEm={t.home.lookbookTitleEm}
+            subtitle={t.home.lookbookSubtitle}
           />
           <motion.div
             className="lookbook__grid"
@@ -509,18 +526,17 @@ export default function Home() {
             {...inView}
           >
             <motion.span className="section__eyebrow" variants={fadeLeft}>
-              Nuestra Historia
+              {t.home.aboutEyebrow}
             </motion.span>
             <motion.h2 className="about__title" variants={fadeLeft}>
-              Una Experiencia <em>Boutique</em> sin igual
+              {t.home.aboutTitle} <em>{t.home.aboutTitleEm}</em>
             </motion.h2>
             <motion.p className="about__desc" variants={fadeLeft}>
-              Hotel Quinta Dalam nació del amor por la cultura michoacana y el
-              arte de la hospitalidad...
+              {t.home.aboutDesc}
             </motion.p>
             <motion.div variants={fadeLeft}>
               <Link to="/nosotros" className="btn btn--primary">
-                Conocer nuestra historia
+                {t.home.aboutButton}
               </Link>
             </motion.div>
           </motion.div>
@@ -539,7 +555,7 @@ export default function Home() {
             />
             <div className="about__badge" aria-hidden="true">
               <span className="about__badge-num">2</span>
-              <span className="about__badge-text">años de hospitalidad</span>
+              <span className="about__badge-text">{t.home.hospitalityYears}</span>
             </div>
           </motion.div>
         </div>

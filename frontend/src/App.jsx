@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ThemeProvider } from './react/context/ThemeContext';
 import { BookingDateProvider } from './react/context/BookingDateContext.jsx';
 import { AuthProvider } from './react/context/AuthContext.jsx';
+import { LanguageProvider } from './react/context/LanguageContext.jsx';
 
 import RouteEffects from './react/hooks/RouteEffects.jsx';
 import Home from './react/pages/Home.jsx';
@@ -38,62 +39,65 @@ export default function App() {
   return (
     <ThemeProvider>
       <BookingDateProvider>
-        <BrowserRouter 
-          future={{ 
-            v7_startTransition: true, 
-            v7_relativeSplatPath: true 
-          }}>
-          <AuthProvider>
-            <RouteEffects />
-            <Routes>
-              {/* Rutas Públicas */}
-              <Route element={<PublicLayout />}>
-                <Route path="/" element={<Home />} />
-                <Route path="/habitaciones" element={<Habitaciones />} />
-                <Route path="/nosotros" element={<Nosotros />} />
-                <Route path="/contacto" element={<Contacto />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/registro" element={<Register />} />
-                <Route path="/forgot-password" element={<ForgotPassword />} />
-                <Route path="/reset-password" element={<ResetPassword />} />
-                <Route path="/reservaciones" element={<Reservaciones />} />
-                <Route path="/pago/exitoso" element={<PaymentSuccess />} />
-                <Route path="/pago/cancelado" element={<PaymentCancel />} />
-              </Route>
-
-              <Route element={<ProtectedRoute />}>
+        <LanguageProvider>
+          <BrowserRouter 
+            future={{ 
+              v7_startTransition: true, 
+              v7_relativeSplatPath: true 
+            }}>
+            <AuthProvider>
+              <RouteEffects />
+              <Routes>
+                {/* Rutas publicas */}
                 <Route element={<PublicLayout />}>
-                  <Route path="/mi-cuenta" element={<MyAccount />} />
-                  <Route path="/mis-reservaciones" element={<MyReservations />} />
+                  <Route path="/" element={<Home />} />
+                  <Route path="/habitaciones" element={<Habitaciones />} />
+                  <Route path="/nosotros" element={<Nosotros />} />
+                  <Route path="/contacto" element={<Contacto />} />
+                  <Route path="/login" element={<Login />} />
+                  <Route path="/registro" element={<Register />} />
+                  <Route path="/forgot-password" element={<ForgotPassword />} />
+                  <Route path="/reset-password" element={<ResetPassword />} />
+                  <Route path="/reservaciones" element={<Reservaciones />} />
+                  <Route path="/pago/exitoso" element={<PaymentSuccess />} />
+                  <Route path="/pago/cancelado" element={<PaymentCancel />} />
                 </Route>
-              </Route>
 
-              <Route element={<ProtectedRoute allowedRoles={['ADMIN', 'RECEPTION']} />}>
-                <Route path="/reception" element={<AdminLayout />}>
-                  <Route path="dashboard" element={<ReceptionDashboard />} />
-                  <Route path="reservations" element={<ReceptionReservations />} />
+                <Route element={<ProtectedRoute />}>
+                  <Route element={<PublicLayout />}>
+                    <Route path="/mi-cuenta" element={<MyAccount />} />
+                    <Route path="/mis-reservaciones" element={<MyReservations />} />
+                  </Route>
                 </Route>
-              </Route>
 
-              <Route element={<ProtectedRoute requireAdmin />}>
-                <Route path="/admin" element={<AdminLayout />}>
-                  <Route path="dashboard" element={<AdminDashboard />} />
-                  <Route path="reservaciones" element={<AdminReservaciones />} />
-                  <Route path="habitaciones" element={<AdminHabitaciones />} />
-                  <Route path="inicio" element={<AdminIndex />} />
-                  <Route path="nosotros" element={<AdminNosotros />} />
-                  <Route path="contacto" element={<AdminContacto />} />
-                  <Route path="globals" element={<AdminGlobals />} />
-                  <Route path="usuarios" element={<AdminUsuarios />} />
+                <Route element={<ProtectedRoute allowedRoles={['ADMIN', 'RECEPTION']} />}>
+                  <Route path="/reception" element={<AdminLayout />}>
+                    <Route path="dashboard" element={<ReceptionDashboard />} />
+                    <Route path="reservations" element={<ReceptionReservations />} />
+                  </Route>
                 </Route>
-              </Route>
 
-              {/* 404 Not Found */}
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </AuthProvider>
-        </BrowserRouter>
+                <Route element={<ProtectedRoute requireAdmin />}>
+                  <Route path="/admin" element={<AdminLayout />}>
+                    <Route path="dashboard" element={<AdminDashboard />} />
+                    <Route path="reservaciones" element={<AdminReservaciones />} />
+                    <Route path="habitaciones" element={<AdminHabitaciones />} />
+                    <Route path="inicio" element={<AdminIndex />} />
+                    <Route path="nosotros" element={<AdminNosotros />} />
+                    <Route path="contacto" element={<AdminContacto />} />
+                    <Route path="globals" element={<AdminGlobals />} />
+                    <Route path="usuarios" element={<AdminUsuarios />} />
+                  </Route>
+                </Route>
+
+                {/* 404 Not Found */}
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </AuthProvider>
+          </BrowserRouter>
+        </LanguageProvider>
       </BookingDateProvider>
     </ThemeProvider>
   );
 }
+

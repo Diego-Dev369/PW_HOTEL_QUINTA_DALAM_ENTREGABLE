@@ -1,5 +1,6 @@
 package com.quintadalam.backend.api.controller;
 
+import com.quintadalam.backend.application.dto.request.UserCreateRequest;
 import com.quintadalam.backend.application.dto.request.UserUpdateRequest;
 import com.quintadalam.backend.application.dto.response.UserResponse;
 import com.quintadalam.backend.application.service.UserService;
@@ -8,6 +9,7 @@ import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -32,6 +34,11 @@ public class AdminUserController {
         return ResponseEntity.ok(ApiResponse.ok(userService.listUsers()));
     }
 
+
+    @PostMapping
+    public ResponseEntity<ApiResponse<UserResponse>> createUser(@Valid @RequestBody UserCreateRequest request) {
+        return ResponseEntity.ok(ApiResponse.ok(userService.createUser(request)));
+    }
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<UserResponse>> getUser(@PathVariable UUID id) {
         return ResponseEntity.ok(ApiResponse.ok(userService.getUser(id)));
@@ -46,5 +53,10 @@ public class AdminUserController {
     public ResponseEntity<Void> deactivateUser(@PathVariable UUID id) {
         userService.deactivateUser(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/{id}/activate")
+    public ResponseEntity<ApiResponse<UserResponse>> activateUser(@PathVariable UUID id) {
+        return ResponseEntity.ok(ApiResponse.ok(userService.activateUser(id)));
     }
 }

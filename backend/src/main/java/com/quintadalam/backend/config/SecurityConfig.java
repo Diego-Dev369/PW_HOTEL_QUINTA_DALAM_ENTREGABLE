@@ -72,7 +72,7 @@ public class SecurityConfig {
                     "/api/v1/auth/forgot-password",
                     "/api/v1/auth/reset-password"
                 ).permitAll()
-                .requestMatchers(HttpMethod.GET, "/api/v1/rooms/availability").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/v1/rooms", "/api/v1/rooms/availability").permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/v1/webhooks/**").permitAll()
                 .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
                 .requestMatchers("/api/v1/reception/**").hasAnyRole("ADMIN", "RECEPTION")
@@ -99,3 +99,4 @@ public class SecurityConfig {
         return configuration.getAuthenticationManager();
     }
 }
+

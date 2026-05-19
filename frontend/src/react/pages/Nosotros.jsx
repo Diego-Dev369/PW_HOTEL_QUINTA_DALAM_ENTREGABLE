@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import CTA from '../components/CTA';
+import { useLanguage } from '../context/LanguageContext.jsx';
 
 import exteriorHotel from '../../assets/images/exteriores/exterior_hotel_dalam.jpg';
 
@@ -25,15 +26,17 @@ const fadeUp = {
 const inView = { viewport: { once: true, margin: '-50px' } };
 
 export default function Nosotros() {
+  const { t } = useLanguage();
+
   return (
     <>
       <div className="page-hero">
         <div className="container">
           <span className="page-hero__eyebrow">Hotel Quinta Dalam</span>
           <h1 className="page-hero__title">
-            Nuestra <em>Historia</em>
+            {t.aboutPage.title} <em>{t.aboutPage.titleEm}</em>
           </h1>
-          <p className="page-hero__subtitle">Pasión por Michoacán, vocación por la hospitalidad</p>
+          <p className="page-hero__subtitle">{t.aboutPage.subtitle}</p>
           <span className="page-hero__ornament" aria-hidden="true">✦ ─── ✦ ─── ✦</span>
         </div>
       </div>
@@ -53,9 +56,9 @@ export default function Nosotros() {
               whileInView="show"
               {...inView}
             >
-              <motion.span className="section__eyebrow" variants={fadeUp}>Legado Familiar</motion.span>
+              <motion.span className="section__eyebrow" variants={fadeUp}>{t.aboutPage.legacy}</motion.span>
               <motion.h2 className="section__title" id="h2-historia-familia" variants={fadeUp}>
-                Nuestra <em>Historia</em>
+                {t.aboutPage.title} <em>{t.aboutPage.titleEm}</em>
               </motion.h2>
               <motion.span className="section__ornament" aria-hidden="true" variants={fadeUp}>
                 ✦ ─── ✦ ─── ✦
@@ -78,31 +81,22 @@ export default function Nosotros() {
                   decoding="async"
                 />
                 <figcaption className="historia-family__caption">
-                  El refugio familiar que se transformó en un tributo a Michoacán.
+                  {t.aboutPage.caption}
                 </figcaption>
               </motion.figure>
 
               <motion.div className="historia-family__content" variants={fadeUp}>
                 <p className="historia-family__lead">
-                  Quinta Dalam nace en Quencio, un pueblito pintoresco de Michoacán con un hermoso
-                  nacimiento de agua.
+                  {t.aboutPage.lead}
                 </p>
                 <p className="historia-family__text">
-                  Originalmente concebido por Daniel, un joven visionario, y su padre Roberto, el
-                  proyecto comenzó como un hogar familiar destinado a dejar una huella positiva,
-                  más allá de lo lucrativo. Años de esfuerzo y desvelos levantaron este edificio frente
-                  al manantial, sin romper la armonía del pueblo.
+                  {t.aboutPage.p1}
                 </p>
                 <p className="historia-family__text">
-                  Aunque el proyecto sobrevivió al inicio de la pandemia, tristemente Daniel y Laura
-                  fueron víctimas mortales de la misma, dejando luto en la familia Medina.
+                  {t.aboutPage.p2}
                 </p>
                 <p className="historia-family__text">
-                  En un acto de amor puro, Roberto continuó la obra de su hijo, plasmando en cada
-                  habitación un pedazo de Michoacán (Morelia, Uruapan, Pátzcuaro, Tlalpujahua,
-                  Paracho, Tzintzuntzan, Coeneo y la suite principal Quencio) y el espíritu
-                  inquebrantable de la familia. Hoy, Quinta Dalam es un refugio de paz, tradición y
-                  amor que honra su memoria.
+                  {t.aboutPage.p3}
                 </p>
               </motion.div>
             </motion.div>
@@ -120,9 +114,9 @@ export default function Nosotros() {
         >
           <div className="container">
             <motion.div className="section__header" variants={fadeUp}>
-              <span className="section__eyebrow">Quiénes Somos</span>
+              <span className="section__eyebrow">{t.aboutPage.who}</span>
               <h2 className="section__title" id="h2-mision">
-                Misión &amp; <em>Visión</em>
+                {t.aboutPage.missionVision} <em>{t.aboutPage.visionEm}</em>
               </h2>
               <motion.span className="section__ornament" aria-hidden="true" variants={fadeUp}>
                 ✦ ─── ✦ ─── ✦
@@ -132,11 +126,9 @@ export default function Nosotros() {
             <motion.article className="nosotros-split" aria-label="Misión del hotel" variants={fadeUp}>
               <div className="nosotros-split__icon" aria-hidden="true"><i className="fa-solid fa-heart"></i></div>
               <div className="nosotros-split__content">
-                <h3 className="nosotros-split__title">Nuestra <em>Misión</em></h3>
+                <h3 className="nosotros-split__title">{t.aboutPage.missionTitle} <em>{t.aboutPage.missionEm}</em></h3>
                 <p className="nosotros-split__text">
-                  Brindar una experiencia de hospitalidad auténtica que celebre la riqueza cultural
-                  de los Pueblos Mágicos de Michoacán. Cada detalle de nuestra casa refleja el
-                  compromiso con la tradición, el arte local y el bienestar de cada huésped.
+                  {t.aboutPage.missionText}
                 </p>
               </div>
             </motion.article>
@@ -150,11 +142,9 @@ export default function Nosotros() {
             >
               <div className="nosotros-split__icon" aria-hidden="true"><i className="fa-solid fa-star"></i></div>
               <div className="nosotros-split__content">
-                <h3 className="nosotros-split__title">Nuestra <em>Visión</em></h3>
+                <h3 className="nosotros-split__title">{t.aboutPage.visionTitle} <em>{t.aboutPage.visionEm}</em></h3>
                 <p className="nosotros-split__text">
-                  Ser el referente de hospitalidad boutique en Michoacán, reconocidos por
-                  preservar el patrimonio cultural mientras ofrecemos experiencias que conectan a
-                  nuestros huéspedes con la esencia profunda de esta tierra mágica.
+                  {t.aboutPage.visionText}
                 </p>
               </div>
             </motion.article>
@@ -171,9 +161,9 @@ export default function Nosotros() {
         >
           <div className="container">
             <motion.div className="section__header section__header--light" variants={fadeUp}>
-              <span className="section__eyebrow section__eyebrow--gold">Lo que nos define</span>
+              <span className="section__eyebrow section__eyebrow--gold">{t.aboutPage.valuesEyebrow}</span>
               <h2 className="section__title" id="h2-valores" style={{ color: 'var(--color-parchment-light)' }}>
-                Nuestros <em>Valores</em>
+                {t.aboutPage.valuesTitle} <em>{t.aboutPage.valuesEm}</em>
               </h2>
               <span className="section__ornament" aria-hidden="true">✦ ─── ✦ ─── ✦</span>
             </motion.div>
@@ -183,9 +173,9 @@ export default function Nosotros() {
                 <div className="valor-card__icon" aria-hidden="true">
                   <i className="fa-solid fa-handshake"></i>
                 </div>
-                <h3 className="valor-card__title">Hospitalidad</h3>
+                <h3 className="valor-card__title">{t.aboutPage.values[0].title}</h3>
                 <p className="valor-card__text">
-                  Cada huésped es parte de nuestra familia. El calor michoacano en cada gesto.
+                  {t.aboutPage.values[0].text}
                 </p>
               </motion.article>
 
@@ -193,9 +183,9 @@ export default function Nosotros() {
                 <div className="valor-card__icon" aria-hidden="true">
                   <i className="fa-solid fa-leaf"></i>
                 </div>
-                <h3 className="valor-card__title">Sustentabilidad</h3>
+                <h3 className="valor-card__title">{t.aboutPage.values[1].title}</h3>
                 <p className="valor-card__text">
-                  Compromiso con el medio ambiente y las comunidades locales de Michoacán.
+                  {t.aboutPage.values[1].text}
                 </p>
               </motion.article>
 
@@ -203,9 +193,9 @@ export default function Nosotros() {
                 <div className="valor-card__icon" aria-hidden="true">
                   <i className="fa-solid fa-palette"></i>
                 </div>
-                <h3 className="valor-card__title">Cultura</h3>
+                <h3 className="valor-card__title">{t.aboutPage.values[2].title}</h3>
                 <p className="valor-card__text">
-                  Preservamos y celebramos las tradiciones artesanales y gastronómicas del estado.
+                  {t.aboutPage.values[2].text}
                 </p>
               </motion.article>
 
@@ -213,9 +203,9 @@ export default function Nosotros() {
                 <div className="valor-card__icon" aria-hidden="true">
                   <i className="fa-solid fa-gem"></i>
                 </div>
-                <h3 className="valor-card__title">Excelencia</h3>
+                <h3 className="valor-card__title">{t.aboutPage.values[3].title}</h3>
                 <p className="valor-card__text">
-                  Estándares de calidad que elevan cada detalle de tu experiencia.
+                  {t.aboutPage.values[3].text}
                 </p>
               </motion.article>
             </motion.div>

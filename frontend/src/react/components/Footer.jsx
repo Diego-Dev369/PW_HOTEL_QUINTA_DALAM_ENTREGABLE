@@ -1,7 +1,10 @@
 import { Link } from 'react-router-dom';
 import logoImg from '../../assets/icons/posible_logo.jpeg';
+import { useLanguage } from '../context/LanguageContext.jsx';
 
 export default function Footer() {
+  const { t } = useLanguage();
+
   return (
     <footer className="footer">
       <div className="footer__top">
@@ -14,29 +17,26 @@ export default function Footer() {
             height="52"
           />
           <h2 className="footer__brand-name">Hotel Quinta Dalam</h2>
-          <p className="footer__brand-tagline">Hotel Boutique</p>
-          <p className="footer__brand-desc">
-            Un refugio colonial donde la tradición y el lujo se encuentran en el
-            corazón de Michoacán.
-          </p>
+          <p className="footer__brand-tagline">{t.boutiqueHotel}</p>
+          <p className="footer__brand-desc">{t.footer.desc}</p>
         </div>
 
-        <nav aria-label="Mapa del sitio">
-          <p className="footer__nav-title">Explore</p>
+        <nav aria-label={t.footer.sitemap}>
+          <p className="footer__nav-title">{t.footer.explore}</p>
           <ul className="footer__nav-list">
-            <li><Link to="/habitaciones" className="footer__nav-link">Habitaciones</Link></li>
-            <li><Link to="/reservaciones" className="footer__nav-link">Reservaciones</Link></li>
-            <li><Link to="/nosotros" className="footer__nav-link">Nosotros</Link></li>
-            <li><Link to="/contacto" className="footer__nav-link">Contacto</Link></li>
+            <li><Link to="/habitaciones" className="footer__nav-link">{t.rooms}</Link></li>
+            <li><Link to="/reservaciones" className="footer__nav-link">{t.footer.reservations}</Link></li>
+            <li><Link to="/nosotros" className="footer__nav-link">{t.about}</Link></li>
+            <li><Link to="/contacto" className="footer__nav-link">{t.contact}</Link></li>
           </ul>
         </nav>
 
         <div>
-          <p className="footer__nav-title">Contacto</p>
+          <p className="footer__nav-title">{t.contact}</p>
           <address className="footer__address">
             <p>
               <i className="fa-solid fa-location-dot" aria-hidden="true"></i>
-              Morelia, Michoacán, México
+              Morelia, Michoacan, Mexico
             </p>
             <p>
               <i className="fa-solid fa-phone" aria-hidden="true"></i>
@@ -50,7 +50,7 @@ export default function Footer() {
         </div>
 
         <div>
-          <p className="footer__nav-title">Redes Sociales</p>
+          <p className="footer__nav-title">{t.footer.social}</p>
           <div className="footer__social-links">
             <a
               href="https://www.facebook.com/profile.php?id=61584681841684"
@@ -80,49 +80,27 @@ export default function Footer() {
               <i className="fa-brands fa-tiktok" aria-hidden="true"></i>
             </a>
           </div>
-
-          {/*<p className="footer__newsletter-label">Suscríbete</p>
-          <div className="footer__newsletter-form">
-            <label htmlFor="newsletter-email" className="visually-hidden">Correo electrónico</label>
-            <input
-              type="email"
-              id="newsletter-email"
-              name="newsletter-email"
-              className="footer__newsletter-input"
-              placeholder="tu@email.com"
-              autoComplete="email"
-            />
-            <button
-              type="button"
-              className="footer__newsletter-btn"
-              aria-label="Suscribirse"
-            >
-              →
-            </button>
-          </div>*/}
         </div>
       </div>
 
       <div className="footer__bottom">
         <p className="footer__copyright">
-          <small>&copy; 2026 Hotel Quinta Dalam. Todos los derechos reservados.</small>
+          <small>&copy; 2026 Hotel Quinta Dalam. {t.footer.copyright}</small>
         </p>
         <div className="footer__certifications">
-          {/* Sello CSS */}
           <a href="https://jigsaw.w3.org/css-validator/check/referer" target="_blank" rel="noopener">
-            <img 
+            <img
               style={{ border: 0, width: '88px', height: '31px' }}
               src="https://jigsaw.w3.org/css-validator/images/vcss"
-              alt="¡CSS Válido!" 
+              alt="CSS valido"
             />
           </a>
 
-          {/* Sello HTML */}
           <a href="https://validator.w3.org/check?uri=referer" target="_blank" rel="noopener">
-            <img 
+            <img
               style={{ border: 0, width: '88px', height: '31px' }}
-              src="https://www.w3.org/Icons/valid-xhtml10" 
-              alt="¡HTML5 Válido!" 
+              src="https://www.w3.org/Icons/valid-xhtml10"
+              alt="HTML5 valido"
             />
           </a>
         </div>

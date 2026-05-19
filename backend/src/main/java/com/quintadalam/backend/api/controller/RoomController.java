@@ -35,6 +35,11 @@ public class RoomController {
         this.roomAdminService = roomAdminService;
     }
 
+    @GetMapping
+    public ResponseEntity<ApiResponse<List<RoomAdminResponse>>> listPublicRooms() {
+        return ResponseEntity.ok(ApiResponse.ok(roomAdminService.listPublicActiveRooms()));
+    }
+
     @GetMapping("/availability")
     public ResponseEntity<ApiResponse<List<RoomAvailabilityResponse>>> availability(
         @Valid @ModelAttribute AvailabilitySearchRequest request
@@ -57,4 +62,6 @@ public class RoomController {
         return ResponseEntity.ok(ApiResponse.ok(roomAdminService.updateRoom(id, request)));
     }
 }
+
+
 

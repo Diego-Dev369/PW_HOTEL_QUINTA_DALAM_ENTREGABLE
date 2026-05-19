@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
+﻿import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import ConfirmDeleteModal from '../../components/admin/ConfirmDeleteModal';
-import { fetchUsers, updateUser, deactivateUser } from '../../services/staffApi';
+import { fetchUsers, createUser, updateUser, deactivateUser, activateUser } from '../../services/staffApi';
 
 function getInitials(firstName, lastName) {
   const a = (firstName || '').trim()[0] || '';
@@ -11,13 +11,14 @@ function getInitials(firstName, lastName) {
 
 function roleBadgeClass(roles = []) {
   if (roles.includes('ADMIN')) return 'admin-badge--gold';
-  if (roles.includes('GUEST')) return 'admin-badge--neutral';
+  if (roles.includes('RECEPTION')) return 'admin-badge--confirmed';
   return 'admin-badge--neutral';
 }
 
 function roleLabel(roles = []) {
   if (roles.includes('ADMIN')) return 'Administrador';
-  if (roles.includes('GUEST')) return 'Huésped';
+  if (roles.includes('RECEPTION')) return 'Recepcion';
+  if (roles.includes('GUEST')) return 'Huesped';
   return roles.join(', ') || 'Sin rol';
 }
 
@@ -27,18 +28,19 @@ export default function AdminUsuarios() {
   const [apiError, setApiError] = useState(null);
   const [saving, setSaving] = useState(false);
   const [saveError, setSaveError] = useState(null);
-
-  const [activeModal, setActiveModal] = useState(null); // 'edit' | 'delete' | null
+  const [activeModal, setActiveModal] = useState(null);
   const [editingUser, setEditingUser] = useState(null);
   const [userToDelete, setUserToDelete] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
-  const { register, handleSubmit, formState: { errors }, reset, watch } = useForm();
+  const { register, handleSubmit, formState: { errors }, reset, watch } = useForm({
+    defaultValues: { role: 'GUEST' }
+  });
+
   const nameWatch = watch('firstName', '');
   const lastNameWatch = watch('lastName', '');
 
-  // ── Carga inicial desde API real ──
   useEffect(() => {
     loadUsers();
   }, []);
@@ -56,6 +58,14 @@ export default function AdminUsuarios() {
     }
   }
 
+  const openCreateModal = () => {
+    setEditingUser(null);
+    reset({ firstName: '', lastName: '', email: '', phone: '', password: '', role: 'GUEST' });
+    setShowPassword(false);
+    setSaveError(null);
+    setActiveModal('edit');
+  };
+
   const openEditModal = (user) => {
     setEditingUser(user);
     reset({
@@ -63,7 +73,9 @@ export default function AdminUsuarios() {
       lastName: user.lastName,
       email: user.email,
       phone: user.phone || '',
+      role: user.roles?.[0] || 'GUEST',
     });
+    setShowPassword(false);
     setSaveError(null);
     setActiveModal('edit');
   };
@@ -78,12 +90,10 @@ export default function AdminUsuarios() {
     setEditingUser(null);
     setUserToDelete(null);
     setSaveError(null);
-    reset();
+    reset({ role: 'GUEST' });
   };
 
-  // ── Submit edición → PUT real ──
   const onSubmitUsuario = async (data) => {
-    if (!editingUser) return;
     setSaving(true);
     setSaveError(null);
     try {
@@ -93,8 +103,19 @@ export default function AdminUsuarios() {
         lastName: data.lastName.trim(),
         phone: data.phone?.trim() || null,
       };
-      const updated = await updateUser(editingUser.id, payload);
-      setUsuarios((prev) => prev.map((u) => (u.id === updated.id ? updated : u)));
+
+      if (editingUser) {
+        const updated = await updateUser(editingUser.id, payload);
+        setUsuarios((prev) => prev.map((u) => (u.id === updated.id ? updated : u)));
+      } else {
+        const created = await createUser({
+          ...payload,
+          password: data.password,
+          role: data.role || 'GUEST',
+        });
+        setUsuarios((prev) => [created, ...prev]);
+      }
+
       closeModal();
     } catch (e) {
       setSaveError(e?.response?.data?.message || 'Error al guardar. Intenta de nuevo.');
@@ -103,7 +124,6 @@ export default function AdminUsuarios() {
     }
   };
 
-  // ── Confirmar desactivación → DELETE real ──
   const handleDeleteConfirm = async () => {
     if (!userToDelete) { closeModal(); return; }
     try {
@@ -112,13 +132,21 @@ export default function AdminUsuarios() {
         u.id === userToDelete.id ? { ...u, status: 'INACTIVE' } : u
       ));
     } catch {
-      loadUsers(); // Fallback: refetch completo
+      loadUsers();
     } finally {
       closeModal();
     }
   };
 
-  // ── Filtrado local ──
+  const handleActivateUser = async (user) => {
+    try {
+      const updated = await activateUser(user.id);
+      setUsuarios((prev) => prev.map((u) => (u.id === updated.id ? updated : u)));
+    } catch {
+      loadUsers();
+    }
+  };
+
   const filteredUsuarios = usuarios.filter((user) => {
     const term = searchTerm.toLowerCase();
     const fullName = `${user.firstName} ${user.lastName}`.toLowerCase();
@@ -126,19 +154,25 @@ export default function AdminUsuarios() {
   });
 
   const previewInitials = getInitials(nameWatch, lastNameWatch);
+  const isEditing = Boolean(editingUser);
 
   return (
     <>
       <main className="admin-main">
         <div className="admin-page-header">
           <div>
-            <h1 className="admin-page-title">Gestión de <em>Usuarios</em></h1>
+            <h1 className="admin-page-title">Gestion de <em>Usuarios</em></h1>
             <p className="admin-page-subtitle">Administra accesos y roles del sistema.</p>
           </div>
-          <button type="button" className="admin-btn admin-btn--primary" onClick={loadUsers} disabled={loading}>
-            <i className={`fa-solid ${loading ? 'fa-spinner fa-spin' : 'fa-rotate-right'}`}></i>
-            {loading ? ' Cargando…' : ' Refrescar'}
-          </button>
+          <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
+            <button type="button" className="admin-btn admin-btn--primary" onClick={openCreateModal}>
+              <i className="fa-solid fa-user-plus"></i> Nuevo usuario
+            </button>
+            <button type="button" className="admin-btn admin-btn--primary" onClick={loadUsers} disabled={loading}>
+              <i className={`fa-solid ${loading ? 'fa-spinner fa-spin' : 'fa-rotate-right'}`}></i>
+              {loading ? ' Cargando...' : ' Refrescar'}
+            </button>
+          </div>
         </div>
 
         {apiError && (
@@ -171,26 +205,20 @@ export default function AdminUsuarios() {
               </thead>
               <tbody>
                 {loading ? (
-                  <tr><td colSpan="4" style={{ textAlign: 'center', padding: '2rem', color: '#888' }}>Cargando usuarios…</td></tr>
+                  <tr><td colSpan="4" style={{ textAlign: 'center', padding: '2rem', color: '#888' }}>Cargando usuarios...</td></tr>
                 ) : filteredUsuarios.length > 0 ? (
                   filteredUsuarios.map((user) => (
                     <tr key={user.id} className={user.status === 'INACTIVE' ? 'admin-table__row--muted' : ''}>
                       <td>
                         <div className="admin-table__guest">
-                          <div className="admin-table__avatar">
-                            {getInitials(user.firstName, user.lastName)}
-                          </div>
+                          <div className="admin-table__avatar">{getInitials(user.firstName, user.lastName)}</div>
                           <div>
                             <strong>{user.firstName} {user.lastName}</strong>
                             <small>{user.email}</small>
                           </div>
                         </div>
                       </td>
-                      <td>
-                        <span className={`admin-badge ${roleBadgeClass(user.roles)}`}>
-                          {roleLabel(user.roles)}
-                        </span>
-                      </td>
+                      <td><span className={`admin-badge ${roleBadgeClass(user.roles)}`}>{roleLabel(user.roles)}</span></td>
                       <td>
                         <span className={`admin-badge ${user.status === 'ACTIVE' ? 'admin-badge--confirmed' : 'admin-badge--cancelled'}`}>
                           {user.status === 'ACTIVE' ? 'Activo' : 'Inactivo'}
@@ -198,21 +226,26 @@ export default function AdminUsuarios() {
                       </td>
                       <td>
                         <div className="admin-table__actions">
-                          <button
-                            className="admin-icon-btn admin-icon-btn--edit"
-                            title="Editar"
-                            onClick={() => openEditModal(user)}
-                          >
+                          <button className="admin-icon-btn admin-icon-btn--edit" title="Editar" onClick={() => openEditModal(user)}>
                             <i className="fa-solid fa-pen"></i>
                           </button>
-                          <button
-                            className="admin-icon-btn admin-icon-btn--delete"
-                            title="Desactivar"
-                            disabled={user.status === 'INACTIVE'}
-                            onClick={() => openDeleteModal(user)}
-                          >
-                            <i className="fa-solid fa-trash"></i>
-                          </button>
+                          {user.status === 'INACTIVE' ? (
+                            <button
+                              className="admin-icon-btn admin-icon-btn--edit"
+                              title="Reactivar"
+                              onClick={() => handleActivateUser(user)}
+                            >
+                              <i className="fa-solid fa-user-check"></i>
+                            </button>
+                          ) : (
+                            <button
+                              className="admin-icon-btn admin-icon-btn--delete"
+                              title="Desactivar"
+                              onClick={() => openDeleteModal(user)}
+                            >
+                              <i className="fa-solid fa-user-slash"></i>
+                            </button>
+                          )}
                         </div>
                       </td>
                     </tr>
@@ -230,12 +263,11 @@ export default function AdminUsuarios() {
         </div>
       </main>
 
-      {/* ── MODAL EDICIÓN ── */}
       <div className={`admin-modal-backdrop ${activeModal === 'edit' ? 'is-open' : ''}`}>
         <div className="admin-modal admin-modal--sm">
           <div className="admin-modal__header">
             <h3 className="admin-modal__title">
-              <i className="fa-solid fa-user-pen"></i> Editar usuario
+              <i className={`fa-solid ${isEditing ? 'fa-user-pen' : 'fa-user-plus'}`}></i> {isEditing ? 'Editar usuario' : 'Nuevo usuario'}
             </h3>
             <button type="button" className="admin-modal__close" onClick={closeModal}>
               <i className="fa-solid fa-xmark"></i>
@@ -250,63 +282,69 @@ export default function AdminUsuarios() {
               <div style={{ flex: 1, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
                 <div className="admin-form__group" style={{ margin: 0 }}>
                   <label className="admin-form__label">Nombre</label>
-                  <input
-                    className={`admin-form__input ${errors.firstName ? 'input-error' : ''}`}
-                    type="text"
-                    placeholder="Ej. Carolina"
-                    {...register("firstName", { required: "El nombre es obligatorio" })}
-                  />
+                  <input className={`admin-form__input ${errors.firstName ? 'input-error' : ''}`} type="text" {...register('firstName', { required: 'El nombre es obligatorio' })} />
                   {errors.firstName && <span style={{color: '#d9534f', fontSize: '12px'}}>{errors.firstName.message}</span>}
                 </div>
                 <div className="admin-form__group" style={{ margin: 0 }}>
                   <label className="admin-form__label">Apellidos</label>
-                  <input
-                    className={`admin-form__input ${errors.lastName ? 'input-error' : ''}`}
-                    type="text"
-                    placeholder="Ej. Mendoza"
-                    {...register("lastName", { required: "Los apellidos son obligatorios" })}
-                  />
+                  <input className={`admin-form__input ${errors.lastName ? 'input-error' : ''}`} type="text" {...register('lastName', { required: 'Los apellidos son obligatorios' })} />
                   {errors.lastName && <span style={{color: '#d9534f', fontSize: '12px'}}>{errors.lastName.message}</span>}
                 </div>
               </div>
             </div>
 
             <div className="admin-form__group">
-              <label className="admin-form__label">Correo electrónico</label>
+              <label className="admin-form__label">Correo electronico</label>
               <input
                 className={`admin-form__input ${errors.email ? 'input-error' : ''}`}
                 type="email"
-                placeholder="usuario@quintadalam.mx"
-                {...register("email", {
-                  required: "El correo es obligatorio",
-                  pattern: { value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i, message: "Correo inválido" }
+                {...register('email', {
+                  required: 'El correo es obligatorio',
+                  pattern: { value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i, message: 'Correo invalido' }
                 })}
               />
               {errors.email && <span style={{color: '#d9534f', fontSize: '12px'}}>{errors.email.message}</span>}
             </div>
 
-            <div className="admin-form__group">
-              <label className="admin-form__label">Teléfono (opcional)</label>
-              <input
-                className="admin-form__input"
-                type="tel"
-                placeholder="+52 443 000 0000"
-                {...register("phone")}
-              />
-            </div>
-
-            {saveError && (
-              <p style={{ color: '#a33', fontSize: '13px', margin: '0.5rem 0' }}>
-                <i className="fa-solid fa-triangle-exclamation"></i> {saveError}
-              </p>
+            {!isEditing && (
+              <>
+                <div className="admin-form__group">
+                  <label className="admin-form__label">Contrasena temporal</label>
+                  <input
+                    className={`admin-form__input ${errors.password ? 'input-error' : ''}`}
+                    type={showPassword ? 'text' : 'password'}
+                    {...register('password', {
+                      required: 'La contrasena es obligatoria',
+                      minLength: { value: 8, message: 'Minimo 8 caracteres' }
+                    })}
+                  />
+                  {errors.password && <span style={{color: '#d9534f', fontSize: '12px'}}>{errors.password.message}</span>}
+                </div>
+                <label style={{ display: 'inline-flex', gap: '0.5rem', alignItems: 'center', fontSize: '13px' }}>
+                  <input type="checkbox" checked={showPassword} onChange={(e) => setShowPassword(e.target.checked)} /> Mostrar contrasena
+                </label>
+                <div className="admin-form__group">
+                  <label className="admin-form__label">Rol</label>
+                  <select className="admin-form__input" {...register('role')}>
+                    <option value="GUEST">Huesped</option>
+                    <option value="RECEPTION">Recepcion</option>
+                    <option value="ADMIN">Administrador</option>
+                  </select>
+                </div>
+              </>
             )}
 
+            <div className="admin-form__group">
+              <label className="admin-form__label">Telefono (opcional)</label>
+              <input className="admin-form__input" type="tel" {...register('phone')} />
+            </div>
+
+            {saveError && <p style={{ color: '#a33', fontSize: '13px', margin: '0.5rem 0' }}><i className="fa-solid fa-triangle-exclamation"></i> {saveError}</p>}
+
             <div className="admin-modal__actions">
-              <button type="button" className="admin-btn admin-btn--ghost" onClick={closeModal} disabled={saving}>
-                Cancelar
-              </button>
+              <button type="button" className="admin-btn admin-btn--ghost" onClick={closeModal} disabled={saving}>Cancelar</button>
               <button type="submit" className="admin-btn admin-btn--primary" disabled={saving}>
-                {saving ? <><i className="fa-solid fa-spinner fa-spin"></i> Guardando…</> : 'Guardar'}
+                {saving ? <><i className="fa-solid fa-spinner fa-spin"></i> Guardando...</> : (isEditing ? 'Guardar' : 'Crear usuario')}
               </button>
             </div>
           </form>

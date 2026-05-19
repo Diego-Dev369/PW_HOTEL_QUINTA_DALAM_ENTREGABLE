@@ -2,6 +2,7 @@ import { NavLink, Link } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
 import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext.jsx';
+import { useLanguage } from '../context/LanguageContext.jsx';
 
 import logoImg from '../../assets/icons/posible_logo.jpeg';
 import banderaMex from '../../assets/icons/bandera_mexico.png';
@@ -11,14 +12,14 @@ function SunIcon() {
   return (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" width="20" height="20">
       <circle cx="12" cy="12" r="4" />
-      <line x1="12" y1="2"  x2="12" y2="6" />
+      <line x1="12" y1="2" x2="12" y2="6" />
       <line x1="12" y1="18" x2="12" y2="22" />
-      <line x1="4.22" y1="4.22"  x2="7.05" y2="7.05" />
+      <line x1="4.22" y1="4.22" x2="7.05" y2="7.05" />
       <line x1="16.95" y1="16.95" x2="19.78" y2="19.78" />
-      <line x1="2"  y1="12" x2="6"  y2="12" />
+      <line x1="2" y1="12" x2="6" y2="12" />
       <line x1="18" y1="12" x2="22" y2="12" />
       <line x1="4.22" y1="19.78" x2="7.05" y2="16.95" />
-      <line x1="16.95" y1="7.05"  x2="19.78" y2="4.22" />
+      <line x1="16.95" y1="7.05" x2="19.78" y2="4.22" />
     </svg>
   );
 }
@@ -31,13 +32,33 @@ function MoonIcon() {
   );
 }
 
+function LanguageButton({ code, active, icon, label, onClick }) {
+  return (
+    <button
+      type="button"
+      className={`header__lang-switch ${active ? 'header__lang-switch--active' : ''}`}
+      onClick={onClick}
+      aria-pressed={active}
+      aria-label={`Cambiar idioma a ${label}`}
+      style={{ background: 'none', border: 0, cursor: 'pointer' }}
+    >
+      <img src={icon} alt={code.toUpperCase()} className="header__flag" width="18" height="12" /> {code.toUpperCase()}
+    </button>
+  );
+}
+
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [profileMenuOpen, setProfileMenuOpen] = useState(false);
   const { theme, toggleTheme } = useTheme();
+  const { language, setLanguage, t } = useLanguage();
   const { isAuthenticated, user, logout } = useAuth();
   const profileRef = useRef(null);
-  const displayName = user?.firstName ? `${user.firstName} ${user.lastName || ''}`.trim() : 'Mi cuenta';
+  const displayName = user?.firstName ? `${user.firstName} ${user.lastName || ''}`.trim() : t.myAccount;
+
+  useEffect(() => {
+    document.documentElement.lang = language;
+  }, [language]);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 10);
@@ -47,11 +68,8 @@ export default function Header() {
 
   useEffect(() => {
     const onClickOutside = (event) => {
-      if (!profileRef.current?.contains(event.target)) {
-        setProfileMenuOpen(false);
-      }
+      if (!profileRef.current?.contains(event.target)) setProfileMenuOpen(false);
     };
-
     document.addEventListener('mousedown', onClickOutside);
     return () => document.removeEventListener('mousedown', onClickOutside);
   }, []);
@@ -62,75 +80,67 @@ export default function Header() {
     setProfileMenuOpen(false);
   };
 
+  const switchLanguage = (nextLanguage) => {
+    setLanguage(nextLanguage);
+    closeMobileMenu();
+  };
+
+  const languageControls = (
+    <>
+      <LanguageButton code="es" label="espanol" icon={banderaMex} active={language === 'es'} onClick={() => switchLanguage('es')} />
+      <span className="header__divider" aria-hidden="true"></span>
+      <LanguageButton code="en" label="ingles" icon={banderaEu} active={language === 'en'} onClick={() => switchLanguage('en')} />
+    </>
+  );
+
   return (
     <>
       <input type="checkbox" id="nav-toggle" className="header__nav-toggle-input" hidden />
-      
       <header className={`header ${scrolled ? 'header--scrolled' : ''}`}>
-        
         <div className="header__brand">
           <Link to="/" className="header__logo-link" aria-label="Hotel Quinta Dalam - Inicio" onClick={closeMobileMenu}>
             <img src={logoImg} alt="Logo Hotel Quinta Dalam" className="header__logo-img" width="44" height="44" />
             <div className="header__logo-text">
               <span className="header__logo-name">Hotel Quinta Dalam</span>
-              <span className="header__logo-tagline">Hotel Boutique</span>
+              <span className="header__logo-tagline">{t.boutiqueHotel}</span>
             </div>
           </Link>
         </div>
 
-        <nav className="header__nav" aria-label="Navegación principal">
+        <nav className="header__nav" aria-label="Navegacion principal">
           <ul className="header__menu">
-            <li><NavLink to="/habitaciones" onClick={closeMobileMenu} className={({ isActive }) => `header__link ${isActive ? 'header__link--active' : ''}`}>Habitaciones</NavLink></li>
-            <li><NavLink to="/nosotros" onClick={closeMobileMenu} className={({ isActive }) => `header__link ${isActive ? 'header__link--active' : ''}`}>Nosotros</NavLink></li>
-            <li><NavLink to="/contacto" onClick={closeMobileMenu} className={({ isActive }) => `header__link ${isActive ? 'header__link--active' : ''}`}>Contacto</NavLink></li>
+            <li><NavLink to="/habitaciones" onClick={closeMobileMenu} className={({ isActive }) => `header__link ${isActive ? 'header__link--active' : ''}`}>{t.rooms}</NavLink></li>
+            <li><NavLink to="/nosotros" onClick={closeMobileMenu} className={({ isActive }) => `header__link ${isActive ? 'header__link--active' : ''}`}>{t.about}</NavLink></li>
+            <li><NavLink to="/contacto" onClick={closeMobileMenu} className={({ isActive }) => `header__link ${isActive ? 'header__link--active' : ''}`}>{t.contact}</NavLink></li>
           </ul>
 
           <div className="header__mobile-actions">
             {isAuthenticated ? (
               <>
-                <Link to="/mi-cuenta" onClick={closeMobileMenu} className="header__mobile-login">Mi cuenta</Link>
-                <Link to="/mis-reservaciones" onClick={closeMobileMenu} className="header__mobile-login">Mis reservaciones</Link>
-                <button type="button" onClick={() => { closeMobileMenu(); logout(); }} className="header__mobile-login">Cerrar Sesión</button>
+                <Link to="/mi-cuenta" onClick={closeMobileMenu} className="header__mobile-login">{t.myAccount}</Link>
+                <Link to="/mis-reservaciones" onClick={closeMobileMenu} className="header__mobile-login">{t.myReservations}</Link>
+                <button type="button" onClick={() => { closeMobileMenu(); logout(); }} className="header__mobile-login">{t.logout}</button>
               </>
             ) : (
               <>
-                <Link to="/login" onClick={closeMobileMenu} className="header__mobile-login">Iniciar Sesión</Link>
-                <Link to="/registro" onClick={closeMobileMenu} className="header__mobile-login">Registrarse</Link>
+                <Link to="/login" onClick={closeMobileMenu} className="header__mobile-login">{t.login}</Link>
+                <Link to="/registro" onClick={closeMobileMenu} className="header__mobile-login">{t.register}</Link>
               </>
             )}
-            <Link to="/reservaciones" onClick={closeMobileMenu} className="header__mobile-cta">Reservar Ahora</Link>
-            
-            {/* ── Extras Móvil (Idiomas y Redes) ── */}
+            <Link to="/reservaciones" onClick={closeMobileMenu} className="header__mobile-cta">{t.reserveNow}</Link>
             <div className="header__mobile-extras">
-              <div className="header__mobile-lang">
-                <a href="#" className="header__lang-switch">
-                  <img src={banderaMex} alt="ES" className="header__flag" width="18" height="12" /> ES
-                </a>
-                <span className="header__divider" aria-hidden="true"></span>
-                <a href="#" className="header__lang-switch">
-                  <img src={banderaEu} alt="EN" className="header__flag" width="18" height="12" /> EN
-                </a>
-              </div>
-              
+              <div className="header__mobile-lang">{languageControls}</div>
               <div className="header__mobile-socials">
                 <a href="#" aria-label="Facebook"><i className="fa-brands fa-facebook-f"></i></a>
                 <a href="#" aria-label="Instagram"><i className="fa-brands fa-instagram"></i></a>
                 <a href="#" aria-label="WhatsApp"><i className="fa-brands fa-whatsapp"></i></a>
               </div>
             </div>
-            {/* ──────────────────────────────────── */}
           </div>
         </nav>
 
         <div className="header__actions">
-          <a href="#" className="header__lang-switch">
-            <img src={banderaMex} alt="ES" className="header__flag" width="18" height="12" /> ES
-          </a>
-          <span className="header__divider" aria-hidden="true"></span>
-          <a href="#" className="header__lang-switch">
-            <img src={banderaEu} alt="EN" className="header__flag" width="18" height="12" /> EN
-          </a>
-
+          {languageControls}
           {isAuthenticated ? (
             <div className="header__profile" ref={profileRef}>
               <button type="button" className="header__login header__profile-trigger" onClick={() => setProfileMenuOpen((open) => !open)}>
@@ -138,40 +148,33 @@ export default function Header() {
               </button>
               {profileMenuOpen && (
                 <div className="header__profile-menu">
-                  <Link to="/mi-cuenta" className="header__profile-item" onClick={closeMobileMenu}>Mi cuenta</Link>
-                  <Link to="/mis-reservaciones" className="header__profile-item" onClick={closeMobileMenu}>Mis reservaciones</Link>
-                  {(user?.roles || []).includes('ADMIN') && (
-                    <Link to="/admin/dashboard" className="header__profile-item" onClick={closeMobileMenu}>Panel admin</Link>
-                  )}
-                  <button type="button" className="header__profile-item header__profile-item--danger" onClick={() => { closeMobileMenu(); logout(); }}>
-                    Cerrar sesión
-                  </button>
+                  <Link to="/mi-cuenta" className="header__profile-item" onClick={closeMobileMenu}>{t.myAccount}</Link>
+                  <Link to="/mis-reservaciones" className="header__profile-item" onClick={closeMobileMenu}>{t.myReservations}</Link>
+                  {(user?.roles || []).includes('ADMIN') && <Link to="/admin/dashboard" className="header__profile-item" onClick={closeMobileMenu}>{t.adminPanel}</Link>}
+                  <button type="button" className="header__profile-item header__profile-item--danger" onClick={() => { closeMobileMenu(); logout(); }}>{t.logout}</button>
                 </div>
               )}
             </div>
           ) : (
             <>
-              <Link to="/login" className="header__login"> Iniciar Sesión </Link>
-              <Link to="/registro" className="header__login"> Registrarse </Link>
+              <Link to="/login" className="header__login">{t.login}</Link>
+              <Link to="/registro" className="header__login">{t.register}</Link>
             </>
           )}
-          <Link to="/reservaciones" className="header__cta"> Reservar </Link>
+          <Link to="/reservaciones" className="header__cta">{t.reserve}</Link>
         </div>
 
         <div style={{ display: 'flex', alignItems: 'center', marginLeft: 'auto' }}>
-          <button 
-            className="header__theme-toggle" 
-            onClick={toggleTheme} 
-            aria-label="Cambiar tema" 
+          <button
+            className="header__theme-toggle"
+            onClick={toggleTheme}
+            aria-label={t.theme}
             style={{ background: 'none', border: 'none', color: '#C9973A', cursor: 'pointer', padding: '0.5rem', display: 'flex', alignItems: 'center', marginRight: '0.5rem' }}
           >
             {theme === 'dark' ? <SunIcon /> : <MoonIcon />}
           </button>
 
-          <label 
-            htmlFor="nav-toggle" className="header__hamburger" style={{ marginLeft: 0 }}
-            aria-label="Abrir menú de navegación"
-          >
+          <label htmlFor="nav-toggle" className="header__hamburger" style={{ marginLeft: 0 }} aria-label={t.menu}>
             <span className="header__hamburger-bar"></span>
             <span className="header__hamburger-bar"></span>
             <span className="header__hamburger-bar"></span>

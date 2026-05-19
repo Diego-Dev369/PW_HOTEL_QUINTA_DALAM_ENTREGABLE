@@ -32,9 +32,16 @@ public class RoomAdminService {
         this.entityManager = entityManager;
     }
 
-    // ─────────────────────────────────────────────
-    // GET: lista todas las habitaciones con su tarifa actual
-    // ─────────────────────────────────────────────
+    // Public listing
+
+    @Transactional(readOnly = true)
+    public List<RoomAdminResponse> listPublicActiveRooms() {
+        return listAllRooms().stream()
+            .filter(room -> "ACTIVE".equals(room.status()))
+            .toList();
+    }
+    // Admin listing with current rate
+
     @Transactional(readOnly = true)
     public List<RoomAdminResponse> listAllRooms() {
         List<Object[]> rows = entityManager.createNativeQuery("""
@@ -90,13 +97,13 @@ public class RoomAdminService {
         )).toList();
     }
 
-    // ─────────────────────────────────────────────
-    // PUT: actualiza campos de la habitación y opcionalmente la tarifa
-    // ─────────────────────────────────────────────
+    // Admin update: fields plus optional current/future rate
+
+
     @Transactional
     public RoomAdminResponse updateRoom(UUID roomId, RoomAdminUpdateRequest req) {
         Room room = roomRepository.findById(roomId)
-            .orElseThrow(() -> new BusinessException(HttpStatus.NOT_FOUND, "ROOM_NOT_FOUND", "Habitación no encontrada."));
+            .orElseThrow(() -> new BusinessException(HttpStatus.NOT_FOUND, "ROOM_NOT_FOUND", "Habitacion no encontrada."));
 
         // Validar status
         RoomStatus newStatus;
@@ -104,7 +111,7 @@ public class RoomAdminService {
             newStatus = RoomStatus.valueOf(req.status().toUpperCase());
         } catch (IllegalArgumentException e) {
             throw new BusinessException(HttpStatus.BAD_REQUEST, "INVALID_STATUS",
-                "Estado inválido. Usa: ACTIVE, INACTIVE o MAINTENANCE.");
+                "Estado invalido. Usa: ACTIVE, INACTIVE o MAINTENANCE.");
         }
 
         room.setName(req.name().trim());
@@ -116,9 +123,9 @@ public class RoomAdminService {
         room.setStatus(newStatus);
         room.setFeatured(Boolean.TRUE.equals(req.featured()));
 
-        roomRepository.save(room);
+        // Actualizar tarifa si se envio
 
-        // Actualizar tarifa si se envió
+        // Actualizar tarifa si se enviÃƒÆ’Ã‚Â³
         BigDecimal finalRate = BigDecimal.ZERO;
         String finalCurrency = "MXN";
 
@@ -127,20 +134,29 @@ public class RoomAdminService {
                 ? req.currency().trim().toUpperCase()
                 : "MXN";
 
-            // Soft-delete de tarifas actuales vigentes para esta habitación
-            int deleted = entityManager.createNativeQuery("""
+            int trimmed = entityManager.createNativeQuery("""
                 UPDATE hotel.room_rates
-                SET deleted_at = NOW(), updated_at = NOW()
+                SET valid_during = daterange(lower(valid_during), CURRENT_DATE, '[)'),
+                    updated_at = NOW()
                 WHERE room_id = CAST(:roomId AS uuid)
-                  AND deleted_at IS NULL
-                  AND valid_during @> CURRENT_DATE
+                  AND valid_during && daterange(CURRENT_DATE, CURRENT_DATE + 1825, '[)')
+                  AND lower(valid_during) < CURRENT_DATE
                 """)
                 .setParameter("roomId", roomId.toString())
                 .executeUpdate();
 
-            log.info("Admin room update: soft-deleted {} active rates for room {}", deleted, roomId);
+            int deletedFuture = entityManager.createNativeQuery("""
+                DELETE FROM hotel.room_rates
+                WHERE room_id = CAST(:roomId AS uuid)
+                  AND valid_during && daterange(CURRENT_DATE, CURRENT_DATE + 1825, '[)')
+                  AND lower(valid_during) >= CURRENT_DATE
+                """)
+                .setParameter("roomId", roomId.toString())
+                .executeUpdate();
 
-            // Insertar nueva tarifa desde hoy en adelante (rango de 5 años)
+            log.info("Admin room update: trimmed {} rates and deleted {} future rates for room {}", trimmed, deletedFuture, roomId);
+
+            // Insertar nueva tarifa desde hoy en adelante (rango de 5 anos)
             entityManager.createNativeQuery("""
                 INSERT INTO hotel.room_rates (room_id, valid_during, nightly_rate_amount, currency, note)
                 VALUES (

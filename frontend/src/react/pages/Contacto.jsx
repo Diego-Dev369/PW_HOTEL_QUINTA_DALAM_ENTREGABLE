@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { useForm } from 'react-hook-form'; 
 import CTA from '../components/CTA';
+import { useLanguage } from '../context/LanguageContext.jsx';
 
 // ── Animaciones de Framer Motion ──
 const staggerContainer = {
@@ -21,6 +22,7 @@ const mapReveal = {
 const inView = { viewport: { once: true, margin: '-80px' } };
 
 export default function Contacto() {
+  const { t } = useLanguage();
   
   const { 
     register, 
@@ -31,7 +33,7 @@ export default function Contacto() {
 
   // Función que se ejecuta al pasar las validaciones
   const onSubmit = (data) => {
-    alert("¡Mensaje enviado correctamente!\n\nDatos:\n" + JSON.stringify(data, null, 2));
+    alert(`${t.contactPage.validations.sent}\n\nDatos:\n` + JSON.stringify(data, null, 2));
     console.log("Mensaje de contacto:", data);
     reset();
   };
@@ -40,10 +42,10 @@ export default function Contacto() {
     <>
       {/* PAGE HERO */}
       <div className="page-hero">
-        <span className="page-hero__eyebrow">Estamos aquí para ti</span>
-        <h1 className="page-hero__title">Contacto</h1>
+        <span className="page-hero__eyebrow">{t.contactPage.eyebrow}</span>
+        <h1 className="page-hero__title">{t.contactPage.title}</h1>
         <p className="page-hero__subtitle">
-          Escríbenos o visítanos en el corazón de Michoacán
+          {t.contactPage.subtitle}
         </p>
         <span className="page-hero__ornament" aria-hidden="true">✦ ─── ✦ ─── ✦</span>
       </div>
@@ -69,7 +71,7 @@ export default function Contacto() {
               {/* ── Formulario ── */}
               <motion.div className="contacto__form-wrap" variants={fadeUp}>
                 <h2 className="contacto__title" id="h2-contacto">
-                  Envíanos un <em>Mensaje</em>
+                  {t.contactPage.formTitle} <em>{t.contactPage.formTitleEm}</em>
                 </h2>
 
                 {/* Conectamos el formulario con handleSubmit */}
@@ -81,41 +83,41 @@ export default function Contacto() {
                 >
                   <div className="form__row">
                     <div className="form__group">
-                      <label className="form__label" htmlFor="nombre">Nombre</label>
+                      <label className="form__label" htmlFor="nombre">{t.contactPage.firstName}</label>
                       <input
                         type="text"
                         id="nombre"
                         className={`form__input ${errors.nombre ? 'input-error' : ''}`}
-                        placeholder="Tu nombre"
-                        {...register("nombre", { required: "El nombre es obligatorio" })}
+                        placeholder={t.contactPage.placeholders.firstName}
+                        {...register("nombre", { required: t.contactPage.validations.nameRequired })}
                       />
                       {errors.nombre && <span style={{color: '#d9534f', fontSize: '13px'}}>{errors.nombre.message}</span>}
                     </div>
                     
                     <div className="form__group">
-                      <label className="form__label" htmlFor="apellido">Apellido</label>
+                      <label className="form__label" htmlFor="apellido">{t.contactPage.lastName}</label>
                       <input
                         type="text"
                         id="apellido"
                         className="form__input"
-                        placeholder="Tu apellido"
+                        placeholder={t.contactPage.placeholders.lastName}
                         {...register("apellido")}
                       />
                     </div>
                   </div>
 
                   <div className="form__group">
-                    <label className="form__label" htmlFor="email">Correo electrónico</label>
+                    <label className="form__label" htmlFor="email">{t.contactPage.email}</label>
                     <input
                       type="email"
                       id="email"
                       className={`form__input ${errors.email ? 'input-error' : ''}`}
                       placeholder="tu@email.com"
                       {...register("email", { 
-                        required: "El correo es obligatorio",
+                        required: t.contactPage.validations.emailRequired,
                         pattern: {
                           value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                          message: "Ingresa un correo válido"
+                          message: t.contactPage.validations.emailInvalid
                         }
                       })}
                     />
@@ -123,7 +125,7 @@ export default function Contacto() {
                   </div>
 
                   <div className="form__group">
-                    <label className="form__label" htmlFor="telefono">Teléfono (opcional)</label>
+                    <label className="form__label" htmlFor="telefono">{t.contactPage.phone}</label>
                     <input
                       type="tel"
                       id="telefono"
@@ -132,7 +134,7 @@ export default function Contacto() {
                       {...register("telefono", {
                         pattern: {
                           value: /^[0-9+\-\s()]{10,15}$/,
-                          message: "Si ingresas un teléfono, debe ser válido"
+                          message: t.contactPage.validations.phoneInvalid
                         }
                       })}
                     />
@@ -140,27 +142,27 @@ export default function Contacto() {
                   </div>
 
                   <div className="form__group">
-                    <label className="form__label" htmlFor="asunto">Asunto</label>
+                    <label className="form__label" htmlFor="asunto">{t.contactPage.subject}</label>
                     <input
                       type="text"
                       id="asunto"
                       className={`form__input ${errors.asunto ? 'input-error' : ''}`}
-                      placeholder="¿En qué podemos ayudarte?"
-                      {...register("asunto", { required: "El asunto es obligatorio" })}
+                      placeholder={t.contactPage.placeholders.subject}
+                      {...register("asunto", { required: t.contactPage.validations.subjectRequired })}
                     />
                     {errors.asunto && <span style={{color: '#d9534f', fontSize: '13px'}}>{errors.asunto.message}</span>}
                   </div>
 
                   <div className="form__group">
-                    <label className="form__label" htmlFor="mensaje">Mensaje</label>
+                    <label className="form__label" htmlFor="mensaje">{t.contactPage.message}</label>
                     <textarea
                       id="mensaje"
                       className={`form__textarea ${errors.mensaje ? 'input-error' : ''}`}
-                      placeholder="Cuéntanos más..."
+                      placeholder={t.contactPage.placeholders.message}
                       rows="4"
                       {...register("mensaje", { 
-                        required: "El mensaje no puede estar vacío",
-                        minLength: { value: 10, message: "Escribe al menos 10 caracteres" }
+                        required: t.contactPage.validations.messageRequired,
+                        minLength: { value: 10, message: t.contactPage.validations.messageMin }
                       })}
                     ></textarea>
                     {errors.mensaje && <span style={{color: '#d9534f', fontSize: '13px'}}>{errors.mensaje.message}</span>}
@@ -168,31 +170,31 @@ export default function Contacto() {
 
                   <button type="submit" className="btn btn--primary">
                     <i className="fa-solid fa-paper-plane" aria-hidden="true"></i>
-                    Enviar mensaje
+                    {t.contactPage.send}
                   </button>
                 </motion.form>
               </motion.div>
 
               {/* ── Info de contacto (intacta) ── */}
               <motion.div className="contacto__info" variants={fadeUp}>
-                <h2 className="contacto__title">Visítanos en <em>Michoacán</em></h2>
+                <h2 className="contacto__title">{t.contactPage.visitTitle} <em>Michoacan</em></h2>
 
                 <ul className="contacto__info-list">
                   <li className="contacto__info-item">
                     <span className="contacto__info-icon" aria-hidden="true"><i className="fa-solid fa-location-dot"></i></span>
-                    <div><strong>Dirección</strong><p>Morelia, Michoacán, México</p></div>
+                    <div><strong>{t.contactPage.address}</strong><p>Morelia, Michoacan, Mexico</p></div>
                   </li>
                   <li className="contacto__info-item">
                     <span className="contacto__info-icon" aria-hidden="true"><i className="fa-solid fa-phone"></i></span>
-                    <div><strong>Teléfono</strong><p><a href="tel:+524430000000">+52 443 000 0000</a></p></div>
+                    <div><strong>{t.contactPage.phoneLabel}</strong><p><a href="tel:+524430000000">+52 443 000 0000</a></p></div>
                   </li>
                   <li className="contacto__info-item">
                     <span className="contacto__info-icon" aria-hidden="true"><i className="fa-solid fa-envelope"></i></span>
-                    <div><strong>Correo</strong><p><a href="mailto:reservas@quintadalam.mx">reservas@quintadalam.mx</a></p></div>
+                    <div><strong>{t.contactPage.emailLabel}</strong><p><a href="mailto:reservas@quintadalam.mx">reservas@quintadalam.mx</a></p></div>
                   </li>
                   <li className="contacto__info-item">
                     <span className="contacto__info-icon" aria-hidden="true"><i className="fa-solid fa-clock"></i></span>
-                    <div><strong>Horario de atención</strong><p>Lunes a domingo · 8:00 – 20:00 hrs</p></div>
+                    <div><strong>{t.contactPage.hours}</strong><p>{t.contactPage.hoursText}</p></div>
                   </li>
                 </ul>
 

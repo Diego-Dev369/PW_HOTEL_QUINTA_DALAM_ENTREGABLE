@@ -1,5 +1,6 @@
 import { useMemo, useState, useCallback } from 'react';
 import { useBookingDates } from '../context/BookingDateContext.jsx';
+import { useLanguage } from '../context/LanguageContext.jsx';
 import { createCheckoutSession } from '../services/paymentService.js';
 import { useToast } from '../hooks/useToast.js';
 import ToastStack from './ToastStack.jsx';
@@ -39,6 +40,7 @@ function generateIdempotencyKey() {
 
 export default function CheckoutWizard({ selectedRoom, reservation }) {
   const { checkInLabel, checkOutLabel, nights } = useBookingDates();
+  const { t } = useLanguage();
   const [isCreatingSession, setIsCreatingSession] = useState(false);
   const [checkoutError, setCheckoutError] = useState(null);
   const { toasts, removeToast, pushError, pushInfo, pushSuccess } = useToast();
@@ -57,7 +59,7 @@ export default function CheckoutWizard({ selectedRoom, reservation }) {
   }, [reservation, selectedRoom, nights]);
 
   const summary = useMemo(() => ({
-    room:            reservation?.roomName  || selectedRoom?.name || 'Sin suite seleccionada',
+    room:            reservation?.roomName  || selectedRoom?.name || t.checkout.noSuite,
     category:        reservation?.roomCategory || selectedRoom?.category || '',
     checkInLabel:    checkInLabel  || (reservation?.checkIn  ? new Date(reservation.checkIn  + 'T12:00:00').toLocaleDateString('es-MX', { day: '2-digit', month: 'short', year: 'numeric' }) : '—'),
     checkOutLabel:   checkOutLabel || (reservation?.checkOut ? new Date(reservation.checkOut + 'T12:00:00').toLocaleDateString('es-MX', { day: '2-digit', month: 'short', year: 'numeric' }) : '—'),
@@ -137,9 +139,9 @@ export default function CheckoutWizard({ selectedRoom, reservation }) {
   return (
     <section className="checkout-wizard" aria-label="Resumen y checkout">
       <header className="checkout-wizard__header">
-        <span className="section__eyebrow">Pago Seguro</span>
+        <span className="section__eyebrow">{t.checkout.eyebrow}</span>
         <h2 className="checkout-wizard__title">
-          Resumen de <em>Reservación</em>
+          {t.checkout.title} <em>{t.checkout.titleEm}</em>
         </h2>
       </header>
 
@@ -177,12 +179,12 @@ export default function CheckoutWizard({ selectedRoom, reservation }) {
             <div className="checkout-wizard__breakdown-row checkout-wizard__breakdown-row--taxes">
               <span>
                 <i className="fa-solid fa-circle-info" aria-hidden="true"></i>
-                Impuestos incluidos
+                {t.checkout.taxesIncluded}
               </span>
-              <span className="checkout-wizard__incl">Incluido</span>
+              <span className="checkout-wizard__incl">{t.checkout.included}</span>
             </div>
             <div className="checkout-wizard__breakdown-row checkout-wizard__breakdown-row--total">
-              <strong>Total a pagar</strong>
+              <strong>{t.checkout.total}</strong>
               <strong className="checkout-wizard__total-amount">
                 {fMoney(breakdown.total, breakdown.currency)}
               </strong>
@@ -194,7 +196,7 @@ export default function CheckoutWizard({ selectedRoom, reservation }) {
         {summary.isPaid && (
           <div className="checkout-wizard__paid-notice">
             <i className="fa-solid fa-shield-check" aria-hidden="true"></i>
-            Pago confirmado por Stripe
+            {t.checkout.paid}
           </div>
         )}
       </div>
@@ -209,13 +211,13 @@ export default function CheckoutWizard({ selectedRoom, reservation }) {
             disabled={isCreatingSession || !reservation?.id || !summary.canPay}
           >
             {isCreatingSession
-              ? <><span className="btn__spinner" aria-hidden="true" /> Abriendo Stripe...</>
-              : <><i className="fa-solid fa-lock" aria-hidden="true"></i> Proceder al pago seguro</>
+              ? <><span className="btn__spinner" aria-hidden="true" /> {t.checkout.opening}</>
+              : <><i className="fa-solid fa-lock" aria-hidden="true"></i> {t.checkout.button}</>
             }
           </button>
           {!reservation?.id && (
             <p className="checkout-wizard__hint">
-              Completa el formulario de reservación para habilitar el pago.
+              {t.checkout.hint}
             </p>
           )}
         </footer>
